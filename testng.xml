@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="TSE_all_tests" parallel="tests" verbose="1" thread-count="14">
+    <parameter name="runMode" value="docker"/>
+    <parameter name="testrun" value="TSE-C69"/>
+    <!-- <parameter name="rerunFailedTestsOnly" value="true"/> -->
+    <listeners>
+        <listener class-name="jiraIntegration.TestListener"/>
+    </listeners>
+
+<!--    <test name="SuiteBuilderAndRunner">-->
+<!--        <classes>-->
+<!--            <class name="framework.SuiteBuilderAndRunner"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+
+<!--    <test name="TSE_all_tests_Balashov" thread-count="1" preserve-order="true">-->
+<!--        <classes>-->
+<!--            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_016_NSI_016_PZ_2_7_2_1"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+
+    <test name="TSE_all_tests_Balashov_1" thread-count="1" preserve-order="true">
+        <classes>
+            <!--FUN_02_BP_006-->
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_011_PZ_2_9"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_015_PZ_2_8_2"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_021_PZ_1_1"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_021_PZ_1_2"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_021_PZ_1_3_1"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_021_PZ_1_3_2"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_021_PZ_1_4"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_021_PZ_1_5"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_021_PZ_1_7"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_021_PZ_1_8"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_021_PZ_1_9"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_021_PZ_2_1"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_023_PZ_1_3_1"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_023_PZ_1_3_2"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_023_PZ_1_4"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_023_PZ_1_5"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_023_PZ_1_6"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_023_PZ_1_7"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_023_PZ_2_1"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_024_PZ_2_2_2"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_024_PZ_2_4_1"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_024_PZ_2_4_2"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_024_PZ_2_4_3"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_024_PZ_2_6_1"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_024_PZ_2_7_1"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_024_PZ_2_8_1"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_024_PZ_2_8_2"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_029_PZ_2_7_2"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_029_PZ_2_8"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_031_PZ_1_7"/>
+            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_02.BP_006.FUN_02_BP_006_NSI_031_PZ_2_1"/>
+        </classes>
+    </test>
+
+
+</suite>
