@@ -9,14 +9,11 @@ import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
-import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.WebDriverConditions.url;
 
 public class Test_03_07_03 extends Hooks_UIDM_DEV {
 
@@ -39,7 +36,7 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
         step07();
     }
 
-    @AfterMethod
+//    @AfterMethod
 //    public void screenShot() {
 //        CommonFunctions.screenShot(WAY_TEST + "screen.png");
 //    }
@@ -48,9 +45,7 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
     public void step01() {
         CommonFunctions.printStep();
         //Ввести логин и пароль demo_exporter/password
-        new GUIFunctions()
-                .authorization("demo_exporter", "password")
-                .waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
+        new GUIFunctions().authorization("demo_exporter", "password");
 
         //Перейти во вкладку «Сервисы»
         new GUIFunctions()
@@ -60,7 +55,7 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
         //Выбрать сервис «Логистика. Доставка продукции «Агроэкспрессом»» и нажать кнопку «Оформить»
         new GUIFunctions()
                 .waitForElementDisplayed("//*[contains(@class, 'preloader')]", 60)
-                .inputSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
+                .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
                 .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Оформить");
 
         //Нажать на кнопку «Продолжить»
@@ -75,7 +70,7 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
         CommonFunctions.printStep();
 
         //В поле «Почтовый адрес» вводим значение «Корнилаева 2»
-        inputValueInBlock("Информация о компании", "Почтовый адрес", "Корнилаева 2");
+        new GUIFunctions().inputValueInArea("Информация о компании", "Почтовый адрес", "Корнилаева 2");
     }
 
     @Step("Заполнить область «Информация о заявителе»")
@@ -83,18 +78,16 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
         CommonFunctions.printStep();
 
         //Нажать на кнопку «Дополнительный контакт»
-
         //В поле «ФИО» вводим значение «Иванов Иван Иванович»
-        inputValueInBlock("Информация о заявителе", "ФИО", "Иванов Иван Иванович");
-
         //В поле «Телефон» вводим значение «+7(999)999-99-99»
-        inputValueInBlock("Информация о заявителе", "Телефон", "+7(999)999-99-99");
-
         //В поле «Должность» вводим значение «Менеджер»
-        inputValueInBlock("Информация о заявителе", "Должность", "Менеджер");
-
         //В поле «Email» вводим значение «word@mail.ru»
-        inputValueInBlock("Информация о заявителе", "Email", "word@mail.ru");
+        new GUIFunctions()
+                .setCheckbox("Информация о заявителе", "Дополнительный контакт", true)
+                .inputValueInArea("Информация о заявителе", "ФИО", "Иванов Иван Иванович")
+                .inputValueInArea("Информация о заявителе", "Телефон", "+7(999)999-99-99")
+                .inputValueInArea("Информация о заявителе", "Должность", "Менеджер")
+                .inputValueInArea("Информация о заявителе", "Email", "word@mail.ru");
     }
 
     @Step("Заполнить область «Информация для оказания услуги»")
