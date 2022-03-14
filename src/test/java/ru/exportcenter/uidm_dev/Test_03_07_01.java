@@ -2,6 +2,7 @@ package ru.exportcenter.uidm_dev;
 
 import com.codeborne.selenide.Condition;
 import framework.RunTestAgain;
+import functional.CommonFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -61,38 +62,41 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
     @Step("Заполнить область «Информация о компании»")
     private static void step02() {
         // В поле «Почтовый адрес» вводим значение «Корнилаева 2»
-        input("Почтовый адрес", "Корнилаева 2");
+        input("Информация о компании", "Почтовый адрес", "Корнилаева 2");
     }
 
-    private static void input(final String field, final String value) {
-        String inputBoxXPath = "//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
+    private static void input(final String area, final String field, final String value) {
+        String inputAreaXPath = "//*[text()='" + area + "']/ancestor::div[not(@class)][1]//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
         String inputXPath = "";
         int n = 1;
 
         while (n < 10) {
-            inputXPath = inputBoxXPath + "//input[preceding::*[" + n + "][text()='" + field + "']]";
+            inputXPath = inputAreaXPath + "//input[preceding::*[" + n + "][text()='" + field + "']]";
+            CommonFunctions.wait(1);
             if ($x(inputXPath).exists())
                 break;
+            if (n == 0)
+                Assert.fail("Не найден элемент {By.xpath: " + inputXPath + "}");
             n++;
         }
 
-        executeJavaScript("arguments[0].scrollIntoView();", $x(inputXPath));
+        $x(inputXPath).scrollIntoView(false);
         $x(inputXPath).sendKeys(value);
 
         // В поле корректно отображается введенное значение
-        Assert.assertEquals($x(inputXPath).getValue(), "Корнилаева 2");
+        Assert.assertEquals($x(inputXPath).getValue(), value);
         // Нет сообщений об ошибке
-        Assert.assertFalse($x(inputBoxXPath + "//span[contains(@class, 'error')]").exists());
+        Assert.assertFalse($x(inputAreaXPath + "//span[contains(@class, 'error')]").exists());
     }
 
-    private static void setCheckboxOn(final String field) {
-        String checkboxAreaXPath = "//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
+    private static void setCheckboxOn(final String area, final String field) {
+        String checkboxAreaXPath = "//*[text()='" + area + "']/ancestor::div[not(@class)][1]//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
         String checkboxXPath = checkboxAreaXPath + "//div[contains(@class,'checkMark')]";
 
-        executeJavaScript("arguments[0].scrollIntoView();", $x(checkboxXPath));
-        if ($x(checkboxAreaXPath + "//div[contains(@class,'checked')]").exists())
+        if ($x(checkboxAreaXPath + "//div[contains(@class,'checked')]/div").exists())
             System.out.println("Параметр «" + field + "» уже был включен");
         else
+            $x(checkboxXPath).scrollIntoView(false);
             $x(checkboxXPath).click();
 
         // В поле корректно отображается введенное значение
@@ -103,11 +107,11 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
 
     @Step("Заполнить область «Информация о заявителе»")
     private static void step03() {
-        setCheckboxOn("Дополнительный контакт");
-        input("ФИО", "Иванов Иван Иванович");
-        input("Телефон", "+7(999)999-99-99");
-        input("Должность", "Менеджер");
-        input("Email", "word@mail.ru");
+        setCheckboxOn("Информация о заявителе", "Дополнительный контакт");
+        input("Информация о заявителе", "ФИО", "Иванов Иван Иванович");
+        input("Информация о заявителе", "Телефон", "+7(999)999-99-99");
+        input("Информация о заявителе", "Должность", "Менеджер");
+        input("Информация о заявителе", "Email", "word@mail.ru");
     }
 
     @Step("Заполнить область «Информация для оказания услуги»")
