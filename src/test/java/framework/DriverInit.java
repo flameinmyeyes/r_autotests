@@ -36,7 +36,7 @@ public class DriverInit {
                 //настройки браузера
                 browser = CHROME;
 //                browserVersion = "85";
-//                startMaximized = true;
+                startMaximized = true;
 //                downloadsFolder = "Z:\\files_for_tests\\downloads";
                 headless = false;
                 screenshots = true;
