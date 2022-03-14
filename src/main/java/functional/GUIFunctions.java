@@ -2,6 +2,8 @@ package functional;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import org.testng.Assert;
+
 import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -39,6 +41,9 @@ public class GUIFunctions {
         $x(buttonOk).click();
 
         waitForLoading(defaultWaitingTime);
+
+        waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
+
         return this;
     }
 
@@ -110,30 +115,27 @@ public class GUIFunctions {
     public GUIFunctions selectTab(String tabName) {
         String tabXpath = "//li[@data-name = '" + tabName + "']";
 
-        waitForElementDisplayed(tabXpath, defaultWaitingTime);
+        clickWebElement(tabXpath);
 
-        waitForLoading(defaultWaitingTime);
+//        waitForLoading(defaultWaitingTime);
         return this;
     }
 
-    public GUIFunctions inputSearchField(String placeHolder, String searchText) {
-        String searchFieldXpath = "//input[contains(@placeholder, '" + placeHolder + "')]" +
+    public GUIFunctions inputInSearchField(String searchFieldPlaceholder, String value) {
+        String searchFieldXpath = "//input[contains(@placeholder, '" + searchFieldPlaceholder + "')]" +
                 "[following-sibling::*[descendant::*[name()='use' and contains(@*, '#search')]]]";
 
         waitForElementDisplayed(searchFieldXpath, defaultWaitingTime);
-        $x(searchFieldXpath).sendKeys(searchText);
-
+        $x(searchFieldXpath).sendKeys(value);
         $x(searchFieldXpath).pressEnter();
 
-        waitForLoading(defaultWaitingTime);
+//        waitForLoading(defaultWaitingTime);
         return this;
     }
 
     public GUIFunctions openSearchResult(String searchResultName, String buttonName) {
         String searchResultXpath = "//*[contains(text(), '" + searchResultName + "')]" +
                 "//following-sibling::div//descendant::*[contains(text(), '" + buttonName + "')]";
-
-        waitForElementDisplayed(searchResultXpath, defaultWaitingTime);
 
         clickWebElement(searchResultXpath);
 
@@ -144,16 +146,81 @@ public class GUIFunctions {
 
     /**
      * Ожидание отображения элемента и клик по нему
-     * @param locator - локатор элемента
+     * @param xpath - локатор элемента
      */
-    public GUIFunctions clickWebElement(String locator) {
-        $x(locator).shouldBe(Condition.exist, Duration.ofSeconds(defaultWaitingTime));
-        executeJavaScript("arguments[0].scrollIntoView();", $x(locator));
-        $x(locator).click();
+    public GUIFunctions clickWebElement(String xpath) {
+        $x(xpath).shouldBe(Condition.exist, Duration.ofSeconds(defaultWaitingTime));
+        executeJavaScript("arguments[0].scrollIntoView();", $x(xpath));
+        $x(xpath).click();
 
-        waitForLoading(defaultWaitingTime);
+//        waitForLoading(defaultWaitingTime);
         return this;
     }
 
+    /**
+     * Ввести значение в поле области
+     * @param area - область
+     * @param field - поле
+     * @param value - значение
+     */
+    public GUIFunctions inputValueInArea(String area, String field, String value) {
+        String inputAreaXPath = "//*[text()='" + area + "']/ancestor::div[not(@class)][1]//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
+        String inputXPath = "";
+        int n = 1;
+
+        while (n < 10) {
+            inputXPath = inputAreaXPath + "//input[preceding::*[" + n + "][text()='" + field + "']]";
+            CommonFunctions.wait(1);
+            if ($x(inputXPath).exists())
+                break;
+            if (n == 0)
+                Assert.fail("Не найден элемент {By.xpath: " + inputXPath + "}");
+            n++;
+        }
+
+        $x(inputXPath).scrollIntoView(false);
+        $x(inputXPath).sendKeys(value);
+
+        // В поле корректно отображается введенное значение
+        Assert.assertEquals($x(inputXPath).getValue(), value);
+        // Нет сообщений об ошибке
+        Assert.assertFalse($x(inputAreaXPath + "//span[contains(@class, 'error')]").exists());
+
+        return this;
+    }
+
+    /**
+     * Установить чекбокс в поле области
+     * @param area - область
+     * @param field - поле
+     */
+    public GUIFunctions setCheckbox(String area, String field, boolean isCheckboxOn) {
+        String checkboxAreaXpath = "//*[text()='" + area + "']/ancestor::div[not(@class)][1]//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
+        String checkboxXpath = checkboxAreaXpath + "//div[contains(@class,'checkMark')]";
+
+        if(isCheckboxOn) {
+            if ($x(checkboxAreaXpath + "//div[contains(@class,'checked')]/div").exists()) {
+                System.out.println("Параметр «" + field + "» уже был включен");
+            } else {
+                $x(checkboxXpath).scrollIntoView(false);
+                $x(checkboxXpath).click();
+            }
+            // В поле корректно отображается введенное значение
+            Assert.assertTrue($x(checkboxAreaXpath + "//div[contains(@class,'checked')]").exists());
+        } else {
+            if ($x(checkboxAreaXpath + "//div[contains(@class,'checked')]/div").exists()) {
+                $x(checkboxXpath).scrollIntoView(false);
+                $x(checkboxXpath).click();
+            } else {
+                System.out.println("Параметр «" + field + "» уже был выключен");
+            }
+            // В поле корректно отображается введенное значение
+            Assert.assertTrue($x(checkboxAreaXpath + "//div[count(contains(@class,'checked'))=0]").exists());
+        }
+        // Нет сообщений об ошибке
+        Assert.assertFalse($x(checkboxAreaXpath + "//span[contains(@class, 'error')]").exists());
+
+        return this;
+    }
 
 }
