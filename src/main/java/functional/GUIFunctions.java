@@ -193,7 +193,7 @@ public class GUIFunctions {
      * @param area - область
      * @param field - поле
      */
-    public GUIFunctions setCheckbox(String area, String field, boolean isCheckboxOn) {
+    public GUIFunctions setCheckboxInArea(String area, String field, boolean isCheckboxOn) {
         String checkboxAreaXpath = "//*[text()='" + area + "']/ancestor::div[not(@class)][1]//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
         String checkboxXpath = checkboxAreaXpath + "//div[contains(@class,'checkMark')]";
 

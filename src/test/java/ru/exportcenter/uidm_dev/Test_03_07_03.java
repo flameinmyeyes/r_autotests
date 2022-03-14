@@ -1,6 +1,5 @@
 package ru.exportcenter.uidm_dev;
 
-import com.codeborne.selenide.Condition;
 import framework.RunTestAgain;
 import functional.CommonFunctions;
 import functional.GUIFunctions;
@@ -8,10 +7,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 import org.testng.annotations.Test;
-
-import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -86,7 +82,7 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
         //В поле «Должность» вводим значение «Менеджер»
         //В поле «Email» вводим значение «word@mail.ru»
         new GUIFunctions()
-                .setCheckbox("Информация о заявителе", "Дополнительный контакт", true)
+                .setCheckboxInArea("Информация о заявителе", "Дополнительный контакт", true)
                 .inputValueInArea("Информация о заявителе", "ФИО", "Иванов Иван Иванович")
                 .inputValueInArea("Информация о заявителе", "Телефон", "+7(999)999-99-99")
                 .inputValueInArea("Информация о заявителе", "Должность", "Менеджер")
@@ -97,19 +93,12 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
     public void step04() {
         CommonFunctions.printStep();
 
-        //В поле «Город отправителя» выбрать значение из выпадающего списка.
-        //Выбираем «Подольск»
-        //В поле «Город назначения» выбрать значение из выпадающего списка.
-        //Выбираем «Харбин»
+        //В поле «Город отправителя» выбрать значение из выпадающего списка.        //Выбираем «Подольск»
+        //В поле «Город назначения» выбрать значение из выпадающего списка.        //Выбираем «Харбин»
         //Нажать на кнопку «Вывоз груза с адреса («Первая миля»)»
         //В поле «Адрес» вводим значение «Молодежная улица»
         //В поле «Предполагаемая дата отправления груза» вводим значение «22.10.2022»
-        new GUIFunctions()
-                .setCheckbox("Информация для оказания услуги", "Дополнительный контакт", true)
-                .inputValueInArea("Информация для оказания услуги", "ФИО", "Иванов Иван Иванович")
-                .inputValueInArea("Информация для оказания услуги", "Телефон", "+7(999)999-99-99")
-                .inputValueInArea("Информация для оказания услуги", "Должность", "Менеджер")
-                .inputValueInArea("Информация для оказания услуги", "Email", "word@mail.ru");
+
     }
 
     @Step("Заполнить область «Информация о грузе»")
@@ -153,29 +142,30 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
         CommonFunctions.printStep();
 
         //В поле «Наименование грузополучателя» вводим значение Ss-password
-
         //В поле «Страна» вводим значение «USA»
-
         //В поле «Город» вводим значение «Moscow»
-
         //В поле «Дом» вводим значение «Ff»
-
         //В поле «Регион» вводим значение «St-Peterburg»
-
         //В поле «Район» вводим значение «Raion»
-
         //В поле «Улица» вводим значение «Lenina street»
-
         //В поле «Регистрационный номер грузополучателя» вводим значение «223 22 44 2»
-
         //В поле «Телефон» вводим значение «+79999999999»
-
         //В поле «Представитель грузополучателя» вводим значение «Moscow disco rule»
-
         //В поле «Email» вводим значение «www@mail.ru»
 
+        new GUIFunctions()
+                .inputValueInArea("Информация о грузополучателе", "Наименование грузополучателя", "Ss-password")
+                .inputValueInArea("Информация о грузополучателе", "Страна", "USA")
+                .inputValueInArea("Информация о грузополучателе", "Город", "Moscow")
+                .inputValueInArea("Информация о грузополучателе", "Дом", "Ff")
+                .inputValueInArea("Информация о грузополучателе", "Регион", "St-Peterburg")
+                .inputValueInArea("Информация о грузополучателе", "Район", "Raion")
+                .inputValueInArea("Информация о грузополучателе", "Улица", "Lenina street")
+                .inputValueInArea("Информация о грузополучателе", "Регистрационный номер грузополучателя", "223 22 44 2")
+                .inputValueInArea("Информация о грузополучателе", "Телефон", "+79999999999")
+                .inputValueInArea("Информация о грузополучателе", "Представитель грузополучателя", "Moscow disco rule")
+                .inputValueInArea("Email", "Представитель грузополучателя", "www@mail.ru");
     }
-
 
     @Step("Заполнить область «Дополнительные услуги»")
     public void step07() {
@@ -202,30 +192,7 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
 
     }
 
-    private void login(String login, String password) {
-        $(By.name("username")).sendKeys(login);
-        $(By.name("password")).sendKeys(password);
-        $x("//button//*[text()='Войти']").click();
-    }
-
-    public void waitForLoading(int maxWaitSeconds) {
-        while ($x("//*[contains(@class, 'preloader') or contains(@class,'spinner')]").isDisplayed()) {
-            System.out.println("Ожидание обработки запроса...");
-            $x("//*[contains(@class, 'preloader') or contains(@class,'spinner')]")
-                    .shouldBe(Condition.not(Condition.visible), Duration.ofSeconds(maxWaitSeconds));
-        }
-    }
-
-    public void inputValueInBlock(String block, String field, String value) {
-        String xpathToField = "//div[text() = '" + block + "']/ancestor::div[contains(@class, 'WithExpansionPanel')]/descendant::div[descendant::*[text() = '" + field + "']]/following-sibling::div//input";
-
-        executeJavaScript("arguments[0].scrollIntoView();", $x(xpathToField));
-        $x(xpathToField)
-                .shouldBe(Condition.visible)
-                .setValue(value);
-    }
-
-    public void refreshTab(String expectedXpath, int times) {
+    private void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
             if($x(expectedXpath).isDisplayed()) {
                 break;
