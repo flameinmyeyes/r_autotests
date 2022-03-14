@@ -62,11 +62,11 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
     @Step("Заполнить область «Информация о компании»")
     private static void step02() {
         // В поле «Почтовый адрес» вводим значение «Корнилаева 2»
-        input("Почтовый адрес", "Корнилаева 2");
+        input("Информация о компании", "Почтовый адрес", "Корнилаева 2");
     }
 
-    private static void input(final String field, final String value) {
-        String inputAreaXPath = "//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
+    private static void input(final String area, final String field, final String value) {
+        String inputAreaXPath = "//*[text()='" + area + "']/ancestor::div[not(@class)][1]//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
         String inputXPath = "";
         int n = 1;
 
@@ -89,10 +89,9 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
         Assert.assertFalse($x(inputAreaXPath + "//span[contains(@class, 'error')]").exists());
     }
 
-    private static void setCheckboxOn(final String field) {
-        String checkboxAreaXPath = "//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
+    private static void setCheckboxOn(final String area, final String field) {
+        String checkboxAreaXPath = "//*[text()='" + area + "']/ancestor::div[not(@class)][1]//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
         String checkboxXPath = checkboxAreaXPath + "//div[contains(@class,'checkMark')]";
-//        String checkboxXPath = "//*[text()='" + field + "']/../preceding-sibling::div";
 
         if ($x(checkboxAreaXPath + "//div[contains(@class,'checked')]/div").exists())
             System.out.println("Параметр «" + field + "» уже был включен");
@@ -108,11 +107,11 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
 
     @Step("Заполнить область «Информация о заявителе»")
     private static void step03() {
-        setCheckboxOn("Дополнительный контакт");
-        input("ФИО", "Иванов Иван Иванович");
-        input("Телефон", "+7(999)999-99-99");
-        input("Должность", "Менеджер");
-        input("Email", "word@mail.ru");
+        setCheckboxOn("Информация о заявителе", "Дополнительный контакт");
+        input("Информация о заявителе", "ФИО", "Иванов Иван Иванович");
+        input("Информация о заявителе", "Телефон", "+7(999)999-99-99");
+        input("Информация о заявителе", "Должность", "Менеджер");
+        input("Информация о заявителе", "Email", "word@mail.ru");
     }
 
     @Step("Заполнить область «Информация для оказания услуги»")
