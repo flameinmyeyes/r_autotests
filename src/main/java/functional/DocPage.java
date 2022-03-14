@@ -14,6 +14,7 @@ import java.util.Map;
 
 import static com.codeborne.selenide.Selenide.*;
 
+@Deprecated
 public class DocPage extends Page {
 
     public DocPage() {

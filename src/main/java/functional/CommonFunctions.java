@@ -47,6 +47,7 @@ public final class CommonFunctions {
      * @param locator - локатор
      * @param seconds - время ожидания в секундах
      */
+    @Deprecated
     public static void waitForElementDisplayed(By locator, int seconds) {
         $(locator).shouldBe(Condition.visible, Duration.ofSeconds(seconds));
         highlightSelenideElement(locator);
@@ -59,6 +60,7 @@ public final class CommonFunctions {
      * @param seconds   - время ожидания в секундах
      * @param highlight - необходимость подсветки элемента
      */
+    @Deprecated
     public static void waitForElementDisplayed(By locator, int seconds, boolean highlight) {
         $(locator).shouldBe(Condition.visible, Duration.ofSeconds(seconds));
         if (highlight) {
@@ -72,6 +74,7 @@ public final class CommonFunctions {
      * @param locator - локатор
      * @param seconds - время ожидания в секундах
      */
+    @Deprecated
     public static void waitForElementDisappeared(By locator, int seconds) {
         $(locator).should(Condition.disappear, Duration.ofSeconds(seconds));
     }
@@ -81,6 +84,7 @@ public final class CommonFunctions {
      *
      * @param locator - локатор
      */
+    @Deprecated
     public static void highlightSelenideElement(By locator) {
         SelenideElement element = $(locator);
         for (int i = 0; i < 1; i++) {
@@ -469,18 +473,6 @@ public final class CommonFunctions {
         byte[] decodedBytes = Base64.getDecoder().decode(value);
         String decodedValue = new String(decodedBytes);
         return decodedValue;
-    }
-
-    /**
-     * Сбросить кэш
-     */
-    public static void resetCache() {
-        // Пользователь: Пятница Анна Сергеевна
-        new LoginPage().authorization("dc02ea88-c09c-429a-9329-adf35f1d3513");
-        new MainPage().clickWebElement("//span[text()=' Настройки']")
-                .clickWebElement("//span[text()=' Администрирование комплекса']")
-                .clickWebElement("//span[text()=' Настройки кэширования']")
-                .clickWebElement("//button[text()=' Сбросить кэш']");
     }
 
 
