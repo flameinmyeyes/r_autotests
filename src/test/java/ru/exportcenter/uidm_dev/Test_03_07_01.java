@@ -2,6 +2,7 @@ package ru.exportcenter.uidm_dev;
 
 import com.codeborne.selenide.Condition;
 import framework.RunTestAgain;
+import functional.CommonFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -65,34 +66,38 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
     }
 
     private static void input(final String field, final String value) {
-        String inputBoxXPath = "//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
+        String inputAreaXPath = "//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
         String inputXPath = "";
         int n = 1;
 
         while (n < 10) {
-            inputXPath = inputBoxXPath + "//input[preceding::*[" + n + "][text()='" + field + "']]";
+            inputXPath = inputAreaXPath + "//input[preceding::*[" + n + "][text()='" + field + "']]";
+            CommonFunctions.wait(1);
             if ($x(inputXPath).exists())
                 break;
+            if (n == 0)
+                Assert.fail("Не найден элемент {By.xpath: " + inputXPath + "}");
             n++;
         }
 
-        executeJavaScript("arguments[0].scrollIntoView();", $x(inputXPath));
+        $x(inputXPath).scrollIntoView(false);
         $x(inputXPath).sendKeys(value);
 
         // В поле корректно отображается введенное значение
-        Assert.assertEquals($x(inputXPath).getValue(), "Корнилаева 2");
+        Assert.assertEquals($x(inputXPath).getValue(), value);
         // Нет сообщений об ошибке
-        Assert.assertFalse($x(inputBoxXPath + "//span[contains(@class, 'error')]").exists());
+        Assert.assertFalse($x(inputAreaXPath + "//span[contains(@class, 'error')]").exists());
     }
 
     private static void setCheckboxOn(final String field) {
         String checkboxAreaXPath = "//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
         String checkboxXPath = checkboxAreaXPath + "//div[contains(@class,'checkMark')]";
+//        String checkboxXPath = "//*[text()='" + field + "']/../preceding-sibling::div";
 
-        executeJavaScript("arguments[0].scrollIntoView();", $x(checkboxXPath));
-        if ($x(checkboxAreaXPath + "//div[contains(@class,'checked')]").exists())
+        if ($x(checkboxAreaXPath + "//div[contains(@class,'checked')]/div").exists())
             System.out.println("Параметр «" + field + "» уже был включен");
         else
+            $x(checkboxXPath).scrollIntoView(false);
             $x(checkboxXPath).click();
 
         // В поле корректно отображается введенное значение
