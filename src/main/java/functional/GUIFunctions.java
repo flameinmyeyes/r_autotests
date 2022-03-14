@@ -139,7 +139,6 @@ public class GUIFunctions {
 
         clickWebElement(searchResultXpath);
 
-        switchTo().window(1);
         waitForLoading(defaultWaitingTime);
         return this;
     }
