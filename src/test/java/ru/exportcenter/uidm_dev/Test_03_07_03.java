@@ -3,11 +3,13 @@ package ru.exportcenter.uidm_dev;
 import com.codeborne.selenide.Condition;
 import framework.RunTestAgain;
 import functional.CommonFunctions;
+import functional.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
@@ -19,6 +21,8 @@ import static com.codeborne.selenide.WebDriverConditions.url;
 public class Test_03_07_03 extends Hooks_UIDM_DEV {
 
 //    private String WAY_TEST = Ways.TSE_DEMO_28080.getWay() + "\\FUN_02\\BP_016\\FUN_02_BP_016_NSI_016_PZ_2_7_2_1\\";
+
+//    private GUIFunctions guiFunctions = new GUIFunctions();
 
     @Owner(value="Балашов Илья")
     @Description("NSI_016. ПЗ п. 2.7.2. ТК №1 Проверка создания нового документа")
@@ -37,125 +41,202 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
 
     @AfterMethod
 //    public void screenShot() {
-//        CommonFunctions.screenShot( WAY_TEST + "screen.png");
+//        CommonFunctions.screenShot(WAY_TEST + "screen.png");
 //    }
 
-    @Step("1. Открыть браузер и перейти по ссылке http://uidm.uidm-dev.d.exportcenter.ru/ru/login\n" +
-            "Ввести логин и пароль demo_exporter/password\n" +
-            "2. Перейти во вкладку «Сервисы»\n" +
-            "3. Выбрать сервис «Логистика. Доставка продукции «Агроэкспрессом»» и нажать кнопку «Оформить»\n" +
-            "4. Нажать на кнопку «Продолжить»")
+    @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
         //Ввести логин и пароль demo_exporter/password
-        $(By.name("username")).sendKeys("demo_exporter");
-        $(By.name("password")).sendKeys("password");
-        $x("//button//*[text()='Войти']").click();
-
-        webdriver().shouldHave(url("http://uidm.uidm-dev.d.exportcenter.ru/ru/main"), Duration.ofSeconds(30));
+        new GUIFunctions()
+                .authorization("demo_exporter", "password")
+                .waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
 
         //Перейти во вкладку «Сервисы»
-        $x("//a[@class='header-menu-list__link '][text()='Сервисы']").click();
-        webdriver().shouldHave(url("http://master-portal-dev.d.exportcenter.ru/services/business"), Duration.ofSeconds(30));
+        new GUIFunctions()
+                .selectTab("Сервисы")
+                .waitForURL("http://master-portal-dev.d.exportcenter.ru/services/business");
 
         //Выбрать сервис «Логистика. Доставка продукции «Агроэкспрессом»» и нажать кнопку «Оформить»
-        $x("//input[@placeholder='Поиск по разделу']").sendKeys("Логистика\n");
-        $x("//div[text()='Логистика. Доставка продукции \"Агроэкспрессом\"']" +
-                "/ancestor::div[@class='support-card support-card--active p-3']//*[text()='Оформить']").click();
+        new GUIFunctions()
+                .waitForElementDisplayed("//*[contains(@class, 'preloader')]", 60)
+                .inputSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
+                .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Оформить");
 
         //Нажать на кнопку «Продолжить»
-        switchTo().window(1);
-        $x("//*[text()='Логистика. Доставка продукции \"Агроэкспрессом\"']").shouldBe(Condition.visible, Duration.ofSeconds(30));
-        refresh();
-        $x("//*[text()='Логистика. Доставка продукции \"Агроэкспрессом\"']").shouldBe(Condition.visible, Duration.ofSeconds(30));
-        $x("//button//*[text()='Продолжить']").click();
+        if (!$x("//*[contains(text(), 'Продолжить')]").isDisplayed()) {
+            refreshTab("//*[contains(text(), 'Продолжить')]", 5);
+        }
+        new GUIFunctions().clickWebElement("//*[contains(text(), 'Продолжить')]");
     }
 
-    @Step("1. В поле «Почтовый адрес» вводим значение «Корнилаева 2»")
+    @Step("Заполнить область «Информация о компании»")
     public void step02() {
-        //«Информация о компании»
         CommonFunctions.printStep();
 
+        //В поле «Почтовый адрес» вводим значение «Корнилаева 2»
+        inputValueInBlock("Информация о компании", "Почтовый адрес", "Корнилаева 2");
     }
 
-    @Step("1. Нажать на кнопку «Дополнительный контакт»\n" +
-            "2. В поле «ФИО» вводим значение «Иванов Иван Иванович»\n" +
-            "3. В поле «Телефон» вводим значение «+7(999)999-99-99»\n" +
-            "4. В поле «Должность» вводим значение «Менеджер»" +
-            "5. В поле «Email» вводим значение «word@mail.ru»")
+    @Step("Заполнить область «Информация о заявителе»")
     public void step03() {
-        //«Информация о заявителе»
         CommonFunctions.printStep();
+
+        //Нажать на кнопку «Дополнительный контакт»
+
+        //В поле «ФИО» вводим значение «Иванов Иван Иванович»
+        inputValueInBlock("Информация о заявителе", "ФИО", "Иванов Иван Иванович");
+
+        //В поле «Телефон» вводим значение «+7(999)999-99-99»
+        inputValueInBlock("Информация о заявителе", "Телефон", "+7(999)999-99-99");
+
+        //В поле «Должность» вводим значение «Менеджер»
+        inputValueInBlock("Информация о заявителе", "Должность", "Менеджер");
+
+        //В поле «Email» вводим значение «word@mail.ru»
+        inputValueInBlock("Информация о заявителе", "Email", "word@mail.ru");
     }
 
-    @Step("1. В поле «Город отправителя» выбрать значение из выпадающего списка.\n" +
-            "Выбираем «Подольск»\n" +
-            "2. В поле «Город назначения» выбрать значение из выпадающего списка.\n" +
-            "Выбираем «Харбин»\n" +
-            "3. Нажать на кнопку «Вывоз груза с адреса («Первая миля»)»\n" +
-            "4. В поле «Адрес» вводим значение «Молодежная улица»\n" +
-            "5. В поле «Предполагаемая дата отправления груза» вводим значение «22.10.2022»")
+    @Step("Заполнить область «Информация для оказания услуги»")
     public void step04() {
-        //«Информация для оказания услуги»
         CommonFunctions.printStep();
+
+        //В поле «Город отправителя» выбрать значение из выпадающего списка.
+        //Выбираем «Подольск»
+
+        //В поле «Город назначения» выбрать значение из выпадающего списка.
+        //Выбираем «Харбин»
+
+        //Нажать на кнопку «Вывоз груза с адреса («Первая миля»)»
+
+        //В поле «Адрес» вводим значение «Молодежная улица»
+
+        //В поле «Предполагаемая дата отправления груза» вводим значение «22.10.2022»
 
     }
 
-    @Step("1. Нажать на кнопку «Полный контейнер»\n" +
-            "2. Нажать на кнопку «Добавить +»\n" +
-            "3. Нажать на кнопку «Добавить новую»\n" +
-            "4. В поле «Наименование продукции» вводим значение «Новая Продукция»\n" +
-            "5. В поле «Код ТН ВЭД» выбрать значение из выпадающего списка.\n" +
-            "Выбираем значение «Кофе»\n" +
-            "6. В поле «Вес продукции, кг» вводим значение «16,000»\n" +
-            "7. В поле «Упаковка» выбрать значение из выпадающего списка.\n" +
-            "Выбираем «Барабаны»\n" +
-            "8. Нажать на кнопку «Температурный режим на всю партию (от -30°C до 0°C или от 0°C до +30°C)»\n" +
-            "9. В поле «От» ввести значение «-15»\n" +
-            "10. В поле «До» ввести значение «+27»\n" +
-            "11. В поле «Количество контейнеров» вводим значение «16»\n" +
-            "12. В поле «Тип контейнера» выбрать значение из выпадающего списка.\n" +
-            "Выбираем «Специализированный»\n" +
-            "13. Нажать на кнопку «Сохранить»")
+    @Step("Заполнить область «Информация о грузе»")
     public void step05() {
-        //«Информация о грузе»
         CommonFunctions.printStep();
+
+        //Нажать на кнопку «Полный контейнер»
+
+        //Нажать на кнопку «Добавить +»
+
+        //Нажать на кнопку «Добавить новую»
+
+        //В поле «Наименование продукции» вводим значение «Новая Продукция»
+
+        //В поле «Код ТН ВЭД» выбрать значение из выпадающего списка.
+        //Выбираем значение «Кофе»
+
+        //В поле «Вес продукции, кг» вводим значение «16,000»
+
+        //В поле «Упаковка» выбрать значение из выпадающего списка.
+        //Выбираем «Барабаны»
+
+        //Нажать на кнопку «Температурный режим на всю партию (от -30°C до 0°C или от 0°C до +30°C)»
+
+        //В поле «От» ввести значение «-15»
+
+        //В поле «До» ввести значение «+27»
+
+        //В поле «Количество контейнеров» вводим значение «16»
+
+        //В поле «Тип контейнера» выбрать значение из выпадающего списка.
+
+        //Выбираем «Специализированный»
+
+        //Нажать на кнопку «Сохранить»
 
     }
 
-    @Step("1. В поле «Наименование грузополучателя» вводим значение Ss-password\n" +
-            "2. В поле «Страна» вводим значение «USA»\n" +
-            "3. В поле «Город» вводим значение «Moscow»\n" +
-            "4. В поле «Дом» вводим значение «Ff»\n" +
-            "5. В поле «Регион» вводим значение «St-Peterburg»\n" +
-            "6. В поле «Район» вводим значение «Raion»\n" +
-            "7. В поле «Улица» вводим значение «Lenina street»\n" +
-            "8. В поле «Регистрационный номер грузополучателя» вводим значение «223 22 44 2»\n" +
-            "9. В поле «Телефон» вводим значение «+79999999999»\n" +
-            "10. В поле «Представитель грузополучателя» вводим значение «Moscow disco rule»\n" +
-            "11. В поле «Email» вводим значение «www@mail.ru»")
+    @Step("Заполнить область «Информация о грузополучателе»")
     public void step06() {
-        //«Информация о грузополучателе»
         CommonFunctions.printStep();
+
+        //В поле «Наименование грузополучателя» вводим значение Ss-password
+
+        //В поле «Страна» вводим значение «USA»
+
+        //В поле «Город» вводим значение «Moscow»
+
+        //В поле «Дом» вводим значение «Ff»
+
+        //В поле «Регион» вводим значение «St-Peterburg»
+
+        //В поле «Район» вводим значение «Raion»
+
+        //В поле «Улица» вводим значение «Lenina street»
+
+        //В поле «Регистрационный номер грузополучателя» вводим значение «223 22 44 2»
+
+        //В поле «Телефон» вводим значение «+79999999999»
+
+        //В поле «Представитель грузополучателя» вводим значение «Moscow disco rule»
+
+        //В поле «Email» вводим значение «www@mail.ru»
 
     }
 
 
-    @Step("1. Нажать на кнопку «Вывоз груза с адреса («Первая миля»)»\n" +
-            "2. Нажать на кнопку «Таможенное оформление»\n" +
-            "3. Выбрать одно из значений «РЭЦ» или «РЖД Логистика».\n" +
-            "Выбираем «РЭЦ»\n" +
-            "4. Нажать на кнопку «Оформление ветеринарного сертификата»\n" +
-            "5. Выбрать одно из значений «РЭЦ» или «РЖД Логистика».\n" +
-            "Выбираем «РЭЦ»\n" +
-            "6. Нажать на кнопку «Оформление фитосанитарного сертификата»\n" +
-            "7. Выбрать одно из значений «РЭЦ» или «РЖД Логистика».\n" +
-            "Выбираем «РЭЦ»\n" +
-            "8. Нажать на кнопку «Далее», для перехода на следующий шаг")
+    @Step("Заполнить область «Дополнительные услуги»")
     public void step07() {
-        //«Дополнительные услуги»
         CommonFunctions.printStep();
 
+        //Нажать на кнопку «Вывоз груза с адреса («Первая миля»)»
+
+        //Нажать на кнопку «Таможенное оформление»
+
+        //Выбрать одно из значений «РЭЦ» или «РЖД Логистика».
+        //Выбираем «РЭЦ»
+
+        //Нажать на кнопку «Оформление ветеринарного сертификата»
+
+        //Выбрать одно из значений «РЭЦ» или «РЖД Логистика».
+        //Выбираем «РЭЦ»
+
+        //Нажать на кнопку «Оформление фитосанитарного сертификата»
+
+        //Выбрать одно из значений «РЭЦ» или «РЖД Логистика».
+        //Выбираем «РЭЦ»
+
+        //Нажать на кнопку «Далее», для перехода на следующий шаг
+
+    }
+
+    private void login(String login, String password) {
+        $(By.name("username")).sendKeys(login);
+        $(By.name("password")).sendKeys(password);
+        $x("//button//*[text()='Войти']").click();
+    }
+
+    public void waitForLoading(int maxWaitSeconds) {
+        while ($x("//*[contains(@class, 'preloader') or contains(@class,'spinner')]").isDisplayed()) {
+            System.out.println("Ожидание обработки запроса...");
+            $x("//*[contains(@class, 'preloader') or contains(@class,'spinner')]")
+                    .shouldBe(Condition.not(Condition.visible), Duration.ofSeconds(maxWaitSeconds));
+        }
+    }
+
+    public void inputValueInBlock(String block, String field, String value) {
+        String xpathToField = "//div[text() = '" + block + "']/ancestor::div[contains(@class, 'WithExpansionPanel')]/descendant::div[descendant::*[text() = '" + field + "']]/following-sibling::div//input";
+
+        executeJavaScript("arguments[0].scrollIntoView();", $x(xpathToField));
+        $x(xpathToField)
+                .shouldBe(Condition.visible)
+                .setValue(value);
+    }
+
+    public void refreshTab(String expectedXpath, int times) {
+        for (int i = 0; i < times; i++) {
+            if($x(expectedXpath).isDisplayed()) {
+                break;
+            }
+            System.out.println("Refreshing");
+            refresh();
+            CommonFunctions.wait(1);
+        }
     }
 
 }
