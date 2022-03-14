@@ -14,7 +14,7 @@ import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import static com.codeborne.selenide.Selenide.*;
 
-
+@Deprecated
 public abstract class Page {
 
     public Page() {
@@ -528,7 +528,7 @@ public abstract class Page {
         String element = "//*[text() = '" + nameBlock + "']/ancestor::div[1]//following::button" +
                 "[contains(normalize-space(), '" + nameButton + "') or contains(@title, '" + nameButton + "')]";
         CommonFunctions.waitForElementDisplayed(By.xpath(element),60, false);
-        $(By.xpath(element)).waitUntil(Condition.exist,120*1000);
+        $(By.xpath(element)).shouldBe(Condition.exist,Duration.ofSeconds(120*1000));
         $(By.xpath(element)).click();
         waitForLoading(defaultWaitForLoadingTime);
         return this;

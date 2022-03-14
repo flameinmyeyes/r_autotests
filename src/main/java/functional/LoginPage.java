@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverRunner.url;
 
+@Deprecated
 public class LoginPage {
 
     /* Методы для работы со страницей авторизации */

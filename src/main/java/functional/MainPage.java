@@ -9,12 +9,13 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.io.File;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Map;
 
 import static com.codeborne.selenide.Selenide.*;
 
-
+@Deprecated
 public class MainPage extends Page {
 
     /* Методы для работы с главной страницей */
@@ -43,7 +44,7 @@ public class MainPage extends Page {
                 elem = "//span[text()='" + previousTab + "']/ancestor::tr/following::span[text()='" + tab + "'][1]";
             }
 //            CommonFunctions.waitForElementDisplayed(By.xpath(elem), 30);
-            $(By.xpath(elem)).waitUntil(Condition.visible, 30 * 1000);
+            $(By.xpath(elem)).shouldBe(Condition.visible, Duration.ofSeconds(30 * 1000));
             CommonFunctions.wait(0.5);
             $(By.xpath(elem)).click();
             previousTab = tab;
