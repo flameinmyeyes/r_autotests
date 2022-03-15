@@ -21,8 +21,8 @@ public class DriverInit {
 
     public void driverConfiguration(String runMode, List<File> pluginsList, String testName) {
 
-        ChromeOptions options = new ChromeOptions();
-        DesiredCapabilities capabilities = new DesiredCapabilities();
+        ChromeOptions chromeOptions = new ChromeOptions();
+        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
 
         System.out.println((char) 27 + "[40m" + "Режим запуска: " + runMode + (char) 27 + "[0m");
         System.out.println((char) 27 + "[40m" + "Имя теста: " + testName + (char) 27 + "[0m");
@@ -30,8 +30,8 @@ public class DriverInit {
         switch (runMode) {
             case ("local"):
                 //плагины
-//                options.addExtensions(pluginsList);
-                browserCapabilities.setCapability(ChromeOptions.CAPABILITY, options);
+//                chromeOptions.addExtensions(pluginsList);
+                browserCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
 
                 //настройки браузера
                 browser = CHROME;
@@ -47,36 +47,36 @@ public class DriverInit {
 
             case ("docker"):
                 //плагины
-//                options.addExtensions(pluginsList);
+//                chromeOptions.addExtensions(pluginsList);
 
                 //папка для скачивания
                 Map<String, Object> prefs = new HashMap<String, Object>();
                 prefs.put("download.default_directory", "/share/files_for_tests/downloads");
                 prefs.put("profile.default_content_settings.popups", 0);
                 prefs.put("download.directory_upgrade", true);
-                options.setExperimentalOption("prefs", prefs);
-                browserCapabilities.setCapability(ChromeOptions.CAPABILITY, options);
+                chromeOptions.setExperimentalOption("prefs", prefs);
+                browserCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
 
                 //настройки браузера
-                capabilities.merge(options);
-                capabilities.setCapability("browserName", "chrome");
-                capabilities.setCapability("browserVersion", "85_cryptopro_csp");
-//                capabilities.setCapability("browserVersion", "93.0");
+                desiredCapabilities.merge(chromeOptions);
+                desiredCapabilities.setCapability("browserName", "chrome");
+                desiredCapabilities.setCapability("browserVersion", "85_cryptopro_csp");
+//                desiredCapabilities.setCapability("browserVersion", "93.0");
 
-//                capabilities.setCapability("enableVNC",true); //было раньше
-//                capabilities.setCapability("enableVideo",true); //было раньше
+//                desiredCapabilities.setCapability("enableVNC",true); //было раньше
+//                desiredCapabilities.setCapability("enableVideo",true); //было раньше
                 Map<String, Object> selenoid_options = new HashMap<String, Object>();
                 selenoid_options.put("enableVNC", true);
                 selenoid_options.put("enableVideo", false);
-                capabilities.setCapability("selenoid:options", selenoid_options);
+                desiredCapabilities.setCapability("selenoid:chromeOptions", selenoid_options);
 
-                capabilities.setCapability("name", testName); //передача имени теста в селеноид
-                capabilities.setCapability("takesScreenshot",true);
-                browserCapabilities = capabilities;
+                desiredCapabilities.setCapability("name", testName); //передача имени теста в селеноид
+                desiredCapabilities.setCapability("takesScreenshot",true);
+                browserCapabilities = desiredCapabilities;
 
                 //создание удаленного браузера
                 try {
-                    remoteWebDriver = new RemoteWebDriver(URI.create("http://eb-test-allure.otr.ru:4444/wd/hub/").toURL(), capabilities);
+                    remoteWebDriver = new RemoteWebDriver(URI.create("http://eb-test-allure.otr.ru:4444/wd/hub/").toURL(), desiredCapabilities);
                 } catch (Exception e) {}
                 WebDriverRunner.setWebDriver(remoteWebDriver);
                 remoteWebDriver.manage().window().maximize();
