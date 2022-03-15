@@ -151,7 +151,16 @@ public class GUIFunctions {
     }
 
     /**
-     * Кликнуть по кнопке в области
+     * Кликнуть по кнопке (по тексту)
+     * @param buttonText - текст
+     */
+    public GUIFunctions clickButton(String buttonText) {
+        clickWebElement("//*[text()='" + buttonText + "']");
+        return this;
+    }
+
+    /**
+     * Кликнуть по кнопке в области (по тексту)
      * @param area - область
      * @param buttonText - текст
      */
@@ -168,8 +177,8 @@ public class GUIFunctions {
      * @param value - значение
      */
     public GUIFunctions inputValueInArea(String area, String field, String value) {
-        String inputXpath = "//*[text() = '" + area +
-                "']/ancestor::div[contains(@class, 'container')][1]/descendant::div[descendant::*[text() = '" + field + "'] and descendant::input][last()]//input";
+        String inputXpath = "//*[text() = '" + area + "']/ancestor::div[contains(@class, 'container')][1]" +
+                "/descendant::div[descendant::*[text() = '" + field + "'] and descendant::input][last()]//input";
 //
 //        executeJavaScript("arguments[0].scrollIntoView();", $x(xpathToField));
 //        $x(xpathToField)
@@ -205,7 +214,7 @@ public class GUIFunctions {
     }
 
     /**
-     * Ввести значение в поле области
+     * Выбрать значение из выпадающего списка области
      * @param area - область
      * @param field - поле
      * @param value - значение
@@ -231,8 +240,61 @@ public class GUIFunctions {
      * Установить чекбокс в поле области
      * @param area - область
      * @param field - поле
+     * @param isCheckboxOn - значение чекбокса
      */
     public GUIFunctions setCheckboxInArea(String area, String field, boolean isCheckboxOn) {
+        String checkboxAreaXpath = "//*[text()='" + area + "']" +
+                "/ancestor::*[contains(@class, 'container')][1]//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
+        String checkboxXpath = checkboxAreaXpath + "//div[contains(@class,'checkMark')]";
+
+        if(isCheckboxOn) {
+            if ($x(checkboxAreaXpath + "//div[contains(@class,'checked')]/div").exists()) {
+                System.out.println("Параметр «" + field + "» уже был включен");
+            } else {
+                $x(checkboxXpath).scrollIntoView(false);
+                $x(checkboxXpath).click();
+            }
+            // В поле корректно отображается введенное значение
+//            Assert.assertTrue($x(checkboxAreaXpath + "//div[contains(@class,'checked')]").exists());
+        } else {
+            if ($x(checkboxAreaXpath + "//div[contains(@class,'checked')]/div").exists()) {
+                $x(checkboxXpath).scrollIntoView(false);
+                $x(checkboxXpath).click();
+            } else {
+                System.out.println("Параметр «" + field + "» уже был выключен");
+            }
+            // В поле корректно отображается введенное значение
+//            Assert.assertTrue($x(checkboxAreaXpath + "//div[count(contains(@class,'checked'))=0]").exists());
+        }
+
+        //Нет сообщений об ошибке
+//        Assert.assertFalse($x(checkboxAreaXpath + "//span[contains(@class, 'error')]").exists());
+
+        return this;
+    }
+
+    /**
+     * Установить чекбокс под чекбоксом в поле области
+     * @param area - область
+     * @param parentCheckbox - родительский чекбокс
+     * @param Radiobutton - радиокнопка
+=     */
+    public GUIFunctions setRadiobuttonUnderСheckboxInArea(String area, String parentCheckbox, String Radiobutton) {
+        String radiobuttonXpath = "//*[text()='" + area + "']/ancestor::div[contains(@class, 'WithExpansionPanel')]" +
+                "//div[contains(@class, 'WithExpansionPanel')]/div[descendant::*[text()='" + parentCheckbox +"']]" +
+                "/following-sibling::div[descendant::*[contains(text(), '" + Radiobutton + "')]][1]//div[contains(@class,'checkMark')]";
+
+        $x(radiobuttonXpath).click();
+
+        return this;
+    }
+
+    /**
+     * Установить радиокнопку в поле области
+     * @param area - область
+     * @param field - поле
+     */
+    public GUIFunctions setRadiobuttonInArea(String area, String field, boolean isCheckboxOn) {
         String checkboxAreaXpath = "//*[text()='" + area + "']" +
                 "/ancestor::*[contains(@class, 'container')][1]//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
         String checkboxXpath = checkboxAreaXpath + "//div[contains(@class,'checkMark')]";
