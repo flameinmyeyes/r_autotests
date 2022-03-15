@@ -144,7 +144,7 @@ public class GUIFunctions {
      */
     public GUIFunctions clickWebElement(String xpath) {
         $x(xpath).shouldBe(Condition.exist, Duration.ofSeconds(defaultWaitingTime));
-        executeJavaScript("arguments[0].scrollIntoView();", $x(xpath));
+//        executeJavaScript("arguments[0].scrollIntoView();", $x(xpath));
         $x(xpath).click();
 
         return this;
@@ -168,22 +168,32 @@ public class GUIFunctions {
      * @param value - значение
      */
     public GUIFunctions inputValueInArea(String area, String field, String value) {
-        String inputAreaXpath = "//*[text()='" + area + "']" +
-                "/ancestor::*[contains(@class, 'container')][1]//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
-        String inputXpath = "";
+        String inputXpath = "//*[text() = '" + area +
+                "']/ancestor::div[contains(@class, 'container')][1]/descendant::div[descendant::*[text() = '" + field + "'] and descendant::input][last()]//input";
+//
+//        executeJavaScript("arguments[0].scrollIntoView();", $x(xpathToField));
+//        $x(xpathToField)
+//                .shouldBe(Condition.visible)
+//                .setValue(value);
+//
+//        Assert.assertEquals($x(xpathToField).getValue(), value);
 
-        int n = 1;
-        while (n < 10) {
-            inputXpath = inputAreaXpath + "//input[preceding::*[" + n + "][text()='" + field + "']]";
-            CommonFunctions.wait(1);
-            if ($x(inputXpath).exists())
-                break;
-            if (n == 0)
-                Assert.fail("Не найден элемент {By.xpath: " + inputXpath + "}");
-            n++;
-        }
+//        String inputAreaXpath = "//*[text()='" + area + "']" +
+//                "/ancestor::*[contains(@class, 'container')][1]//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
+//        String inputXpath = "";
+//
+//        int n = 1;
+//        while (n < 10) {
+//            inputXpath = inputAreaXpath + "//input[preceding::*[" + n + "][text()='" + field + "']]";
+//            CommonFunctions.wait(1);
+//            if ($x(inputXpath).exists())
+//                break;
+//            if (n == 0)
+//                Assert.fail("Не найден элемент {By.xpath: " + inputXpath + "}");
+//            n++;
+//        }
 
-        $x(inputXpath).scrollIntoView(false);
+//        $x(inputXpath).scrollIntoView(false);
         $x(inputXpath).sendKeys(value);
 
         //В поле корректно отображается введенное значение
@@ -202,10 +212,10 @@ public class GUIFunctions {
      */
     public GUIFunctions selectValueFromDropdownInArea(String area, String field, String value) {
         String fieldXpath = "//*[text() = '" + area + "']" +
-                "/ancestor::div[contains(@class, 'WithExpansionPanel') and descendant::*[text() = '" + field + "']]" +
+                "/ancestor::div[(contains(@class, 'WithExpansionPanel') or contains(@class, 'Modal_wrapper')) and descendant::*[text() = '" + field + "']]" +
                 "/descendant::div[descendant::*[text() = '" + field + "'] and descendant::input][last()]//input";
         String valueXpath = "//*[text() = '" + area + "']" +
-                "/ancestor::div[contains(@class, 'WithExpansionPanel') and descendant::*[text() = '" + field + "']]" +
+                "/ancestor::div[(contains(@class, 'WithExpansionPanel') or contains(@class, 'Modal_wrapper')) and descendant::*[text() = '" + field + "']]" +
                 "/descendant::div[descendant::*[text() = '" + field + "'] and descendant::input][last()]//*[contains(text(), '" + value + "')]";
 
         clickWebElement(fieldXpath);
