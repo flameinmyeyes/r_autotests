@@ -27,18 +27,17 @@ public class GUIFunctions {
      * @param password  - пароль
      */
     public GUIFunctions authorization(String login, String password) {
-        String loginLocator = "//input[@name='username']";
-        String passwordLocator = "//input[@name='password']";
-        String buttonOk = "//button[@id='submit']";
+        String loginXpath = "//input[@name='username']";
+        String passwordXpath = "//input[@name='password']";
+        String submitButtonXpath = "//button[@id='submit']";
 
-        waitForElementDisplayed(loginLocator, defaultWaitingTime, false);
-        $x(loginLocator).sendKeys(login);
+        waitForElementDisplayed(loginXpath, defaultWaitingTime, false);
+        $x(loginXpath).sendKeys(login);
 
-        waitForElementDisplayed(passwordLocator, defaultWaitingTime, false);
-        $x(passwordLocator).sendKeys(password);
+        waitForElementDisplayed(passwordXpath, defaultWaitingTime, false);
+        $x(passwordXpath).sendKeys(password);
 
-        waitForElementDisplayed(buttonOk, defaultWaitingTime, false);
-        $x(buttonOk).click();
+        clickWebElement(submitButtonXpath);
 
         waitForLoading(defaultWaitingTime);
 
@@ -83,10 +82,10 @@ public class GUIFunctions {
 
     /**
      * Подсветка элемента (выделение границ элемента)
-     * @param locator - локатор
+     * @param xpath - локатор
      */
-    private void highlightSelenideElement(String locator) {
-        SelenideElement element = $x(locator);
+    private void highlightSelenideElement(String xpath) {
+        SelenideElement element = $x(xpath);
         for (int i = 0; i < 1; i++) {
             executeJavaScript("arguments[0].style.border='2px solid red'", element);
             CommonFunctions.wait(0.15);
@@ -114,10 +113,7 @@ public class GUIFunctions {
 
     public GUIFunctions selectTab(String tabName) {
         String tabXpath = "//li[@data-name = '" + tabName + "']";
-
         clickWebElement(tabXpath);
-
-//        waitForLoading(defaultWaitingTime);
         return this;
     }
 
@@ -129,7 +125,6 @@ public class GUIFunctions {
         $x(searchFieldXpath).sendKeys(value);
         $x(searchFieldXpath).pressEnter();
 
-//        waitForLoading(defaultWaitingTime);
         return this;
     }
 
@@ -138,8 +133,8 @@ public class GUIFunctions {
                 "//following-sibling::div//descendant::*[contains(text(), '" + buttonName + "')]";
 
         clickWebElement(searchResultXpath);
-
         waitForLoading(defaultWaitingTime);
+
         return this;
     }
 
@@ -152,7 +147,17 @@ public class GUIFunctions {
         executeJavaScript("arguments[0].scrollIntoView();", $x(xpath));
         $x(xpath).click();
 
-//        waitForLoading(defaultWaitingTime);
+        return this;
+    }
+
+    /**
+     * Кликнуть по кнопке в области
+     * @param area - область
+     * @param buttonText - текст
+     */
+    public GUIFunctions clickButtonInArea(String area, String buttonText) {
+        clickWebElement("//*[text()='" + area + "']" +
+                "/ancestor::*[contains(@class, 'container')][1]//*[text()='" + buttonText + "']");
         return this;
     }
 
@@ -163,27 +168,51 @@ public class GUIFunctions {
      * @param value - значение
      */
     public GUIFunctions inputValueInArea(String area, String field, String value) {
-        String inputAreaXPath = "//*[text()='" + area + "']/ancestor::div[not(@class)][1]//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
-        String inputXPath = "";
-        int n = 1;
+        String inputAreaXpath = "//*[text()='" + area + "']" +
+                "/ancestor::*[contains(@class, 'container')][1]//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
+        String inputXpath = "";
 
+        int n = 1;
         while (n < 10) {
-            inputXPath = inputAreaXPath + "//input[preceding::*[" + n + "][text()='" + field + "']]";
+            inputXpath = inputAreaXpath + "//input[preceding::*[" + n + "][text()='" + field + "']]";
             CommonFunctions.wait(1);
-            if ($x(inputXPath).exists())
+            if ($x(inputXpath).exists())
                 break;
             if (n == 0)
-                Assert.fail("Не найден элемент {By.xpath: " + inputXPath + "}");
+                Assert.fail("Не найден элемент {By.xpath: " + inputXpath + "}");
             n++;
         }
 
-        $x(inputXPath).scrollIntoView(false);
-        $x(inputXPath).sendKeys(value);
+        $x(inputXpath).scrollIntoView(false);
+        $x(inputXpath).sendKeys(value);
 
-        // В поле корректно отображается введенное значение
-        Assert.assertEquals($x(inputXPath).getValue(), value);
-        // Нет сообщений об ошибке
-        Assert.assertFalse($x(inputAreaXPath + "//span[contains(@class, 'error')]").exists());
+        //В поле корректно отображается введенное значение
+//        Assert.assertEquals($x(inputXpath).getValue(), value);
+        //Нет сообщений об ошибке
+//        Assert.assertFalse($x(inputAreaXpath + "//span[contains(@class, 'error')]").exists());
+
+        return this;
+    }
+
+    /**
+     * Ввести значение в поле области
+     * @param area - область
+     * @param field - поле
+     * @param value - значение
+     */
+    public GUIFunctions selectValueFromDropdownInArea(String area, String field, String value) {
+        String fieldXpath = "//*[text() = '" + area + "']" +
+                "/ancestor::div[contains(@class, 'WithExpansionPanel') and descendant::*[text() = '" + field + "']]" +
+                "/descendant::div[descendant::*[text() = '" + field + "'] and descendant::input][last()]//input";
+        String valueXpath = "//*[text() = '" + area + "']" +
+                "/ancestor::div[contains(@class, 'WithExpansionPanel') and descendant::*[text() = '" + field + "']]" +
+                "/descendant::div[descendant::*[text() = '" + field + "'] and descendant::input][last()]//*[contains(text(), '" + value + "')]";
+
+        clickWebElement(fieldXpath);
+        clickWebElement(valueXpath);
+
+        //В поле корректно отображается введенное значение
+//        Assert.assertEquals($x(fieldXpath).getValue(), value);
 
         return this;
     }
@@ -194,7 +223,8 @@ public class GUIFunctions {
      * @param field - поле
      */
     public GUIFunctions setCheckboxInArea(String area, String field, boolean isCheckboxOn) {
-        String checkboxAreaXpath = "//*[text()='" + area + "']/ancestor::div[not(@class)][1]//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
+        String checkboxAreaXpath = "//*[text()='" + area + "']" +
+                "/ancestor::*[contains(@class, 'container')][1]//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
         String checkboxXpath = checkboxAreaXpath + "//div[contains(@class,'checkMark')]";
 
         if(isCheckboxOn) {
@@ -205,7 +235,7 @@ public class GUIFunctions {
                 $x(checkboxXpath).click();
             }
             // В поле корректно отображается введенное значение
-            Assert.assertTrue($x(checkboxAreaXpath + "//div[contains(@class,'checked')]").exists());
+//            Assert.assertTrue($x(checkboxAreaXpath + "//div[contains(@class,'checked')]").exists());
         } else {
             if ($x(checkboxAreaXpath + "//div[contains(@class,'checked')]/div").exists()) {
                 $x(checkboxXpath).scrollIntoView(false);
@@ -214,12 +244,14 @@ public class GUIFunctions {
                 System.out.println("Параметр «" + field + "» уже был выключен");
             }
             // В поле корректно отображается введенное значение
-            Assert.assertTrue($x(checkboxAreaXpath + "//div[count(contains(@class,'checked'))=0]").exists());
+//            Assert.assertTrue($x(checkboxAreaXpath + "//div[count(contains(@class,'checked'))=0]").exists());
         }
-        // Нет сообщений об ошибке
-        Assert.assertFalse($x(checkboxAreaXpath + "//span[contains(@class, 'error')]").exists());
+
+        //Нет сообщений об ошибке
+//        Assert.assertFalse($x(checkboxAreaXpath + "//span[contains(@class, 'error')]").exists());
 
         return this;
     }
+
 
 }
