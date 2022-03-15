@@ -1,6 +1,7 @@
 package ru.exportcenter.uidm_dev;
 
 import framework.RunTestAgain;
+import framework.Ways;
 import functional.CommonFunctions;
 import functional.GUIFunctions;
 import io.qameta.allure.Description;
@@ -13,9 +14,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class Test_03_07_03 extends Hooks_UIDM_DEV {
 
-//    private String WAY_TEST = Ways.TSE_DEMO_28080.getWay() + "\\FUN_02\\BP_016\\FUN_02_BP_016_NSI_016_PZ_2_7_2_1\\";
-
-//    private GUIFunctions guiFunctions = new GUIFunctions();
+//    private String WAY_TEST = Ways.UIDM_DEV.getWay() + "\\FUN_02\\BP_016\\FUN_02_BP_016_NSI_016_PZ_2_7_2_1\\";
 
     @Owner(value="Балашов Илья")
     @Description("NSI_016. ПЗ п. 2.7.2. ТК №1 Проверка создания нового документа")
@@ -92,14 +91,14 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
     public void step04() {
         CommonFunctions.printStep();
 
-        //В поле «Город отправителя» выбрать значение из выпадающего списка.        //Выбираем «Подольск»
-        //В поле «Город назначения» выбрать значение из выпадающего списка.        //Выбираем «Харбин»
+        //В поле «Город отправителя» выбрать значение из выпадающего списка.        //Выбираем «Тула»
+        //В поле «Город назначения» выбрать значение из выпадающего списка.        //Выбираем «Шанхай»
         //Нажать на кнопку «Вывоз груза с адреса («Первая миля»)»
         //В поле «Адрес» вводим значение «Молодежная улица»
         //В поле «Предполагаемая дата отправления груза» вводим значение «22.10.2022»
         new GUIFunctions()
-                .selectValueFromDropdownInArea("Информация для оказания услуги", "Город отправления", "Тула") //!!!
-                .selectValueFromDropdownInArea("Информация для оказания услуги", "Город назначения", "Харбин")
+                .selectValueFromDropdownInArea("Информация для оказания услуги", "Город отправления", "Тула")
+                .selectValueFromDropdownInArea("Информация для оказания услуги", "Город назначения", "Шанхай")
                 .setCheckboxInArea("Информация для оказания услуги", "Вывоз груза с адреса («Первая миля»)", true)
                 .inputValueInArea("Информация для оказания услуги", "Адрес", "Молодежная улица")
                 .inputValueInArea("Информация для оказания услуги", "Предполагаемая дата отправления груза", "22.10.2022");
@@ -131,7 +130,7 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
                 .inputValueInArea("Сведения о продукции", "Наименование продукции", "Новая Продукция")
                 .selectValueFromDropdownInArea("Сведения о продукции", "Код ТН ВЭД", "Кофе")
                 .inputValueInArea("Сведения о продукции", "Вес продукции, кг", "16,000")
-                .selectValueFromDropdownInArea("Сведения о продукции", "Упаковка", "Флекси танки") //!!!
+                .selectValueFromDropdownInArea("Сведения о продукции", "Упаковка", "Ящики 1-5кг")
                 .setCheckboxInArea("Сведения о продукции", "Температурный режим (от -30°C до 0°C или от 0°C до +30°C) ", true)
                 .inputValueInArea("Сведения о продукции", "От", "-15")
                 .inputValueInArea("Сведения о продукции", "До", "+27")
