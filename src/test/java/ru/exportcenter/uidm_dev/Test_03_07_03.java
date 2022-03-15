@@ -1,6 +1,7 @@
 package ru.exportcenter.uidm_dev;
 
 import framework.RunTestAgain;
+import framework.Ways;
 import functional.CommonFunctions;
 import functional.GUIFunctions;
 import io.qameta.allure.Description;
@@ -13,9 +14,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class Test_03_07_03 extends Hooks_UIDM_DEV {
 
-//    private String WAY_TEST = Ways.TSE_DEMO_28080.getWay() + "\\FUN_02\\BP_016\\FUN_02_BP_016_NSI_016_PZ_2_7_2_1\\";
-
-//    private GUIFunctions guiFunctions = new GUIFunctions();
+//    private String WAY_TEST = Ways.UIDM_DEV.getWay() + "\\FUN_02\\BP_016\\FUN_02_BP_016_NSI_016_PZ_2_7_2_1\\";
 
     @Owner(value="Балашов Илья")
     @Description("NSI_016. ПЗ п. 2.7.2. ТК №1 Проверка создания нового документа")
