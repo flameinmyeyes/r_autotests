@@ -57,9 +57,9 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
         //Нажать на кнопку «Продолжить»
         switchTo().window(1);
 
-        if (!$x("//*[contains(text(), 'Продолжить')]").isDisplayed()) {
-            refreshTab("//*[contains(text(), 'Продолжить')]", 5);
-        }
+        new GUIFunctions().waitForLoading(60);
+        refreshTab("//*[contains(text(), 'Продолжить')]", 20);
+
         new GUIFunctions().clickWebElement("//*[contains(text(), 'Продолжить')]");
     }
 
@@ -98,7 +98,7 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
         //В поле «Адрес» вводим значение «Молодежная улица»
         //В поле «Предполагаемая дата отправления груза» вводим значение «22.10.2022»
         new GUIFunctions()
-                .selectValueFromDropdownInArea("Информация для оказания услуги", "Город отправителя", "Подольск")
+                .selectValueFromDropdownInArea("Информация для оказания услуги", "Город отправления", "Тула") //!!!
                 .selectValueFromDropdownInArea("Информация для оказания услуги", "Город назначения", "Харбин")
                 .setCheckboxInArea("Информация для оказания услуги", "Вывоз груза с адреса («Первая миля»)", true)
                 .inputValueInArea("Информация для оказания услуги", "Адрес", "Молодежная улица")
@@ -120,17 +120,24 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
         //В поле «От» ввести значение «-15»
         //В поле «До» ввести значение «+27»
         //В поле «Количество контейнеров» вводим значение «16»
-        //В поле «Тип контейнера» выбрать значение из выпадающего списка.
-        //Выбираем «Специализированный»
+        //В поле «Тип контейнера» выбрать значение из выпадающего списка.        //Выбираем «Специализированный»
         //Нажать на кнопку «Сохранить»
 
         new GUIFunctions()
-                .clickButtonInArea("Информация о грузе", "Полный контейнер")
+//                .clickButtonInArea("Информация о грузе", "Полный контейнер")
                 .clickButtonInArea("Информация о грузе", "Добавить +")
-                .clickButtonInArea("Информация о грузе", "Добавить новую")
-        ;
 
-
+                .clickButtonInArea("Сведения о продукции", "Добавить новую")
+                .inputValueInArea("Сведения о продукции", "Наименование продукции", "Новая Продукция")
+                .selectValueFromDropdownInArea("Сведения о продукции", "Код ТН ВЭД", "Кофе")
+                .inputValueInArea("Сведения о продукции", "Вес продукции, кг", "16,000")
+                .selectValueFromDropdownInArea("Сведения о продукции", "Упаковка", "Флекси танки") //!!!
+                .setCheckboxInArea("Сведения о продукции", "Температурный режим (от -30°C до 0°C или от 0°C до +30°C) ", true)
+                .inputValueInArea("Сведения о продукции", "От", "-15")
+                .inputValueInArea("Сведения о продукции", "До", "+27")
+                .inputValueInArea("Сведения о продукции", "Количество контейнеров", "16")
+                .selectValueFromDropdownInArea("Сведения о продукции", "Тип контейнера", "Специализированный")
+                .clickButtonInArea("Сведения о продукции", "Сохранить");
     }
 
     @Step("Заполнить область «Информация о грузополучателе»")
@@ -179,9 +186,12 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
         new GUIFunctions()
                 .setCheckboxInArea("Дополнительные услуги", "Вывоз груза с адреса («Первая миля»)", true)
                 .setCheckboxInArea("Дополнительные услуги", "Таможенное оформление", true)
+                .setRadiobuttonUnderСheckboxInArea("Дополнительные услуги", "Таможенное оформление", "РЭЦ")
                 .setCheckboxInArea("Дополнительные услуги", "Оформление ветеринарного сертификата", true)
-                .setCheckboxInArea("Дополнительные услуги", "Оформление фитосанитарного сертификата", true);
-
+                .setRadiobuttonUnderСheckboxInArea("Дополнительные услуги", "Оформление ветеринарного сертификата", "РЭЦ")
+                .setCheckboxInArea("Дополнительные услуги", "Оформление фитосанитарного сертификата", true)
+                .setRadiobuttonUnderСheckboxInArea("Дополнительные услуги", "Оформление фитосанитарного сертификата", "РЭЦ")
+                .clickButton("Далее");
     }
 
     private void refreshTab(String expectedXpath, int times) {
