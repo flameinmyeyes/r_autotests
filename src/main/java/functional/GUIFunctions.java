@@ -102,7 +102,7 @@ public class GUIFunctions {
      */
     public GUIFunctions assertNoControlInFieldInArea(String area, String field) {
         String controlFieldXpath = "//*[text() = '" + area + "']/ancestor::div[contains(@class, 'container')][1]" +
-                "/descendant::div[descendant::*[text() = '" + field + "'] and descendant::input][last()]//span[contains(@class, 'error')]";
+                "/descendant::div[descendant::*[text() = '" + field + "'] and descendant::input][last()]//span[contains(@class, 'error') and . !='']";
 
         Assert.assertFalse($x(controlFieldXpath).isDisplayed());
 
