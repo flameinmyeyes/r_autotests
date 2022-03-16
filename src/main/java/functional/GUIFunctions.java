@@ -81,6 +81,35 @@ public class GUIFunctions {
     }
 
     /**
+     * Проверить значение поля в области
+     * @param area - область
+     * @param field - родительский чекбокс
+     * @param value - радиокнопка
+     */
+    public GUIFunctions assertValueInFieldInArea(String area, String field, String value) {
+        String inputXpath = "//*[text() = '" + area + "']/ancestor::div[contains(@class, 'container')][1]" +
+                "/descendant::div[descendant::*[text() = '" + field + "'] and descendant::input][last()]//input";
+
+        Assert.assertEquals($x(inputXpath).getValue(), value);
+
+        return this;
+    }
+
+    /**
+     * Проверить НЕотображение контроля в поле области
+     * @param area - область
+     * @param field - поле
+     */
+    public GUIFunctions assertNoControlInFieldInArea(String area, String field) {
+        String controlFieldXpath = "//*[text() = '" + area + "']/ancestor::div[contains(@class, 'container')][1]" +
+                "/descendant::div[descendant::*[text() = '" + field + "'] and descendant::input][last()]//span[contains(@class, 'error')]";
+
+        Assert.assertFalse($x(controlFieldXpath).isDisplayed());
+
+        return this;
+    }
+
+    /**
      * Подсветка элемента (выделение границ элемента)
      * @param xpath - локатор
      */
@@ -144,7 +173,6 @@ public class GUIFunctions {
      */
     public GUIFunctions clickWebElement(String xpath) {
         $x(xpath).shouldBe(Condition.exist, Duration.ofSeconds(defaultWaitingTime));
-//        executeJavaScript("arguments[0].scrollIntoView();", $x(xpath));
         $x(xpath).click();
 
         return this;
@@ -179,36 +207,12 @@ public class GUIFunctions {
     public GUIFunctions inputValueInArea(String area, String field, String value) {
         String inputXpath = "//*[text() = '" + area + "']/ancestor::div[contains(@class, 'container')][1]" +
                 "/descendant::div[descendant::*[text() = '" + field + "'] and descendant::input][last()]//input";
-//
-//        executeJavaScript("arguments[0].scrollIntoView();", $x(xpathToField));
-//        $x(xpathToField)
-//                .shouldBe(Condition.visible)
-//                .setValue(value);
-//
-//        Assert.assertEquals($x(xpathToField).getValue(), value);
-
-//        String inputAreaXpath = "//*[text()='" + area + "']" +
-//                "/ancestor::*[contains(@class, 'container')][1]//*[text()='" + field + "']/ancestor::div[not(@class)][1]";
-//        String inputXpath = "";
-//
-//        int n = 1;
-//        while (n < 10) {
-//            inputXpath = inputAreaXpath + "//input[preceding::*[" + n + "][text()='" + field + "']]";
-//            CommonFunctions.wait(1);
-//            if ($x(inputXpath).exists())
-//                break;
-//            if (n == 0)
-//                Assert.fail("Не найден элемент {By.xpath: " + inputXpath + "}");
-//            n++;
-//        }
-
-//        $x(inputXpath).scrollIntoView(false);
         $x(inputXpath).sendKeys(value);
 
         //В поле корректно отображается введенное значение
-//        Assert.assertEquals($x(inputXpath).getValue(), value);
+        assertValueInFieldInArea(area, field, value);
         //Нет сообщений об ошибке
-//        Assert.assertFalse($x(inputAreaXpath + "//span[contains(@class, 'error')]").exists());
+        assertNoControlInFieldInArea(area, field);
 
         return this;
     }
@@ -231,7 +235,9 @@ public class GUIFunctions {
         clickWebElement(valueXpath);
 
         //В поле корректно отображается введенное значение
-//        Assert.assertEquals($x(fieldXpath).getValue(), value);
+        assertValueInFieldInArea(area, field, value);
+        //Нет сообщений об ошибке
+        assertNoControlInFieldInArea(area, field);
 
         return this;
     }
@@ -251,14 +257,12 @@ public class GUIFunctions {
             if ($x(checkboxAreaXpath + "//div[contains(@class,'checked')]/div").exists()) {
                 System.out.println("Параметр «" + field + "» уже был включен");
             } else {
-                $x(checkboxXpath).scrollIntoView(false);
                 $x(checkboxXpath).click();
             }
             // В поле корректно отображается введенное значение
 //            Assert.assertTrue($x(checkboxAreaXpath + "//div[contains(@class,'checked')]").exists());
         } else {
             if ($x(checkboxAreaXpath + "//div[contains(@class,'checked')]/div").exists()) {
-                $x(checkboxXpath).scrollIntoView(false);
                 $x(checkboxXpath).click();
             } else {
                 System.out.println("Параметр «" + field + "» уже был выключен");
@@ -283,7 +287,6 @@ public class GUIFunctions {
         String radiobuttonXpath = "//*[text()='" + area + "']/ancestor::div[contains(@class, 'WithExpansionPanel')]" +
                 "//div[contains(@class, 'WithExpansionPanel')]/div[descendant::*[text()='" + parentCheckbox +"']]" +
                 "/following-sibling::div[descendant::*[contains(text(), '" + Radiobutton + "')]][1]//div[contains(@class,'checkMark')]";
-
         $x(radiobuttonXpath).click();
 
         return this;
@@ -303,14 +306,12 @@ public class GUIFunctions {
             if ($x(checkboxAreaXpath + "//div[contains(@class,'checked')]/div").exists()) {
                 System.out.println("Параметр «" + field + "» уже был включен");
             } else {
-                $x(checkboxXpath).scrollIntoView(false);
                 $x(checkboxXpath).click();
             }
             // В поле корректно отображается введенное значение
 //            Assert.assertTrue($x(checkboxAreaXpath + "//div[contains(@class,'checked')]").exists());
         } else {
             if ($x(checkboxAreaXpath + "//div[contains(@class,'checked')]/div").exists()) {
-                $x(checkboxXpath).scrollIntoView(false);
                 $x(checkboxXpath).click();
             } else {
                 System.out.println("Параметр «" + field + "» уже был выключен");
