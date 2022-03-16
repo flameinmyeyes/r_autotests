@@ -5,21 +5,16 @@ import framework.RunTestAgain;
 import framework.Ways;
 import functional.CommonFunctions;
 import functional.GUIFunctions;
-import functional.LoginPage;
-import functional.MainPage;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
-import org.openqa.selenium.By;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.otr.eb_tse_demo_ufos_28080.HooksTSE_DEMO_28080;
 
 import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.WebDriverConditions.url;
 
 public class Test_03_07_02 extends Hooks_UIDM_DEV {
 
