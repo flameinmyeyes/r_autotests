@@ -28,7 +28,7 @@ public class Hooks_UIDM_DEV implements HooksInterface {
 
         //плагины
         List<File> pluginsList = new ArrayList<>();
-//        pluginsList.add(new File(setWay("drivers\\CryptoPro.crx")));
+        pluginsList.add(new File(setWay("drivers\\CryptoPro.crx")));
 //        pluginsList.add(new File(setWay("drivers\\ModHeader.crx")));
 
         //инициализируем драйвер
