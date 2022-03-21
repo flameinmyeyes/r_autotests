@@ -30,12 +30,12 @@ public class DriverInit {
         switch (runMode) {
             case ("local"):
                 //плагины
-//                chromeOptions.addExtensions(pluginsList);
+                chromeOptions.addExtensions(pluginsList);
                 browserCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
 
                 //настройки браузера
                 browser = CHROME;
-//                browserVersion = "85";
+                browserVersion = "91";
                 startMaximized = true;
 //                downloadsFolder = "Z:\\files_for_tests\\downloads";
                 headless = false;
@@ -47,7 +47,7 @@ public class DriverInit {
 
             case ("docker"):
                 //плагины
-//                chromeOptions.addExtensions(pluginsList);
+                chromeOptions.addExtensions(pluginsList);
 
                 //папка для скачивания
                 Map<String, Object> prefs = new HashMap<String, Object>();
@@ -60,23 +60,16 @@ public class DriverInit {
                 //настройки браузера
                 desiredCapabilities.merge(chromeOptions);
                 desiredCapabilities.setCapability("browserName", "chrome");
-                desiredCapabilities.setCapability("browserVersion", "85_cryptopro_csp");
-//                desiredCapabilities.setCapability("browserVersion", "93.0");
-
-//                desiredCapabilities.setCapability("enableVNC",true); //было раньше
-//                desiredCapabilities.setCapability("enableVideo",true); //было раньше
-                Map<String, Object> selenoid_options = new HashMap<String, Object>();
-                selenoid_options.put("enableVNC", true);
-                selenoid_options.put("enableVideo", false);
-                desiredCapabilities.setCapability("selenoid:chromeOptions", selenoid_options);
-
+                desiredCapabilities.setCapability("browserVersion", "91.0");
+                desiredCapabilities.setCapability("enableVNC",true);
+                desiredCapabilities.setCapability("enableVideo",true);
                 desiredCapabilities.setCapability("name", testName); //передача имени теста в селеноид
                 desiredCapabilities.setCapability("takesScreenshot",true);
                 browserCapabilities = desiredCapabilities;
 
                 //создание удаленного браузера
                 try {
-                    remoteWebDriver = new RemoteWebDriver(URI.create("http://eb-test-allure.otr.ru:4444/wd/hub/").toURL(), desiredCapabilities);
+                    remoteWebDriver = new RemoteWebDriver(URI.create("http://selenoid.d.exportcenter.ru/wd/hub/").toURL(), desiredCapabilities);
                 } catch (Exception e) {}
                 WebDriverRunner.setWebDriver(remoteWebDriver);
                 remoteWebDriver.manage().window().maximize();
