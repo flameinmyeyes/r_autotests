@@ -1,4 +1,4 @@
-package ru.exportcenter.uidm_dev;
+package ru.exportcenter.uidm_dev.agroexpress;
 
 import com.codeborne.selenide.Condition;
 import framework.RunTestAgain;
@@ -11,6 +11,7 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+import ru.exportcenter.uidm_dev.Hooks_UIDM_DEV;
 
 import java.time.Duration;
 
