@@ -40,4 +40,4 @@ run_regression_tests_job: #Test_&_send:
     #- ./Send_results_to_jira.sh || echo "[ERROR]   Отправка результатов в Jira завершилась с ошибкой"
     - ./send_results.sh || echo "[ERROR]   Отправка результатов в Allure завершилась с ошибкой"
   stage: test
-  tags: [rec]
+  tags: [gitlabw-inf-07]
