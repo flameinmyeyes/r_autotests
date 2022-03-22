@@ -20,7 +20,7 @@ run_regression_tests_job: #Test_&_send:
 #    - schedules
   only:
     variables:
-      - $RUN_TYPE == "regression_tests"
+      - $RUN_TYPE == "testng"
   artifacts:          # Имеет смысл в случае ошибки при выполнении теста результат пихать в артефакты гитлаба для анализа
     expire_in: 1 days
     when: on_failure
@@ -32,12 +32,7 @@ run_regression_tests_job: #Test_&_send:
     - export TZ=Europe/Moscow
   script:
     - echo $RUN_TYPE
-#    - mvn test -DsuiteXmlFile=testng.xml || echo "[ERROR]  Выполнение тестов завершилось с ошибкой"
-    - mvn test -Dsurefire.suiteXmlFiles=testng.xml || echo "[ERROR]  Выполнение тестов завершилось с ошибкой"
-#    - javac src/test/java/framework/SuiteBuilderAndRunner.java
-#    - mvn test -Dsurefire.suiteXmlFiles=smoke_tests_2.xml || echo "[ERROR]  Выполнение тестов завершилось с ошибкой"
-#    - mvn test -Dsurefire.suiteXmlFiles=smoke_tests.xml,smoke_tests2.xml || echo "[ERROR]  Выполнение тестов завершилось с ошибкой"
-    #- ./Send_results_to_jira.sh || echo "[ERROR]   Отправка результатов в Jira завершилась с ошибкой"
-    - ./send_results.sh || echo "[ERROR]   Отправка результатов в Allure завершилась с ошибкой"
+    - mvn test -Dsurefire.suiteXmlFiles=testng.xml || echo "[ERROR] Выполнение тестов завершилось с ошибкой"
+    - ./send_results.sh || echo "[ERROR] Отправка результатов в Allure завершилась с ошибкой"
   stage: test
 #  tags: [gitlabw-inf-07]
