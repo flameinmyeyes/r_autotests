@@ -1,6 +1,6 @@
 ---
 image:
-  name: cr-sk-prod.otr.ru:5005/seledtsov.vadim/pur_puio_selenoid:5.5 # (5.5) Тег не должен быть "latest" может вызвать проблемы
+  name: maven:3.6
   entrypoint: [""]  # Переопределение "точки входа" в контейнер который запускается ранером при сборке
 
 variables:
@@ -9,13 +9,6 @@ variables:
 
 stages:
   - test
-
-# Не нравится мне все это...
-# В идеале:
-#           1) gradle test должен завершаться с exit code 0 даже при ошибках в выполнении теста
-#           2) конфигугить как тесты так и скрипты из единого файла или переменного окружения сборщика?
-#               адреса алюра и сервисов которые мы тестируем могут меняться и удобнее держать их в одном месте
-#           3) минимизировать колличество скриптов перенести выполнение операций в .gitlab-ci.yaml
 
 # Запускаем тесты
 run_regression_tests_job: #Test_&_send:
@@ -34,9 +27,9 @@ run_regression_tests_job: #Test_&_send:
     paths:
       - mvn/**/*
       - result.json
-  before_script:
-    - mkdir -p /share && mount.cifs //172.31.197.220/atst /share -o username=User,password=Start123,file_mode=0766,dir_mode=0766
-    - export TZ=Europe/Moscow
+#  before_script:
+#    - mkdir -p /share && mount.cifs //172.31.197.220/atst /share -o username=User,password=Start123,file_mode=0766,dir_mode=0766
+#    - export TZ=Europe/Moscow
   script:
     - echo $RUN_TYPE
 #    - mvn test -DsuiteXmlFile=testng.xml || echo "[ERROR]  Выполнение тестов завершилось с ошибкой"
@@ -47,27 +40,4 @@ run_regression_tests_job: #Test_&_send:
     #- ./Send_results_to_jira.sh || echo "[ERROR]   Отправка результатов в Jira завершилась с ошибкой"
     - ./send_results.sh || echo "[ERROR]   Отправка результатов в Allure завершилась с ошибкой"
   stage: test
-  tags: [pur, w8]
-
-run_smoke_tests_job:
-  when: manual
-  only:
-    variables:
-      - $RUN_TYPE == "smoke_tests"
-  artifacts:
-    expire_in: 1 days
-    when: on_failure
-    paths:
-      - mvn/**/*
-      - result.json
-  before_script:
-    - mkdir -p /share && mount.cifs //172.31.197.220/atst /share -o username=User,password=Start123,file_mode=0766,dir_mode=0766
-  script:
-    - echo $RUN_TYPE
-#    - mvn test -DsuiteXmlFile=smoke_tests.xml || echo "[ERROR]  Выполнение тестов завершилось с ошибкой"
-    - mvn test -Dsurefire.suiteXmlFiles=smoke_tests.xml || echo "[ERROR]  Выполнение тестов завершилось с ошибкой"
-    - ./send_results.sh || echo "[ERROR]   Отправка результатов в Allure завершилась с ошибкой"
-  stage: test
-  tags: [pur, w8]
-
-
+  tags: [rec]
