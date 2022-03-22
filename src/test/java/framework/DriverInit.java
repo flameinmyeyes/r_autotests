@@ -62,7 +62,7 @@ public class DriverInit {
                 desiredCapabilities.setCapability("browserName", "chrome");
                 desiredCapabilities.setCapability("browserVersion", "91.0");
                 desiredCapabilities.setCapability("enableVNC",true);
-                desiredCapabilities.setCapability("enableVideo",true);
+//                desiredCapabilities.setCapability("enableVideo",true);
                 desiredCapabilities.setCapability("name", testName); //передача имени теста в селеноид
                 desiredCapabilities.setCapability("takesScreenshot",true);
                 browserCapabilities = desiredCapabilities;
