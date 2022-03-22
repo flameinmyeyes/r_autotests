@@ -27,9 +27,9 @@ run_regression_tests_job: #Test_&_send:
     paths:
       - mvn/**/*
       - result.json
-#  before_script:
+  before_script:
 #    - mkdir -p /share && mount.cifs //172.31.197.220/atst /share -o username=User,password=Start123,file_mode=0766,dir_mode=0766
-#    - export TZ=Europe/Moscow
+    - export TZ=Europe/Moscow
   script:
     - echo $RUN_TYPE
 #    - mvn test -DsuiteXmlFile=testng.xml || echo "[ERROR]  Выполнение тестов завершилось с ошибкой"
