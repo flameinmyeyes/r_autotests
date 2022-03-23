@@ -1275,4 +1275,20 @@ public final class FileFunctions {
         }
     }
 
+    public static String parseFromProperties(String filePath, String propertyName) throws IOException {
+
+        String value = "";
+
+        Properties properties = new Properties();
+        try {
+            properties.load(new InputStreamReader(new FileInputStream(filePath), "ANSI-1251"));
+        } catch (Exception e) {
+            System.out.println("Файл " + filePath + " не найден!");
+        }
+
+        value = properties.getProperty(propertyName);
+
+        return value;
+    }
+
 }
