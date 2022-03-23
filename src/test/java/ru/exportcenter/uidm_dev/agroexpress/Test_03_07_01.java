@@ -2,7 +2,6 @@ package ru.exportcenter.uidm_dev.agroexpress;
 
 import framework.GUI.func.GUI;
 import framework.RunTestAgain;
-import functional.CommonFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -31,7 +30,7 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
     }
 
     @Step("Перейти к оформлению сервиса «Логистика. Доставка продукции «Агроэкспрессом»»")
-    private void step01() {
+    public void step01() {
         new GUI().inContainer("Вход в личный кабинет")
                 .inField("Email").inputValue("demo_exporter")
                 .inField("Пароль").inputValue("password")
@@ -50,7 +49,7 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
         new GUI().clickButton("Продолжить");
     }
 
-    private void refreshTab(String expectedXpath, int times) {
+    public void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
             new GUI().waitForLoading();
             if ($x(expectedXpath).isDisplayed()) {
@@ -61,13 +60,13 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
     }
 
     @Step("Заполнить область «Информация о компании»")
-    private void step02() {
+    public void step02() {
         new GUI().inContainer("Информация о компании")
                 .inField("Почтовый адрес").inputValue("Корнилаева 2").assertValue().assertNoControl();
     }
 
     @Step("Заполнить область «Информация о заявителе»")
-    private void step03() {
+    public void step03() {
         new GUI().inContainer("Информация о заявителе")
                 .inField("Дополнительный контакт").setCheckboxON().assertCheckboxON().assertNoControl()
                 .inField("ФИО").inputValue("Иванов Иван Иванович").assertValue().assertNoControl()
@@ -77,7 +76,7 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
     }
 
     @Step("Заполнить область «Информация для оказания услуги»")
-    private void step04() {
+    public void step04() {
         new GUI().inContainer("Информация для оказания услуги")
                 .inField("Город отправления").selectValue("Ярославль").assertValue().assertNoControl()
                 .inField("Город назначения").selectValue("Шанхай").assertValue().assertNoControl()
@@ -87,7 +86,7 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
     }
 
     @Step("Заполнить область «Информация о грузе»")
-    private void step05() {
+    public void step05() {
         new GUI().inContainer("Информация о грузе")
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
@@ -100,7 +99,7 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
     }
 
     @Step("Заполнить область «Информация о грузополучателе»")
-    private void step06() {
+    public void step06() {
         new GUI().inContainer("Информация о грузополучателе")
                 .inField("Наименование грузополучателя").inputValue("Ss-password").assertValue().assertNoControl()
                 .inField("Страна").inputValue("USA").assertValue().assertNoControl()
@@ -115,7 +114,7 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
     }
 
     @Step("Заполнить область «Дополнительные услуги»")
-    private void step07() {
+    public void step07() {
         new GUI().inContainer("Дополнительные услуги")
                 .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertCheckboxON().assertNoControl()
                 .inField("Адрес").assertValueContains(" ")
