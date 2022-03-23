@@ -66,27 +66,27 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
     @Step("Заполнить область «Информация о компании»")
     public void step03() {
         new GUI().inContainer("Информация о компании")
-                .inField("Почтовый адрес").inputValue("Корнилаева 2").assertValue().assertNoControl();
+                .inField("Почтовый адрес").inputValue("Корнилаева 2").assertNoControl();
     }
 
     @Step("Заполнить область «Информация о заявителе»")
     public void step04() {
         new GUI().inContainer("Информация о заявителе")
-                .inField("Дополнительный контакт").setCheckboxON().assertCheckboxON().assertNoControl()
-                .inField("ФИО").inputValue("Иванов Иван Иванович").assertValue().assertNoControl()
-                .inField("Телефон").inputValue("+7(999)999-99-99").assertValue().assertNoControl()
-                .inField("Должность").inputValue("Менеджер").assertValue().assertNoControl()
-                .inField("Email").inputValue("word@mail.ru").assertValue().assertNoControl();
+                .inField("Дополнительный контакт").setCheckboxON().assertNoControl()
+                .inField("ФИО").inputValue("Иванов Иван Иванович").assertNoControl()
+                .inField("Телефон").inputValue("+7(999)999-99-99").assertNoControl()
+                .inField("Должность").inputValue("Менеджер").assertNoControl()
+                .inField("Email").inputValue("word@mail.ru").assertNoControl();
     }
 
     @Step("Заполнить область «Информация для оказания услуги»")
     public void step05() {
         new GUI().inContainer("Информация для оказания услуги")
-                .inField("Город отправления").selectValue("Ярославль").assertValue().assertNoControl()
-                .inField("Город назначения").selectValue("Шанхай").assertValue().assertNoControl()
-                .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertCheckboxON().assertNoControl()
-                .inField("Адрес").inputValue("Молодежная улица").assertValue().assertNoControl()
-                .inField("Предполагаемая дата отправления груза").inputValue("22.10.2022").assertValue().assertNoControl();
+                .inField("Город отправления").selectValue("Ярославль").assertNoControl()
+                .inField("Город назначения").selectValue("Шанхай").assertNoControl()
+                .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertNoControl()
+                .inField("Адрес").inputValue("Молодежная улица").assertNoControl()
+                .inField("Предполагаемая дата отправления груза").inputValue("22.10.2022").assertNoControl();
     }
 
     @Step("Заполнить область «Информация о грузе»")
@@ -94,41 +94,41 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
         new GUI().inContainer("Информация о грузе")
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
-                .inField("Наименование продукции").selectValue("Новая продукция").assertValue().assertNoControl()
+                .inField("Наименование продукции").selectValue("Новая продукция").assertNoControl()
                 .inField("Код ТН ВЭД").assertValue("  Кофе").assertNoControl()
-                .inField("Вес продукции, кг").inputValue("532,000").assertValue().assertNoControl()
-                .inField("Упаковка").selectValue("Фляги").assertValue().assertNoControl()
-                .inField("Количество контейнеров").inputValue("156").assertValue().assertNoControl()
-                .inField("Тип контейнера").selectValue("Универсальный").assertValue().assertNoControl()
+                .inField("Вес продукции, кг").inputValue("532,000").assertNoControl()
+                .inField("Упаковка").selectValue("Фляги").assertNoControl()
+                .inField("Количество контейнеров").inputValue("156").assertNoControl()
+                .inField("Тип контейнера").selectValue("Универсальный").assertNoControl()
                 .clickButton("Сохранить");
     }
 
     @Step("Заполнить область «Информация о грузополучателе»")
     public void step07() {
         new GUI().inContainer("Информация о грузополучателе")
-                .inField("Наименование грузополучателя").inputValue("Ss-password").assertValue().assertNoControl()
-                .inField("Страна").inputValue("USA").assertValue().assertNoControl()
-                .inField("Город").inputValue("Moscow").assertValue().assertNoControl()
-                .inField("Дом").inputValue("Ff").assertValue().assertNoControl()
-                .inField("Регион").inputValue("Raion").assertValue().assertNoControl()
-                .inField("Улица").inputValue("Lenina street").assertValue().assertNoControl()
-                .inField("Регистрационный номер грузополучателя").inputValue("223 22 44 2").assertValue().assertNoControl()
-                .inField("Телефон").inputValue("+79999999999").assertValue().assertNoControl()
-                .inField("Представитель грузополучателя").inputValue("Moscow disco rule").assertValue().assertNoControl()
-                .inField("Email").inputValue("www@mail.ru").assertValue().assertNoControl();
+                .inField("Наименование грузополучателя").inputValue("Ss-password").assertNoControl()
+                .inField("Страна").inputValue("USA").assertNoControl()
+                .inField("Город").inputValue("Moscow").assertNoControl()
+                .inField("Дом").inputValue("Ff").assertNoControl()
+                .inField("Регион").inputValue("Raion").assertNoControl()
+                .inField("Улица").inputValue("Lenina street").assertNoControl()
+                .inField("Регистрационный номер грузополучателя").inputValue("223 22 44 2").assertNoControl()
+                .inField("Телефон").inputValue("+79999999999").assertNoControl()
+                .inField("Представитель грузополучателя").inputValue("Moscow disco rule").assertNoControl()
+                .inField("Email").inputValue("www@mail.ru").assertNoControl();
     }
 
     @Step("Заполнить область «Дополнительные услуги»")
     public void step08() {
         new GUI().inContainer("Дополнительные услуги")
-                .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertCheckboxON().assertNoControl()
-                .inField("Адрес").assertValue("Молодежная улица").assertNoControl()
-                .inField("Таможенное оформление").setCheckboxON().assertCheckboxON().assertNoControl()
-                .inField("РЖД Логистика").setRadiobuttonByDescription("Комплексная услуга таможенного оформления").assertRadiobuttonONByDescription()
-                .inField("Оформление ветеринарного сертификата").setCheckboxON().assertCheckboxON().assertNoControl()
-                .inField("РЖД Логистика").setRadiobuttonByDescription("Содействие в получении ветеринарных сертификатов").assertRadiobuttonONByDescription()
-                .inField("Оформление фитосанитарного сертификата").setCheckboxON().assertCheckboxON().assertNoControl()
-                .inField("РЖД Логистика").setRadiobuttonByDescription("Содействие в получении фитосанитарных сертификатов").assertRadiobuttonONByDescription();
+                .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertNoControl()
+                .inField("Адрес").assertValue("Молодежная улица").assertEditable().assertNoControl()
+                .inField("Таможенное оформление").setCheckboxON().assertNoControl()
+                .inField("РЖД Логистика").setRadiobuttonByDescription("Комплексная услуга таможенного оформления")
+                .inField("Оформление ветеринарного сертификата").setCheckboxON().assertNoControl()
+                .inField("РЖД Логистика").setRadiobuttonByDescription("Содействие в получении ветеринарных сертификатов")
+                .inField("Оформление фитосанитарного сертификата").setCheckboxON().assertNoControl()
+                .inField("РЖД Логистика").setRadiobuttonByDescription("Содействие в получении фитосанитарных сертификатов");
 
         new GUI().clickButton("Далее");
     }

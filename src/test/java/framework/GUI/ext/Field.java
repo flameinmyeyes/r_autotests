@@ -12,11 +12,13 @@ public class Field extends ElementData {
 
     public void inputValue(String value) {
         $x(new XPath(this).getInputXPath()).sendKeys(value);
+        new Asserts(this).assertValue(value);
     }
 
     public void selectValue(String value) {
         $x(new XPath(this).getInputXPath()).click();
-        $x(new XPath(this).getItemXPath(value)).click();
+        $x(new XPath(this).getSearchedValueXPath(value)).click();
+        new Asserts(this).assertValue(value);
     }
 
     public void inputInSearchField(String searchFieldPlaceholder, String value) {
@@ -31,16 +33,19 @@ public class Field extends ElementData {
         if (!$x(new XPath(this).getCheckedCheckboxXPath()).exists()) {
             $x(new XPath(this).getCheckboxXPath()).click();
         }
+        new Asserts(this).assertCheckboxON();
     }
 
     public void setCheckboxOFF() {
         if ($x(new XPath(this).getCheckedCheckboxXPath()).exists()) {
             $x(new XPath(this).getCheckboxXPath()).click();
         }
+        new Asserts(this).assertCheckboxOFF();
     }
 
     public void setRadiobuttonByDescription(String description) {
         $x(new XPath(this).getRadiobuttonByDescriptionXPath()).click();
+        new Asserts(this).assertRadiobuttonONByDescription();
     }
 
 }
