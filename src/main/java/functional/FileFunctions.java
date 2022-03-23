@@ -1276,4 +1276,42 @@ public final class FileFunctions {
         }
     }
 
+    /**
+     * Перенести файл из одной папки другую
+     * @param buttonName - текст кнопки загрузки файла
+     * @param area - область
+     * @param wayToFile - путь к файлу
+     */
+    public void uploadFileInArea (String buttonName, String area, String wayToFile) {
+        File file = new File(wayToFile);
+        $x("  //*[text()='" + area + "']/ancestor::*[contains(@class, 'container')]//*[text()= '"+
+                buttonName+"']//following-sibling::input[@type = 'file'] ").uploadFile(file);
+    }
+
+    public static String readProperties(String filePath, String key) {
+
+        String value = "";
+
+        Properties properties = new Properties();
+
+        try {
+            FileInputStream fileInputStream = new FileInputStream(filePath);
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "ANSI-1251");
+
+            if(filePath.endsWith(".xml")) {
+                properties.loadFromXML(fileInputStream);
+            } else {
+                properties.load(inputStreamReader);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Файл " + filePath + " не найден!");
+        }
+
+        value = properties.getProperty(key);
+
+        return value;
+    }
+
+
 }
