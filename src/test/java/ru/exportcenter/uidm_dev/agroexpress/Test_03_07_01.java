@@ -40,16 +40,6 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
         new GUI().waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
     }
 
-    private void refreshTab(int times) {
-        for (int i = 0; i < times; i++) {
-            new GUI().waitForLoading();
-            if ($x("//*[contains(text(), 'Продолжить')]").isDisplayed()) {
-                break;
-            }
-            refresh();
-        }
-    }
-
     @Step("Навигация")
     public void step02() {
         new GUI().selectTab("Сервисы")
@@ -61,6 +51,16 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
         refreshTab(15);
 
         new GUI().clickButton("Продолжить");
+    }
+
+    private void refreshTab(int times) {
+        for (int i = 0; i < times; i++) {
+            new GUI().waitForLoading();
+            if ($x("//*[contains(text(), 'Продолжить')]").isDisplayed()) {
+                break;
+            }
+            refresh();
+        }
     }
 
     @Step("Заполнить область «Информация о компании»")
