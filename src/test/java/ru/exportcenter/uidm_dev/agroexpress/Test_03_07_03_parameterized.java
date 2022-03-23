@@ -18,9 +18,7 @@ public class Test_03_07_03_parameterized extends Hooks_UIDM_DEV {
 
 //    private final String WAY_TEST = Ways.UIDM_DEV.getWay() + "\\FUN_02\\BP_016\\FUN_02_BP_016_NSI_016_PZ_2_7_2_1\\";
 
-//    private final String WAY_TO_PROPERTIES = "ru/exportcenter/uidm_dev/agroexpress/Test_03_07_03.properties";
-    public static String WAY_TO_PROPERTIES = "C:\\Users\\Ilya\\Documents\\IDEAProjects\\rec_autotests\\src\\test\\java\\" +
-        "ru\\exportcenter\\uidm_dev\\agroexpress\\Test_03_07_03_properties.xml";
+    public static String WAY_TO_PROPERTIES = "src/test/java/ru/exportcenter/uidm_dev/agroexpress/Test_03_07_03_properties.xml";
 
     @Owner(value="Балашов Илья")
     @Description("03 07 03 Заполнение Заявки на получение услуги (сценарий 3)")
