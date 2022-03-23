@@ -36,8 +36,12 @@ public class XPath extends ElementData {
         return getContainerXPath() + getFieldXPath() + "//input";
     }
 
-    public String getItemXPath(String item) {
-        return getContainerXPath() + getFieldXPath() + "//*[contains(text(), '" + item + "')]";
+    public String getUneditableInputXPath() {
+        return getContainerXPath() + getFieldXPath() + "//span[text() != '" + field + "'][not(@style)]";
+    }
+
+    public String getSearchedValueXPath(String value) {
+        return getContainerXPath() + getFieldXPath() + "//*[contains(text(), '" + value + "')]";
     }
 
     public String getErrorXPath() {

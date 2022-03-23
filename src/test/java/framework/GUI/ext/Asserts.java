@@ -12,20 +12,34 @@ public class Asserts extends ElementData {
     }
 
     public void assertValue() {
-        String actualValue = $x(new XPath(this).getInputXPath()).getValue();
+        String actualValue = getValue();
         assertEquals(actualValue, value);
     }
 
+    private String getValue() {
+        String actualValue;
+        String inputXPath = new XPath(this).getInputXPath();
+        if ($x(inputXPath).exists()) {
+            actualValue = $x(new XPath(this).getInputXPath()).getValue();
+        } else {
+            actualValue = $x(new XPath(this).getUneditableInputXPath()).getText();
+        }
+        return actualValue;
+    }
+
     public void assertValue(String expectedValue) {
-        String actualValue = $x(new XPath(this).getInputXPath()).getValue();
-        assertEquals(actualValue, value = expectedValue);
+        String actualValue = getValue();
+        assertEquals(actualValue, expectedValue);
     }
 
     @Deprecated
     public void assertValueContains(String subValue) {
-        value = subValue;
-        String actualValue = $x(new XPath(this).getInputXPath()).getValue();
+        String actualValue = getValue();
         assertTrue(actualValue.contains(subValue));
+    }
+
+    public void assertEditable() {
+        assertTrue($x(new XPath(this).getInputXPath()).exists());
     }
 
     public void assertNoControl() {

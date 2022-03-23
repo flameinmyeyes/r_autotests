@@ -83,6 +83,11 @@ public class AllFunctions extends ElementData {
         return this;
     }
 
+    public AllFunctions assertEditable() {
+        new Asserts(this).assertEditable();
+        return this;
+    }
+
     public AllFunctions assertNoControl() {
         new Asserts(this).assertNoControl();
         return this;
