@@ -1,7 +1,6 @@
 package ru.exportcenter.uidm_dev.agroexpress;
 
 import framework.GUI.func.GUI;
-import framework.GUI.func.InField;
 import framework.RunTestAgain;
 import functional.CommonFunctions;
 import io.qameta.allure.Description;
@@ -51,7 +50,7 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
         new GUI().clickButton("Продолжить");
     }
 
-    public void refreshTab(String expectedXpath, int times) {
+    private void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
             new GUI().waitForLoading();
             if ($x(expectedXpath).isDisplayed()) {
@@ -102,7 +101,7 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
     }
 
     @Step("Заполнить область «Информация о грузополучателе»")
-    public void step06() {
+    private void step06() {
         new GUI().inContainer("Информация о грузополучателе")
                 .inField("Наименование грузополучателя").inputValue("Ss-password").assertValue().assertNoControl()
                 .inField("Страна").inputValue("USA").assertValue().assertNoControl()
@@ -117,7 +116,7 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
     }
 
     @Step("Заполнить область «Дополнительные услуги»")
-    public void step07() {
+    private void step07() {
         new GUI().inContainer("Дополнительные услуги")
                 .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertCheckboxON().assertNoControl()
                 .inField("Адрес").assertValueContains(" ")
