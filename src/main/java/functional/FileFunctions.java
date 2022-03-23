@@ -48,6 +48,7 @@ import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$x;
 
 public final class FileFunctions {
 
@@ -1273,6 +1274,18 @@ public final class FileFunctions {
                         }
                     });
         }
+    }
+
+    /**
+     * Перенести файл из одной папки другую
+     * @param buttonName - текст кнопки загрузки файла
+     * @param area - область
+     * @param wayToFile - путь к файлу
+     */
+    public void uploadFileInArea (String buttonName, String area, String wayToFile) {
+        File file = new File(wayToFile);
+        $x("  //*[text()='" + area + "']/ancestor::*[contains(@class, 'container')]//*[text()= '"+
+                buttonName+"']//following-sibling::input[@type = 'file'] ").uploadFile(file);
     }
 
 }
