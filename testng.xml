@@ -6,7 +6,7 @@
 <!--    <parameter name="testrun" value="TSE-C69"/>-->
 <!--    <parameter name="rerunFailedTestsOnly" value="true"/> -->
 <!--    <listeners>-->
-<!--        <listener class-name="jiraIntegration.TestListener"/>-->
+<!--        <listener class-name="framework.integration.zephyrScaleIntegration.TestListener"/>-->
 <!--    </listeners>-->
 
     <test name="REC_all_tests_Maksimova" thread-count="1" preserve-order="true">

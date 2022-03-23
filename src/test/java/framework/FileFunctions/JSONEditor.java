@@ -1,9 +1,7 @@
-package jiraIntegration;
+package framework.FileFunctions;
 
 import com.google.gson.JsonObject;
-import jdk.nashorn.internal.parser.JSONParser;
 import net.sf.json.JSONArray;
-import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import com.google.gson.JsonParser;
 

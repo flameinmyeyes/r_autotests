@@ -7,7 +7,7 @@
 	<parameter name="testrun" value="TSE-C72"/>
 	<parameter name="rerunFailedTestsOnly" value="true"/>
 	<listeners>
-		<listener class-name="jiraIntegration.TestListener"/>
+		<listener class-name="framework.integration.zephyrScaleIntegration.TestListener"/>
 	</listeners>
 
 	<test name="TSE_all_tests_Balashov" thread-count="1" preserve-order="true">

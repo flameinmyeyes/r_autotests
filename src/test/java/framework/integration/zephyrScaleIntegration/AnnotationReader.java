@@ -1,4 +1,4 @@
-package jiraIntegration;
+package framework.integration.zephyrScaleIntegration;
 
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
