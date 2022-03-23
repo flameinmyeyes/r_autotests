@@ -77,7 +77,7 @@ public class AllFunctions extends ElementData {
         return this;
     }
 
-
+    @Deprecated
     public AllFunctions assertValueContains(String subValue) {
         new Asserts(this).assertValueContains(subValue);
         return this;
