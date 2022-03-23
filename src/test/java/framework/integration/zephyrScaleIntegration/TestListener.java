@@ -1,7 +1,5 @@
-package jiraIntegration;
+package framework.integration.zephyrScaleIntegration;
 
-import framework.Ways;
-import functional.FileFunctions;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.testng.ITestContext;
@@ -10,9 +8,7 @@ import org.testng.ITestResult;
 import org.testng.SkipException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TestListener implements ITestListener {
 
@@ -113,7 +109,7 @@ public class TestListener implements ITestListener {
         //получаем владельца тесткейса из тесткейса
         String jiraUser = ZephyrScaleIntegration.getJiraUserFromTestcase(testcase);
 
-        //строим JSON вида: src/test/java/jiraIntegration/testresult_sample.json
+        //строим JSON вида: src/test/java/framework.integration.jiraIntegration/testresult_sample.json
         JSONObject json = new JSONObject();
         //основное тело запроса
         json.put("status", testStatus);
@@ -145,7 +141,7 @@ public class TestListener implements ITestListener {
         String jiraUser = ZephyrScaleIntegration.getJiraUserFromTestcase(testcase);
 
         //строим JSON вида:
-        //src/test/java/jiraIntegration.testresult_sample.json;
+        //src/test/java/framework.integration.jiraIntegration.testresult_sample.json;
         /*
         {
             "status": "Fail",
@@ -220,7 +216,7 @@ public class TestListener implements ITestListener {
         String jiraUser = ZephyrScaleIntegration.getJiraUserFromTestcase(testcase);
 
         //строим JSON вида:
-        //src/test/java/jiraIntegration.testresult_sample.json;
+        //src/test/java/framework.integration.jiraIntegration.testresult_sample.json;
         /*
         {
             "status": "Fail",
