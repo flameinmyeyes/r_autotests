@@ -32,7 +32,7 @@ public class InField extends ElementData {
         return new AllFunctions(this);
     }
 
-
+    @Deprecated
     public AllFunctions assertValueContains(String subValue) {
         new Asserts(this).assertValueContains(subValue);
         return new AllFunctions(this);
