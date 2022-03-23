@@ -57,7 +57,6 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
                 break;
             }
             refresh();
-            CommonFunctions.wait(1);
         }
     }
 
