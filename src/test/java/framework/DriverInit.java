@@ -42,6 +42,7 @@ public class DriverInit {
                 screenshots = true;
                 proxyEnabled = true;
                 fileDownload = PROXY;
+                timeout = 60000;
 
                 break;
 
@@ -66,6 +67,7 @@ public class DriverInit {
                 desiredCapabilities.setCapability("name", testName); //передача имени теста в селеноид
                 desiredCapabilities.setCapability("takesScreenshot",true);
                 browserCapabilities = desiredCapabilities;
+                timeout = 60000;
 
                 //создание удаленного браузера
                 try {
