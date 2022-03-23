@@ -2,8 +2,6 @@ package framework.GUI;
 
 public class ElementData {
 
-    private final boolean enableComment = false;
-
     protected String container = "";
     protected String field = "";
     protected String value = "";
