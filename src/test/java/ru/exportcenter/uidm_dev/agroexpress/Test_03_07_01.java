@@ -1,9 +1,7 @@
 package ru.exportcenter.uidm_dev.agroexpress;
 
 import framework.GUI.func.GUI;
-import framework.GUI.func.InField;
 import framework.RunTestAgain;
-import functional.CommonFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -32,7 +30,7 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
     }
 
     @Step("Перейти к оформлению сервиса «Логистика. Доставка продукции «Агроэкспрессом»»")
-    private void step01() {
+    public void step01() {
         new GUI().inContainer("Вход в личный кабинет")
                 .inField("Email").inputValue("demo_exporter")
                 .inField("Пароль").inputValue("password")
@@ -58,18 +56,17 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
                 break;
             }
             refresh();
-            CommonFunctions.wait(1);
         }
     }
 
     @Step("Заполнить область «Информация о компании»")
-    private void step02() {
+    public void step02() {
         new GUI().inContainer("Информация о компании")
                 .inField("Почтовый адрес").inputValue("Корнилаева 2").assertValue().assertNoControl();
     }
 
     @Step("Заполнить область «Информация о заявителе»")
-    private void step03() {
+    public void step03() {
         new GUI().inContainer("Информация о заявителе")
                 .inField("Дополнительный контакт").setCheckboxON().assertCheckboxON().assertNoControl()
                 .inField("ФИО").inputValue("Иванов Иван Иванович").assertValue().assertNoControl()
@@ -79,7 +76,7 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
     }
 
     @Step("Заполнить область «Информация для оказания услуги»")
-    private void step04() {
+    public void step04() {
         new GUI().inContainer("Информация для оказания услуги")
                 .inField("Город отправления").selectValue("Ярославль").assertValue().assertNoControl()
                 .inField("Город назначения").selectValue("Шанхай").assertValue().assertNoControl()
@@ -89,7 +86,7 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
     }
 
     @Step("Заполнить область «Информация о грузе»")
-    private void step05() {
+    public void step05() {
         new GUI().inContainer("Информация о грузе")
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
