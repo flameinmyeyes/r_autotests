@@ -1,6 +1,7 @@
 package ru.exportcenter.uidm_dev.agroexpress;
 
 import com.codeborne.selenide.Condition;
+import framework.GUI.func.GUI;
 import framework.RunTestAgain;
 import framework.Ways;
 import functional.CommonFunctions;
@@ -34,6 +35,7 @@ public class Test_03_07_02 extends Hooks_UIDM_DEV {
         step05();
         step06();
         step07();
+        step08();
     }
 
     @AfterMethod
@@ -41,126 +43,121 @@ public class Test_03_07_02 extends Hooks_UIDM_DEV {
         CommonFunctions.screenShot( WAY_TEST + "screen.png");
     }
 
-    @Step("Авторизация и навигация")
+    @Step("Шаг 1 Авторизация")
     public void step01() {
         CommonFunctions.printStep();
-        // Ввести логин и пароль demo_exporter/password
-        new GUIFunctions().authorization("demo_exporter", "password");
+        new GUI().inContainer("Вход в личный кабинет")
+                .inField("Email").inputValue("demo_exporter")
+                .inField("Пароль").inputValue("password")
+                .clickButton("Войти");
 
-        //Перейти во вкладку «Сервисы»
-        new GUIFunctions()
-                .selectTab("Сервисы")
-                .waitForURL("http://master-portal-dev.d.exportcenter.ru/services/business");
-
-        //Выбрать сервис «Логистика. Доставка продукции «Агроэкспрессом»» и нажать кнопку «Оформить»
-        new GUIFunctions()
-                .waitForElementDisplayed("//*[contains(@class, 'preloader')]", 60)
-                .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
-                .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Подробнее");
-        $x("//a[text()='Получить услугу']").click();
-        switchTo().window(1);
-        while (!$x("//button//span[text()='Продолжить']").isDisplayed()) {
-            CommonFunctions.wait(3);
-            refresh();
-            $x("//*[text()='Логистика. Доставка продукции \"Агроэкспрессом\"']").shouldBe(Condition.visible, Duration.ofSeconds(60));
-        }
-        $x("//button//span[text()='Продолжить']").click();
-        $x("//span[text()='Заявка на услугу']").shouldBe(Condition.visible, Duration.ofSeconds(60));
+        new GUI().waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
     }
 
-    @Step("«Информация о компании»")
+    @Step("Шаг 2 Навигация")
     public void step02() {
         CommonFunctions.printStep();
-        //Заполнить поле адрес
-        new GUIFunctions().inputValueInArea("Информация о компании", "Почтовый адрес", "Корнилаева 2");
-        //Проверить отсуствие срабатывания контроля
-        $x("//span[contains (@class, 'KrInput_message')]").shouldNotBe(Condition.visible, Duration.ofSeconds(3));
-        //Проверить что блок заполнен
-        $x("//div[text() = 'Заполнено']/../../../div[text()= 'Информация о компании']").
-                shouldBe(Condition.visible, Duration.ofSeconds(3));
+        new GUI().selectTab("Сервисы")
+                .waitForURL("http://master-portal-dev.d.exportcenter.ru/services/business")
+                .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
+                .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Подробнее");
+
+        new GUI().clickButton("Получить услугу").switchPageTo(1);
+        refreshTab("//*[contains(text(), 'Продолжить')]", 15);
+        new GUI().clickButton("Продолжить");
     }
 
-    @Step("  «Информация о заявителе»"
-            )
+    @Step("Шаг 3 Блок «Информация о компании»")
     public void step03() {
         CommonFunctions.printStep();
-        new GUIFunctions()
-                .setCheckboxInArea("Информация о заявителе", "Дополнительный контакт", true)
-                .inputValueInArea("Информация о заявителе", "ФИО", "Иванов Иван Иванович")
-                .inputValueInArea("Информация о заявителе", "Телефон", "+7(999)999-99-99")
-                .inputValueInArea("Информация о заявителе", "Должность", "Менеджер")
-                .inputValueInArea("Информация о заявителе", "Email", "word@mail.ru");
-        $x("//span[contains (@class, 'KrInput_message')]").shouldNotBe(Condition.visible, Duration.ofSeconds(3));
-        $x("//div[text() = 'Заполнено']/../../../div[text()= 'Информация о заявителе']").
-                shouldBe(Condition.visible, Duration.ofSeconds(3));
+        new GUI().inContainer("Информация о компании")
+                .inField("Почтовый адрес").inputValue("Корнилаева 2").assertValue().assertNoControl();
     }
 
-    @Step("Заполнить область «Информация для оказания услуги»")
+    @Step("Шаг 4 Блок «Информация о заявителе»" )
     public void step04() {
         CommonFunctions.printStep();
-        new GUIFunctions()
-                .selectValueFromDropdownInArea("Информация для оказания услуги", "Город отправления", "Уфа")
-                .selectValueFromDropdownInArea("Информация для оказания услуги", "Город назначения", "Харбин")
-                .setCheckboxInArea("Информация для оказания услуги", "Вывоз груза с адреса («Первая миля»)", true)
-                .inputValueInArea("Информация для оказания услуги", "Адрес", "Молодежная улица")
-                .inputValueInArea("Информация для оказания услуги", "Предполагаемая дата отправления груза", "22.10.2022");
+        new GUI().inContainer("Информация о заявителе")
+                .inField("Дополнительный контакт").setCheckboxON().assertCheckboxON().assertNoControl()
+                .inField("ФИО").inputValue("Иванов Иван Иванович").assertValue().assertNoControl()
+                .inField("Телефон").inputValue("+7(999)999-99-99").assertValue().assertNoControl()
+                .inField("Должность").inputValue("Менеджер").assertValue().assertNoControl()
+                .inField("Email").inputValue("word@mail.ru").assertValue().assertNoControl();
     }
 
-    @Step("Заполнить область «Информация о грузе»")
+    @Step("Шаг 5 Блок  «Информация для оказания услуги»")
     public void step05() {
         CommonFunctions.printStep();
-
-        new GUIFunctions()
-                .clickButtonInArea("Информация о грузе", "Сборный груз")
-                .clickButtonInArea("Информация о грузе", "Температурный режим на всю партию (от -30°C до 0°C или от 0°C до +30°C) ")
-                .inputValueInArea("Информация о грузе", "От", "-25")
-                .inputValueInArea("Информация о грузе", "До", "+2")
-                .clickButtonInArea("Информация о грузе", "Добавить +")
-                //.clickButtonInArea("Сведения о продукции", "Выбрать из каталога")
-                .selectValueFromDropdownInArea("Сведения о продукции", "Наименование продукции", "Чудо шоколадное")
-                //.clickButtonInArea("Сведения о продукции", "Добавить новую")
-                .waitForElementDisplayed("//input[@placeholder = 'Выберите код ТН ВЭД']" +
-                        "[@value = '97030000 ПОДЛИННИКИ СКУЛЬПТУР И СТАТУЭТОК ИЗ ЛЮБЫХ МАТЕРИАЛОВ'][@disabled]", 5)
-                .inputValueInArea("Сведения о продукции", "Вес продукции, кг", "4,000")
-                .selectValueFromDropdownInArea("Сведения о продукции", "Упаковка", "Фляги") /*Бидоны*/
-                .inputValueInArea("Сведения о продукции", "Длина, см", "15")
-                .inputValueInArea("Сведения о продукции", "Ширина, см", "2345")
-                .inputValueInArea("Сведения о продукции", "Высота, см", "113")
-                .inputValueInArea("Сведения о продукции", "Количество грузовых мест, шт", "2222")
-                .clickButtonInArea("Сведения о продукции", "Сохранить");
-
+        new GUI().inContainer("Информация для оказания услуги")
+                .inField("Город отправления").selectValue("Ярославль").assertValue().assertNoControl()
+                .inField("Город назначения").selectValue("Шанхай").assertValue().assertNoControl()
+                .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertCheckboxON().assertNoControl()
+                .inField("Адрес").inputValue("Молодежная улица").assertValue().assertNoControl()
+                .inField("Предполагаемая дата отправления груза").inputValue("22.10.2022").assertValue().assertNoControl();
     }
 
-    @Step("Заполнить область «Информация о грузополучателе»")
+    @Step("Шаг 6 Блок «Информация о грузе»")
     public void step06() {
         CommonFunctions.printStep();
+        new GUI().inContainer("Информация о грузе")
+                .clickButton("Сборный груз")
+                .clickButton("Температурный режим на всю партию (от -30°C до 0°C или от 0°C до +30°C) ")
+                .inField("От").inputValue("-25")
+                .inField("До").inputValue("+2")
+                .clickButton("Добавить +")
+                .inContainer("Сведения о продукции")
+                .inField("Наименование продукции").selectValue("Новая продукция").assertNoControl()
+                .inField("Код ТН ВЭД").assertValue("  Кофе").assertNoControl()
+                .inField("Вес продукции, кг").inputValue("4,000").assertValue().assertNoControl()
+                .inField("Упаковка").selectValue("Фляги").assertValue().assertNoControl()
+                .inField("Длина, см").inputValue("15").assertValue().assertNoControl()
+                .inField("Ширина, см").inputValue("2345").assertValue().assertNoControl()
+                .inField("Высота, см").inputValue("113").assertValue().assertNoControl()
+                .inField("Количество грузовых мест, шт").inputValue("2222").assertValue().assertNoControl()
+                .clickButton("Сохранить");
+        new GUI().clickButton("Далее")
+                .waitForElementDisplayed("//*[text()='Заявка отправлена на рассмотрение. Срок рассмотрения до 3 рабочих дней']");
 
-        new GUIFunctions()
-                .inputValueInArea("Информация о грузополучателе", "Наименование грузополучателя", "Ss-password")
-                .inputValueInArea("Информация о грузополучателе", "Страна", "USA")
-                .inputValueInArea("Информация о грузополучателе", "Город", "Moscow")
-                .inputValueInArea("Информация о грузополучателе", "Дом", "Ff")
-                .inputValueInArea("Информация о грузополучателе", "Регион", "St-Peterburg")
-                .inputValueInArea("Информация о грузополучателе", "Район", "Raion")
-                .inputValueInArea("Информация о грузополучателе", "Улица", "Lenina street")
-                .inputValueInArea("Информация о грузополучателе", "Регистрационный номер грузополучателя", "223 22 44 2")
-                .inputValueInArea("Информация о грузополучателе", "Телефон", "+79999999999")
-                .inputValueInArea("Информация о грузополучателе", "Представитель грузополучателя", "Moscow disco rule")
-                .inputValueInArea("Информация о грузополучателе", "Email", "www@mail.ru");
     }
 
-    @Step("Заполнить область «Дополнительные услуги»")
+    @Step("Шаг 7 Блок  «Информация о грузополучателе»")
     public void step07() {
-        CommonFunctions.printStep();
-        new GUIFunctions()
-                .setCheckboxInArea("Дополнительные услуги", "Вывоз груза с адреса («Первая миля»)", true)
-                .setCheckboxInArea("Дополнительные услуги", "Таможенное оформление", true)
-                .setRadiobuttonUnderСheckboxInArea("Дополнительные услуги", "Таможенное оформление", "РЭЦ")
-                .setCheckboxInArea("Дополнительные услуги", "Оформление ветеринарного сертификата", true)
-                .setRadiobuttonUnderСheckboxInArea("Дополнительные услуги", "Оформление ветеринарного сертификата", "РЭЦ")
-                .setCheckboxInArea("Дополнительные услуги", "Оформление фитосанитарного сертификата", true)
-                .setRadiobuttonUnderСheckboxInArea("Дополнительные услуги", "Оформление фитосанитарного сертификата", "РЭЦ")
-                .clickButton("Далее");
+        new GUI().inContainer("Информация о грузополучателе")
+                .inField("Наименование грузополучателя").inputValue("Ss-password").assertValue().assertNoControl()
+                .inField("Страна").inputValue("USA").assertValue().assertNoControl()
+                .inField("Город").inputValue("Moscow").assertValue().assertNoControl()
+                .inField("Дом").inputValue("Ff").assertValue().assertNoControl()
+                .inField("Регион").inputValue("Raion").assertValue().assertNoControl()
+                .inField("Улица").inputValue("Lenina street").assertValue().assertNoControl()
+                .inField("Регистрационный номер грузополучателя").inputValue("223 22 44 2").assertValue().assertNoControl()
+                .inField("Телефон").inputValue("+79999999999").assertValue().assertNoControl()
+                .inField("Представитель грузополучателя").inputValue("Moscow disco rule").assertValue().assertNoControl()
+                .inField("Email").inputValue("www@mail.ru").assertValue().assertNoControl();
+    }
+
+    @Step("Шаг 8 Блок «Дополнительные услуги»")
+    public void step08() {
+        new GUI().inContainer("Дополнительные услуги")
+                .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertCheckboxON().assertNoControl()
+                .inField("Адрес").assertValue("Молодежная улица").assertNoControl()
+                .inField("Таможенное оформление").setCheckboxON().assertCheckboxON().assertNoControl()
+                .inField("РЖД Логистика").setRadiobuttonByDescription("Комплексная услуга таможенного оформления").assertRadiobuttonONByDescription()
+                .inField("Оформление ветеринарного сертификата").setCheckboxON().assertCheckboxON().assertNoControl()
+                .inField("РЖД Логистика").setRadiobuttonByDescription("Содействие в получении ветеринарных сертификатов").assertRadiobuttonONByDescription()
+                .inField("Оформление фитосанитарного сертификата").setCheckboxON().assertCheckboxON().assertNoControl()
+                .inField("РЖД Логистика").setRadiobuttonByDescription("Содействие в получении фитосанитарных сертификатов").assertRadiobuttonONByDescription();
+        new GUI().clickButton("Далее");
+    }
+
+    public void refreshTab(String expectedXpath, int times) {
+        for (int i = 0; i < times; i++) {
+            new GUI().waitForLoading();
+            if ($x(expectedXpath).isDisplayed()) {
+                break;
+            }
+            refresh();
+            CommonFunctions.wait(1);
+        }
 
     }
 
