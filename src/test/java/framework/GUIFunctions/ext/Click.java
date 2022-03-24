@@ -1,6 +1,6 @@
-package framework.GUI.ext;
+package framework.GUIFunctions.ext;
 
-import framework.GUI.ElementData;
+import framework.GUIFunctions.ElementData;
 
 import static com.codeborne.selenide.Selenide.$x;
 

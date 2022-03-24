@@ -1,6 +1,6 @@
 package ru.exportcenter.uidm_dev.agroexpress;
 
-import framework.GUI.GUIFunctions;
+import framework.GUIFunctions.GUIFunctions;
 import framework.RunTestAgain;
 import framework.Ways;
 import functional.CommonFunctions;

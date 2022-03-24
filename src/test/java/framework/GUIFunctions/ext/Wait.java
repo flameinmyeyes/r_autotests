@@ -1,7 +1,7 @@
-package framework.GUI.ext;
+package framework.GUIFunctions.ext;
 
 import com.codeborne.selenide.Condition;
-import framework.GUI.ElementData;
+import framework.GUIFunctions.ElementData;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.webdriver;
