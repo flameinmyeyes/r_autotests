@@ -15,7 +15,7 @@ import static com.codeborne.selenide.Selenide.refresh;
 public class Test_03_07_01 extends Hooks_UIDM_DEV {
 
     @Owner(value = "Максимова Диана")
-    @Description("03 07 01 Сценарий 1")
+    @Description("03 07 01 Заполнение Заявки на получение услуги (сценарий 1)")
     @Link(name = "Test_03_07_01", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=117902466")
 
     @Test(retryAnalyzer = RunTestAgain.class)
@@ -130,7 +130,8 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
                 .inField("Оформление фитосанитарного сертификата").setCheckboxON().assertNoControl()
                 .inField("РЖД Логистика").setRadiobuttonByDescription("Содействие в получении фитосанитарных сертификатов");
 
-        new GUI().clickButton("Далее");
+        new GUI().clickButton("Далее")
+                .waitForElementDisplayed("//*[text()='Заявка отправлена на рассмотрение. Срок рассмотрения до 3 рабочих дней']");
     }
 }
 
