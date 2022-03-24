@@ -1,4 +1,4 @@
-package framework.GUI;
+package framework.GUIFunctions;
 
 public class ElementData {
 

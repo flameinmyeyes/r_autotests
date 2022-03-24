@@ -1,7 +1,7 @@
-package framework.GUI;
+package framework.GUIFunctions;
 
-import framework.GUI.ext.Asserts;
-import framework.GUI.ext.Field;
+import framework.GUIFunctions.ext.Asserts;
+import framework.GUIFunctions.ext.Field;
 
 public class InField extends ElementData {
 

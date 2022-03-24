@@ -1,9 +1,9 @@
-package framework.GUI;
+package framework.GUIFunctions;
 
-import framework.GUI.ext.Asserts;
-import framework.GUI.ext.Click;
-import framework.GUI.ext.Field;
-import framework.GUI.ext.Wait;
+import framework.GUIFunctions.ext.Asserts;
+import framework.GUIFunctions.ext.Click;
+import framework.GUIFunctions.ext.Field;
+import framework.GUIFunctions.ext.Wait;
 
 import static com.codeborne.selenide.Selenide.switchTo;
 

@@ -1,6 +1,6 @@
-package framework.GUI.ext;
+package framework.GUIFunctions.ext;
 
-import framework.GUI.ElementData;
+import framework.GUIFunctions.ElementData;
 import org.testng.Assert;
 
 public class XPath extends ElementData {
