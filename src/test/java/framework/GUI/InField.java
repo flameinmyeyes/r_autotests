@@ -3,7 +3,7 @@ package framework.GUI;
 import framework.GUI.ext.Asserts;
 import framework.GUI.ext.Field;
 
-class InField extends ElementData {
+public class InField extends ElementData {
 
     protected InField(ElementData data) {
         super(data);

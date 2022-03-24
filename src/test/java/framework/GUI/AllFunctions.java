@@ -7,7 +7,7 @@ import framework.GUI.ext.Wait;
 
 import static com.codeborne.selenide.Selenide.switchTo;
 
-class AllFunctions extends ElementData {
+public class AllFunctions extends ElementData {
 
     protected AllFunctions(ElementData data) {
         super(data);
