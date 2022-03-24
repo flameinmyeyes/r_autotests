@@ -1,6 +1,5 @@
-package framework.GUI.func;
+package framework.GUI;
 
-import framework.GUI.ElementData;
 import framework.GUI.ext.Asserts;
 import framework.GUI.ext.Click;
 import framework.GUI.ext.Field;
@@ -8,9 +7,9 @@ import framework.GUI.ext.Wait;
 
 import static com.codeborne.selenide.Selenide.switchTo;
 
-public class AllFunctions extends ElementData {
+class AllFunctions extends ElementData {
 
-    AllFunctions(ElementData data) {
+    protected AllFunctions(ElementData data) {
         super(data);
     }
 

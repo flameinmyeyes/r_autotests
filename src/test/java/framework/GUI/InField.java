@@ -1,12 +1,11 @@
-package framework.GUI.func;
+package framework.GUI;
 
-import framework.GUI.ElementData;
 import framework.GUI.ext.Asserts;
 import framework.GUI.ext.Field;
 
-public class InField extends ElementData {
+class InField extends ElementData {
 
-    InField(ElementData data) {
+    protected InField(ElementData data) {
         super(data);
     }
 

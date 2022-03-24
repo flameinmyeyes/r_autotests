@@ -10,6 +10,7 @@ import java.time.Duration;
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverConditions.url;
 
+@Deprecated
 public class GUIFunctions {
 
     /* Методы для работы с главной страницей */

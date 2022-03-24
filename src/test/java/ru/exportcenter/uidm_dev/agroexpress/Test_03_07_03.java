@@ -1,10 +1,8 @@
 package ru.exportcenter.uidm_dev.agroexpress;
 
-import framework.GUI.func.GUI;
+import framework.GUI.GUIFunctions;
 import framework.RunTestAgain;
-import framework.Ways;
 import functional.CommonFunctions;
-import functional.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -44,13 +42,13 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
     public void step01() {
         //В браузере перейти по ссылке http://uidm.uidm-dev.d.exportcenter.ru/ru/login
         //Ввести логин и пароль demo_exporter/password, нажать «Войти»
-        new GUI()
+        new GUIFunctions()
                 .inContainer("Вход в личный кабинет")
                 .inField("Email").inputValue("demo_exporter")
                 .inField("Пароль").inputValue("password")
                 .clickButton("Войти");
 
-        new GUI().waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
+        new GUIFunctions().waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
     }
 
     @Step("Навигация")
@@ -59,7 +57,7 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
         //Найти сервис «Логистика. Доставка продукции "Агроэкспрессом"» и нажать «Оформить»
         //Перезагрузить страницу
         //Нажать кнопку «Продолжить»
-        new GUI()
+        new GUIFunctions()
                 .selectTab("Сервисы")
                 .waitForURL("http://master-portal-dev.d.exportcenter.ru/services/business")
                 .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
@@ -68,14 +66,14 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
 
         refreshTab("//*[contains(text(), 'Продолжить')]", 60);
 
-        new GUI().clickButton("Продолжить");
+        new GUIFunctions().clickButton("Продолжить");
     }
 
     @Step("Блок «Информация о компании»")
     public void step03() {
         CommonFunctions.printStep();
         //В поле «Почтовый адрес» вводим значение «Корнилаева 2»
-        new GUI()
+        new GUIFunctions()
                 .inContainer("Информация о компании")
                 .inField("Почтовый адрес").inputValue("Корнилаева 2").assertNoControl();
     }
@@ -89,7 +87,7 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
         //В поле «Телефон» вводим значение «+7(999)999-99-99»
         //В поле «Должность» вводим значение «Менеджер»
         //В поле «Email» вводим значение «word@mail.ru»
-        new GUI()
+        new GUIFunctions()
                 .inContainer("Информация о заявителе")
                 .inField("Дополнительный контакт").setCheckboxON().assertNoControl()
                 .inField("ФИО").inputValue("Иванов Иван Иванович").assertNoControl()
@@ -107,7 +105,7 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
         //Нажать на кнопку «Вывоз груза с адреса («Первая миля»)»
         //В поле «Адрес» вводим значение «Молодежная улица»
         //В поле «Предполагаемая дата отправления груза» вводим значение «22.10.2022»
-        new GUI()
+        new GUIFunctions()
                 .inContainer("Информация для оказания услуги")
                 .inField("Город отправления").selectValue("Тула").assertNoControl()
                 .inField("Город назначения").selectValue("Шанхай").assertNoControl()
@@ -133,7 +131,7 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
         //В поле «Количество контейнеров» вводим значение «16»
         //В поле «Тип контейнера» выбрать значение из выпадающего списка.        //Выбираем «Специализированный»
         //Нажать на кнопку «Сохранить»
-        new GUI()
+        new GUIFunctions()
                 .inContainer("Информация о грузе")
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
@@ -165,7 +163,7 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
         //В поле «Телефон» вводим значение «+79999999999»
         //В поле «Представитель грузополучателя» вводим значение «Moscow disco rule»
         //В поле «Email» вводим значение «www@mail.ru»
-        new GUI()
+        new GUIFunctions()
                 .inContainer("Информация о грузополучателе")
                 .inField("Наименование грузополучателя").inputValue("Ss-password").assertNoControl()
                 .inField("Страна").inputValue("USA").assertNoControl()
@@ -192,7 +190,7 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
         //Нажать на кнопку «Оформление фитосанитарного сертификата»
         //Выбрать одно из значений «РЭЦ» или «РЖД Логистика».        //Выбираем «РЭЦ»
         //Нажать на кнопку «Далее», для перехода на следующий шаг
-        new GUI()
+        new GUIFunctions()
                 .inContainer("Дополнительные услуги")
                 .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertNoControl()
                 .inField("Таможенное оформление").setCheckboxON().assertNoControl()
@@ -202,12 +200,12 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
                 .inField("Оформление фитосанитарного сертификата").setCheckboxON().assertNoControl()
                 .inField("РЖД Логистика").setRadiobuttonByDescription("Содействие в получении фитосанитарных сертификатов");
 
-        new GUI().clickButton("Далее");
+        new GUIFunctions().clickButton("Далее");
     }
 
     private void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
-            new GUI().waitForLoading();
+            new GUIFunctions().waitForLoading();
             if($x(expectedXpath).isDisplayed()) {
                 break;
             }
