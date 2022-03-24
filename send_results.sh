@@ -7,7 +7,7 @@ ALLURE_RESULTS_DIRECTORY='target/allure-results'
 # This url is where the Allure container is deployed. We are using localhost as example
 ALLURE_SERVER='http://allure.d.exportcenter.ru'
 # Project ID according to existent projects in your Allure container - Check endpoint for project creation >> `[POST]/projects`
-PROJECT_ID='rec_autotests'
+PROJECT_ID='rec-autotests'
 #PROJECT_ID='my-project-id'
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
