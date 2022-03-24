@@ -1,15 +1,14 @@
-package framework.GUI.func;
+package framework.GUI;
 
-import framework.GUI.ElementData;
 import framework.GUI.ext.Click;
 import framework.GUI.ext.Field;
 import framework.GUI.ext.Wait;
 
 import static com.codeborne.selenide.Selenide.switchTo;
 
-public class GUI extends ElementData {
+public class GUIFunctions extends ElementData {
 
-    public GUI() {
+    public GUIFunctions() {
     }
 
     /**

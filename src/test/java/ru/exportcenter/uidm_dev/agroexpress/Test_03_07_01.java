@@ -1,6 +1,6 @@
 package ru.exportcenter.uidm_dev.agroexpress;
 
-import framework.GUI.func.GUI;
+import framework.GUI.GUIFunctions;
 import framework.RunTestAgain;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
@@ -32,17 +32,17 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
 
     @Step("Авторизация")
     public void step01() {
-        new GUI().inContainer("Вход в личный кабинет")
+        new GUIFunctions().inContainer("Вход в личный кабинет")
                 .inField("Email").inputValue("demo_exporter")
                 .inField("Пароль").inputValue("password")
                 .clickButton("Войти");
 
-        new GUI().waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
+        new GUIFunctions().waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
     }
 
     @Step("Навигация")
     public void step02() {
-        new GUI().selectTab("Сервисы")
+        new GUIFunctions().selectTab("Сервисы")
                 .waitForURL("http://master-portal-dev.d.exportcenter.ru/services/business")
                 .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
                 .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Оформить")
@@ -50,12 +50,12 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
 
         refreshTab(15);
 
-        new GUI().clickButton("Продолжить");
+        new GUIFunctions().clickButton("Продолжить");
     }
 
     private void refreshTab(int times) {
         for (int i = 0; i < times; i++) {
-            new GUI().waitForLoading();
+            new GUIFunctions().waitForLoading();
             if ($x("//*[contains(text(), 'Продолжить')]").isDisplayed()) {
                 break;
             }
@@ -65,13 +65,13 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
 
     @Step("Заполнить область «Информация о компании»")
     public void step03() {
-        new GUI().inContainer("Информация о компании")
+        new GUIFunctions().inContainer("Информация о компании")
                 .inField("Почтовый адрес").inputValue("Корнилаева 2").assertNoControl();
     }
 
     @Step("Заполнить область «Информация о заявителе»")
     public void step04() {
-        new GUI().inContainer("Информация о заявителе")
+        new GUIFunctions().inContainer("Информация о заявителе")
                 .inField("Дополнительный контакт").setCheckboxON().assertNoControl()
                 .inField("ФИО").inputValue("Иванов Иван Иванович").assertNoControl()
                 .inField("Телефон").inputValue("+7(999)999-99-99").assertNoControl()
@@ -81,7 +81,7 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
 
     @Step("Заполнить область «Информация для оказания услуги»")
     public void step05() {
-        new GUI().inContainer("Информация для оказания услуги")
+        new GUIFunctions().inContainer("Информация для оказания услуги")
                 .inField("Город отправления").selectValue("Ярославль").assertNoControl()
                 .inField("Город назначения").selectValue("Шанхай").assertNoControl()
                 .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertNoControl()
@@ -91,7 +91,7 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
 
     @Step("Заполнить область «Информация о грузе»")
     public void step06() {
-        new GUI().inContainer("Информация о грузе")
+        new GUIFunctions().inContainer("Информация о грузе")
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
                 .inField("Наименование продукции").selectValue("Новая продукция").assertNoControl()
@@ -105,7 +105,7 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
 
     @Step("Заполнить область «Информация о грузополучателе»")
     public void step07() {
-        new GUI().inContainer("Информация о грузополучателе")
+        new GUIFunctions().inContainer("Информация о грузополучателе")
                 .inField("Наименование грузополучателя").inputValue("Ss-password").assertNoControl()
                 .inField("Страна").inputValue("USA").assertNoControl()
                 .inField("Город").inputValue("Moscow").assertNoControl()
@@ -120,7 +120,7 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
 
     @Step("Заполнить область «Дополнительные услуги»")
     public void step08() {
-        new GUI().inContainer("Дополнительные услуги")
+        new GUIFunctions().inContainer("Дополнительные услуги")
                 .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertNoControl()
                 .inField("Адрес").assertValue("Молодежная улица").assertEditable().assertNoControl()
                 .inField("Таможенное оформление").setCheckboxON().assertNoControl()
@@ -130,7 +130,7 @@ public class Test_03_07_01 extends Hooks_UIDM_DEV {
                 .inField("Оформление фитосанитарного сертификата").setCheckboxON().assertNoControl()
                 .inField("РЖД Логистика").setRadiobuttonByDescription("Содействие в получении фитосанитарных сертификатов");
 
-        new GUI().clickButton("Далее")
+        new GUIFunctions().clickButton("Далее")
                 .waitForElementDisplayed("//*[text()='Заявка отправлена на рассмотрение. Срок рассмотрения до 3 рабочих дней']");
     }
 }
