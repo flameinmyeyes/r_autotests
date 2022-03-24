@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="TSE_all_tests" parallel="tests" verbose="1" thread-count="4">
+<suite name="REC_all_tests" parallel="tests" verbose="1" thread-count="4">
     <parameter name="runMode" value="docker"/>
 <!--    <parameter name="testrun" value="TSE-C69"/>-->
 <!--    <parameter name="rerunFailedTestsOnly" value="true"/> -->
