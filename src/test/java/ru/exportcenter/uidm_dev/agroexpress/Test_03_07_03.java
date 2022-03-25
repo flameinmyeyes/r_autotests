@@ -1,8 +1,8 @@
 package ru.exportcenter.uidm_dev.agroexpress;
 
-import framework.GUIFunctions.GUIFunctions;
+import functions.gui.GUIFunctions;
 import framework.RunTestAgain;
-import functional.CommonFunctions;
+import functions.common.CommonFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;

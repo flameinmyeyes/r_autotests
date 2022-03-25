@@ -6,7 +6,7 @@
 <!--    <parameter name="testrun" value="TSE-C69"/>-->
 <!--    <parameter name="rerunFailedTestsOnly" value="true"/> -->
 <!--    <listeners>-->
-<!--        <listener class-name="framework.integration.zephyrScaleIntegration.TestListener"/>-->
+<!--        <listener class-name="framework.integration.zephyrscale.TestListener"/>-->
 <!--    </listeners>-->
 
     <test name="REC_all_tests_Maksimova" thread-count="1" preserve-order="true">
@@ -29,7 +29,7 @@
 
     <test name="REC_all_tests_Vorozhko" thread-count="1" preserve-order="true">
         <classes>
-            <class name="ru.exportcenter.uidm_dev.agroexpress.Test_03_07_04"/>
+<!--            <class name="ru.exportcenter.uidm_dev.agroexpress.Test_03_07_04"/>-->
         </classes>
     </test>
 
