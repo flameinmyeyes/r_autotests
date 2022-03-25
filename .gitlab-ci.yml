@@ -5,8 +5,8 @@ variables:
   DOCKER_DRIVER: overlay2
 
 stages:
-  - test
   - build
+  - test
 
 build:
   stage: build
@@ -33,7 +33,7 @@ build:
 # Запускаем тесты
 run_regression_tests_job: #Test_&_send:
   image:
-    name: maven:3.8-openjdk-8
+    name: $CI_ARTIFACTORY_URL_CLOUD/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/$DATADIR:$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID
     entrypoint: [""]  # Переопределение "точки входа" в контейнер который запускается ранером при сборке
 
   except:
