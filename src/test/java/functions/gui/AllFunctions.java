@@ -1,9 +1,6 @@
 package functions.gui;
 
-import functions.gui.ext.Asserts;
-import functions.gui.ext.Click;
-import functions.gui.ext.Field;
-import functions.gui.ext.Wait;
+import functions.gui.ext.*;
 
 import static com.codeborne.selenide.Selenide.switchTo;
 
@@ -150,6 +147,15 @@ public class AllFunctions extends ElementData {
     public AllFunctions selectTab(String tabName) {
         button = tabName;
         new Click(this).selectTab(tabName);
+        return this;
+    }
+
+    /**
+     * upload
+     */
+
+    public AllFunctions uploadFile(String upload, String wayToFile) {
+        new Upload(this).uploadFile(upload, wayToFile);
         return this;
     }
 
