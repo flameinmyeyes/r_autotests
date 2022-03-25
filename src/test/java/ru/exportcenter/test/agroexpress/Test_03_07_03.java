@@ -41,7 +41,7 @@ public class Test_03_07_03 extends HooksTEST {
 
     @Step("Авторизация")
     public void step01() {
-        //В браузере перейти по ссылке http://uidm.uidm-dev.d.exportcenter.ru/ru/login
+        //В браузере перейти по ссылке https://lk.t.exportcenter.ru/ru/login
         //Ввести логин и пароль demo_exporter/password, нажать «Войти»
         new GUIFunctions()
                 .inContainer("Вход в личный кабинет")
@@ -49,7 +49,7 @@ public class Test_03_07_03 extends HooksTEST {
                 .inField("Пароль").inputValue("password")
                 .clickButton("Войти");
 
-        new GUIFunctions().waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
+        new GUIFunctions().waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
     @Step("Навигация")
@@ -60,7 +60,7 @@ public class Test_03_07_03 extends HooksTEST {
         //Нажать кнопку «Продолжить»
         new GUIFunctions()
                 .selectTab("Сервисы")
-                .waitForURL("http://master-portal-dev.d.exportcenter.ru/services/business")
+                .waitForURL("https://master-portal.t.exportcenter.ru/services/business")
                 .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
                 .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Оформить")
                 .switchPageTo(1);
@@ -123,7 +123,7 @@ public class Test_03_07_03 extends HooksTEST {
         //Нажать на кнопку «Добавить +»
         //Нажать на кнопку «Добавить новую»
         //В поле «Наименование продукции» вводим значение «Новая Продукция»
-        //В поле «Код ТН ВЭД» выбрать значение из выпадающего списка.        //Выбираем значение «Кофе»
+        //В поле «Код ТН ВЭД» выбрать значение из выпадающего списка.        //Выбираем значение «Ежевика»
         //В поле «Вес продукции, кг» вводим значение «16,000»
         //В поле «Упаковка» выбрать значение из выпадающего списка.        //Выбираем «Барабаны»
         //Нажать на кнопку «Температурный режим на всю партию (от -30°C до 0°C или от 0°C до +30°C)»
@@ -138,7 +138,7 @@ public class Test_03_07_03 extends HooksTEST {
                 .inContainer("Сведения о продукции")
                 .clickButton("Добавить новую")
                 .inField("Наименование продукции").inputValue("Новая Продукция").assertNoControl()
-                .inField("Код ТН ВЭД").selectValue("Кофе").assertNoControl()
+                .inField("Код ТН ВЭД").selectValue("Ежевика").assertNoControl()
                 .inField("Вес продукции, кг").inputValue("16,000").assertNoControl()
                 .inField("Упаковка").selectValue("Ящики 1-5кг").assertNoControl()
                 .inField("Температурный режим (от -30°C до 0°C или от 0°C до +30°C) ").setCheckboxON().assertNoControl()
@@ -156,7 +156,7 @@ public class Test_03_07_03 extends HooksTEST {
         //В поле «Наименование грузополучателя» вводим значение Ss-password
         //В поле «Страна» вводим значение «USA»
         //В поле «Город» вводим значение «Moscow»
-        //В поле «Дом» вводим значение «Ff»
+        //В поле «Дом» вводим значение «12s»
         //В поле «Регион» вводим значение «St-Peterburg»
         //В поле «Район» вводим значение «Raion»
         //В поле «Улица» вводим значение «Lenina street»
@@ -169,7 +169,7 @@ public class Test_03_07_03 extends HooksTEST {
                 .inField("Наименование грузополучателя").inputValue("Ss-password").assertNoControl()
                 .inField("Страна").inputValue("USA").assertNoControl()
                 .inField("Город").inputValue("Moscow").assertNoControl()
-                .inField("Дом").inputValue("Ff").assertNoControl()
+                .inField("Дом").inputValue("12s").assertNoControl()
                 .inField("Регион").inputValue("St-Peterburg").assertNoControl()
                 .inField("Район").inputValue("Raion").assertNoControl()
                 .inField("Улица").inputValue("Lenina street").assertNoControl()
