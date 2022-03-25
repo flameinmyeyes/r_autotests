@@ -1,6 +1,6 @@
 ---
 image:
-  name: maven:3.8-openjdk-8
+  name: artifactory.exportcenter.ru/docker/sub-service/autotests/rec_autotests:testbuid-178411
   entrypoint: [""]  # Переопределение "точки входа" в контейнер который запускается ранером при сборке
 
 variables:
