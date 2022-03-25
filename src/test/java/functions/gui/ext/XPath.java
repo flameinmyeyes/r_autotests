@@ -78,4 +78,18 @@ public class XPath extends ElementData {
         return "";
     }
 
+    /**
+     * upload
+     */
+
+    public String getUploadXPath(String upload) {
+        return getContainerXPath() + "//*[text() = '" + upload + "']/ancestor::*[contains(@class, 'FileInput_labelWrapper')]" +
+                "/following-sibling::*[contains(@class, 'FileInput_container')]//input[@type = 'file']";
+    }
+
+    public String getUploadedFileNameXPath(String upload, String fileName) {
+        return getContainerXPath() + "//*[text() = '" + upload + "']/ancestor::*[contains(@class, 'FileInput_labelWrapper')]" +
+                "/following-sibling::*[contains(@class, 'FileInput_container')]//*[contains(@class, 'FileInput_fileName')][text() = '" + fileName + "']";
+    }
+
 }

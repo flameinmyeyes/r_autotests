@@ -2,6 +2,7 @@ package functions.gui;
 
 import functions.gui.ext.Click;
 import functions.gui.ext.Field;
+import functions.gui.ext.Upload;
 import functions.gui.ext.Wait;
 
 import static com.codeborne.selenide.Selenide.switchTo;
@@ -66,6 +67,15 @@ public class GUIFunctions extends ElementData {
 
     public AllFunctions selectTab(String tabName) {
         new Click(this).selectTab(tabName);
+        return new AllFunctions(this);
+    }
+
+    /**
+     * upload
+     */
+
+    public AllFunctions uploadFile(String upload, String wayToFile) {
+        new Upload(this).uploadFile(upload, wayToFile);
         return new AllFunctions(this);
     }
 
