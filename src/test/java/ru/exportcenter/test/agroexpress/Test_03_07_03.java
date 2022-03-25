@@ -18,7 +18,7 @@ public class Test_03_07_03 extends HooksTEST {
 //    private String WAY_TEST = Ways.UIDM_DEV.getWay() + "\\FUN_02\\BP_016\\FUN_02_BP_016_NSI_016_PZ_2_7_2_1\\";
 
     @Owner(value="Балашов Илья")
-    @Description("03 07 03 Заполнение Заявки на получение услуги (сценарий 3)")
+    @Description("03 07 03 Заполнение Заявки на получение услуги. Полный контейнер. Новая продукция")
     @Link(name="Test_03_07_03", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=117902506")
 
     @Test(retryAnalyzer = RunTestAgain.class)
