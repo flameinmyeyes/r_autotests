@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class PropertiesEditor {
 
-    public static String readProperties(String filePath, String key) {
+    public static String getProperty(String filePath, String key) {
 
         String value = "";
 
