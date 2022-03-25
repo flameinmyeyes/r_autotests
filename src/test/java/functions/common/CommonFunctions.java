@@ -8,8 +8,6 @@ import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import java.io.*;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.*;
@@ -175,7 +173,7 @@ public class CommonFunctions {
                 System.out.println("Файл счетчика не обнаружен. Будет создан новый файл счетчика");
                 docNumCounterPathFile = new File(docNumCounterPath);
                 CommonFunctions.wait(5);
-                FileFunctions.writeValueFile(docNumCounterPath, DateFunctions.dateToday("ddMM") + "01");
+                FileFunctions.writeValueToFile(docNumCounterPath, DateFunctions.dateToday("ddMM") + "01");
             }
 
             //Создание объекта BufferedReader
