@@ -43,7 +43,7 @@ public class Test_03_07_03_parameterized extends Hooks_UIDM_DEV {
 //    }
 
     public static String getData(String key) {
-        String data = PropertiesEditor.readProperties(WAY_TO_PROPERTIES, key);
+        String data = PropertiesEditor.getProperty(WAY_TO_PROPERTIES, key);
         return data;
     }
 
