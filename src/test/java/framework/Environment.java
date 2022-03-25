@@ -1,7 +1,7 @@
 package framework;
 
 import com.google.common.collect.ImmutableMap;
-import functional.APIFunctions;
+import functions.api.RESTFunctions;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
@@ -82,7 +82,7 @@ public class Environment {
     private String getStandVersion(String standVersionURL) {
         try {
             //с помощью REST запроса получаем html с версиями ядра и приклада
-            String content = APIFunctions.sendRESTRequest("GET", standVersionURL);
+            String content = RESTFunctions.sendRESTRequest("GET", standVersionURL);
 
             //правим String
             String[] contentMod = content
@@ -110,7 +110,7 @@ public class Environment {
     private String getStandCoreVersion(String standVersionURL) {
         try {
             //с помощью REST запроса получаем html с версиями ядра и приклада
-            String content = APIFunctions.sendRESTRequest("GET", standVersionURL);
+            String content = RESTFunctions.sendRESTRequest("GET", standVersionURL);
 
             //правим String
             String[] contentMod = content

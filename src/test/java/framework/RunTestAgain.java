@@ -1,9 +1,8 @@
 package framework;
 
-import functional.CommonFunctions;
+import functions.common.CommonFunctions;
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;
-import org.testng.annotations.*;
 
 import static com.codeborne.selenide.Selenide.refresh;
 

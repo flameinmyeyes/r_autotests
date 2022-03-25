@@ -1,7 +1,7 @@
 package framework;
 
-import functional.CommonFunctions;
-import org.testng.annotations.Optional;
+import functions.common.CommonFunctions;
+import functions.common.DateFunctions;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -21,7 +21,7 @@ public class AutoTestsStartTime {
         START_TIME = autoTestsStartTime;
 
         //Текущая дата
-        String currentTime = CommonFunctions.dateToday("dd.MM.yyyy HH:mm");
+        String currentTime = DateFunctions.dateToday("dd.MM.yyyy HH:mm");
         System.out.println("Текущее время: " + currentTime);
         //Преобразовываем в Date
         Date currentTime_date = null;
@@ -49,7 +49,7 @@ public class AutoTestsStartTime {
         while(currentTime_date.before(startTime_date)) {
             CommonFunctions.wait(30);
             //Обновляем текущее время
-            currentTime = CommonFunctions.dateToday("dd.MM.yyyy HH:mm");
+            currentTime = DateFunctions.dateToday("dd.MM.yyyy HH:mm");
             //Преобразовываем в Date
             try {
                 currentTime_date = new SimpleDateFormat("dd.MM.yyyy HH:mm").parse(currentTime);

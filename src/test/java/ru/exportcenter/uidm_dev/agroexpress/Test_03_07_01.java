@@ -1,6 +1,6 @@
 package ru.exportcenter.uidm_dev.agroexpress;
 
-import framework.GUIFunctions.GUIFunctions;
+import functions.gui.GUIFunctions;
 import framework.RunTestAgain;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;

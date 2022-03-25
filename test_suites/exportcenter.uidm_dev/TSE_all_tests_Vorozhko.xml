@@ -8,7 +8,7 @@
 	<parameter name="testrun" value="TSE-C69"/>
 <!--	 <parameter name="rerunFailedTestsOnly" value="true"/>-->
 <!--	<listeners>-->
-<!--		<listener class-name="framework.integration.zephyrScaleIntegration.TestListener"/>-->
+<!--		<listener class-name="framework.integration.zephyrscale.TestListener"/>-->
 <!--	</listeners>-->
 
 	<test name="TSE_all_tests_Vorozhko" thread-count="1" preserve-order="true">
