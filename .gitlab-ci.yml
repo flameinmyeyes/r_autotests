@@ -28,9 +28,10 @@ build:
       --build-arg CI_BUILD_TAG="$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID" \
       --build-arg CI_ARTIFACTORY_URL="$CI_ARTIFACTORY_URL" \
       --build-arg CI_ARTIFACTORY_URL_CLOUD_BASE="$CI_ARTIFACTORY_URL_CLOUD_BASE" \
-      -t $CI_ARTIFACTORY_URL_CLOUD/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID .
-    - docker push $CI_ARTIFACTORY_URL_CLOUD/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID
-    - echo DOCKER_IMAGE=$CI_ARTIFACTORY_URL_CLOUD/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID >> build.env
+      -t $CI_ARTIFACTORY_URL_CLOUD/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME .
+    - docker push $CI_ARTIFACTORY_URL_CLOUD/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+    - echo DOCKER_IMAGE=$CI_ARTIFACTORY_URL_CLOUD/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME >> build.env
+
   artifacts:
     reports:
       dotenv: build.env
@@ -39,7 +40,7 @@ build:
 run_regression_tests_job: #Test_&_send:
   stage: test
   image:
-    name: artifactory.exportcenter.ru/docker/sub-service/autotests/rec_autotests:master-178474
+    name: $CI_ARTIFACTORY_URL_CLOUD/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:latest
     entrypoint: [""]  # Переопределение "точки входа" в контейнер который запускается ранером при сборке
   except:
     - merge_requests
