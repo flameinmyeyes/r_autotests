@@ -1,4 +1,4 @@
-package ru.exportcenter.uidm_dev.agroexpress;
+package ru.exportcenter.dev.agroexpress;
 
 import framework.RunTestAgain;
 import functions.common.CommonFunctions;
@@ -8,11 +8,11 @@ import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.testng.annotations.Test;
-import ru.exportcenter.uidm_dev.Hooks_UIDM_DEV;
+import ru.exportcenter.dev.HooksDEV;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_04 extends Hooks_UIDM_DEV {
+public class Test_03_07_04 extends HooksDEV {
 
     @Owner(value="Ворожко Александр")
     @Description("03 07 04 Сценарий 4")

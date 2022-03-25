@@ -1,18 +1,18 @@
-package ru.exportcenter.uidm_dev.agroexpress;
+package ru.exportcenter.test.agroexpress;
 
-import functions.gui.GUIFunctions;
 import framework.RunTestAgain;
+import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.testng.annotations.Test;
-import ru.exportcenter.uidm_dev.Hooks_UIDM_DEV;
+import ru.exportcenter.test.HooksTEST;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.refresh;
 
-public class Test_03_07_01 extends Hooks_UIDM_DEV {
+public class Test_03_07_01 extends HooksTEST {
 
     @Owner(value = "Максимова Диана")
     @Description("03 07 01 Заполнение Заявки на получение услуги (сценарий 1)")

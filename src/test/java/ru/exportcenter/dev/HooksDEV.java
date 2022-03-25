@@ -1,7 +1,6 @@
-package ru.exportcenter.uidm_dev;
+package ru.exportcenter.dev;
 
 import framework.DriverInit;
-import framework.Environment;
 import framework.HooksInterface;
 import io.qameta.allure.Step;
 import org.testng.annotations.AfterClass;
@@ -15,7 +14,7 @@ import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Hooks_UIDM_DEV implements HooksInterface {
+public class HooksDEV implements HooksInterface {
 
     private static final String URL = "http://uidm.uidm-dev.d.exportcenter.ru/ru/login";
     public static String RUN_MODE;

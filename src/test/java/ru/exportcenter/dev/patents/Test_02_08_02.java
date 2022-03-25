@@ -1,4 +1,4 @@
-package ru.exportcenter.uidm_dev.patents;
+package ru.exportcenter.dev.patents;
 
 import framework.RunTestAgain;
 import functions.common.CommonFunctions;
@@ -8,12 +8,12 @@ import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.testng.annotations.Test;
-import ru.exportcenter.uidm_dev.Hooks_UIDM_DEV;
+import ru.exportcenter.dev.HooksDEV;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.refresh;
 
-public class Test_02_08_02 extends Hooks_UIDM_DEV {
+public class Test_02_08_02 extends HooksDEV {
 
     @Owner(value = "Ворожко Александр")
     @Description("ТК 02 08 02")

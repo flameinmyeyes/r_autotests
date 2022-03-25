@@ -1,20 +1,24 @@
-package ru.exportcenter.uidm_dev.agroexpress;
+package ru.exportcenter.dev.agroexpress;
 
-import functions.gui.GUIFunctions;
 import framework.RunTestAgain;
 import functions.common.CommonFunctions;
+import functions.file.PropertiesHandler;
+import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.testng.annotations.Test;
-import ru.exportcenter.uidm_dev.Hooks_UIDM_DEV;
+import ru.exportcenter.dev.HooksDEV;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.refresh;
 
-public class Test_03_07_03 extends Hooks_UIDM_DEV {
+public class Test_03_07_03_parameterized extends HooksDEV {
 
-//    private String WAY_TEST = Ways.UIDM_DEV.getWay() + "\\FUN_02\\BP_016\\FUN_02_BP_016_NSI_016_PZ_2_7_2_1\\";
+//    private final String WAY_TEST = Ways.UIDM_DEV.getWay() + "\\FUN_02\\BP_016\\FUN_02_BP_016_NSI_016_PZ_2_7_2_1\\";
+
+    public static String WAY_TO_PROPERTIES = "src/test/java/ru/exportcenter/uidm_dev/agroexpress/Test_03_07_03_properties.xml";
 
     @Owner(value="Балашов Илья")
     @Description("03 07 03 Заполнение Заявки на получение услуги (сценарий 3)")
@@ -38,14 +42,19 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
 //        CommonFunctions.screenShot(WAY_TEST + "screen.png");
 //    }
 
+    public static String getData(String key) {
+        String data = PropertiesHandler.getProperty(WAY_TO_PROPERTIES, key);
+        return data;
+    }
+
     @Step("Авторизация")
     public void step01() {
         //В браузере перейти по ссылке http://uidm.uidm-dev.d.exportcenter.ru/ru/login
         //Ввести логин и пароль demo_exporter/password, нажать «Войти»
         new GUIFunctions()
                 .inContainer("Вход в личный кабинет")
-                .inField("Email").inputValue("demo_exporter")
-                .inField("Пароль").inputValue("password")
+                .inField("Email").inputValue(getData("Авторизация.Email"))
+                .inField("Пароль").inputValue(getData("Авторизация.Пароль"))
                 .clickButton("Войти");
 
         new GUIFunctions().waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
@@ -75,7 +84,7 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
         //В поле «Почтовый адрес» вводим значение «Корнилаева 2»
         new GUIFunctions()
                 .inContainer("Информация о компании")
-                .inField("Почтовый адрес").inputValue("Корнилаева 2").assertNoControl();
+                .inField("Почтовый адрес").inputValue(getData("Информация о компании.Почтовый адрес")).assertNoControl();
     }
 
     @Step("Блок «Информация о заявителе»")
@@ -90,10 +99,10 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
         new GUIFunctions()
                 .inContainer("Информация о заявителе")
                 .inField("Дополнительный контакт").setCheckboxON().assertNoControl()
-                .inField("ФИО").inputValue("Иванов Иван Иванович").assertNoControl()
-                .inField("Телефон").inputValue("+7(999)999-99-99").assertNoControl()
-                .inField("Должность").inputValue("Менеджер").assertNoControl()
-                .inField("Email").inputValue("word@mail.ru").assertNoControl();
+                .inField("ФИО").inputValue(getData("Информация о заявителе.ФИО")).assertNoControl()
+                .inField("Телефон").inputValue(getData("Информация о заявителе.Телефон")).assertNoControl()
+                .inField("Должность").inputValue(getData("Информация о заявителе.Должность")).assertNoControl()
+                .inField("Email").inputValue(getData("Информация о заявителе.Email")).assertNoControl();
     }
 
     @Step("Блок  «Информация для оказания услуги»")
@@ -107,11 +116,11 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
         //В поле «Предполагаемая дата отправления груза» вводим значение «22.10.2022»
         new GUIFunctions()
                 .inContainer("Информация для оказания услуги")
-                .inField("Город отправления").selectValue("Тула").assertNoControl()
-                .inField("Город назначения").selectValue("Шанхай").assertNoControl()
+                .inField("Город отправления").selectValue(getData("Информация для оказания услуги.Город отправления")).assertNoControl()
+                .inField("Город назначения").selectValue(getData("Информация для оказания услуги.Город назначения")).assertNoControl()
                 .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON()
-                .inField("Адрес").inputValue("Молодежная улица").assertNoControl()
-                .inField("Предполагаемая дата отправления груза").inputValue("22.10.2022").assertNoControl();
+                .inField("Адрес").inputValue(getData("Информация для оказания услуги.Адрес")).assertNoControl()
+                .inField("Предполагаемая дата отправления груза").inputValue(getData("Информация для оказания услуги.Предполагаемая дата отправления груза")).assertNoControl();
     }
 
     @Step("Блок «Информация о грузе»")
@@ -136,15 +145,15 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
                 .clickButton("Добавить новую")
-                .inField("Наименование продукции").inputValue("Новая Продукция").assertNoControl()
-                .inField("Код ТН ВЭД").selectValue("Кофе").assertNoControl()
-                .inField("Вес продукции, кг").inputValue("16,000").assertNoControl()
-                .inField("Упаковка").selectValue("Ящики 1-5кг").assertNoControl()
+                .inField("Наименование продукции").inputValue(getData("Информация о грузе.Наименование продукции")).assertNoControl()
+                .inField("Код ТН ВЭД").selectValue(getData("Информация о грузе.Код ТН ВЭД")).assertNoControl()
+                .inField("Вес продукции, кг").inputValue(getData("Информация о грузе.Вес продукции, кг")).assertNoControl()
+                .inField("Упаковка").selectValue(getData("Информация о грузе.Упаковка")).assertNoControl()
                 .inField("Температурный режим (от -30°C до 0°C или от 0°C до +30°C) ").setCheckboxON().assertNoControl()
-                .inField("От").inputValue("-15").assertNoControl()
-                .inField("До").inputValue("+27").assertNoControl()
-                .inField("Количество контейнеров").inputValue("16").assertNoControl()
-                .inField("Тип контейнера").selectValue("Специализированный").assertNoControl()
+                .inField("От").inputValue(getData("Информация о грузе.От")).assertNoControl()
+                .inField("До").inputValue(getData("Информация о грузе.До")).assertNoControl()
+                .inField("Количество контейнеров").inputValue(getData("Информация о грузе.Количество контейнеров")).assertNoControl()
+                .inField("Тип контейнера").selectValue(getData("Информация о грузе.Тип контейнера")).assertNoControl()
                 .clickButton("Сохранить");
     }
 
@@ -165,17 +174,17 @@ public class Test_03_07_03 extends Hooks_UIDM_DEV {
         //В поле «Email» вводим значение «www@mail.ru»
         new GUIFunctions()
                 .inContainer("Информация о грузополучателе")
-                .inField("Наименование грузополучателя").inputValue("Ss-password").assertNoControl()
-                .inField("Страна").inputValue("USA").assertNoControl()
-                .inField("Город").inputValue("Moscow").assertNoControl()
-                .inField("Дом").inputValue("Ff").assertNoControl()
-                .inField("Регион").inputValue("St-Peterburg").assertNoControl()
-                .inField("Район").inputValue("Raion").assertNoControl()
-                .inField("Улица").inputValue("Lenina street").assertNoControl()
-                .inField("Регистрационный номер грузополучателя").inputValue("223 22 44 2").assertNoControl()
-                .inField("Телефон").inputValue("+79999999999").assertNoControl()
-                .inField("Представитель грузополучателя").inputValue("Moscow disco rule").assertNoControl()
-                .inField("Email").inputValue("www@mail.ru").assertNoControl();
+                .inField("Наименование грузополучателя").inputValue(getData("Информация о грузополучателе.Наименование грузополучателя")).assertNoControl()
+                .inField("Страна").inputValue(getData("Информация о грузополучателе.Страна")).assertNoControl()
+                .inField("Город").inputValue(getData("Информация о грузополучателе.Город")).assertNoControl()
+                .inField("Дом").inputValue(getData("Информация о грузополучателе.Дом")).assertNoControl()
+                .inField("Регион").inputValue(getData("Информация о грузополучателе.Регион")).assertNoControl()
+                .inField("Район").inputValue(getData("Информация о грузополучателе.Район")).assertNoControl()
+                .inField("Улица").inputValue(getData("Информация о грузополучателе.Улица")).assertNoControl()
+                .inField("Регистрационный номер грузополучателя").inputValue(getData("Информация о грузополучателе.Регистрационный номер грузополучателя")).assertNoControl()
+                .inField("Телефон").inputValue(getData("Информация о грузополучателе.Телефон")).assertNoControl()
+                .inField("Представитель грузополучателя").inputValue(getData("Информация о грузополучателе.Представитель грузополучателя")).assertNoControl()
+                .inField("Email").inputValue(getData("Информация о грузополучателе.Email")).assertNoControl();
     }
 
     @Step("Блок «Дополнительные услуги»")
