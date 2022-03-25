@@ -7,7 +7,7 @@ import com.google.gson.JsonParser;
 
 import java.util.Map;
 
-public class JSONEditor {
+public class JSONHandler {
 
     //https://stackoverflow.com/questions/20117148/how-to-create-json-object-using-string
 

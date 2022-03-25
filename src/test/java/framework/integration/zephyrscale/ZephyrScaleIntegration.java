@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import framework.Ways;
 import functions.api.RESTFunctions;
 import functions.common.DateFunctions;
-import functions.file.JSONEditor;
+import functions.file.JSONHandler;
 import net.sf.json.JSONObject;
 
 import java.io.File;
@@ -164,7 +164,7 @@ public class ZephyrScaleIntegration {
             String getRequestResponse = RESTFunctions.sendRESTRequest("GET", getRequestURL, LOGIN, PASSWORD);
 
             //преобразовываем в JSON
-            JsonObject json = JSONEditor.parseJSONfromString(getRequestResponse);
+            JsonObject json = JSONHandler.parseJSONfromString(getRequestResponse);
 
             //достаем из него JsonArray с именем items, в котором лежит список тесткейсов
             JsonArray jsonArray = json.getAsJsonArray("items");
@@ -213,7 +213,7 @@ public class ZephyrScaleIntegration {
             String getRequestResponse = RESTFunctions.sendRESTRequest("GET", getRequestURL, LOGIN, PASSWORD);
 
             //преобразовываем в JSON
-            JsonObject json = JSONEditor.parseJSONfromString(getRequestResponse);
+            JsonObject json = JSONHandler.parseJSONfromString(getRequestResponse);
 
             //достаем из него JsonArray с именем items, в котором лежит список тесткейсов
             JsonArray jsonArray = json.getAsJsonArray("items");
@@ -255,7 +255,7 @@ public class ZephyrScaleIntegration {
             String getRequestResponse = RESTFunctions.sendRESTRequest("GET", getRequestURL, LOGIN, PASSWORD);
 
             //преобразовываем в JSON
-            JsonObject json = JSONEditor.parseJSONfromString(getRequestResponse);
+            JsonObject json = JSONHandler.parseJSONfromString(getRequestResponse);
 
             //получаем статус тесткейса
             testCaseStatus = json.get("status").toString().replace("\"", "");
@@ -281,7 +281,7 @@ public class ZephyrScaleIntegration {
             String getRequestResponse = RESTFunctions.sendRESTRequest("GET", getRequestURL, LOGIN, PASSWORD);
 
             //преобразовываем в JSON
-            JsonObject json = JSONEditor.parseJSONfromString(getRequestResponse);
+            JsonObject json = JSONHandler.parseJSONfromString(getRequestResponse);
 
             //достаем из него JsonArray с именем issueLinks, в котором лежит список багрепортов
             JsonArray issueLinks = json.getAsJsonArray("issueLinks");
@@ -317,7 +317,7 @@ public class ZephyrScaleIntegration {
             String getRequestResponse = RESTFunctions.sendRESTRequest("GET", getRequestURL, LOGIN, PASSWORD);
 
             //преобразовываем в JSON
-            JsonObject json = JSONEditor.parseJSONfromString(getRequestResponse);
+            JsonObject json = JSONHandler.parseJSONfromString(getRequestResponse);
 
             //достаем из него JsonArray с именем issueLinks, в котором лежит список тасков
             JsonArray issueLinks = json.getAsJsonArray("issueLinks");
@@ -354,7 +354,7 @@ public class ZephyrScaleIntegration {
             String getRequestResponse = RESTFunctions.sendRESTRequest("GET", getRequestURL, LOGIN, PASSWORD);
 
             //преобразовываем в JSON
-            JsonObject json = JSONEditor.parseJSONfromString(getRequestResponse);
+            JsonObject json = JSONHandler.parseJSONfromString(getRequestResponse);
 
             //достаем из него JsonArray с именем items, в котором лежит список тесткейсов
             JsonArray jsonArray = json.getAsJsonArray("items");
@@ -389,7 +389,7 @@ public class ZephyrScaleIntegration {
             String getRequestResponse = RESTFunctions.sendRESTRequest("GET", getRequestURL, LOGIN, PASSWORD);
 
             //преобразовываем в JSON
-            JsonObject json = JSONEditor.parseJSONfromString(getRequestResponse);
+            JsonObject json = JSONHandler.parseJSONfromString(getRequestResponse);
 
             //получаем пользователя Jira из поля поля "Ответственный ATE"
             jiraUser = json.get("customFields").getAsJsonObject().get("Ответственный ATE").toString().replace("\"", "");
