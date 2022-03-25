@@ -1,23 +1,20 @@
-package ru.exportcenter.uidm_dev.patents;
+package ru.exportcenter.test.patents;
 
 import framework.RunTestAgain;
+import functions.common.CommonFunctions;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
-
-import functions.common.CommonFunctions;
 import org.testng.annotations.Test;
-import ru.exportcenter.uidm_dev.Hooks_UIDM_DEV;
-
-//import java.time.Duration;
+import ru.exportcenter.test.HooksTEST;
 
 import java.io.File;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_02_08_01 extends Hooks_UIDM_DEV {
+public class Test_02_08_01 extends HooksTEST {
 
     @Description("ТК 02 08 01")
     @Owner(value="Теребков Андрей, Петрищев Руслан")

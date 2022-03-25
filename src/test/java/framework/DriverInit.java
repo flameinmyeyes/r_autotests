@@ -18,6 +18,7 @@ import static com.codeborne.selenide.FileDownloadMode.PROXY;
 public class DriverInit {
 
     private RemoteWebDriver remoteWebDriver;
+    private final int TIMEOUT = 60000;
 
     public void driverConfiguration(String runMode, List<File> pluginsList, String testName) {
 
@@ -42,11 +43,11 @@ public class DriverInit {
                 screenshots = true;
                 proxyEnabled = true;
                 fileDownload = PROXY;
-                timeout = 60000;
-
+                pageLoadTimeout = TIMEOUT;
+                timeout = TIMEOUT;
                 break;
 
-            case ("docker"):
+            case ("remote"):
                 //плагины
                 chromeOptions.addExtensions(pluginsList);
 
@@ -66,8 +67,10 @@ public class DriverInit {
 //                desiredCapabilities.setCapability("enableVideo",true);
                 desiredCapabilities.setCapability("name", testName); //передача имени теста в селеноид
                 desiredCapabilities.setCapability("takesScreenshot",true);
+                desiredCapabilities.setCapability("sessionTimeout", "30m");
                 browserCapabilities = desiredCapabilities;
-                timeout = 60000;
+                pageLoadTimeout = TIMEOUT;
+                timeout = TIMEOUT;
 
                 //создание удаленного браузера
                 try {

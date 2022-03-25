@@ -1,4 +1,4 @@
-package ru.exportcenter.uidm_dev.agroexpress;
+package ru.exportcenter.test.agroexpress;
 
 import framework.RunTestAgain;
 import functions.common.CommonFunctions;
@@ -9,12 +9,12 @@ import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.testng.annotations.Test;
-import ru.exportcenter.uidm_dev.Hooks_UIDM_DEV;
+import ru.exportcenter.test.HooksTEST;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.refresh;
 
-public class Test_03_07_03_parameterized extends Hooks_UIDM_DEV {
+public class Test_03_07_03_parameterized extends HooksTEST {
 
 //    private final String WAY_TEST = Ways.UIDM_DEV.getWay() + "\\FUN_02\\BP_016\\FUN_02_BP_016_NSI_016_PZ_2_7_2_1\\";
 

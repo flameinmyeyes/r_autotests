@@ -1,35 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="REC_all_tests" parallel="tests" verbose="1" thread-count="4">
-    <parameter name="runMode" value="docker"/>
+<suite name="REC_all_tests" parallel="tests" verbose="1" thread-count="2">
+    <parameter name="runMode" value="remote"/>
 <!--    <parameter name="testrun" value="TSE-C69"/>-->
 <!--    <parameter name="rerunFailedTestsOnly" value="true"/> -->
 <!--    <listeners>-->
 <!--        <listener class-name="framework.integration.zephyrscale.TestListener"/>-->
 <!--    </listeners>-->
 
-<!--    <test name="REC_all_tests_Maksimova" thread-count="1" preserve-order="true">-->
-<!--        <classes>-->
-<!--            <class name="ru.exportcenter.uidm_dev.agroexpress.Test_03_07_01"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-
-<!--    <test name="REC_all_tests_Kamaev" thread-count="1" preserve-order="true">-->
-<!--        <classes>-->
-<!--            <class name="ru.exportcenter.uidm_dev.agroexpress.Test_03_07_02"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-
-<!--    <test name="REC_all_tests_Balashov" thread-count="1" preserve-order="true">-->
-<!--        <classes>-->
-<!--            <class name="ru.exportcenter.uidm_dev.agroexpress.Test_03_07_03"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-
-    <test name="REC_all_tests_Vorozhko" thread-count="1" preserve-order="true">
+    <test name="REC_all_tests_aggroexpress" thread-count="1" preserve-order="true">
         <classes>
-            <class name="ru.exportcenter.uidm_dev.agroexpress.Test_03_07_04"/>
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_01"/>
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02"/>
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03"/>
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_04"/>
+        </classes>
+    </test>
+
+    <test name="REC_all_tests_patents" thread-count="1" preserve-order="true">
+        <classes>
+            <class name="ru.exportcenter.dev.patents.Test_02_08_01"/>
         </classes>
     </test>
 
