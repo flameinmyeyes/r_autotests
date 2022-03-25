@@ -9,27 +9,27 @@
 <!--        <listener class-name="framework.integration.zephyrscale.TestListener"/>-->
 <!--    </listeners>-->
 
-    <test name="REC_all_tests_Maksimova" thread-count="1" preserve-order="true">
-        <classes>
-            <class name="ru.exportcenter.uidm_dev.agroexpress.Test_03_07_01"/>
-        </classes>
-    </test>
+<!--    <test name="REC_all_tests_Maksimova" thread-count="1" preserve-order="true">-->
+<!--        <classes>-->
+<!--            <class name="ru.exportcenter.uidm_dev.agroexpress.Test_03_07_01"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
-    <test name="REC_all_tests_Kamaev" thread-count="1" preserve-order="true">
-        <classes>
-            <class name="ru.exportcenter.uidm_dev.agroexpress.Test_03_07_02"/>
-        </classes>
-    </test>
+<!--    <test name="REC_all_tests_Kamaev" thread-count="1" preserve-order="true">-->
+<!--        <classes>-->
+<!--            <class name="ru.exportcenter.uidm_dev.agroexpress.Test_03_07_02"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
-    <test name="REC_all_tests_Balashov" thread-count="1" preserve-order="true">
-        <classes>
-            <class name="ru.exportcenter.uidm_dev.agroexpress.Test_03_07_03"/>
-        </classes>
-    </test>
+<!--    <test name="REC_all_tests_Balashov" thread-count="1" preserve-order="true">-->
+<!--        <classes>-->
+<!--            <class name="ru.exportcenter.uidm_dev.agroexpress.Test_03_07_03"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
     <test name="REC_all_tests_Vorozhko" thread-count="1" preserve-order="true">
         <classes>
-<!--            <class name="ru.exportcenter.uidm_dev.agroexpress.Test_03_07_04"/>-->
+            <class name="ru.exportcenter.uidm_dev.agroexpress.Test_03_07_04"/>
         </classes>
     </test>
 
