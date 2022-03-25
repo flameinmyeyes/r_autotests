@@ -2,7 +2,5 @@
 /target/*
 /build/*
 /test-output/*
-/src/test/java/ru/otr/eb_tse_demo_ufos_28080/Sandbox.java
 /debug.log
-/test_suites/exportcenter.uidm_dev/partial_run.xml
-/test_suites/exportcenter.uidm_dev/partiol_run2.xml
+
