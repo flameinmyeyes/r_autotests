@@ -13,7 +13,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 
-public class XMLEditor {
+public class XMLHandler {
 
     /**
      * Обновить XML-файл по тэгу
