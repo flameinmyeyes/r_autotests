@@ -11,7 +11,14 @@ stages:
 build:
   stage: build
   except:
+    - merge_requests
+    - pushes
+    - tags
+    - triggers
     - schedules
+  only:
+    variables:
+      - $RUN_TYPE == "build_image"
   script:
     - docker login $CI_ARTIFACTORY_URL_CLOUD -u $CI_ARTIFACTORY_USER -p $CI_ARTIFACTORY_PASSWORD
     - |
