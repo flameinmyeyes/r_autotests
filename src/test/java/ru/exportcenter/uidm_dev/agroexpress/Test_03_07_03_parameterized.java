@@ -1,9 +1,9 @@
 package ru.exportcenter.uidm_dev.agroexpress;
 
-import functions.gui.GUIFunctions;
 import framework.RunTestAgain;
 import functions.common.CommonFunctions;
-import functions.file.FileFunctions;
+import functions.file.PropertiesEditor;
+import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -43,7 +43,7 @@ public class Test_03_07_03_parameterized extends Hooks_UIDM_DEV {
 //    }
 
     public static String getData(String key) {
-        String data = FileFunctions.readProperties(WAY_TO_PROPERTIES, key);
+        String data = PropertiesEditor.getProperty(WAY_TO_PROPERTIES, key);
         return data;
     }
 
