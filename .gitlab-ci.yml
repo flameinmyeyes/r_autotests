@@ -14,6 +14,7 @@ build:
   except:
     - schedules
   script:
+    - if echo $CI_COMMIT_REF_SLUG | grep -q 'hotfix\|release'; then DATADIR='production'; else DATADIR='develop'; fi
     - docker login $CI_ARTIFACTORY_URL_CLOUD -u $CI_ARTIFACTORY_USER -p $CI_ARTIFACTORY_PASSWORD
     - |
       docker build \
