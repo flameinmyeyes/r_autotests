@@ -84,6 +84,11 @@ public class AllFunctions extends ElementData {
         return this;
     }
 
+    public AllFunctions assertUneditable() {
+        new Asserts(this).assertUneditable();
+        return this;
+    }
+
     public AllFunctions assertNoControl() {
         new Asserts(this).assertNoControl();
         return this;
