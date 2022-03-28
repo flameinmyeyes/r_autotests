@@ -11,10 +11,6 @@ import functions.common.CommonFunctions;
 import org.testng.annotations.Test;
 import ru.exportcenter.dev.HooksDEV;
 
-//import java.time.Duration;
-
-import java.io.File;
-
 import static com.codeborne.selenide.Selenide.*;
 
 public class Test_02_08_01 extends HooksDEV {
@@ -30,19 +26,31 @@ public class Test_02_08_01 extends HooksDEV {
         step03();
         step04();
         step05();
+        step06();
+        step07();
+        step08();
+        step09();
+        step10();
+        step11();
+        step12();
+//        step13();
     }
 
-    @Step("Перейти к оформлению сервиса «Компенсация части затрат на регистрацию ОИС за рубежом»")
-    private void step01() {
-//        CommonFunctions.printStep();
+    @Step("Авторизация")
+    private void step01(){
+        CommonFunctions.printStep();
 
         //Ввести логин и пароль demo_exporter/password
         new GUIFunctions().inContainer("Вход в личный кабинет")
                 .inField("Email").inputValue("demo_exporter")
                 .inField("Пароль").inputValue("password")
-                .clickButton("Войти");
+                .clickButton("Войти")
+                .waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
+    }
 
-        new GUIFunctions().waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
+    @Step("Навигация")
+    private void step02(){
+        CommonFunctions.printStep();
 
         //Перейти во вкладку «Сервисы»
         new GUIFunctions().selectTab("Сервисы")
@@ -57,27 +65,29 @@ public class Test_02_08_01 extends HooksDEV {
         //Нажать на кнопку «Продолжить»
         switchTo().window(1);
         new GUIFunctions().waitForElementDisplayed("//div[@class='Steps_stepsWrapper__2dJpS']");
+
+        //Перезагрузить страницу
         refreshTab("//span[text()='Продолжить']", 30);
+
+        //Нажать кнопку «Продолжить»
         new GUIFunctions().clickButton("Продолжить");
     }
 
-    @Step("Навигация")
-    private void step02() {
+    @Step("Блок «Заявитель»")
+    private void step03(){
         CommonFunctions.printStep();
 
+        //В поле «Регион» из выпадающего списка выбрать значение «Республика Коми»
         new GUIFunctions().inContainer("Сведения о заявителе")
-                .inField("Регион").selectValue("Республика Коми")
-                .inContainer("Контакты заявителя")
-                .inField("ИНН").inputValue("12345676")
-                .inField("СНИЛС").inputValue("12345676");
+                .inField("Регион").selectValue("Республика Коми");
 
-        new GUIFunctions().clickButton("Далее").clickButton("Далее")
-                .waitForElementDisplayed("//form[@class='Form_form__Vhvzn']");
-
+        //Нажать на кнопку «Далее»
+        new GUIFunctions().clickButton("Далее")
+                .waitForElementDisplayed("//*[text()='Добавить способ получения услуг']");
     }
 
-    @Step()
-    private void step03() {
+    @Step("Блок «Способ получения услуги»")
+    private void step04() {
         CommonFunctions.printStep();
 
         //Нажать на кнопку «Добавить способ получения услуги»
@@ -85,31 +95,19 @@ public class Test_02_08_01 extends HooksDEV {
 
         //В поле «Укажите способ оказания услуг» выбрать значение «Напрямую организацией»
         new GUIFunctions().inContainer("Выберите способ получения услуги")
-                .inField("Укажите способ оказания услуг").selectValue("Напрямую организацией");
-
-//        new GUIFunctions().waitForElementDisplayed("xxxxdasdasd");
-
-        //Нажать кнопку «Загрузите документ»
-        new GUIFunctions().clickButton("Загрузите документы");
+                .inField("Способ оказания услуг").selectValue("Напрямую организацией");
 
         //Выбрать приложенный файл с устройства формата txt и нажать кнопку «Открыть»
-        new GUIFunctions().uploadFile("Загрузите документы","C:\\auto-tests\\tmp.txt");
-//        $x("//*[text()='Загрузите документы']").uploadFile(new File("C:\\auto-tests\\tmp.txt"));
-
-//        uploadFileInArea("Загрузите документы", "", "C:\\auto-tests\\tmp.txt");
+        new GUIFunctions().uploadFile("Прикрепить платежное поручение","C:\\auto-tests\\tmp.txt");
+        CommonFunctions.wait(5);
 
         //Нажать кнопку «Далее»
-        new GUIFunctions().clickButton("Далее")
-                .waitForElementDisplayed("Добавить тип заявки");
+        $x("//*[text()='Далее']").click();
     }
 
-    @Step("Заполнить область «Информация для оказания услуги»")
-    private void step04() {
+    @Step("Блок «Заявка»")
+    private void step05(){
         CommonFunctions.printStep();
-
-        //
-        new GUIFunctions().waitForElementDisplayed("//*[text()='Добавить тип заявки']")
-                .clickByLocator("//button[@id='button-up']");
 
         //Нажать кнопку «Добавить тип заявки»
         new GUIFunctions().clickButton("Добавить тип заявки");
@@ -124,7 +122,13 @@ public class Test_02_08_01 extends HooksDEV {
                 .inField("Дата подачи международной заявки").inputValue("03.02.2022").assertValue().assertNoControl()
                 .inField("Наименование объекта").inputValue("Объект").assertValue().assertNoControl()
                 .inField("Наименование заявителя (организации)").inputValue("Заявитель").assertValue().assertNoControl();
+    }
 
+    @Step("Блок «Цель затрат и описание»")
+    private void step06(){
+        CommonFunctions.printStep();
+
+        //В выпадающем списке «Цель правовой охраны за рубежом» выбрать значение «Создание собственного производства за рубежом»
         new GUIFunctions().inContainer("Цель затрат и описание")
                 .inField("Цель правовой охраны за рубежом").selectValue("Создание собственного производства за рубежом").assertValue().assertNoControl()
                 .inField("Описание конечного продукта/технологии, в том числе его конкурентные преимущества").inputValue("Значение").assertValue().assertNoControl()
@@ -133,12 +137,22 @@ public class Test_02_08_01 extends HooksDEV {
                 .inField("Описание бизнес-модели вывода продукции на внешние рынки").inputValue("ввод").assertValue().assertNoControl()
                 .inField("Оценка вероятного экономического эффекта от введения за рубежом в гражданский оборот продукции, в состав которой будет входить предлагаемый объект интеллектуальной собственности").inputValue("Ocenka").assertValue().assertNoControl();
 
-        uploadFileInArea("Загрузите документ", "", "C:\\auto-tests\\tmp.pdf");
+        //Нажать на кнопку «Загрузите документ»
+        new GUIFunctions().uploadFile("Заявка на регистрацию ОИС","C:\\auto-tests\\tmp.pdf");
+        CommonFunctions.wait(5);
 
+        //Нажать на кнопку «Медиа-файл объекта»
         new GUIFunctions()
                 .clickByLocator("//span[@class= 'Checkbox_label__3B7Mj'][text()='Медиа-файл объекта']");
 
-        uploadFileInArea("Загрузите документ", "", "C:\\auto-tests\\tmp.pdf");
+        //Выбрать приложенный файл с устройства формата pdf и нажать кнопку «Открыть»
+        new GUIFunctions().uploadFile("Прикрепить медиа-файл объекта","C:\\auto-tests\\tmp.pdf");
+        CommonFunctions.wait(5);
+    }
+
+    @Step("Блок «Затраты на оплату пошлины»")
+    private void step07(){
+        CommonFunctions.printStep();
 
         //Нажать на кнопку «Добавить затрату на оплату пошлины»
         new GUIFunctions().clickButton("Добавить затрату на оплату пошлины");
@@ -153,6 +167,11 @@ public class Test_02_08_01 extends HooksDEV {
                 .inField("Налоговая ставка, %").inputValue("13,00").assertValue().assertNoControl()
                 .inField("Способ получения услуги").selectValue("Напрямую организацией").assertValue().assertNoControl()
                 .inField("Платёжное поручение").selectValue("tmp.txt").assertValue().assertNoControl();
+    }
+
+    @Step("Блок «Затраты на оплату услуг»")
+    private void step08(){
+        CommonFunctions.printStep();
 
         //Нажать на кнопку «Добавить затрату на оплату услуги»
         new GUIFunctions().clickButton("Добавить затрату на оплату услуги");
@@ -172,8 +191,8 @@ public class Test_02_08_01 extends HooksDEV {
         new GUIFunctions().clickButton("Далее").clickButton("Далее");
     }
 
-    @Step("Добавить затрату на оплату услуги")
-    private void step05(){
+    @Step("Блок «Сведения для регистрации / актуализации в ГИИС Электронный бюджет»")
+    private void step09(){
         CommonFunctions.printStep();
 
         //Заполнение полей в блоке «Сведения для регистрации / актуализации в ГИИС "Электронный бюджет"»
@@ -187,6 +206,11 @@ public class Test_02_08_01 extends HooksDEV {
                 .inField("Номер банковского счета").inputValue("40702810000000000046").assertValue().assertNoControl()
                 .inField("БИК банка").selectValue("044525050").assertValue().assertNoControl()
                 .inField("Корреспондентский счет").inputValue("30101810100000000722").assertValue().assertNoControl();
+    }
+
+    @Step("Блок «Данные о руководителе / уполномоченном лице компании»")
+    private void step10(){
+        CommonFunctions.printStep();
 
         //Заполнение полей в блоке "Данные о руководителе / уполномоченном лице компании"
         new GUIFunctions().inContainer("Данные о руководителе / уполномоченном лице компании")
@@ -195,12 +219,22 @@ public class Test_02_08_01 extends HooksDEV {
                 .inField("СНИЛС").inputValue("12345678901").assertValue().assertNoControl()
                 .inField("E-mail").inputValue("wor_ld@mai-l.ru").assertValue().assertNoControl()
                 .inField("Телефон").inputValue("+1234567890").assertValue().assertNoControl();
+    }
+
+    @Step("Блок «Контактные данные лица, ответственного за работу в ГИИС Электронный бюджет»")
+    private void step11(){
+        CommonFunctions.printStep();
 
         //Заполнение полей в блоке «Контактные данные лица, ответственного за работу в ГИИС "Электронный бюджет"»
         new GUIFunctions().inContainer("Контактные данные лица, ответственного за работу в ГИИС Электронный бюджет")
                 .inField("ФИО контактного лица").selectValue("Иванов Иван Иванович").assertValue().assertNoControl()
                 .inField("Телефон").inputValue("+7(123)456-78-90").assertValue().assertNoControl()
                 .inField("E-mail").inputValue("wor_ld@mai-l.ru").assertValue().assertNoControl();
+    }
+
+    @Step("Блок «Подтверждение сведений Заявителем»")
+    private void step12(){
+        CommonFunctions.printStep();
 
         //Проставление чекбоксов в блоке «Подтверждение сведений Заявителем»
         new GUIFunctions().inContainer("Подтверждение сведений Заявителем")
@@ -215,6 +249,12 @@ public class Test_02_08_01 extends HooksDEV {
         new GUIFunctions().clickButton("Далее").clickButton("Далее");
     }
 
+    @Step("Блок \"Подписание Заявки электронной подписью\"")
+    private void step13(){
+        CommonFunctions.printStep();
+
+    }
+
     private void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
             if($x(expectedXpath).isDisplayed()) {
@@ -224,12 +264,5 @@ public class Test_02_08_01 extends HooksDEV {
             refresh();
             CommonFunctions.wait(1);
         }
-    }
-    public void uploadFileInArea (String buttonName, String area, String wayToFile) {
-        File file = new File(wayToFile);
-        $x("//*[text()='" + area + "']/ancestor::*[contains(@class, 'container')]//*[text()= '"
-                +  buttonName+"']//following-sibling::input[@type = 'file'] ").uploadFile(file);
-
-        CommonFunctions.wait(5);
     }
 }
