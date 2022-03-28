@@ -98,6 +98,12 @@
 
     <dependencies>
 
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>4.5.1</version>
+        </dependency>
+
         <!--    Allure    -->
         <dependency>
             <groupId>io.qameta.allure</groupId>

@@ -4,6 +4,7 @@ public enum Ways {
     COMMON("Z:\\files_for_tests\\"),
     DOWNLOADS("Z:\\files_for_tests\\downloads\\"),
     UIDM_DEV("Z:\\files_for_tests\\eb_exp_demo"),
+    TEST("files_for_tests/test"),
 
     //
     TSE_DEMO_28080("Z:\\files_for_tests\\eb_exp_demo")
@@ -29,5 +30,4 @@ public enum Ways {
         }
         return way;
     }
-
 }

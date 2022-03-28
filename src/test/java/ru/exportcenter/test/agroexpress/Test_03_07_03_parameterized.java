@@ -1,6 +1,8 @@
 package ru.exportcenter.test.agroexpress;
 
 import framework.RunTestAgain;
+import framework.Ways;
+import functions.api.RESTFunctions;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
@@ -11,14 +13,17 @@ import io.qameta.allure.Step;
 import org.testng.annotations.Test;
 import ru.exportcenter.test.HooksTEST;
 
+import java.util.Properties;
+
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.refresh;
+import static framework.integration.JupyterLabIntegration.parseProperties;
 
 public class Test_03_07_03_parameterized extends HooksTEST {
 
-//    private final String WAY_TEST = Ways.UIDM_DEV.getWay() + "\\FUN_02\\BP_016\\FUN_02_BP_016_NSI_016_PZ_2_7_2_1\\";
-
-    public static String WAY_TO_PROPERTIES = "src/test/java/ru/exportcenter/uidm_dev/agroexpress/Test_03_07_03_properties.xml";
+    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_parameterized/";
+    public String WAY_TO_PROPERTIES = WAY_TEST +  "Test_03_07_03_properties.xml";
+    public Properties PROPERTIES = parseProperties(WAY_TO_PROPERTIES);
 
     @Owner(value="Балашов Илья")
     @Description("03 07 03 Заполнение Заявки на получение услуги (сценарий 3)")
@@ -26,7 +31,7 @@ public class Test_03_07_03_parameterized extends HooksTEST {
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
-//        WAY_TEST = setWay(WAY_TEST);
+        WAY_TEST = setWay(WAY_TEST);
         step01();
         step02();
         step03();
@@ -42,10 +47,10 @@ public class Test_03_07_03_parameterized extends HooksTEST {
 //        CommonFunctions.screenShot(WAY_TEST + "screen.png");
 //    }
 
-    public static String getData(String key) {
-        String data = PropertiesHandler.getProperty(WAY_TO_PROPERTIES, key);
-        return data;
-    }
+//    public String PROPERTIES.getProperty(String key) {
+//        String data = PropertiesHandler.getProperty(PROPERTIES, key);
+//        return data;
+//    }
 
     @Step("Авторизация")
     public void step01() {
@@ -53,11 +58,11 @@ public class Test_03_07_03_parameterized extends HooksTEST {
         //Ввести логин и пароль demo_exporter/password, нажать «Войти»
         new GUIFunctions()
                 .inContainer("Вход в личный кабинет")
-                .inField("Email").inputValue(getData("Авторизация.Email"))
-                .inField("Пароль").inputValue(getData("Авторизация.Пароль"))
+                .inField("Email").inputValue(PROPERTIES.getProperty("Авторизация.Email"))
+                .inField("Пароль").inputValue(PROPERTIES.getProperty("Авторизация.Пароль"))
                 .clickButton("Войти");
 
-        new GUIFunctions().waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
+        new GUIFunctions().waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
     @Step("Навигация")
@@ -68,7 +73,7 @@ public class Test_03_07_03_parameterized extends HooksTEST {
         //Нажать кнопку «Продолжить»
         new GUIFunctions()
                 .selectTab("Сервисы")
-                .waitForURL("http://master-portal-dev.d.exportcenter.ru/services/business")
+                .waitForURL("https://master-portal.t.exportcenter.ru/services/business")
                 .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
                 .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Оформить")
                 .switchPageTo(1);
@@ -84,7 +89,7 @@ public class Test_03_07_03_parameterized extends HooksTEST {
         //В поле «Почтовый адрес» вводим значение «Корнилаева 2»
         new GUIFunctions()
                 .inContainer("Информация о компании")
-                .inField("Почтовый адрес").inputValue(getData("Информация о компании.Почтовый адрес")).assertNoControl();
+                .inField("Почтовый адрес").inputValue(PROPERTIES.getProperty("Информация о компании.Почтовый адрес")).assertNoControl();
     }
 
     @Step("Блок «Информация о заявителе»")
@@ -99,10 +104,10 @@ public class Test_03_07_03_parameterized extends HooksTEST {
         new GUIFunctions()
                 .inContainer("Информация о заявителе")
                 .inField("Дополнительный контакт").setCheckboxON().assertNoControl()
-                .inField("ФИО").inputValue(getData("Информация о заявителе.ФИО")).assertNoControl()
-                .inField("Телефон").inputValue(getData("Информация о заявителе.Телефон")).assertNoControl()
-                .inField("Должность").inputValue(getData("Информация о заявителе.Должность")).assertNoControl()
-                .inField("Email").inputValue(getData("Информация о заявителе.Email")).assertNoControl();
+                .inField("ФИО").inputValue(PROPERTIES.getProperty("Информация о заявителе.ФИО")).assertNoControl()
+                .inField("Телефон").inputValue(PROPERTIES.getProperty("Информация о заявителе.Телефон")).assertNoControl()
+                .inField("Должность").inputValue(PROPERTIES.getProperty("Информация о заявителе.Должность")).assertNoControl()
+                .inField("Email").inputValue(PROPERTIES.getProperty("Информация о заявителе.Email")).assertNoControl();
     }
 
     @Step("Блок  «Информация для оказания услуги»")
@@ -116,11 +121,11 @@ public class Test_03_07_03_parameterized extends HooksTEST {
         //В поле «Предполагаемая дата отправления груза» вводим значение «22.10.2022»
         new GUIFunctions()
                 .inContainer("Информация для оказания услуги")
-                .inField("Город отправления").selectValue(getData("Информация для оказания услуги.Город отправления")).assertNoControl()
-                .inField("Город назначения").selectValue(getData("Информация для оказания услуги.Город назначения")).assertNoControl()
+                .inField("Город отправления").selectValue(PROPERTIES.getProperty("Информация для оказания услуги.Город отправления")).assertNoControl()
+                .inField("Город назначения").selectValue(PROPERTIES.getProperty("Информация для оказания услуги.Город назначения")).assertNoControl()
                 .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON()
-                .inField("Адрес").inputValue(getData("Информация для оказания услуги.Адрес")).assertNoControl()
-                .inField("Предполагаемая дата отправления груза").inputValue(getData("Информация для оказания услуги.Предполагаемая дата отправления груза")).assertNoControl();
+                .inField("Адрес").inputValue(PROPERTIES.getProperty("Информация для оказания услуги.Адрес")).assertNoControl()
+                .inField("Предполагаемая дата отправления груза").inputValue(PROPERTIES.getProperty("Информация для оказания услуги.Предполагаемая дата отправления груза")).assertNoControl();
     }
 
     @Step("Блок «Информация о грузе»")
@@ -145,15 +150,15 @@ public class Test_03_07_03_parameterized extends HooksTEST {
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
                 .clickButton("Добавить новую")
-                .inField("Наименование продукции").inputValue(getData("Информация о грузе.Наименование продукции")).assertNoControl()
-                .inField("Код ТН ВЭД").selectValue(getData("Информация о грузе.Код ТН ВЭД")).assertNoControl()
-                .inField("Вес продукции, кг").inputValue(getData("Информация о грузе.Вес продукции, кг")).assertNoControl()
-                .inField("Упаковка").selectValue(getData("Информация о грузе.Упаковка")).assertNoControl()
+                .inField("Наименование продукции").inputValue(PROPERTIES.getProperty("Информация о грузе.Наименование продукции")).assertNoControl()
+                .inField("Код ТН ВЭД").selectValue(PROPERTIES.getProperty("Информация о грузе.Код ТН ВЭД")).assertNoControl()
+                .inField("Вес продукции, кг").inputValue(PROPERTIES.getProperty("Информация о грузе.Вес продукции, кг")).assertNoControl()
+                .inField("Упаковка").selectValue(PROPERTIES.getProperty("Информация о грузе.Упаковка")).assertNoControl()
                 .inField("Температурный режим (от -30°C до 0°C или от 0°C до +30°C) ").setCheckboxON().assertNoControl()
-                .inField("От").inputValue(getData("Информация о грузе.От")).assertNoControl()
-                .inField("До").inputValue(getData("Информация о грузе.До")).assertNoControl()
-                .inField("Количество контейнеров").inputValue(getData("Информация о грузе.Количество контейнеров")).assertNoControl()
-                .inField("Тип контейнера").selectValue(getData("Информация о грузе.Тип контейнера")).assertNoControl()
+                .inField("От").inputValue(PROPERTIES.getProperty("Информация о грузе.От")).assertNoControl()
+                .inField("До").inputValue(PROPERTIES.getProperty("Информация о грузе.До")).assertNoControl()
+                .inField("Количество контейнеров").inputValue(PROPERTIES.getProperty("Информация о грузе.Количество контейнеров")).assertNoControl()
+                .inField("Тип контейнера").selectValue(PROPERTIES.getProperty("Информация о грузе.Тип контейнера")).assertNoControl()
                 .clickButton("Сохранить");
     }
 
@@ -174,17 +179,17 @@ public class Test_03_07_03_parameterized extends HooksTEST {
         //В поле «Email» вводим значение «www@mail.ru»
         new GUIFunctions()
                 .inContainer("Информация о грузополучателе")
-                .inField("Наименование грузополучателя").inputValue(getData("Информация о грузополучателе.Наименование грузополучателя")).assertNoControl()
-                .inField("Страна").inputValue(getData("Информация о грузополучателе.Страна")).assertNoControl()
-                .inField("Город").inputValue(getData("Информация о грузополучателе.Город")).assertNoControl()
-                .inField("Дом").inputValue(getData("Информация о грузополучателе.Дом")).assertNoControl()
-                .inField("Регион").inputValue(getData("Информация о грузополучателе.Регион")).assertNoControl()
-                .inField("Район").inputValue(getData("Информация о грузополучателе.Район")).assertNoControl()
-                .inField("Улица").inputValue(getData("Информация о грузополучателе.Улица")).assertNoControl()
-                .inField("Регистрационный номер грузополучателя").inputValue(getData("Информация о грузополучателе.Регистрационный номер грузополучателя")).assertNoControl()
-                .inField("Телефон").inputValue(getData("Информация о грузополучателе.Телефон")).assertNoControl()
-                .inField("Представитель грузополучателя").inputValue(getData("Информация о грузополучателе.Представитель грузополучателя")).assertNoControl()
-                .inField("Email").inputValue(getData("Информация о грузополучателе.Email")).assertNoControl();
+                .inField("Наименование грузополучателя").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Наименование грузополучателя")).assertNoControl()
+                .inField("Страна").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Страна")).assertNoControl()
+                .inField("Город").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Город")).assertNoControl()
+                .inField("Дом").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Дом")).assertNoControl()
+                .inField("Регион").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Регион")).assertNoControl()
+                .inField("Район").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Район")).assertNoControl()
+                .inField("Улица").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Улица")).assertNoControl()
+                .inField("Регистрационный номер грузополучателя").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Регистрационный номер грузополучателя")).assertNoControl()
+                .inField("Телефон").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Телефон")).assertNoControl()
+                .inField("Представитель грузополучателя").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Представитель грузополучателя")).assertNoControl()
+                .inField("Email").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Email")).assertNoControl();
     }
 
     @Step("Блок «Дополнительные услуги»")
