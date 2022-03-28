@@ -1,34 +1,64 @@
 package functions.file;
 
+import framework.integration.JupyterLabIntegration;
+import org.apache.commons.io.FilenameUtils;
+import org.openqa.selenium.By;
+
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 public class PropertiesHandler {
 
-    public static String getProperty(String filePath, String key) {
-
-        String value = "";
-
+    public static Properties parsePropertiesFromString(String content) {
         Properties properties = new Properties();
 
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
         try {
-            FileInputStream fileInputStream = new FileInputStream(filePath);
-            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "ANSI-1251");
-
-            if(filePath.endsWith(".xml")) {
-                properties.loadFromXML(fileInputStream);
-            } else {
-                properties.load(inputStreamReader);
-            }
-
+            properties.loadFromXML(byteArrayInputStream);
         } catch (Exception e) {
-            System.out.println("Файл " + filePath + " не найден!");
+            e.printStackTrace();
         }
 
+        return properties;
+    }
+
+    public static String getProperty(Properties properties, String key) {
+
+        String value = "";
         value = properties.getProperty(key);
 
         return value;
     }
+
+
+
+//    public static String getProperty(String filePath, String key) {
+//
+//        String value = "";
+//
+//        Properties properties = new Properties();
+//
+//        try {
+//            FileInputStream fileInputStream = new FileInputStream(filePath);
+//            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "ANSI-1251");
+//
+//            if(filePath.endsWith(".xml")) {
+//                properties.loadFromXML(fileInputStream);
+//            } else {
+//                properties.load(inputStreamReader);
+//            }
+//
+//        } catch (Exception e) {
+//            System.out.println("Файл " + filePath + " не найден!");
+//        }
+//
+//        value = properties.getProperty(key);
+//
+//        return value;
+//    }
 
 }
