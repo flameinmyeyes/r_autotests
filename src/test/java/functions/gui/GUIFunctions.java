@@ -55,7 +55,7 @@ public class GUIFunctions extends ElementData {
 
     public AllFunctions clickButton(String button) {
         this.button = button;
-        new Click(this).clickButton(button);
+        new Click(this).clickButton();
         return new AllFunctions(this);
     }
 

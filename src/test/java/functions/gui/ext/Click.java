@@ -10,7 +10,7 @@ public class Click extends ElementData {
         super(data);
     }
 
-    public void clickButton(String button) {
+    public void clickButton() {
         $x(new XPath(this).getButtonXPath()).click();
     }
 
