@@ -58,7 +58,7 @@ run_regression_tests_job: #Test_&_send:
       - mvn/**/*
       - result.json
   before_script:
-    - mkdir -p /share && mount.cifs //10.5.1.87/share /share -o username=share,password=aij7zieYAeng2gee,file_mode=0766,dir_mode=0766
+#    - mkdir -p /share && mount.cifs //10.5.1.87/share /share -o username=share,password=aij7zieYAeng2gee,file_mode=0766,dir_mode=0766
     - export TZ=Europe/Moscow
   script:
     - echo $RUN_TYPE
