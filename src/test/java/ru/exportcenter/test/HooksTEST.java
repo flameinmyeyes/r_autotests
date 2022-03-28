@@ -58,7 +58,7 @@ public class HooksTEST implements HooksInterface {
      * Преобразование пути к файлу под Linux (в случае запуска в докере)
      */
     public static String setWay(String way) {
-        if (RUN_MODE.equals("docker") || RUN_MODE.equals("docker_manual")) {
+        if (RUN_MODE.equals("remote")) {
             way = way.replace("Z:", "/share").replace("\\", "/");
             //System.out.println("Путь к файлам преобразован под Linux");
         } else {
