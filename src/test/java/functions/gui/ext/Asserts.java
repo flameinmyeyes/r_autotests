@@ -39,7 +39,11 @@ public class Asserts extends ElementData {
     }
 
     public void assertEditable() {
-        assertTrue($x(new XPath(this).getInputXPath()).exists());
+        assertFalse($x(new XPath(this).getUneditableInputXPath()).exists());
+    }
+
+    public void assertUneditable() {
+        assertTrue($x(new XPath(this).getUneditableInputXPath()).exists());
     }
 
     public void assertNoControl() {

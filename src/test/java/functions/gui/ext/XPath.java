@@ -37,7 +37,8 @@ public class XPath extends ElementData {
     }
 
     public String getUneditableInputXPath() {
-        return getContainerXPath() + getFieldXPath() + "//span[text() != '" + field + "'][not(@style)]";
+        return getContainerXPath() + getFieldXPath() + "//*[(name()='input' and @disabled) " +
+                "or (name()='span' and preceding-sibling::span[text()='" + field + "'] and text()!='" + field + "')][not(@style)]";
     }
 
     public String getSearchedValueXPath(String value) {
