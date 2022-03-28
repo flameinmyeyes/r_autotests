@@ -46,7 +46,7 @@ public class XPath extends ElementData {
     }
 
     public String getErrorXPath() {
-        return getContainerXPath() + getFieldXPath() + "//span[contains(@class, 'error') and . !='']";
+        return getContainerXPath() + getFieldXPath() + "//span[contains(@class, 'message') and . !='']";
     }
 
     public String getCheckboxXPath() {
