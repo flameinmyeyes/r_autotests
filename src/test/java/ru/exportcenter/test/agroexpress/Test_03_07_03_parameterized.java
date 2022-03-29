@@ -2,7 +2,6 @@ package ru.exportcenter.test.agroexpress;
 
 import framework.RunTestAgain;
 import framework.Ways;
-import functions.api.RESTFunctions;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
@@ -17,13 +16,12 @@ import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.refresh;
-import static framework.integration.JupyterLabIntegration.parseProperties;
 
 public class Test_03_07_03_parameterized extends HooksTEST {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_parameterized/";
-    public String WAY_TO_PROPERTIES = WAY_TEST +  "Test_03_07_03_properties.xml";
-    public Properties PROPERTIES = parseProperties(WAY_TO_PROPERTIES);
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_03_properties.xml";
+    public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     @Owner(value="Балашов Илья")
     @Description("03 07 03 Заполнение Заявки на получение услуги (сценарий 3)")

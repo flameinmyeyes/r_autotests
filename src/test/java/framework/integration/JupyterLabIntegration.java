@@ -28,11 +28,11 @@ public class JupyterLabIntegration {
 //        return new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
 //    }
 
-    public static Properties parseProperties(String wayProperties) {
-        Properties properties;
-        String content = JupyterLabIntegration.getFileContent(wayProperties);
-        properties = PropertiesHandler.parsePropertiesFromString(content);
-        return properties;
-    }
+//    public static Properties parseProperties(String wayProperties) {
+//        Properties properties;
+//        String content = JupyterLabIntegration.getFileContent(wayProperties);
+//        properties = PropertiesHandler.parsePropertiesFromString(content);
+//        return properties;
+//    }
 
 }
