@@ -29,4 +29,15 @@ public class Click extends ElementData {
         new Wait().waitForLoading();
     }
 
+    public void closeAllPopupWindows() {
+        if ($x("//*[contains(text(), 'Принять')]").isDisplayed())
+            $x("//*[contains(text(), 'Принять')]").click();
+
+        if ($x("//div[@class='info-line__close-btn']").isDisplayed())
+            $x("//div[@class='info-line__close-btn']").click();
+
+        if ($x("//*[text()='Да']").isDisplayed())
+            $x("//*[text()='Да']").click();
+    }
+
 }

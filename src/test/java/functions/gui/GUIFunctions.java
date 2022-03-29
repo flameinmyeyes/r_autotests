@@ -70,6 +70,11 @@ public class GUIFunctions extends ElementData {
         return new AllFunctions(this);
     }
 
+    public AllFunctions closeAllPopupWindows() {
+        new Click(this).closeAllPopupWindows();
+        return new AllFunctions(this);
+    }
+
     /**
      * upload
      */

@@ -155,6 +155,11 @@ public class AllFunctions extends ElementData {
         return this;
     }
 
+    public AllFunctions closeAllPopupWindows() {
+        new Click(this).closeAllPopupWindows();
+        return this;
+    }
+
     /**
      * upload
      */
