@@ -29,4 +29,28 @@ public class Click extends ElementData {
         new Wait().waitForLoading();
     }
 
+    public void closeAllPopupWindows() {
+        String AcceptCookies = "//*[contains(text(), 'Принять')]";
+        if ($x(AcceptCookies).isDisplayed()) {
+            $x(AcceptCookies).click();
+        }
+
+        String closeOfferToUseSupportService = "//div[@class='info-line__close-btn']";
+        if ($x(closeOfferToUseSupportService).isDisplayed()) {
+            $x(closeOfferToUseSupportService).click();
+        }
+
+        String AcceptCity = "//div[@class = 'city-select__popup-wrap']//*[text()='Да']";
+        if ($x(AcceptCity).isDisplayed()) {
+            $x(AcceptCity).click();
+        }
+
+        String closeMyExport = "//div[@class='block-survey block-survey--show']" +
+                "[@style='visibility: visible;'][//div[contains(text(),'«Мой экспорт»')]]" +
+                "//button[contains(@class, 'close')]";
+        if ($x(closeMyExport).isDisplayed()) {
+            $x(closeMyExport).click();
+        }
+    }
+
 }
