@@ -37,13 +37,13 @@ public class Test_03_07_01 extends HooksTEST {
                 .inField("Пароль").inputValue("password")
                 .clickButton("Войти");
 
-        new GUIFunctions().waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
+        new GUIFunctions().waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
     @Step("Навигация")
     public void step02() {
         new GUIFunctions().selectTab("Сервисы")
-                .waitForURL("http://master-portal-dev.d.exportcenter.ru/services/business")
+                .waitForURL("https://master-portal.t.exportcenter.ru/services/business")
                 .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
                 .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Оформить")
                 .switchPageTo(1);
@@ -82,11 +82,11 @@ public class Test_03_07_01 extends HooksTEST {
     @Step("Заполнить область «Информация для оказания услуги»")
     public void step05() {
         new GUIFunctions().inContainer("Информация для оказания услуги")
-                .inField("Город отправления").selectValue("Ярославль").assertNoControl()
+                .inField("Город отправления").selectValue("Белгород").assertNoControl()
                 .inField("Город назначения").selectValue("Шанхай").assertNoControl()
                 .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertNoControl()
                 .inField("Адрес").inputValue("Молодежная улица").assertNoControl()
-                .inField("Предполагаемая дата отправления груза").inputValue("22.10.2022").assertNoControl();
+                .inField("Предполагаемая дата отправления груза").inputValue("23.12.2022").assertNoControl();
     }
 
     @Step("Заполнить область «Информация о грузе»")
@@ -94,10 +94,10 @@ public class Test_03_07_01 extends HooksTEST {
         new GUIFunctions().inContainer("Информация о грузе")
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
-                .inField("Наименование продукции").selectValue("Новая продукция").assertNoControl()
-                .inField("Код ТН ВЭД").assertValue("  Кофе").assertNoControl()
+                .inField("Наименование продукции").selectValue("0306240000 Крабы немороженые ").assertNoControl()
+                .inField("Код ТН ВЭД").assertValue("0306240000 Крабы немороженые").assertUneditable().assertNoControl()
                 .inField("Вес продукции, кг").inputValue("532,000").assertNoControl()
-                .inField("Упаковка").selectValue("Фляги").assertNoControl()
+                .inField("Упаковка").selectValue("Контейнеры").assertNoControl()
                 .inField("Количество контейнеров").inputValue("156").assertNoControl()
                 .inField("Тип контейнера").selectValue("Универсальный").assertNoControl()
                 .clickButton("Сохранить");
