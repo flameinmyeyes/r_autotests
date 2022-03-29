@@ -30,14 +30,27 @@ public class Click extends ElementData {
     }
 
     public void closeAllPopupWindows() {
-        if ($x("//*[contains(text(), 'Принять')]").isDisplayed())
-            $x("//*[contains(text(), 'Принять')]").click();
+        String AcceptCookies = "//*[contains(text(), 'Принять')]";
+        if ($x(AcceptCookies).isDisplayed()) {
+            $x(AcceptCookies).click();
+        }
 
-        if ($x("//div[@class='info-line__close-btn']").isDisplayed())
-            $x("//div[@class='info-line__close-btn']").click();
+        String closeOfferToUseSupportService = "//div[@class='info-line__close-btn']";
+        if ($x(closeOfferToUseSupportService).isDisplayed()) {
+            $x(closeOfferToUseSupportService).click();
+        }
 
-        if ($x("//*[text()='Да']").isDisplayed())
-            $x("//*[text()='Да']").click();
+        String AcceptCity = "//div[@class = 'city-select__popup-wrap']//*[text()='Да']";
+        if ($x(AcceptCity).isDisplayed()) {
+            $x(AcceptCity).click();
+        }
+
+        String closeMyExport = "//div[@class='block-survey block-survey--show']" +
+                "[@style='visibility: visible;'][//div[contains(text(),'«Мой экспорт»')]]" +
+                "//button[contains(@class, 'close')]";
+        if ($x(closeMyExport).isDisplayed()) {
+            $x(closeMyExport).click();
+        }
     }
 
 }
