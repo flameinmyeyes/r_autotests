@@ -26,6 +26,13 @@ public class PropertiesHandler {
         return properties;
     }
 
+    public static Properties parseProperties(String wayProperties) {
+        Properties properties;
+        String content = JupyterLabIntegration.getFileContent(wayProperties);
+        properties = PropertiesHandler.parsePropertiesFromString(content);
+        return properties;
+    }
+
     public static String getProperty(Properties properties, String key) {
 
         String value = "";
