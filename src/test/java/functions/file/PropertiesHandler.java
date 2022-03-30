@@ -32,40 +32,4 @@ public class PropertiesHandler {
         properties = PropertiesHandler.parsePropertiesFromString(content);
         return properties;
     }
-
-    public static String getProperty(Properties properties, String key) {
-
-        String value = "";
-        value = properties.getProperty(key);
-
-        return value;
-    }
-
-
-
-//    public static String getProperty(String filePath, String key) {
-//
-//        String value = "";
-//
-//        Properties properties = new Properties();
-//
-//        try {
-//            FileInputStream fileInputStream = new FileInputStream(filePath);
-//            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "ANSI-1251");
-//
-//            if(filePath.endsWith(".xml")) {
-//                properties.loadFromXML(fileInputStream);
-//            } else {
-//                properties.load(inputStreamReader);
-//            }
-//
-//        } catch (Exception e) {
-//            System.out.println("Файл " + filePath + " не найден!");
-//        }
-//
-//        value = properties.getProperty(key);
-//
-//        return value;
-//    }
-
 }

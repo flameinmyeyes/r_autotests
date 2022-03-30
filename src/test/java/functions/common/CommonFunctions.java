@@ -3,6 +3,7 @@ package functions.common;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import framework.integration.JupyterLabIntegration;
 import functions.file.FileFunctions;
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
@@ -223,19 +224,23 @@ public class CommonFunctions {
      * @param way - полный путь к сохраняемому файлу
      */
 //    @Step("Сделать скриншот")
-    public static void screenShot(String way) {
-        File fileScreen = Selenide.screenshot(OutputType.FILE);
-        try {
-            FileUtils.copyFile(fileScreen, new File(way));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    @Attachment(value="Вложение", type="image/png")
+    public static byte[] screenShot(String way) {
+        byte[] fileScreen = screenshot(OutputType.BYTES);
+        JupyterLabIntegration.uploadBinaryContent(fileScreen, way, "screen.png");
+
+//        try {
+//            FileUtils.copyFile(fileScreen, new File(way));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         //для Allure
-        screenShotAllure();
+//        screenShotAllure();
+        return fileScreen;
     }
 
-    @Attachment(value="Вложение", type="image/png")
+//    @Attachment(value="Вложение", type="image/png")
     public static byte[] screenShotAllure() {
         return screenshot(OutputType.BYTES);
     }

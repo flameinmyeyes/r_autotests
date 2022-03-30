@@ -11,7 +11,7 @@
 
     <test name="REC_all_tests_aggroexpress" thread-count="1" preserve-order="true">
         <classes>
-            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_parameterized"/>
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_04"/>
 <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_01"/>-->
 <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02"/>-->
 <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03"/>-->
