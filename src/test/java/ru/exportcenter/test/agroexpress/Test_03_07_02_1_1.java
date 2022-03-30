@@ -48,7 +48,7 @@ public class Test_03_07_02_1_1 extends HooksTEST {
 
     @AfterMethod
     public void screenShot() {
-        CommonFunctions.screenShot(WAY_TEST + "screen.png");
+        CommonFunctions.screenShot(WAY_TEST);
     }
 
 
