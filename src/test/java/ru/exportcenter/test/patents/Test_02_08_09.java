@@ -41,11 +41,6 @@ public class Test_02_08_09 extends HooksTEST {
         CommonFunctions.screenShot(WAY_TEST);
     }
 
-//    public String PROPERTIES.getProperty(String key) {
-//        String data = PropertiesHandler.getProperty(PROPERTIES, key);
-//        return data;
-//    }
-
     @Step("Авторизация")
     public void step01() {
         //В браузере перейти по ссылке http://uidm.uidm-dev.d.exportcenter.ru/ru/login

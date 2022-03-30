@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="REC_all_tests" parallel="tests" verbose="1" thread-count="2">
+<suite name="REC_all_tests" parallel="tests" verbose="1" thread-count="1">
     <parameter name="runMode" value="remote"/>
 <!--    <parameter name="testrun" value="TSE-C69"/>-->
 <!--    <parameter name="rerunFailedTestsOnly" value="true"/> -->
@@ -11,12 +11,19 @@
 
     <test name="REC_all_tests_aggroexpress" thread-count="1" preserve-order="true">
         <classes>
-            <class name="ru.exportcenter.test.agroexpress.Test_03_07_04"/>
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1_1"/>
+<!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_04"/>-->
 <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_01"/>-->
 <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02"/>-->
 <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03"/>-->
 <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_04"/>-->
         </classes>
     </test>
+
+<!--    <test name="REC_all_tests_patents" thread-count="1" preserve-order="true">-->
+<!--        <classes>-->
+<!--            <class name="ru.exportcenter.test.patents.Test_02_08_09"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
 </suite>
