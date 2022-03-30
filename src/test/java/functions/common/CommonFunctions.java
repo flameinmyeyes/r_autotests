@@ -228,21 +228,7 @@ public class CommonFunctions {
     public static byte[] screenShot(String way) {
         byte[] fileScreen = screenshot(OutputType.BYTES);
         JupyterLabIntegration.uploadBinaryContent(fileScreen, way, "screen.png");
-
-//        try {
-//            FileUtils.copyFile(fileScreen, new File(way));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-        //для Allure
-//        screenShotAllure();
         return fileScreen;
-    }
-
-//    @Attachment(value="Вложение", type="image/png")
-    public static byte[] screenShotAllure() {
-        return screenshot(OutputType.BYTES);
     }
 
     /**
