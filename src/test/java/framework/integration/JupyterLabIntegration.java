@@ -26,7 +26,7 @@ public class JupyterLabIntegration {
         return content;
     }
 
-    public static void uploadBinaryContent(byte[] file, String filePath, String fileName) {
+    public static void uploadBinaryContent(byte[] bytes, String filePath, String fileName) {
         JSONObject requestBody = new JSONObject();
 
         if (filePath.endsWith("/")) {
@@ -35,7 +35,7 @@ public class JupyterLabIntegration {
 
         requestBody.put("type", "file");
         requestBody.put("format", "base64");
-        String encodedBytes = Base64Encoder.encodeBytesToBase64(file);
+        String encodedBytes = Base64Encoder.encodeBytesToBase64(bytes);
         requestBody.put("content", encodedBytes);
 
         createDirectory(filePath);
