@@ -16,8 +16,13 @@ public class Field extends ElementData {
     }
 
     public void selectValue(String value) {
-        $x(new XPath(this).getInputXPath()).click();
-        $x(new XPath(this).getSearchedValueXPath(value)).click();
+        String inputField = new XPath(this).getInputXPath();
+        String item = new XPath(this).getSearchedValueXPath(value);
+        $x(inputField).sendKeys(value);
+        if (!$x(item).exists()) {
+            $x(inputField).click();
+        }
+        $x(item).click();
         new Asserts(this).assertValue(value);
     }
 
