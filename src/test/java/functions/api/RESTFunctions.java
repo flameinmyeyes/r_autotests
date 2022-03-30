@@ -121,7 +121,7 @@ public class RESTFunctions {
                 //задаем параметры соединения
                 httpUrlConnection.setRequestMethod("GET");
                 httpUrlConnection.setDoOutput(true);
-                httpUrlConnection.setRequestProperty("Authorization", "Basic " + Base64Encoder.encodeToBase64(login + ":" + password));
+                httpUrlConnection.setRequestProperty("Authorization", "Basic " + Base64Encoder.encodeStringToBase64(login + ":" + password));
                 httpUrlConnection.setRequestProperty("Content-Type", "application/json");
                 httpUrlConnection.setRequestProperty("Accept", "application/json");
                 httpUrlConnection.setConnectTimeout(120000);
@@ -187,7 +187,7 @@ public class RESTFunctions {
                 httpUrlConnection.setRequestMethod("PUT");
                 httpUrlConnection.setDoInput(true);
                 httpUrlConnection.setDoOutput(true);
-                httpUrlConnection.setRequestProperty("Authorization", "Basic " + Base64Encoder.encodeToBase64(login + ":" + password));
+                httpUrlConnection.setRequestProperty("Authorization", "Basic " + Base64Encoder.encodeStringToBase64(login + ":" + password));
                 httpUrlConnection.setRequestProperty("Content-Type", "application/json");
                 httpUrlConnection.setRequestProperty("Accept", "application/json");
                 httpUrlConnection.setConnectTimeout(120000);
@@ -255,7 +255,7 @@ public class RESTFunctions {
                 httpUrlConnection.setRequestMethod("POST");
                 httpUrlConnection.setDoInput(true);
                 httpUrlConnection.setDoOutput(true);
-                httpUrlConnection.setRequestProperty("Authorization", "Basic " + Base64Encoder.encodeToBase64(login + ":" + password));
+                httpUrlConnection.setRequestProperty("Authorization", "Basic " + Base64Encoder.encodeStringToBase64(login + ":" + password));
                 httpUrlConnection.setRequestProperty("Content-Type", "application/json");
                 httpUrlConnection.setRequestProperty("Accept", "application/json");
                 httpUrlConnection.setConnectTimeout(120000);
@@ -347,7 +347,7 @@ public class RESTFunctions {
                 httpUrlConnection.setRequestMethod("POST");
                 httpUrlConnection.setDoInput(true);
                 httpUrlConnection.setDoOutput(true);
-                httpUrlConnection.setRequestProperty("Authorization", "Basic " + Base64Encoder.encodeToBase64(login + ":" + password));
+                httpUrlConnection.setRequestProperty("Authorization", "Basic " + Base64Encoder.encodeStringToBase64(login + ":" + password));
                 httpUrlConnection.setRequestProperty("Accept", "*/*");
                 httpUrlConnection.setRequestProperty("Connection", "keep-alive");
                 httpUrlConnection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);

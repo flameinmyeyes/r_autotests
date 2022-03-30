@@ -1,5 +1,6 @@
 package functions.common;
 
+import java.io.File;
 import java.util.Base64;
 
 public class Base64Encoder {
@@ -7,7 +8,7 @@ public class Base64Encoder {
     /**
      * Закодировать в base64
      */
-    public static String encodeToBase64(String value) {
+    public static String encodeStringToBase64(String value) {
         String encodedValue = Base64.getEncoder().encodeToString(value.getBytes());
         return encodedValue;
     }
@@ -21,4 +22,8 @@ public class Base64Encoder {
         return decodedValue;
     }
 
+    public static String encodeBytesToBase64(byte[] source) {
+        String encodedValue = Base64.getEncoder().encodeToString(source);
+        return encodedValue;
+    }
 }
