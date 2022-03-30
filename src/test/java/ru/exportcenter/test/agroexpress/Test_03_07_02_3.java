@@ -11,11 +11,11 @@ import ru.exportcenter.test.HooksTEST;
 
 import static com.codeborne.selenide.Selenide.$x;
 
-public class Test_03_07_10 extends HooksTEST {
+public class Test_03_07_02_3 extends HooksTEST {
 
     @Owner(value = "Максимова Диана")
-    @Description("03 07 10 Авторизация экспортера в ФГАИС \"Одно окно\". Выбор Сервиса. Ознакомление с описанием Сервиса")
-    @Link(name = "Test_03_07_10", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123878353")
+    @Description("03 07 02.3 Авторизация экспортера в ФГАИС \"Одно окно\". Выбор Сервиса. Ознакомление с описанием Сервиса")
+    @Link(name = "Test_03_07_02_3", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123878353")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
