@@ -19,10 +19,4 @@
         </classes>
     </test>
 
-    <test name="REC_all_tests_patents" thread-count="1" preserve-order="true">
-        <classes>
-            <class name="ru.exportcenter.dev.patents.Test_02_08_01"/>
-        </classes>
-    </test>
-
 </suite>
