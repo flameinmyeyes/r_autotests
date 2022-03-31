@@ -92,58 +92,63 @@ public class Test_03_07_02_2_1 extends HooksTEST {
     @Step("Заполнить область «Информация о компании»")
     public void step03() {
         new GUIFunctions().inContainer("Информация о компании")
-                .inField("Почтовый адрес").inputValue(P.getProperty("Информация о компании.Почтовый адрес")).assertNoControl();
+                .inField("Почтовый адрес").inputValue(P.getProperty("Почтовый адрес")).assertNoControl();
     }
 
     @Step("Заполнить область «Информация о заявителе»")
     public void step04() {
         new GUIFunctions().inContainer("Информация о заявителе")
                 .inField("Дополнительный контакт").setCheckboxON().assertNoControl()
-                .inField("ФИО").inputValue(P.getProperty("Информация о заявителе.ФИО")).assertNoControl()
-                .inField("Телефон").inputValue(P.getProperty("Информация о заявителе.Телефон")).assertNoControl()
-                .inField("Должность").inputValue(P.getProperty("Информация о заявителе.Должность")).assertNoControl()
-                .inField("Email").inputValue(P.getProperty("Информация о заявителе.Email")).assertNoControl();
+                .inField("ФИО").inputValue(P.getProperty("Заявитель.ФИО")).assertNoControl()
+                .inField("Телефон").inputValue(P.getProperty("Заявитель.Телефон")).assertNoControl()
+                .inField("Должность").inputValue(P.getProperty("Заявитель.Должность")).assertNoControl()
+                .inField("Email").inputValue(P.getProperty("Заявитель.Email")).assertNoControl();
     }
 
     @Step("Заполнить область «Информация для оказания услуги»")
     public void step05() {
+        String departureDate = P.getProperty("Дата отправления");
+        if (departureDate.equals("")){
+            departureDate = DateFunctions.dateShift("dd.MM.yyyy", 14);
+        }
+
         new GUIFunctions().inContainer("Информация для оказания услуги")
-                .inField("Город отправления").selectValue(P.getProperty("Информация для оказания услуги.Город отправления")).assertNoControl()
-                .inField("Город назначения").selectValue(P.getProperty("Информация для оказания услуги.Город назначения")).assertNoControl()
+                .inField("Город отправления").selectValue(P.getProperty("Город отправления")).assertNoControl()
+                .inField("Город назначения").selectValue(P.getProperty("Город назначения")).assertNoControl()
                 .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertNoControl()
-                .inField("Адрес").inputValue(P.getProperty("Информация для оказания услуги.Адрес")).assertNoControl()
-                .inField("Предполагаемая дата отправления груза").inputValue(DateFunctions.dateShift("dd.MM.yyyy", 14)).assertNoControl();
+                .inField("Адрес").inputValue(P.getProperty("Адрес")).assertNoControl()
+                .inField("Предполагаемая дата отправления груза").inputValue(departureDate).assertNoControl();
     }
 
     @Step("Заполнить область «Информация о грузе»")
     public void step06() {
 
-        String removedName = P.getProperty("Информация о грузе.1.Наименование продукции");
+        String removedName = P.getProperty("1.Наименование продукции");
 
         new GUIFunctions().inContainer("Информация о грузе")
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
                 .inField("Наименование продукции").selectValue(removedName).assertNoControl()
-                .inField("Код ТН ВЭД").assertValue(P.getProperty("Информация о грузе.1.Код ТН ВЭД")).assertUneditable().assertNoControl()
-                .inField("Вес продукции, кг").inputValue(P.getProperty("Информация о грузе.1.Вес продукции, кг")).assertNoControl()
-                .inField("Упаковка").selectValue(P.getProperty("Информация о грузе.1.Упаковка")).assertNoControl()
+                .inField("Код ТН ВЭД").assertValue(P.getProperty("1.Код ТН ВЭД")).assertUneditable().assertNoControl()
+                .inField("Вес продукции, кг").inputValue(P.getProperty("1.Вес продукции")).assertNoControl()
+                .inField("Упаковка").selectValue(P.getProperty("1.Упаковка")).assertNoControl()
                 .inField("Температурный режим (от -30°C до 0°C или от 0°C до +30°C) ").setCheckboxON().assertNoControl()
-                .inField("От").inputValue(P.getProperty("Информация о грузе.1.От")).assertNoControl()
-                .inField("До").inputValue(P.getProperty("Информация о грузе.1.До")).assertNoControl()
-                .inField("Количество контейнеров").inputValue(P.getProperty("Информация о грузе.1.Количество контейнеров")).assertNoControl()
-                .inField("Тип контейнера").selectValue(P.getProperty("Информация о грузе.1.Тип контейнера")).assertNoControl()
+                .inField("От").inputValue(P.getProperty("1.От")).assertNoControl()
+                .inField("До").inputValue(P.getProperty("1.До")).assertNoControl()
+                .inField("Количество контейнеров").inputValue(P.getProperty("1.Количество контейнеров")).assertNoControl()
+                .inField("Тип контейнера").selectValue(P.getProperty("1.Тип контейнера")).assertNoControl()
                 .clickButton("Сохранить");
 
         new GUIFunctions().inContainer("Информация о грузе")
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
                 .clickButton("Добавить новую")
-                .inField("Наименование продукции").inputValue(P.getProperty("Информация о грузе.2.Наименование продукции")).assertNoControl()
-                .inField("Код ТН ВЭД").selectValue(P.getProperty("Информация о грузе.2.Код ТН ВЭД")).assertNoControl()
-                .inField("Вес продукции, кг").inputValue(P.getProperty("Информация о грузе.2.Вес продукции, кг")).assertNoControl()
-                .inField("Упаковка").selectValue(P.getProperty("Информация о грузе.2.Упаковка")).assertNoControl()
-                .inField("Количество контейнеров").inputValue(P.getProperty("Информация о грузе.2.Количество контейнеров")).assertNoControl()
-                .inField("Тип контейнера").selectValue(P.getProperty("Информация о грузе.2.Тип контейнера")).assertNoControl()
+                .inField("Наименование продукции").inputValue(P.getProperty("2.Наименование продукции")).assertNoControl()
+                .inField("Код ТН ВЭД").selectValue(P.getProperty("2.Код ТН ВЭД")).assertNoControl()
+                .inField("Вес продукции, кг").inputValue(P.getProperty("2.Вес продукции")).assertNoControl()
+                .inField("Упаковка").selectValue(P.getProperty("2.Упаковка")).assertNoControl()
+                .inField("Количество контейнеров").inputValue(P.getProperty("2.Количество контейнеров")).assertNoControl()
+                .inField("Тип контейнера").selectValue(P.getProperty("2.Тип контейнера")).assertNoControl()
                 .clickButton("Сохранить");
 
         $x("//td[text()='" + removedName + "']/ancestor::tr[1]//button").click();
@@ -151,47 +156,46 @@ public class Test_03_07_02_2_1 extends HooksTEST {
         new GUIFunctions().waitForElementDisappeared("//td[text()='" + removedName + "']/ancestor::tr[1]");
     }
 
-    @Step("Заполнить область «Информация о грузополучателе»")
+    @Step("Заполнить область «Информация о грузополучаеле»")
     public void step07() {
         new GUIFunctions()
                 .inContainer("Информация о грузополучателе")
-                .inField("Наименование грузополучателя").inputValue(P.getProperty("Информация о грузополучателе.Наименование грузополучателя")).assertNoControl()
-                .inField("Страна").inputValue(P.getProperty("Информация о грузополучателе.Страна")).assertNoControl()
-                .inField("Город").inputValue(P.getProperty("Информация о грузополучателе.Город")).assertNoControl()
-                .inField("Дом").inputValue(P.getProperty("Информация о грузополучателе.Дом")).assertNoControl()
-                .inField("Регион").inputValue(P.getProperty("Информация о грузополучателе.Регион")).assertNoControl()
-                .inField("Населенный пункт").inputValue(P.getProperty("Информация о грузополучателе.Населенный пункт")).assertNoControl()
-                .inField("Район").inputValue(P.getProperty("Информация о грузополучателе.Район")).assertNoControl()
-                .inField("Улица").inputValue(P.getProperty("Информация о грузополучателе.Улица")).assertNoControl()
-                .inField("Офис").inputValue(P.getProperty("Информация о грузополучателе.Офис")).assertNoControl()
-                .inField("Регистрационный номер грузополучателя").inputValue(P.getProperty("Информация о грузополучателе.Регистрационный номер грузополучателя")).assertNoControl()
-                .inField("Телефон").inputValue(P.getProperty("Информация о грузополучателе.Телефон")).assertNoControl()
-                .inField("Представитель грузополучателя").inputValue(P.getProperty("Информация о грузополучателе.Представитель грузополучателя")).assertNoControl()
-                .inField("Email").inputValue(P.getProperty("Информация о грузополучателе.Email")).assertNoControl();
+                .inField("Наименование грузополучателя").inputValue(P.getProperty("Наименование грузополучателя")).assertNoControl()
+                .inField("Страна").inputValue(P.getProperty("Страна")).assertNoControl()
+                .inField("Город").inputValue(P.getProperty("Город")).assertNoControl()
+                .inField("Дом").inputValue(P.getProperty("Дом")).assertNoControl()
+                .inField("Регион").inputValue(P.getProperty("Регион")).assertNoControl()
+                .inField("Населенный пункт").inputValue(P.getProperty("Населенный пункт")).assertNoControl()
+                .inField("Район").inputValue(P.getProperty("Район")).assertNoControl()
+                .inField("Улица").inputValue(P.getProperty("Улица")).assertNoControl()
+                .inField("Офис").inputValue(P.getProperty("Офис")).assertNoControl()
+                .inField("Регистрационный номер грузополучателя").inputValue(P.getProperty("Регистрационный номер грузополучателя")).assertNoControl()
+                .inField("Телефон").inputValue(P.getProperty("Телефон")).assertNoControl()
+                .inField("Представитель грузополучателя").inputValue(P.getProperty("Представитель грузополучателя")).assertNoControl()
+                .inField("Email").inputValue(P.getProperty("Email")).assertNoControl();
     }
 
     @Step("Заполнить область «Дополнительные услуги»")
     public void step08() {
         new GUIFunctions().inContainer("Дополнительные услуги")
                 .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertNoControl()
-                .inField("Адрес").assertValue("Молодежная улица 14").assertEditable().assertNoControl()
+                .inField("Адрес").assertValue(P.getProperty("Адрес")).assertEditable().assertNoControl()
                 .inField("Таможенное оформление").setCheckboxON().assertNoControl()
                 .inField("РЖД Логистика").setRadiobuttonByDescription("Комплексная услуга таможенного оформления")
                 .inField("Оформление ветеринарного сертификата").setCheckboxON().assertNoControl()
                 .inField("РЖД Логистика").setRadiobuttonByDescription("Содействие в получении ветеринарных сертификатов")
                 .inField("Оформление фитосанитарного сертификата").setCheckboxON().assertNoControl()
                 .inField("РЖД Логистика").setRadiobuttonByDescription("Содействие в получении фитосанитарных сертификатов");
-
-        String docNum = $x("//div[contains (@class, 'FormHeader_title' )]//span[contains (@class, 'Typography_body' )]").getText().split("№")[1];
-        JupyterLabIntegration.uploadTextContent(docNum, WAY_TEST, "docNum.txt");
-
     }
 
     @Step("Отправка Заявки на рассмотрение ")
     public void step09() {
+        String docNum = $x("//div[contains (@class, 'FormHeader_title' )]//span[contains (@class, 'Typography_body' )]").getText().split("№")[1];
+
         new GUIFunctions().clickButton("Далее")
                 .waitForElementDisplayed("//*[text()='Заявка отправлена на рассмотрение. Срок рассмотрения до 3 рабочих дней']");
 
+        JupyterLabIntegration.uploadTextContent(docNum, WAY_TEST, "docNum.txt");
     }
 
     @AfterMethod
