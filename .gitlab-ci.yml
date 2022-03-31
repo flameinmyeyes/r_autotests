@@ -1,4 +1,4 @@
-image: $CI_ARTIFACTORY_URL_CLOUD_BASE/docker:18.09
+image: $CI_ARTIFACTORY_URL_CLOUD_BASE/docker:18.09_vault_2
 services:
   - $CI_ARTIFACTORY_URL_CLOUD_BASE/docker:18.09-dind
 variables:
@@ -7,6 +7,20 @@ variables:
 stages:
   - build
   - test
+
+.get_variables_from_vault: &get_variables_from_vault  |
+  date
+  export VAULT_SKIP_VERIFY=true
+  export VAULT_ADDR=$CI_VAULT_ADD
+  vault status
+  export VAULT_TOKEN="$(vault write -field=token auth/jwt/login role=artifactory jwt=$CI_JOB_JWT)"
+  export CI_ARTIFACTORY_USER="$(vault kv get -field=login rec_public/prod/infra/artifactory/all_repos_read)"
+  export CI_ARTIFACTORY_PASSWORD="$(vault kv get -field=password rec_public/prod/infra/artifactory/all_repos_read)"
+  export CI_ARTIFACTORY_W_LOGIN="$(vault kv get -field=login rec_public/prod/infra/artifactory/all_repos_write)"
+  export CI_ARTIFACTORY_W_PASSWORD="$(vault kv get -field=password rec_public/prod/infra/artifactory/all_repos_write)"
+  export CI_SONARQUBE_URL="$(vault kv get -field=url rec_public/prod/infra/sonarqube/sonar_dev)"
+  export CI_SONARQUBE_USER="$(vault kv get -field=login rec_public/prod/infra/sonarqube/sonar_dev)"
+  export CI_SONARQUBE_PASSWORD="$(vault kv get -field=password rec_public/prod/infra/sonarqube/sonar_dev)"
 
 build:
   stage: build
@@ -19,8 +33,10 @@ build:
   only:
     variables:
       - $RUN_TYPE == "build_image"
+  before_script:
+    - *get_variables_from_vault
   script:
-    - docker login $CI_ARTIFACTORY_URL_CLOUD -u $CI_ARTIFACTORY_USER -p $CI_ARTIFACTORY_PASSWORD
+    - docker login $CI_ARTIFACTORY_URL_CLOUD -u $CI_ARTIFACTORY_W_LOGIN -p $CI_ARTIFACTORY_W_PASSWORD
     - |
       docker build \
       --build-arg CI_ARTIFACTORY_USER="$CI_ARTIFACTORY_USER" \
@@ -31,7 +47,6 @@ build:
       -t $CI_ARTIFACTORY_URL_CLOUD/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME .
     - docker push $CI_ARTIFACTORY_URL_CLOUD/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
     - echo DOCKER_IMAGE=$CI_ARTIFACTORY_URL_CLOUD/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME >> build.env
-
   artifacts:
     reports:
       dotenv: build.env
@@ -58,6 +73,8 @@ run_regression_tests_job: #Test_&_send:
       - mvn/**/*
       - result.json
   before_script:
+    - *get_variables_from_vault
+    - *fill_maven_settings
 #    - mkdir -p /share && mount.cifs //10.5.1.87/share /share -o username=share,password=aij7zieYAeng2gee,file_mode=0766,dir_mode=0766
     - export TZ=Europe/Moscow
   script:
