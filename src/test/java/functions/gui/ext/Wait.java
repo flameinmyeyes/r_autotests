@@ -29,11 +29,11 @@ public class Wait extends ElementData {
     }
 
     public void waitForElementDisplayed(String xPath) {
-        $x(xPath).shouldBe(Condition.visible);
+        $x(new XPath(this).getContainerXPath() + xPath).shouldBe(Condition.visible);
     }
 
     public void waitForElementDisappeared(String xPath) {
-        $x(xPath).shouldBe(Condition.disappear);
+        $x(new XPath(this).getContainerXPath() + xPath).shouldBe(Condition.disappear);
     }
 
 }
