@@ -18,15 +18,15 @@ import java.util.Properties;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.refresh;
 
-public class Test_02_08_09 extends HooksTEST {
+public class Test_02_08_02_4 extends HooksTEST {
 
-    public String WAY_TEST = Ways.TEST.getWay() + "/patents/Test_02_08_09/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_02_08_09_properties.xml";
+    public String WAY_TEST = Ways.TEST.getWay() + "/patents/Test_02_08_02_4/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_02_08_02_4_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     @Owner(value="Балашов Илья")
-    @Description("ТК 02 08 09 Отказ Клиента от услуги")
-    @Link(name="Test_02_08_09", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123868246")
+    @Description("ТК 02 08 02.4 Отказ Клиента от услуги")
+    @Link(name="Test_02_08_02_4", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123868246")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
@@ -43,7 +43,7 @@ public class Test_02_08_09 extends HooksTEST {
 
     @Step("Авторизация")
     public void step01() {
-        //В браузере перейти по ссылке http://uidm.uidm-dev.d.exportcenter.ru/ru/login
+        //В браузере перейти по ссылке https://lk.t.exportcenter.ru/ru/login
         //Ввести логин и пароль demo_exporter/password, нажать «Войти»
         new GUIFunctions()
                 .inContainer("Вход в личный кабинет")
@@ -67,12 +67,10 @@ public class Test_02_08_09 extends HooksTEST {
                 .selectTab("Сервисы")
                 .waitForURL("https://master-portal.t.exportcenter.ru/services/business")
                 .inputInSearchField("Поиск по разделу", "Компенсация части затрат на регистрацию ОИС за рубежом")
+                .waitForURL("https://master-portal.t.exportcenter.ru/services/search")
                 .waitForElementDisplayed("//div[text()=' ничего не найдено']//span[text()='Компенсация части затрат на регистрацию ОИС за рубежом']")
-
                 .inContainer("Каталог сервисов")
                 .clickButton("Государственные")
-//                .waitForURL("http://master-portal-dev.d.exportcenter.ru/services/state")
-//                .inputInSearchField("Поиск по разделу", "Компенсация части затрат на регистрацию ОИС за рубежом")
                 .openSearchResult("Компенсация части затрат на регистрацию ОИС за рубежом", "Оформить")
                 .switchPageTo(1)
                 .waitForLoading();
