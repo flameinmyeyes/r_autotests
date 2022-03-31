@@ -12,7 +12,6 @@ public class Field extends ElementData {
 
     public void inputValue(String value) {
         $x(new XPath(this).getInputXPath()).sendKeys(value);
-        new Asserts(this).assertValue(value);
     }
 
     public void selectValue(String value) {
@@ -23,7 +22,6 @@ public class Field extends ElementData {
             $x(inputField).click();
         }
         $x(item).click();
-        new Asserts(this).assertValue(value);
     }
 
     public void inputInSearchField(String searchFieldPlaceholder, String value) {
@@ -48,7 +46,7 @@ public class Field extends ElementData {
         new Asserts(this).assertCheckboxOFF();
     }
 
-    public void setRadiobuttonByDescription(String description) {
+    public void setRadiobuttonByDescription() {
         $x(new XPath(this).getRadiobuttonByDescriptionXPath()).click();
         new Asserts(this).assertRadiobuttonONByDescription();
     }

@@ -124,7 +124,7 @@ public class AllFunctions extends ElementData {
     public AllFunctions setRadiobuttonByDescription(String description) {
         rbCondition = true;
         this.description = description;
-        new Field(this).setRadiobuttonByDescription(description);
+        new Field(this).setRadiobuttonByDescription();
         return this;
     }
 

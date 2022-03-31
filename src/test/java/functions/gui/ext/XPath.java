@@ -9,14 +9,14 @@ public class XPath extends ElementData {
         super(data);
     }
 
-    private String getContainerXPath() {
+    public String getContainerXPath() {
         if (isContainerDefined()) {
             return "//*[text() = '" + container + "']/ancestor::div[contains(@class, 'container')][1]";
         }
         return "";
     }
 
-    private String getFieldXPath() {
+    public String getFieldXPath() {
         if (isFieldDefined()) {
             return "//*[text() = '" + field + "']/ancestor::div[contains(@class,'Column_col') " +
                     "or contains(@class, 'inputWrapper') " +

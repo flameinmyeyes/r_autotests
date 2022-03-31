@@ -15,7 +15,7 @@ public class Click extends ElementData {
     }
 
     public void clickByLocator(String xPath) {
-        $x(xPath).click();
+        $x(new XPath(this).getContainerXPath() + xPath).click();
     }
 
     public void selectTab(String tabName) {
