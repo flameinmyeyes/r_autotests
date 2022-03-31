@@ -8,6 +8,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
+import io.restassured.RestAssured;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.dev.HooksDEV;
@@ -16,14 +17,14 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class Test_03_07_02 extends HooksDEV {
 
-    private String WAY_TEST = Ways.TSE_DEMO_28080.getWay() + "\\FUN_02\\BP_016\\FUN_02_BP_016_NSI_016_PZ_2_7_2_1\\";
+ //   private String WAY_TEST = Ways.TSE_DEMO_28080.getWay() + "\\FUN_02\\BP_016\\FUN_02_BP_016_NSI_016_PZ_2_7_2_1\\";
 
     @Owner(value="Камаев Евгений")
     @Description("03 07 02 Сценарий 2")
     @Link(name="03 07 02", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=117902502")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
-        WAY_TEST = setWay(WAY_TEST);
+  //      WAY_TEST = setWay(WAY_TEST);
         step01();
         step02();
         step03();
@@ -35,12 +36,25 @@ public class Test_03_07_02 extends HooksDEV {
     }
 
     @AfterMethod
-    public void screenShot() {
-        CommonFunctions.screenShot( WAY_TEST + "screen.png");
-    }
+  //  public void screenShot() {
+   //     CommonFunctions.screenShot( WAY_TEST + "screen.png");
+   // }
 
     @Step("Шаг 1 Авторизация")
     public void step01() {
+
+        String result = RestAssured
+                .given()
+                .baseUri("http://selenoidshare.d.exportcenter.ru")
+                .basePath("/api/contents/work")
+                .param("token", "0a6a3f42bb6533339a7862e37f56c8cdbcee67a4baecf988")
+                .when()
+                .get("files_for_tests/test/agroexpress/Test_03_07_03_parameterized/Test_03_07_03_properties.xml")
+                .then()
+                .assertThat().statusCode(200)
+                .extract().response().jsonPath().getString("content");
+
+        System.out.println(result);
         CommonFunctions.printStep();
         new GUIFunctions().inContainer("Вход в личный кабинет")
                 .inField("Email").inputValue("demo_exporter")
@@ -48,6 +62,8 @@ public class Test_03_07_02 extends HooksDEV {
                 .clickButton("Войти");
 
         new GUIFunctions().waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
+
+
     }
 
     @Step("Шаг 2 Навигация")
@@ -78,7 +94,7 @@ public class Test_03_07_02 extends HooksDEV {
                 .inField("ФИО").inputValue("Иванов Иван Иванович").assertValue().assertNoControl()
                 .inField("Телефон").inputValue("+7(999)999-99-99").assertValue().assertNoControl()
                 .inField("Должность").inputValue("Менеджер").assertValue().assertNoControl()
-                .inField("Email").inputValue("word@mail.ru").assertValue().assertNoControl();
+                .inField("Email").inputValue("345").assertValue().assertNoControl();
     }
 
     @Step("Шаг 5 Блок  «Информация для оказания услуги»")

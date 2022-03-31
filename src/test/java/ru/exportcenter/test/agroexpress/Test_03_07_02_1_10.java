@@ -22,16 +22,16 @@ import java.util.Properties;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.refresh;
 
-public class Test_03_07_02_1_1 extends HooksTEST {
+public class Test_03_07_02_1_10 extends HooksTEST {
 
-    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_1/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_1.xml";
+    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_10/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_10.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String docNum;
 
     @Owner(value="Камаев Евгений")
-    @Description("03 07 02.1.1 Ввод и редактирование данных Заявки (Сборный груз). Отправка Заявки на рассмотрение")
-    @Link(name="Test_03_07_02_1_1", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123880785")
+    @Description("03 07 02.1.10 Ввод и редактирование данных Заявки (Сборный груз). Отправка Заявки на рассмотрение")
+    @Link(name="Test_03_07_02_1_10", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123880785")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
@@ -44,6 +44,7 @@ public class Test_03_07_02_1_1 extends HooksTEST {
         step06();
         step07();
         step08();
+        step09();
     }
 
     @AfterMethod
@@ -203,10 +204,18 @@ public class Test_03_07_02_1_1 extends HooksTEST {
                 .inField("РЖД Логистика").setRadiobuttonByDescription("Содействие в получении ветеринарных сертификатов")
                 .inField("Оформление фитосанитарного сертификата").setCheckboxON().assertNoControl()
                 .inField("РЖД Логистика").setRadiobuttonByDescription("Содействие в получении фитосанитарных сертификатов");
+
+    }
+
+    @Step("Отправка Заявки на рассмотрение ")
+    public void step09() {
+        CommonFunctions.printStep();
         new GUIFunctions().clickButton("Далее").waitForLoading();
         docNum = $x("//div[contains (@class, 'FormHeader_title' )]//span[contains (@class, 'Typography_body' )]").getText().split("№")[1];
         JupyterLabIntegration.uploadTextContent(docNum,WAY_TEST,"docNum.txt");
     }
+
+
 
     private void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
