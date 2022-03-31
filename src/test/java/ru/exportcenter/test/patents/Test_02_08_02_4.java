@@ -47,11 +47,10 @@ public class Test_02_08_02_4 extends HooksTEST {
         //Ввести логин и пароль demo_exporter/password, нажать «Войти»
         new GUIFunctions()
                 .inContainer("Вход в личный кабинет")
-                .inField("Email").inputValue(PROPERTIES.getProperty("Авторизация.Email"))
-                .inField("Пароль").inputValue(PROPERTIES.getProperty("Авторизация.Пароль"))
-                .clickButton("Войти");
-
-        new GUIFunctions().waitForURL("https://lk.t.exportcenter.ru/ru/main");
+                    .inField("Email").inputValue(PROPERTIES.getProperty("Авторизация.Email"))
+                    .inField("Пароль").inputValue(PROPERTIES.getProperty("Авторизация.Пароль"))
+                    .clickButton("Войти")
+                    .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
     @Step("Навигация")
@@ -70,10 +69,10 @@ public class Test_02_08_02_4 extends HooksTEST {
                 .waitForURL("https://master-portal.t.exportcenter.ru/services/search")
                 .waitForElementDisplayed("//div[text()=' ничего не найдено']//span[text()='Компенсация части затрат на регистрацию ОИС за рубежом']")
                 .inContainer("Каталог сервисов")
-                .clickButton("Государственные")
-                .openSearchResult("Компенсация части затрат на регистрацию ОИС за рубежом", "Оформить")
-                .switchPageTo(1)
-                .waitForLoading();
+                    .clickButton("Государственные")
+                    .openSearchResult("Компенсация части затрат на регистрацию ОИС за рубежом", "Оформить")
+                    .switchPageTo(1)
+                    .waitForLoading();
 
         refreshTab("//*[contains(text(), 'Продолжить')]", 60);
 
@@ -87,8 +86,9 @@ public class Test_02_08_02_4 extends HooksTEST {
         //Нажать на "Отменить заявку"
         new GUIFunctions()
                 .inContainer("Заявка «Субсидия по компенсации части затрат, связанных с регистрацией на внешних рынках объектов интеллектуальной собственности» S/2022/08554")
-                .clickByLocator("//button[@class='dropdown-icon']").clickByLocator("//li[text()='Отменить заявку']")
-                .waitForURL("https://lk.t.exportcenter.ru/ru/main");
+                    .clickByLocator("//button[@class='dropdown-icon']")
+                    .clickByLocator("//li[text()='Отменить заявку']")
+                    .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
     private void refreshTab(String expectedXpath, int times) {
