@@ -17,14 +17,14 @@ import static com.codeborne.selenide.Selenide.refresh;
 
 public class Test_03_07_02 extends HooksTEST {
 
-    private String WAY_TEST = Ways.TSE_DEMO_28080.getWay() + "\\FUN_02\\BP_016\\FUN_02_BP_016_NSI_016_PZ_2_7_2_1\\";
+//    private String WAY_TEST = Ways.TSE_DEMO_28080.getWay() + "\\FUN_02\\BP_016\\FUN_02_BP_016_NSI_016_PZ_2_7_2_1\\";
 
     @Owner(value="Камаев Евгений")
     @Description("03 07 02 Сценарий 2")
     @Link(name="03 07 02", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=117902502")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
-        WAY_TEST = setWay(WAY_TEST);
+//        WAY_TEST = setWay(WAY_TEST);
         step01();
         step02();
         step03();
@@ -36,9 +36,9 @@ public class Test_03_07_02 extends HooksTEST {
     }
 
     @AfterMethod
-    public void screenShot() {
-        CommonFunctions.screenShot( WAY_TEST + "screen.png");
-    }
+//   public void screenShot() {
+//       CommonFunctions.screenShot( WAY_TEST + "screen.png");
+//   }
 
     @Step("Шаг 1 Авторизация")
     public void step01() {
