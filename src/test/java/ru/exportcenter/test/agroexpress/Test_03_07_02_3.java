@@ -17,6 +17,11 @@ import java.util.Properties;
 
 public class Test_03_07_02_3 extends HooksTEST {
 
+    /*
+     * http://selenoidshare.d.exportcenter.ru/lab/tree/work/files_for_tests/test/agroexpress/Test_03_07_02_3
+     * https://gitlab.exportcenter.ru/sub-service/autotests/rec_autotests/-/blob/master/src/test/java/ru/exportcenter/test/agroexpress/Test_03_07_02_3.java
+     */
+
     private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_3/";
     private final Properties P = PropertiesHandler.parseProperties(WAY_TEST + "Test_03_07_02_3.xml");
 
