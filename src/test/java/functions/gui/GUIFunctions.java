@@ -1,10 +1,8 @@
 package functions.gui;
 
-import functions.gui.ext.Click;
-import functions.gui.ext.Field;
-import functions.gui.ext.Upload;
-import functions.gui.ext.Wait;
+import functions.gui.ext.*;
 
+import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.switchTo;
 
 public class GUIFunctions extends ElementData {
@@ -16,96 +14,213 @@ public class GUIFunctions extends ElementData {
      * setters
      */
 
-    public AllFunctions inContainer(String container) {
+    public GUIFunctions inContainer(String container) {
         this.container = container;
-        return new AllFunctions(this);
+        return this;
     }
 
-    public InField inField(String field) {
+    public GUIFunctions inField(String field) {
         this.field = field;
-        return new InField(this);
+        return this;
     }
 
     /**
      * switch page
      */
 
-    public AllFunctions switchPageTo(int page) {
+    public GUIFunctions switchPageTo(int page) {
         switchTo().window(page);
-        return new AllFunctions(this);
+        return this;
+    }
+
+
+    /**
+     * authorisation
+     */
+
+    public GUIFunctions authorisation(String login, String password) {
+        this.inContainer("Вход в личный кабинет")
+                .inField("Email").inputValue(login)
+                .inField("Пароль").inputValue(password)
+                .clickButton("Войти");
+        return this;
+    }
+
+    public GUIFunctions authorisation(String login, String password, String code) {
+        this.inContainer("Вход в личный кабинет")
+                .inField("Email").inputValue(login)
+                .inField("Пароль").inputValue(password)
+                .clickButton("Войти");
+
+        int n = 0;
+        while (n < code.length()) {
+            $x(new XPath(this).getContainerXPath() + "//input[@data-id=" + n + "]")
+                    .sendKeys(code.substring(n, n + 1));
+            n++;
+        }
+        return this;
     }
 
     /**
      * search in page
      */
 
-    public AllFunctions inputInSearchField(String searchFieldPlaceholder, String value) {
+    public GUIFunctions inputInSearchField(String searchFieldPlaceholder, String value) {
         new Field(this).inputInSearchField(searchFieldPlaceholder, value);
-        return new AllFunctions(this);
+        return this;
     }
 
-    public AllFunctions openSearchResult(String searchResultName, String buttonName) {
+    public GUIFunctions openSearchResult(String searchResultName, String buttonName) {
         new Click(this).openSearchResult(searchResultName, buttonName);
-        return new AllFunctions(this);
+        return this;
     }
 
     /**
-     * click ext
+     * input ext
      */
 
-    public AllFunctions clickButton(String button) {
+    public GUIFunctions inputValue(String value) {
+        this.value = value;
+        new Field(this).inputValue(value);
+        return this;
+    }
+
+    public GUIFunctions selectValue(String value) {
+        this.value = value;
+        new Field(this).selectValue(value);
+        return this;
+    }
+
+    public GUIFunctions assertValue() {
+        new Asserts(this).assertValue();
+        return this;
+    }
+
+    public GUIFunctions assertValue(String expectedValue) {
+        new Asserts(this).assertValue(expectedValue);
+        return this;
+    }
+
+    @Deprecated
+    public GUIFunctions assertValueContains(String subValue) {
+        new Asserts(this).assertValueContains(subValue);
+        return this;
+    }
+
+    public GUIFunctions assertEditable() {
+        new Asserts(this).assertEditable();
+        return this;
+    }
+
+    public GUIFunctions assertUneditable() {
+        new Asserts(this).assertUneditable();
+        return this;
+    }
+
+    public GUIFunctions assertNoControl() {
+        new Asserts(this).assertNoControl();
+        return this;
+    }
+
+
+    /**
+     * checkbox ext
+     */
+
+    public GUIFunctions setCheckboxON() {
+        cbCondition = true;
+        new Field(this).setCheckboxON();
+        return this;
+    }
+
+    public GUIFunctions assertCheckboxON() {
+        new Asserts(this).assertCheckboxON();
+        return this;
+    }
+
+
+    public GUIFunctions setCheckboxOFF() {
+        cbCondition = false;
+        new Field(this).setCheckboxOFF();
+        return this;
+    }
+
+    public GUIFunctions assertCheckboxOFF() {
+        new Asserts(this).assertCheckboxOFF();
+        return this;
+    }
+
+
+    public GUIFunctions setRadiobuttonByDescription(String description) {
+        rbCondition = true;
+        this.description = description;
+        new Field(this).setRadiobuttonByDescription();
+        return this;
+    }
+
+    public GUIFunctions assertRadiobuttonONByDescription() {
+        new Asserts(this).assertRadiobuttonONByDescription();
+        return this;
+    }
+
+    /**
+     * click
+     */
+
+    public GUIFunctions clickButton(String button) {
         this.button = button;
         new Click(this).clickButton();
-        return new AllFunctions(this);
+        return this;
     }
 
-    public AllFunctions clickByLocator(String xPath) {
+    public GUIFunctions clickByLocator(String xPath) {
         this.xPath = xPath;
         new Click(this).clickByLocator(xPath);
-        return new AllFunctions(this);
+        return this;
     }
 
-    public AllFunctions selectTab(String tabName) {
+    public GUIFunctions selectTab(String tabName) {
+        button = tabName;
         new Click(this).selectTab(tabName);
-        return new AllFunctions(this);
+        return this;
     }
 
-    public AllFunctions closeAllPopupWindows() {
+    public GUIFunctions closeAllPopupWindows() {
         new Click(this).closeAllPopupWindows();
-        return new AllFunctions(this);
+        return this;
     }
 
     /**
      * upload
      */
 
-    public AllFunctions uploadFile(String upload, String wayToFile) {
+    public GUIFunctions uploadFile(String upload, String wayToFile) {
         new Upload(this).uploadFile(upload, wayToFile);
-        return new AllFunctions(this);
+        return this;
     }
 
     /**
      * wait
      */
 
-    public AllFunctions waitForURL(String URL) {
+    public GUIFunctions waitForURL(String URL) {
         new Wait(this).waitForURL(URL);
-        return new AllFunctions(this);
+        return this;
     }
 
-    public AllFunctions waitForLoading() {
+    public GUIFunctions waitForLoading() {
         new Wait(this).waitForLoading();
-        return new AllFunctions(this);
+        return this;
     }
 
-    public AllFunctions waitForElementDisplayed(String xPath) {
+    public GUIFunctions waitForElementDisplayed(String xPath) {
         new Wait(this).waitForElementDisplayed(xPath);
-        return new AllFunctions(this);
+        return this;
     }
 
-    public AllFunctions waitForElementDisappeared(String xPath) {
+    public GUIFunctions waitForElementDisappeared(String xPath) {
         new Wait(this).waitForElementDisappeared(xPath);
-        return new AllFunctions(this);
+        return this;
     }
 
 }
