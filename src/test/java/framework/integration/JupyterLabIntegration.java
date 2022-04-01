@@ -3,11 +3,7 @@ package framework.integration;
 import functions.common.Base64Encoder;
 import io.restassured.RestAssured;
 import net.sf.json.JSONObject;
-import org.apache.commons.io.FileUtils;
 import org.testng.Assert;
-
-import java.io.File;
-import java.io.IOException;
 
 public class JupyterLabIntegration {
 
