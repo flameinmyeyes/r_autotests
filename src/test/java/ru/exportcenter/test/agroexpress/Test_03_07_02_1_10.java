@@ -66,6 +66,7 @@ public class Test_03_07_02_1_10 extends HooksTEST {
         $x("//div[contains(@class, 'CodeInput_input' )]/input[@data-id= '2']").sendKeys("3");
         $x("//div[contains(@class, 'CodeInput_input' )]/input[@data-id= '3']").sendKeys("4");
         new GUIFunctions().waitForURL("https://lk.t.exportcenter.ru/ru/main");
+
     }
 
     @Step("Навигация")
@@ -99,11 +100,11 @@ public class Test_03_07_02_1_10 extends HooksTEST {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Информация о заявителе")
-                .inField("Дополнительный контакт").setCheckboxON().assertNoControl()
-                .inField("ФИО").inputValue(PROPERTIES.getProperty("Информация о заявителе.ФИО")).assertNoControl()
-                .inField("Телефон").inputValue(PROPERTIES.getProperty("Информация о заявителе.Телефон")).assertNoControl()
-                .inField("Должность").inputValue(PROPERTIES.getProperty("Информация о заявителе.Должность")).assertNoControl()
-                .inField("Email").inputValue(PROPERTIES.getProperty("Информация о заявителе.Email")).assertNoControl();
+                .inField("Дополнительный контакт").setCheckboxON().assertNoControl().assertValue()
+                .inField("ФИО").inputValue(PROPERTIES.getProperty("Информация о заявителе.ФИО")).assertNoControl().assertValue()
+                .inField("Телефон").inputValue(PROPERTIES.getProperty("Информация о заявителе.Телефон")).assertNoControl().assertValue()
+                .inField("Должность").inputValue(PROPERTIES.getProperty("Информация о заявителе.Должность")).assertNoControl().assertValue()
+                .inField("Email").inputValue(PROPERTIES.getProperty("Информация о заявителе.Email")).assertNoControl().assertValue();
     }
 
     @Step("Блок  «Информация для оказания услуги»")
@@ -111,11 +112,11 @@ public class Test_03_07_02_1_10 extends HooksTEST {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Информация для оказания услуги")
-                .inField("Город отправления").selectValue(PROPERTIES.getProperty("Информация для оказания услуги.Город отправления")).assertNoControl()
-                .inField("Город назначения").selectValue(PROPERTIES.getProperty("Информация для оказания услуги.Город назначения")).assertNoControl()
+                .inField("Город отправления").selectValue(PROPERTIES.getProperty("Информация для оказания услуги.Город отправления")).assertNoControl().assertValue()
+                .inField("Город назначения").selectValue(PROPERTIES.getProperty("Информация для оказания услуги.Город назначения")).assertNoControl().assertValue()
                 .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON()
-                .inField("Адрес").inputValue(PROPERTIES.getProperty("Информация для оказания услуги.Адрес")).assertNoControl()
-                .inField("Предполагаемая дата отправления груза").inputValue(DateFunctions.dateShift("dd.MM.yyyy", 14));;
+                .inField("Адрес").inputValue(PROPERTIES.getProperty("Информация для оказания услуги.Адрес")).assertNoControl().assertValue()
+                .inField("Предполагаемая дата отправления груза").inputValue(DateFunctions.dateShift("dd.MM.yyyy", 14)).assertValue();
     }
 
     @Step("Блок «Информация о грузе»")
@@ -125,19 +126,19 @@ public class Test_03_07_02_1_10 extends HooksTEST {
                 .inContainer("Информация о грузе")
                 .clickButton("Сборный груз")
                 .waitForElementDisplayed("//*[text()= 'Температурный режим на всю партию (от -30°C до 0°C или от 0°C до +30°C) ']")
-                .inField("Температурный режим на всю партию (от -30°C до 0°C или от 0°C до +30°C) ").setCheckboxON().assertNoControl()
-                .inField("От").inputValue(PROPERTIES.getProperty("Информация о грузе.От")).assertNoControl()
-                .inField("До").inputValue(PROPERTIES.getProperty("Информация о грузе.До")).assertNoControl()
+                .inField("Температурный режим на всю партию (от -30°C до 0°C или от 0°C до +30°C) ").setCheckboxON().assertNoControl().assertValue()
+                .inField("От").inputValue(PROPERTIES.getProperty("Информация о грузе.От")).assertNoControl().assertValue()
+                .inField("До").inputValue(PROPERTIES.getProperty("Информация о грузе.До")).assertNoControl().assertValue()
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
-               .inField("Наименование продукции").selectValue(PROPERTIES.getProperty("Информация о грузе.Наименование продукции")).assertNoControl()
-                .inField("Код ТН ВЭД").assertValue(PROPERTIES.getProperty("Информация о грузе.Код ТН ВЭД")).assertNoControl().assertUneditable()
-                .inField("Вес продукции, кг").inputValue(PROPERTIES.getProperty("Информация о грузе.Вес продукции, кг")).assertNoControl()
-                .inField("Упаковка").selectValue(PROPERTIES.getProperty("Информация о грузе.Упаковка")).assertNoControl()
-                .inField("Длина, см").inputValue(PROPERTIES.getProperty("Информация о грузе.Длина, см")).assertValue().assertNoControl()
-                .inField("Ширина, см").inputValue(PROPERTIES.getProperty("Информация о грузе.Ширина, см")).assertValue().assertNoControl()
-                .inField("Высота, см").inputValue(PROPERTIES.getProperty("Информация о грузе.Высота, см")).assertValue().assertNoControl()
-                .inField("Количество грузовых мест, шт").inputValue(PROPERTIES.getProperty("Информация о грузе.Количество грузовых мест, шт")).assertValue().assertNoControl()
+               .inField("Наименование продукции").selectValue(PROPERTIES.getProperty("Информация о грузе.Наименование продукции")).assertNoControl().assertValue()
+                .inField("Код ТН ВЭД").assertValue(PROPERTIES.getProperty("Информация о грузе.Код ТН ВЭД")).assertNoControl().assertUneditable().assertValue()
+                .inField("Вес продукции, кг").inputValue(PROPERTIES.getProperty("Информация о грузе.Вес продукции, кг")).assertNoControl().assertValue()
+                .inField("Упаковка").selectValue(PROPERTIES.getProperty("Информация о грузе.Упаковка")).assertNoControl().assertValue()
+                .inField("Длина, см").inputValue(PROPERTIES.getProperty("Информация о грузе.Длина, см")).assertValue().assertNoControl().assertValue()
+                .inField("Ширина, см").inputValue(PROPERTIES.getProperty("Информация о грузе.Ширина, см")).assertValue().assertNoControl().assertValue()
+                .inField("Высота, см").inputValue(PROPERTIES.getProperty("Информация о грузе.Высота, см")).assertValue().assertNoControl().assertValue()
+                .inField("Количество грузовых мест, шт").inputValue(PROPERTIES.getProperty("Информация о грузе.Количество грузовых мест, шт")).assertValue().assertNoControl().assertValue()
                 .clickButton("Сохранить")
                 .inContainer("Информация о грузе").waitForElementDisplayed("//td[text() = '1']" +
                 "/following-sibling::td[text() = '" + PROPERTIES.getProperty("Информация о грузе.Наименование продукции") + "']" +
@@ -147,10 +148,10 @@ public class Test_03_07_02_1_10 extends HooksTEST {
         new GUIFunctions().inContainer("Информация о грузе").clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
                 .clickButton("Добавить новую")
-                .inField("Наименование продукции").inputValue(PROPERTIES.getProperty("Информация о грузе.Наименование продукции.2")).assertNoControl()
-                .inField("Код ТН ВЭД").selectValue(PROPERTIES.getProperty("Информация о грузе.Код ТН ВЭД.2")).assertNoControl()
-                .inField("Вес продукции, кг").inputValue(PROPERTIES.getProperty("Информация о грузе.Вес продукции, кг.2")).assertNoControl()
-                .inField("Упаковка").selectValue(PROPERTIES.getProperty("Информация о грузе.Упаковка.2")).assertNoControl()
+                .inField("Наименование продукции").inputValue(PROPERTIES.getProperty("Информация о грузе.Наименование продукции.2")).assertNoControl().assertValue()
+                .inField("Код ТН ВЭД").selectValue(PROPERTIES.getProperty("Информация о грузе.Код ТН ВЭД.2")).assertNoControl().assertValue()
+                .inField("Вес продукции, кг").inputValue(PROPERTIES.getProperty("Информация о грузе.Вес продукции, кг.2")).assertNoControl().assertValue()
+                .inField("Упаковка").selectValue(PROPERTIES.getProperty("Информация о грузе.Упаковка.2")).assertNoControl().assertValue()
                 .inField("Длина, см").inputValue(PROPERTIES.getProperty("Информация о грузе.Длина, см.2")).assertValue().assertNoControl()
                 .inField("Ширина, см").inputValue(PROPERTIES.getProperty("Информация о грузе.Ширина, см.2")).assertValue().assertNoControl()
                 .inField("Высота, см").inputValue(PROPERTIES.getProperty("Информация о грузе.Высота, см.2")).assertValue().assertNoControl()
@@ -180,16 +181,16 @@ public class Test_03_07_02_1_10 extends HooksTEST {
         new GUIFunctions()
                 .inContainer("Информация о грузополучателе")
                 .inField("Наименование грузополучателя").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Наименование грузополучателя")).assertNoControl()
-                .inField("Страна").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Страна")).assertNoControl()
-                .inField("Город").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Город")).assertNoControl()
-                .inField("Дом").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Дом")).assertNoControl()
-                .inField("Регион").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Регион")).assertNoControl()
-                .inField("Район").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Район")).assertNoControl()
-                .inField("Улица").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Улица")).assertNoControl()
-                .inField("Регистрационный номер грузополучателя").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Регистрационный номер грузополучателя")).assertNoControl()
-                .inField("Телефон").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Телефон")).assertNoControl()
-                .inField("Представитель грузополучателя").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Представитель грузополучателя")).assertNoControl()
-                .inField("Email").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Email")).assertNoControl();
+                .inField("Страна").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Страна")).assertNoControl().assertValue()
+                .inField("Город").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Город")).assertNoControl().assertValue()
+                .inField("Дом").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Дом")).assertNoControl().assertValue()
+                .inField("Регион").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Регион")).assertNoControl().assertValue()
+                .inField("Район").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Район")).assertNoControl().assertValue()
+                .inField("Улица").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Улица")).assertNoControl().assertValue()
+                .inField("Регистрационный номер грузополучателя").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Регистрационный номер грузополучателя")).assertNoControl().assertValue()
+                .inField("Телефон").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Телефон")).assertNoControl().assertValue()
+                .inField("Представитель грузополучателя").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Представитель грузополучателя")).assertNoControl().assertValue()
+                .inField("Email").inputValue(PROPERTIES.getProperty("Информация о грузополучателе.Email")).assertNoControl().assertValue();
     }
 
     @Step("Блок «Дополнительные услуги»")
