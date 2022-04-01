@@ -35,10 +35,10 @@ public class GUIFunctions extends ElementData {
 
 
     /**
-     * authorisation
+     * authorization
      */
 
-    public GUIFunctions authorisation(String login, String password) {
+    public GUIFunctions authorization(String login, String password) {
         this.inContainer("Вход в личный кабинет")
                 .inField("Email").inputValue(login)
                 .inField("Пароль").inputValue(password)
@@ -46,7 +46,7 @@ public class GUIFunctions extends ElementData {
         return this;
     }
 
-    public GUIFunctions authorisation(String login, String password, String code) {
+    public GUIFunctions authorization(String login, String password, String code) {
         this.inContainer("Вход в личный кабинет")
                 .inField("Email").inputValue(login)
                 .inField("Пароль").inputValue(password)

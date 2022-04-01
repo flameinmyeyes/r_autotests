@@ -45,9 +45,9 @@ public class Test_03_07_03 extends HooksTEST {
         //Ввести логин и пароль demo_exporter/password, нажать «Войти»
         new GUIFunctions()
                 .inContainer("Вход в личный кабинет")
-                .inField("Email").inputValue("demo_exporter")
-                .inField("Пароль").inputValue("password")
-                .clickButton("Войти");
+                    .inField("Email").inputValue("demo_exporter").assertValue()
+                    .inField("Пароль").inputValue("password").assertValue()
+                    .clickButton("Войти");
 
         new GUIFunctions().waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
@@ -76,7 +76,7 @@ public class Test_03_07_03 extends HooksTEST {
         //В поле «Почтовый адрес» вводим значение «Корнилаева 2»
         new GUIFunctions()
                 .inContainer("Информация о компании")
-                .inField("Почтовый адрес").inputValue("Корнилаева 2").assertNoControl();
+                    .inField("Почтовый адрес").inputValue("Корнилаева 2").assertValue().assertNoControl();
     }
 
     @Step("Блок «Информация о заявителе»")
@@ -90,11 +90,11 @@ public class Test_03_07_03 extends HooksTEST {
         //В поле «Email» вводим значение «word@mail.ru»
         new GUIFunctions()
                 .inContainer("Информация о заявителе")
-                .inField("Дополнительный контакт").setCheckboxON().assertNoControl()
-                .inField("ФИО").inputValue("Иванов Иван Иванович").assertNoControl()
-                .inField("Телефон").inputValue("+7(999)999-99-99").assertNoControl()
-                .inField("Должность").inputValue("Менеджер").assertNoControl()
-                .inField("Email").inputValue("word@mail.ru").assertNoControl();
+                    .inField("Дополнительный контакт").setCheckboxON().assertNoControl()
+                    .inField("ФИО").inputValue("Иванов Иван Иванович").assertValue().assertNoControl()
+                    .inField("Телефон").inputValue("+7(999)999-99-99").assertValue().assertNoControl()
+                    .inField("Должность").inputValue("Менеджер").assertValue().assertNoControl()
+                    .inField("Email").inputValue("word@mail.ru").assertValue().assertNoControl();
     }
 
     @Step("Блок  «Информация для оказания услуги»")
@@ -108,11 +108,11 @@ public class Test_03_07_03 extends HooksTEST {
         //В поле «Предполагаемая дата отправления груза» вводим значение «22.10.2022»
         new GUIFunctions()
                 .inContainer("Информация для оказания услуги")
-                .inField("Город отправления").selectValue("Тула").assertNoControl()
-                .inField("Город назначения").selectValue("Шанхай").assertNoControl()
-                .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON()
-                .inField("Адрес").inputValue("Молодежная улица").assertNoControl()
-                .inField("Предполагаемая дата отправления груза").inputValue("22.10.2022").assertNoControl();
+                    .inField("Город отправления").selectValue("Тула").assertValue().assertNoControl()
+                    .inField("Город назначения").selectValue("Шанхай").assertValue().assertNoControl()
+                    .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON()
+                    .inField("Адрес").inputValue("Молодежная улица").assertValue().assertNoControl()
+                    .inField("Предполагаемая дата отправления груза").assertValue().inputValue("22.10.2022").assertNoControl();
     }
 
     @Step("Блок «Информация о грузе»")
@@ -134,19 +134,19 @@ public class Test_03_07_03 extends HooksTEST {
         //Нажать на кнопку «Сохранить»
         new GUIFunctions()
                 .inContainer("Информация о грузе")
-                .clickButton("Добавить +")
+                    .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
-                .clickButton("Добавить новую")
-                .inField("Наименование продукции").inputValue("Новая Продукция").assertNoControl()
-                .inField("Код ТН ВЭД").selectValue("Ежевика").assertNoControl()
-                .inField("Вес продукции, кг").inputValue("16,000").assertNoControl()
-                .inField("Упаковка").selectValue("Ящики 1-5кг").assertNoControl()
-                .inField("Температурный режим (от -30°C до 0°C или от 0°C до +30°C) ").setCheckboxON().assertNoControl()
-                .inField("От").inputValue("-15").assertNoControl()
-                .inField("До").inputValue("+27").assertNoControl()
-                .inField("Количество контейнеров").inputValue("16").assertNoControl()
-                .inField("Тип контейнера").selectValue("Специализированный").assertNoControl()
-                .clickButton("Сохранить");
+                    .clickButton("Добавить новую")
+                    .inField("Наименование продукции").inputValue("Новая Продукция").assertValue().assertNoControl()
+                    .inField("Код ТН ВЭД").selectValue("Ежевика").assertValue().assertNoControl()
+                    .inField("Вес продукции, кг").inputValue("16,000").assertValue().assertNoControl()
+                    .inField("Упаковка").selectValue("Ящики 1-5кг").assertValue().assertNoControl()
+                    .inField("Температурный режим (от -30°C до 0°C или от 0°C до +30°C) ").setCheckboxON().assertNoControl()
+                    .inField("От").inputValue("-15").assertValue().assertNoControl()
+                    .inField("До").inputValue("+27").assertValue().assertNoControl()
+                    .inField("Количество контейнеров").inputValue("16").assertValue().assertNoControl()
+                    .inField("Тип контейнера").selectValue("Специализированный").assertValue().assertNoControl()
+                    .clickButton("Сохранить");
     }
 
     @Step("Блок  «Информация о грузополучателе»")
@@ -166,17 +166,17 @@ public class Test_03_07_03 extends HooksTEST {
         //В поле «Email» вводим значение «www@mail.ru»
         new GUIFunctions()
                 .inContainer("Информация о грузополучателе")
-                .inField("Наименование грузополучателя").inputValue("Ss-password").assertNoControl()
-                .inField("Страна").inputValue("USA").assertNoControl()
-                .inField("Город").inputValue("Moscow").assertNoControl()
-                .inField("Дом").inputValue("12s").assertNoControl()
-                .inField("Регион").inputValue("St-Peterburg").assertNoControl()
-                .inField("Район").inputValue("Raion").assertNoControl()
-                .inField("Улица").inputValue("Lenina street").assertNoControl()
-                .inField("Регистрационный номер грузополучателя").inputValue("223 22 44 2").assertNoControl()
-                .inField("Телефон").inputValue("+79999999999").assertNoControl()
-                .inField("Представитель грузополучателя").inputValue("Moscow disco rule").assertNoControl()
-                .inField("Email").inputValue("www@mail.ru").assertNoControl();
+                    .inField("Наименование грузополучателя").inputValue("Ss-password").assertValue().assertNoControl()
+                    .inField("Страна").inputValue("USA").assertValue().assertNoControl()
+                    .inField("Город").inputValue("Moscow").assertValue().assertNoControl()
+                    .inField("Дом").inputValue("12s").assertValue().assertNoControl()
+                    .inField("Регион").inputValue("St-Peterburg").assertValue().assertNoControl()
+                    .inField("Район").inputValue("Raion").assertValue().assertNoControl()
+                    .inField("Улица").inputValue("Lenina street").assertValue().assertNoControl()
+                    .inField("Регистрационный номер грузополучателя").inputValue("223 22 44 2").assertValue().assertNoControl()
+                    .inField("Телефон").inputValue("+79999999999").assertValue().assertNoControl()
+                    .inField("Представитель грузополучателя").inputValue("Moscow disco rule").assertValue().assertNoControl()
+                    .inField("Email").inputValue("www@mail.ru").assertValue().assertNoControl();
     }
 
     @Step("Блок «Дополнительные услуги»")
@@ -193,13 +193,13 @@ public class Test_03_07_03 extends HooksTEST {
         //Нажать на кнопку «Далее», для перехода на следующий шаг
         new GUIFunctions()
                 .inContainer("Дополнительные услуги")
-                .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertNoControl()
-                .inField("Таможенное оформление").setCheckboxON().assertNoControl()
-                .inField("РЖД Логистика").setRadiobuttonByDescription("Комплексная услуга таможенного оформления")
-                .inField("Оформление ветеринарного сертификата").setCheckboxON().assertNoControl()
-                .inField("РЖД Логистика").setRadiobuttonByDescription("Содействие в получении ветеринарных сертификатов")
-                .inField("Оформление фитосанитарного сертификата").setCheckboxON().assertNoControl()
-                .inField("РЖД Логистика").setRadiobuttonByDescription("Содействие в получении фитосанитарных сертификатов");
+                    .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertNoControl()
+                    .inField("Таможенное оформление").setCheckboxON().assertNoControl()
+                    .inField("РЖД Логистика").setRadiobuttonByDescription("Комплексная услуга таможенного оформления")
+                    .inField("Оформление ветеринарного сертификата").setCheckboxON().assertNoControl()
+                    .inField("РЖД Логистика").setRadiobuttonByDescription("Содействие в получении ветеринарных сертификатов")
+                    .inField("Оформление фитосанитарного сертификата").setCheckboxON().assertNoControl()
+                    .inField("РЖД Логистика").setRadiobuttonByDescription("Содействие в получении фитосанитарных сертификатов");
 
         new GUIFunctions().clickButton("Далее");
     }
