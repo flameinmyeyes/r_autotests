@@ -4,6 +4,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import functions.common.Base64Encoder;
 import functions.common.CommonFunctions;
+import io.restassured.RestAssured;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
@@ -447,6 +448,53 @@ public class RESTFunctions {
 
         }
         return response;
+    }
+
+    public static String getAccessToken() {
+
+        String baseUri = "http://uidm.uidm-dev.d.exportcenter.ru";
+
+        String execution = RestAssured
+                .given()
+                .baseUri(baseUri)
+                .basePath("/sso/oauth2/access_token")
+                .header("Accept", "application/json")
+                .contentType("application/x-www-form-urlencoded; charset=utf-8")
+                .formParam("client_id", "rec_elk_m2m")
+                .formParam("client_secret", "password")
+                .formParam("realm", "/customer")
+                .formParam("grant_type", "urn:roox:params:oauth:grant-type:m2m")
+                .formParam("service", "dispatcher")
+                .when()
+                .post()
+                .then()
+                .assertThat().statusCode(200)
+                .extract().response().jsonPath().getString("execution");
+
+        String response = RestAssured
+                .given()
+                .baseUri(baseUri)
+                .basePath("/sso/oauth2/access_token")
+                .header("Accept", "application/json")
+                .contentType("application/x-www-form-urlencoded; charset=utf-8")
+                .formParam("client_id", "rec_elk_m2m")
+                .formParam("client_secret", "password")
+                .formParam("realm", "/customer")
+                .formParam("grant_type", "urn:roox:params:oauth:grant-type:m2m")
+                .formParam("service", "dispatcher")
+                .formParam("_eventId", "next")
+                .formParam("username", "bpmn_admin")
+                .formParam("password", "password")
+                .formParam("execution", execution)
+                .when()
+                .post()
+                .then()
+                .assertThat().statusCode(200)
+                .extract().response().jsonPath().getString("access_token");
+
+        String token = "Bearer sso_1.0_" + response;
+
+        return token;
     }
 
 
