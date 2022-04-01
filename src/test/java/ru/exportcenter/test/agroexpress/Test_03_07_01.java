@@ -21,6 +21,11 @@ import static com.codeborne.selenide.Selenide.refresh;
 
 public class Test_03_07_01 extends HooksTEST {
 
+    /*
+     * http://selenoidshare.d.exportcenter.ru/lab/tree/work/files_for_tests/test/agroexpress/Test_03_07_01
+     * https://gitlab.exportcenter.ru/sub-service/autotests/rec_autotests/-/blob/master/src/test/java/ru/exportcenter/test/agroexpress/Test_03_07_01.java
+     */
+
     private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_01/";
     private final Properties P = PropertiesHandler.parseProperties(WAY_TEST + "Test_03_07_01.xml");
 
@@ -53,7 +58,7 @@ public class Test_03_07_01 extends HooksTEST {
     @Step("Навигация")
     public void step02() {
         new GUIFunctions().selectTab("Сервисы")
-                .waitForURL("https://master-portal.t.exportcenter.ru/services/")
+                .waitForURL("https://master-portal.t.exportcenter.ru/services/business")
                 .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
                 .closeAllPopupWindows()
                 .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Оформить")

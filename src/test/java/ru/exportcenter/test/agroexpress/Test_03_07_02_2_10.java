@@ -20,14 +20,19 @@ import java.util.Properties;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.refresh;
 
-public class Test_03_07_02_2_1 extends HooksTEST {
+public class Test_03_07_02_2_10 extends HooksTEST {
 
-    private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_2_1/";
-    private final Properties P = PropertiesHandler.parseProperties(WAY_TEST + "Test_03_07_02_2_1.xml");
+    /*
+     * http://selenoidshare.d.exportcenter.ru/lab/tree/work/files_for_tests/test/agroexpress/Test_03_07_02_2_10
+     * https://gitlab.exportcenter.ru/sub-service/autotests/rec_autotests/-/blob/master/src/test/java/ru/exportcenter/test/agroexpress/Test_03_07_02_2_10.java
+     */
+
+    private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_2_10/";
+    private final Properties P = PropertiesHandler.parseProperties(WAY_TEST + "Test_03_07_02_2_10.xml");
 
     @Owner(value = "Максимова Диана")
-    @Description("03 07 02.2.1 Ввод и редактирование данных Заявки (Полный контейнер). Отправка Заявки на рассмотрение")
-    @Link(name = "Test_03_07_02_2_1", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123878854")
+    @Description("03 07 02.2.10 Ввод и редактирование данных Заявки (Полный контейнер). Отправка Заявки на рассмотрение")
+    @Link(name = "Test_03_07_02_2_10", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123878854")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
@@ -65,7 +70,7 @@ public class Test_03_07_02_2_1 extends HooksTEST {
     @Step("Навигация")
     public void step02() {
         new GUIFunctions().selectTab("Сервисы")
-                .waitForURL("https://master-portal.t.exportcenter.ru/services/")
+                .waitForURL("https://master-portal.t.exportcenter.ru/services/business")
                 .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
                 .closeAllPopupWindows()
                 .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Оформить")
@@ -108,7 +113,7 @@ public class Test_03_07_02_2_1 extends HooksTEST {
     @Step("Заполнить область «Информация для оказания услуги»")
     public void step05() {
         String departureDate = P.getProperty("Дата отправления");
-        if (departureDate.equals("")){
+        if (departureDate.equals("")) {
             departureDate = DateFunctions.dateShift("dd.MM.yyyy", 14);
         }
 
