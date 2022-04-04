@@ -60,8 +60,7 @@ public class Test_03_07_03_1_10 extends HooksTEST {
                 .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
                 .closeAllPopupWindows()
                 .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Оформить")
-                .switchPageTo(1)
-                .closeAllPopupWindows();
+                .switchPageTo(1);
 
         refreshTab(15);
         if ($x("//*[contains(text(), 'Продолжить')]").isDisplayed()) {
@@ -89,7 +88,8 @@ public class Test_03_07_03_1_10 extends HooksTEST {
 
     @Step("Заполнить область «Информация о заявителе»")
     public void step04() {
-        new GUIFunctions().inContainer("Информация о заявителе")
+        new GUIFunctions().closeAllPopupWindows()
+                .inContainer("Информация о заявителе")
                 .inField("Дополнительный контакт").setCheckboxON().assertNoControl()
                 .inField("ФИО").inputValue(P.getProperty("Заявитель.ФИО")).assertValue().assertNoControl()
                 .inField("Телефон").inputValue(P.getProperty("Заявитель.Телефон")).assertValue().assertNoControl()
@@ -117,7 +117,8 @@ public class Test_03_07_03_1_10 extends HooksTEST {
 
         String removedName = P.getProperty("1.Наименование продукции");
 
-        new GUIFunctions().inContainer("Информация о грузе")
+        new GUIFunctions().closeAllPopupWindows()
+                .inContainer("Информация о грузе")
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
                 .inField("Наименование продукции").selectValue(removedName).assertValue().assertNoControl()
@@ -131,7 +132,8 @@ public class Test_03_07_03_1_10 extends HooksTEST {
                 .inField("Тип контейнера").selectValue(P.getProperty("1.Тип контейнера")).assertValue().assertNoControl()
                 .clickButton("Сохранить");
 
-        new GUIFunctions().inContainer("Информация о грузе")
+        new GUIFunctions().closeAllPopupWindows()
+                .inContainer("Информация о грузе")
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
                 .clickButton("Добавить новую")
@@ -169,7 +171,8 @@ public class Test_03_07_03_1_10 extends HooksTEST {
 
     @Step("Заполнить область «Дополнительные услуги»")
     public void step08() {
-        new GUIFunctions().inContainer("Дополнительные услуги")
+        new GUIFunctions().closeAllPopupWindows()
+                .inContainer("Дополнительные услуги")
                 .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertNoControl()
                 .inField("Адрес").assertValue(P.getProperty("Адрес")).assertEditable().assertNoControl()
                 .inField("Таможенное оформление").setCheckboxON().assertNoControl()
