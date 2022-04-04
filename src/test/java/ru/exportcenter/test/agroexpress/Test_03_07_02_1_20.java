@@ -32,7 +32,7 @@ public class Test_03_07_02_1_20 extends HooksTEST {
 
     @Owner(value="Ворожко Александр")
     @Description("03 07 02.1.20 Получение результатов верификации от АО \"РЖД Логистика\"")
-    @Link(name="Test_03_07_02_1_10", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123870742")
+    @Link(name="Test_03_07_02_1_20", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123870742")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
