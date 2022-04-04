@@ -29,7 +29,6 @@ public class Test_03_07_03_parameterized extends HooksTEST {
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
-        WAY_TEST = setWay(WAY_TEST);
         step01();
         step02();
         step03();

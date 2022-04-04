@@ -19,6 +19,7 @@ public class DriverInit {
 
     private RemoteWebDriver remoteWebDriver;
     private final int TIMEOUT = 60000;
+    private final String DOWNLOADS_FOLDER = Ways.DOWNLOADS.getWay();
 
     public void driverConfiguration(String runMode, List<File> pluginsList, String testName) {
 
@@ -38,7 +39,7 @@ public class DriverInit {
                 browser = CHROME;
                 browserVersion = "91";
                 startMaximized = true;
-//                downloadsFolder = "Z:\\files_for_tests\\downloads";
+                downloadsFolder = DOWNLOADS_FOLDER;
                 headless = false;
                 screenshots = true;
                 proxyEnabled = true;
@@ -53,7 +54,7 @@ public class DriverInit {
 
                 //папка для скачивания
                 Map<String, Object> prefs = new HashMap<String, Object>();
-                prefs.put("download.default_directory", "/share/files_for_tests/downloads");
+                prefs.put("download.default_directory", DOWNLOADS_FOLDER);
                 prefs.put("profile.default_content_settings.popups", 0);
                 prefs.put("download.directory_upgrade", true);
                 chromeOptions.setExperimentalOption("prefs", prefs);

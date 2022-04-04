@@ -1,13 +1,10 @@
 package framework;
 
 public enum Ways {
-    COMMON("Z:\\files_for_tests\\"),
-    DOWNLOADS("Z:\\files_for_tests\\downloads\\"),
-    UIDM_DEV("Z:\\files_for_tests\\eb_exp_demo"),
+    COMMON("files_for_tests"),
+    DOWNLOADS("files_for_tests/downloads"),
+    DEV("files_for_tests/dev"),
     TEST("files_for_tests/test"),
-
-    //
-    TSE_DEMO_28080("Z:\\files_for_tests\\eb_exp_demo")
 
     ;
     private String way;

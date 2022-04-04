@@ -98,7 +98,7 @@ public class SuiteBuilderAndRunner {
 //        classes.add(new XmlClass("ru.otr.eb_tse_demo_ufos_28080.FUN_01.BP_002.FUN_01_BP_002_MT_1_KP_1"));
 //        test.setXmlClasses(classes);
 
-        createXmlFile(suite_new, Ways.TSE_DEMO_28080.getWay() + "\\suite_new.xml");
+//        createXmlFile(suite_new, Ways.TSE_DEMO_28080.getWay() + "\\suite_new.xml");
 
         //3. Запускаем
         List<XmlSuite> suites_new = new ArrayList<XmlSuite>();
