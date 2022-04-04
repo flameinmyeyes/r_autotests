@@ -40,6 +40,11 @@ public class Click extends ElementData {
             $x(closeOfferToUseSupportService).click();
         }
 
+        String closeOfferToUseSupportServiceV2 = "//div[@class='BannerBetaVersion_closeIcon__1Ngmg']";
+        if ($x(closeOfferToUseSupportServiceV2).isDisplayed()) {
+            $x(closeOfferToUseSupportServiceV2).click();
+        }
+
         String AcceptCity = "//div[@class = 'city-select__popup-wrap']//*[text()='Да']";
         if ($x(AcceptCity).isDisplayed()) {
             $x(AcceptCity).click();

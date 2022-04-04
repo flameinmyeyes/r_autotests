@@ -20,19 +20,19 @@ import java.util.Properties;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.refresh;
 
-public class Test_03_07_02_2_10 extends HooksTEST {
+public class Test_03_07_03_1_10 extends HooksTEST {
 
     /*
-     * http://selenoidshare.d.exportcenter.ru/lab/tree/work/files_for_tests/test/agroexpress/Test_03_07_02_2_10
-     * https://gitlab.exportcenter.ru/sub-service/autotests/rec_autotests/-/blob/master/src/test/java/ru/exportcenter/test/agroexpress/Test_03_07_02_2_10.java
+     * http://selenoidshare.d.exportcenter.ru/lab/tree/work/files_for_tests/test/agroexpress/Test_03_07_03_1_10
+     * https://gitlab.exportcenter.ru/sub-service/autotests/rec_autotests/-/blob/master/src/test/java/ru/exportcenter/test/agroexpress/Test_03_07_03_1_10.java
      */
 
-    private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_2_10/";
-    private final Properties P = PropertiesHandler.parseProperties(WAY_TEST + "Test_03_07_02_2_10.xml");
+    private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1_10/";
+    private final Properties P = PropertiesHandler.parseProperties(WAY_TEST + "Test_03_07_03_1_10.xml");
 
     @Owner(value = "Максимова Диана")
-    @Description("03 07 02.2.10 Ввод и редактирование данных Заявки (Полный контейнер). Отправка Заявки на рассмотрение")
-    @Link(name = "Test_03_07_02_2_10", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123878854")
+    @Description("03 07 03.1.10 Ввод и редактирование данных Заявки (Полный контейнер). Отправка Заявки на рассмотрение")
+    @Link(name = "Test_03_07_03_1_10", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123878854")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
@@ -49,22 +49,8 @@ public class Test_03_07_02_2_10 extends HooksTEST {
 
     @Step("Авторизация")
     public void step01() {
-        new GUIFunctions().inContainer("Вход в личный кабинет")
-                .inField("Email").inputValue("test-otr@yandex.ru")
-                .inField("Пароль").inputValue("Password1!")
-                .clickButton("Войти");
-
-        setCode("1234");
-
-        new GUIFunctions().waitForURL("https://lk.t.exportcenter.ru/ru/main");
-    }
-
-    private void setCode(String code) {
-        int n = 0;
-        while (n < code.length()) {
-            $x("//input[@data-id=" + n + "]").sendKeys(code.substring(n, n + 1));
-            n++;
-        }
+        new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль"), P.getProperty("Код подтвержения"))
+                .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
     @Step("Навигация")
@@ -102,7 +88,8 @@ public class Test_03_07_02_2_10 extends HooksTEST {
 
     @Step("Заполнить область «Информация о заявителе»")
     public void step04() {
-        new GUIFunctions().inContainer("Информация о заявителе")
+        new GUIFunctions().closeAllPopupWindows()
+                .inContainer("Информация о заявителе")
                 .inField("Дополнительный контакт").setCheckboxON().assertNoControl()
                 .inField("ФИО").inputValue(P.getProperty("Заявитель.ФИО")).assertValue().assertNoControl()
                 .inField("Телефон").inputValue(P.getProperty("Заявитель.Телефон")).assertValue().assertNoControl()
@@ -130,7 +117,8 @@ public class Test_03_07_02_2_10 extends HooksTEST {
 
         String removedName = P.getProperty("1.Наименование продукции");
 
-        new GUIFunctions().inContainer("Информация о грузе")
+        new GUIFunctions().closeAllPopupWindows()
+                .inContainer("Информация о грузе")
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
                 .inField("Наименование продукции").selectValue(removedName).assertValue().assertNoControl()
@@ -144,7 +132,8 @@ public class Test_03_07_02_2_10 extends HooksTEST {
                 .inField("Тип контейнера").selectValue(P.getProperty("1.Тип контейнера")).assertValue().assertNoControl()
                 .clickButton("Сохранить");
 
-        new GUIFunctions().inContainer("Информация о грузе")
+        new GUIFunctions().closeAllPopupWindows()
+                .inContainer("Информация о грузе")
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
                 .clickButton("Добавить новую")
@@ -163,7 +152,7 @@ public class Test_03_07_02_2_10 extends HooksTEST {
 
     @Step("Заполнить область «Информация о грузополучаеле»")
     public void step07() {
-        new GUIFunctions()
+        new GUIFunctions().closeAllPopupWindows()
                 .inContainer("Информация о грузополучателе")
                 .inField("Наименование грузополучателя").inputValue(P.getProperty("Наименование грузополучателя")).assertValue().assertNoControl()
                 .inField("Страна").inputValue(P.getProperty("Страна")).assertValue().assertNoControl()
@@ -182,7 +171,8 @@ public class Test_03_07_02_2_10 extends HooksTEST {
 
     @Step("Заполнить область «Дополнительные услуги»")
     public void step08() {
-        new GUIFunctions().inContainer("Дополнительные услуги")
+        new GUIFunctions().closeAllPopupWindows()
+                .inContainer("Дополнительные услуги")
                 .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertNoControl()
                 .inField("Адрес").assertValue(P.getProperty("Адрес")).assertEditable().assertNoControl()
                 .inField("Таможенное оформление").setCheckboxON().assertNoControl()

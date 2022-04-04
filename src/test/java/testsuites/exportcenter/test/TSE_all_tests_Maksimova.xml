@@ -6,7 +6,10 @@
 
     <test name="TSE_all_tests_Maksimova" thread-count="1" preserve-order="true">
         <classes>
-<!--            <class name="ru.otr.eb_tse_demo_ufos_28080.FUN_07.BP_016.FUN_07_BP_016_MT_1_KP_6_6"/>-->
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_01"/>
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_01_1"/>
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_3"/>
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1_10"/>
         </classes>
     </test>
 </suite>

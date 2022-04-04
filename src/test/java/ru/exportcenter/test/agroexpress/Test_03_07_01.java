@@ -47,12 +47,8 @@ public class Test_03_07_01 extends HooksTEST {
 
     @Step("Авторизация")
     public void step01() {
-        new GUIFunctions().inContainer("Вход в личный кабинет")
-                .inField("Email").inputValue(P.getProperty("Логин"))
-                .inField("Пароль").inputValue(P.getProperty("Пароль"))
-                .clickButton("Войти");
-
-        new GUIFunctions().waitForURL("https://lk.t.exportcenter.ru/ru/main");
+        new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль"))
+                .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
     @Step("Навигация")
