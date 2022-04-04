@@ -17,10 +17,8 @@ public class Field extends ElementData {
     public void selectValue(String value) {
         String inputField = new XPath(this).getInputXPath();
         String item = new XPath(this).getSearchedValueXPath(value);
-        $x(inputField).sendKeys(value);
-        if (!$x(item).exists()) {
-            $x(inputField).click();
-        }
+        $x(inputField).click();
+        $x(inputField).setValue(value);
         $x(item).click();
     }
 
@@ -28,7 +26,7 @@ public class Field extends ElementData {
         String searchFieldXpath = "//input[contains(@placeholder, '" + searchFieldPlaceholder + "')]" +
                 "[following-sibling::*[descendant::*[name()='use' and contains(@*, '#search')]]]";
 
-        $x(searchFieldXpath).sendKeys(value);
+        $x(searchFieldXpath).setValue(value);
         $x(searchFieldXpath).pressEnter();
     }
 
