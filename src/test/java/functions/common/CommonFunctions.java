@@ -247,7 +247,7 @@ public class CommonFunctions {
         return timeTransaction;
     }
 
-    public static String getProcessID() {
+    public static String getProcessIDFromURL() {
 
         String processID = null;
 

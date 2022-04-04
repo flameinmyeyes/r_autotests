@@ -1,6 +1,5 @@
 package ru.exportcenter.test.agroexpress;
 
-import com.codeborne.selenide.Condition;
 import framework.RunTestAgain;
 import framework.Ways;
 import framework.integration.JupyterLabIntegration;
@@ -16,7 +15,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.test.HooksTEST;
 
-import java.time.Duration;
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.$x;
@@ -80,9 +78,13 @@ public class Test_03_07_02_1_10 extends HooksTEST {
                 .switchPageTo(1);
         new GUIFunctions().waitForLoading();
         CommonFunctions.wait(3);
+
+        String processID = CommonFunctions.getProcessIDFromURL();
+        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
+
         if ($x("//div[contains(@class, 'CardInfo_nameBlock' )]/*[text()='Логистика. Доставка продукции \"Агроэкспрессом\"']").isDisplayed()){
-        refreshTab("//*[contains(text(), 'Продолжить')]", 60);
-        new GUIFunctions().clickButton("Продолжить");
+            refreshTab("//*[contains(text(), 'Продолжить')]", 60);
+            new GUIFunctions().clickButton("Продолжить");
         }
 
     }
@@ -100,7 +102,7 @@ public class Test_03_07_02_1_10 extends HooksTEST {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Информация о заявителе")
-                .inField("Дополнительный контакт").setCheckboxON().assertNoControl().assertValue()
+                .inField("Дополнительный контакт").setCheckboxON().assertNoControl()
                 .inField("ФИО").inputValue(PROPERTIES.getProperty("Информация о заявителе.ФИО")).assertNoControl().assertValue()
                 .inField("Телефон").inputValue(PROPERTIES.getProperty("Информация о заявителе.Телефон")).assertNoControl().assertValue()
                 .inField("Должность").inputValue(PROPERTIES.getProperty("Информация о заявителе.Должность")).assertNoControl().assertValue()
