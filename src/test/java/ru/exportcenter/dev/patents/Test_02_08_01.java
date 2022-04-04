@@ -1,6 +1,7 @@
 package ru.exportcenter.dev.patents;
 
 import framework.RunTestAgain;
+import framework.Ways;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
@@ -8,12 +9,15 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 
 import functions.common.CommonFunctions;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.dev.HooksDEV;
 
 import static com.codeborne.selenide.Selenide.*;
 
 public class Test_02_08_01 extends HooksDEV {
+
+    private String WAY_TEST = Ways.UIDM_DEV.getWay() + "/patents/Test_02_08_01/";
 
     @Description("ТК 02 08 01")
     @Owner(value="Теребков Андрей, Петрищев Руслан")
@@ -36,6 +40,11 @@ public class Test_02_08_01 extends HooksDEV {
 //        step13();
     }
 
+    @AfterMethod
+    public void screenShot() {
+        CommonFunctions.screenShot(WAY_TEST + "screen.png");
+    }
+
     @Step("Авторизация")
     private void step01(){
         CommonFunctions.printStep();
@@ -53,14 +62,23 @@ public class Test_02_08_01 extends HooksDEV {
         CommonFunctions.printStep();
 
         //Перейти во вкладку «Сервисы»
-        new GUIFunctions().selectTab("Сервисы")
-                .waitForURL("http://master-portal-dev.d.exportcenter.ru/services/business");
+//        new GUIFunctions().selectTab("Сервисы")
+//                .waitForURL("http://master-portal-dev.d.exportcenter.ru/services/");
+
 
         //Выбрать сервис «Компенсация части затрат на регистрацию ОИС за рубежом» и нажать кнопку «Оформить»
-        new GUIFunctions().waitForElementDisplayed("//input[@placeholder='Поиск по разделу']")
-                .inputInSearchField("Поиск по разделу", "Компенсация части затрат на регистрацию ОИС за рубежом").
-                clickByLocator("//div[text()='Государственные']")
-                .openSearchResult("Компенсация части затрат на регистрацию ОИС", "Оформить");
+//        new GUIFunctions().waitForElementDisplayed("//input[@placeholder='Поиск по разделу']")
+//                .inputInSearchField("Поиск по разделу", "Компенсация части затрат на регистрацию ОИС за рубежом")
+//                .clickByLocator("//div[text()='Государственные']")
+//                .openSearchResult("Компенсация части затрат на регистрацию ОИС", "Оформить");
+
+//        new GUIFunctions().waitForElementDisplayed("//input[@placeholder='Поиск по разделу']")
+//                .inputInSearchField("Поиск по разделу", "Компенсация части затрат на регистрацию ОИС за рубежом");
+//        CommonFunctions.wait(100);
+//        new GUIFunctions().waitForElementDisplayed("//ul[@class='card-list card-list mb-2']");
+//
+//        new GUIFunctions().clickByLocator("//div[text()='Государственные']")
+//                .openSearchResult("Компенсация части затрат на регистрацию ОИС", "Оформить");
 
         //Нажать на кнопку «Продолжить»
         switchTo().window(1);
@@ -114,14 +132,14 @@ public class Test_02_08_01 extends HooksDEV {
 
         //Заполнение полей в блоке «Заявка»
         new GUIFunctions().inContainer("Заявка")
-                .inField("Тип заявки").selectValue("Международная заявка").assertValue().assertNoControl()
-                .inField("Подтип международной заявки").selectValue("Международная заявка на регистрацию изобретения в соответствии с договором о патентной кооперации РСТ").assertValue().assertNoControl()
-                .inField("Номер базовой заявки/свидетельства").inputValue("987654321").assertValue().assertNoControl()
-                .inField("Дата подачи базовой заявки/свидетельства").inputValue("02.02.2022").assertValue().assertNoControl()
-                .inField("Номер международной заявки").inputValue("987654321").assertValue().assertNoControl()
-                .inField("Дата подачи международной заявки").inputValue("03.02.2022").assertValue().assertNoControl()
-                .inField("Наименование объекта").inputValue("Объект").assertValue().assertNoControl()
-                .inField("Наименование заявителя (организации)").inputValue("Заявитель").assertValue().assertNoControl();
+                .inField("Тип заявки").selectValue("Международная заявка").assertNoControl()
+                .inField("Подтип международной заявки").selectValue("Международная заявка на регистрацию изобретения в соответствии с договором о патентной кооперации РСТ").assertNoControl()
+                .inField("Номер базовой заявки/свидетельства").inputValue("987654321").assertNoControl()
+                .inField("Дата подачи базовой заявки/свидетельства").inputValue("02.02.2022").assertNoControl()
+                .inField("Номер международной заявки").inputValue("987654321").assertNoControl()
+                .inField("Дата подачи международной заявки").inputValue("03.02.2022").assertNoControl()
+                .inField("Наименование объекта").inputValue("Объект").assertNoControl()
+                .inField("Наименование заявителя (организации)").inputValue("Заявитель").assertNoControl();
     }
 
     @Step("Блок «Цель затрат и описание»")
@@ -130,12 +148,12 @@ public class Test_02_08_01 extends HooksDEV {
 
         //В выпадающем списке «Цель правовой охраны за рубежом» выбрать значение «Создание собственного производства за рубежом»
         new GUIFunctions().inContainer("Цель затрат и описание")
-                .inField("Цель правовой охраны за рубежом").selectValue("Создание собственного производства за рубежом").assertValue().assertNoControl()
-                .inField("Описание конечного продукта/технологии, в том числе его конкурентные преимущества").inputValue("Значение").assertValue().assertNoControl()
-                .inField("Описание потребителя конечного продукта (технологии)").inputValue("word").assertValue().assertNoControl()
-                .inField("Описание целевых рынков для реализации продукции").inputValue("Значениеss").assertValue().assertNoControl()
-                .inField("Описание бизнес-модели вывода продукции на внешние рынки").inputValue("ввод").assertValue().assertNoControl()
-                .inField("Оценка вероятного экономического эффекта от введения за рубежом в гражданский оборот продукции, в состав которой будет входить предлагаемый объект интеллектуальной собственности").inputValue("Ocenka").assertValue().assertNoControl();
+                .inField("Цель правовой охраны за рубежом").selectValue("Создание собственного производства за рубежом").assertNoControl()
+                .inField("Описание конечного продукта/технологии, в том числе его конкурентные преимущества").inputValue("Значение").assertNoControl()
+                .inField("Описание потребителя конечного продукта (технологии)").inputValue("word").assertNoControl()
+                .inField("Описание целевых рынков для реализации продукции").inputValue("Значениеss").assertNoControl()
+                .inField("Описание бизнес-модели вывода продукции на внешние рынки").inputValue("ввод").assertNoControl()
+                .inField("Оценка вероятного экономического эффекта от введения за рубежом в гражданский оборот продукции, в состав которой будет входить предлагаемый объект интеллектуальной собственности").inputValue("Ocenka").assertNoControl();
 
         //Нажать на кнопку «Загрузите документ»
         new GUIFunctions().uploadFile("Заявка на регистрацию ОИС","C:\\auto-tests\\tmp.pdf");
@@ -159,14 +177,15 @@ public class Test_02_08_01 extends HooksDEV {
 
         //Заполнение полей
         new GUIFunctions().inContainer("Затраты на оплату пошлины")
-                .inField("Наименование пошлины").inputValue("Пошлина").assertValue().assertNoControl()
-                .inField("Объем затрат").inputValue("1230,00").assertValue().assertNoControl()
-                .inField("Валюта").selectValue("ЮЖНОСУДАНСКИЙ ФУНТ").assertValue().assertNoControl()
-                .inField("Дата платежа").inputValue("02.02.2022").assertValue().assertNoControl()
+                .inField("Наименование пошлины").inputValue("Пошлина").assertNoControl()
+                .inField("Объем затрат").inputValue("1230,00").assertNoControl()
+                .inField("Валюта").selectValue("ЮЖНОСУДАНСКИЙ ФУНТ").assertNoControl()
+                .inField("Дата платежа").inputValue("02.02.2022").assertNoControl()
                 .inField("НДС").setCheckboxON().assertCheckboxON().assertNoControl()
-                .inField("Налоговая ставка, %").inputValue("13,00").assertValue().assertNoControl()
-                .inField("Способ получения услуги").selectValue("Напрямую организацией").assertValue().assertNoControl()
-                .inField("Платёжное поручение").selectValue("tmp.txt").assertValue().assertNoControl();
+                .inField("Налоговая ставка, %").inputValue("13,00").assertNoControl()
+                .inField("Способ получения услуги").selectValue("Напрямую организацией").assertNoControl();
+//                .inField("Платёжное поручение").selectValue("tmp.txt").assertNoControl();
+                CommonFunctions.wait(15);
     }
 
     @Step("Блок «Затраты на оплату услуг»")
@@ -178,17 +197,18 @@ public class Test_02_08_01 extends HooksDEV {
 
         //Заполнение полей
         new GUIFunctions().inContainer("Затраты на оплату услуги")
-                .inField("Наименование услуги по подготовке, подаче заявки и делопроизводству по ней").inputValue("Услуга").assertValue().assertNoControl()
-                .inField("Объем затрат").inputValue("1230,00").assertValue().assertNoControl()
-                .inField("Валюта").selectValue("ЮЖНОСУДАНСКИЙ ФУНТ").assertValue().assertNoControl()
-                .inField("Дата платежа").inputValue("02.02.2022").assertValue().assertNoControl()
+                .inField("Наименование услуги по подготовке, подаче заявки и делопроизводству по ней").inputValue("Услуга").assertNoControl()
+                .inField("Объем затрат").inputValue("1230,00").assertNoControl()
+                .inField("Валюта").selectValue("ЮЖНОСУДАНСКИЙ ФУНТ").assertNoControl()
+                .inField("Дата платежа").inputValue("02.02.2022").assertNoControl()
                 .inField("НДС").setCheckboxON().assertCheckboxON().assertNoControl()
-                .inField("Налоговая ставка, %").inputValue("13,00").assertValue().assertNoControl()
-                .inField("Способ получения услуги").selectValue("Напрямую организацией").assertValue().assertNoControl()
-                .inField("Платёжное поручение").selectValue("tmp.txt").assertValue().assertNoControl();
+                .inField("Налоговая ставка, %").inputValue("13,00").assertNoControl()
+                .inField("Способ получения услуги").selectValue("Напрямую организацией").assertNoControl();
+//                .inField("Платёжное поручение").selectValue("tmp.txt").assertNoControl();
+        CommonFunctions.wait(15);
 
         //Нажать на кнопку «Далее»
-        new GUIFunctions().clickButton("Далее").clickButton("Далее");
+        new GUIFunctions().clickButton("Далее");
     }
 
     @Step("Блок «Сведения для регистрации / актуализации в ГИИС Электронный бюджет»")
@@ -197,15 +217,15 @@ public class Test_02_08_01 extends HooksDEV {
 
         //Заполнение полей в блоке «Сведения для регистрации / актуализации в ГИИС "Электронный бюджет"»
         new GUIFunctions().inContainer("Сведения для регистрации / актуализации в ГИИС Электронный бюджет")
-                .inField("Код по ОКОПФ").inputValue("12247").assertValue().assertNoControl()
-                .inField("Наименование по ОКОПФ").inputValue("Наименование").assertValue().assertNoControl()
-                .inField("Код по ОКПО").inputValue("12345678").assertValue().assertNoControl()
-                .inField("Код по ОКТМО").inputValue("12345678901").assertValue().assertNoControl()
-                .inField("Почтовый индекс").inputValue("630000").assertValue().assertNoControl()
-                .inField("Дата постановки на налоговый учёт").inputValue("02.02.2022").assertValue().assertNoControl()
-                .inField("Номер банковского счета").inputValue("40702810000000000046").assertValue().assertNoControl()
-                .inField("БИК банка").selectValue("044525050").assertValue().assertNoControl()
-                .inField("Корреспондентский счет").inputValue("30101810100000000722").assertValue().assertNoControl();
+                .inField("Код по ОКОПФ").inputValue("12247").assertNoControl()
+                .inField("Наименование по ОКОПФ").inputValue("Наименование").assertNoControl()
+                .inField("Код по ОКПО").inputValue("12345678").assertNoControl()
+                .inField("Код по ОКТМО").inputValue("12345678901").assertNoControl()
+                .inField("Почтовый индекс").inputValue("630000").assertNoControl()
+                .inField("Дата постановки на налоговый учёт").inputValue("02.02.2022").assertNoControl()
+                .inField("Номер банковского счета").inputValue("40702810000000000046").assertNoControl()
+                .inField("БИК банка").selectValue("044525050").assertNoControl()
+                .inField("Корреспондентский счет").inputValue("30101810100000000722").assertNoControl();
     }
 
     @Step("Блок «Данные о руководителе / уполномоченном лице компании»")
@@ -214,11 +234,11 @@ public class Test_02_08_01 extends HooksDEV {
 
         //Заполнение полей в блоке "Данные о руководителе / уполномоченном лице компании"
         new GUIFunctions().inContainer("Данные о руководителе / уполномоченном лице компании")
-                .inField("Реквизиты документа, на основании которого действует руководитель / уполномоченное лицо").inputValue("Устав").assertValue().assertNoControl()
-                .inField("ИНН").inputValue("1234567890").assertValue().assertNoControl()
-                .inField("СНИЛС").inputValue("12345678901").assertValue().assertNoControl()
-                .inField("E-mail").inputValue("wor_ld@mai-l.ru").assertValue().assertNoControl()
-                .inField("Телефон").inputValue("+1234567890").assertValue().assertNoControl();
+                .inField("Реквизиты документа, на основании которого действует руководитель / уполномоченное лицо").inputValue("Устав").assertNoControl()
+                .inField("ИНН").inputValue("1234567890").assertNoControl()
+                .inField("СНИЛС").inputValue("12345678901").assertNoControl()
+                .inField("E-mail").inputValue("wor_ld@mai-l.ru").assertNoControl()
+                .inField("Телефон").inputValue("+1234567890").assertNoControl();
     }
 
     @Step("Блок «Контактные данные лица, ответственного за работу в ГИИС Электронный бюджет»")
@@ -227,9 +247,10 @@ public class Test_02_08_01 extends HooksDEV {
 
         //Заполнение полей в блоке «Контактные данные лица, ответственного за работу в ГИИС "Электронный бюджет"»
         new GUIFunctions().inContainer("Контактные данные лица, ответственного за работу в ГИИС Электронный бюджет")
-                .inField("ФИО контактного лица").selectValue("Иванов Иван Иванович").assertValue().assertNoControl()
-                .inField("Телефон").inputValue("+7(123)456-78-90").assertValue().assertNoControl()
-                .inField("E-mail").inputValue("wor_ld@mai-l.ru").assertValue().assertNoControl();
+//                .inField("ФИО контактного лица").selectValue("Иванов Иван Иванович").assertNoControl()
+                .inField("ФИО контактного лица").selectValue("Летов Игорь Федорович").assertNoControl()
+                .inField("Телефон").inputValue("+7(123)456-78-90").assertNoControl()
+                .inField("E-mail").inputValue("wor_ld@mai-l.ru").assertNoControl();
     }
 
     @Step("Блок «Подтверждение сведений Заявителем»")
@@ -246,7 +267,7 @@ public class Test_02_08_01 extends HooksDEV {
                 .inField("Подтверждение сведений Заявителем\", \"Согласие на получение центром сведений из заявок, заявлений, свидетельств и патентов о регистрации прав на объекты интеллектуальной собственности в Российской Федерации, а также международных заявок, поданных через Федеральную службу по интеллектуальной собственности.").setCheckboxON().assertCheckboxON().assertNoControl();
 
         //Нажать на кнопку «Далее»
-        new GUIFunctions().clickButton("Далее").clickButton("Далее");
+        new GUIFunctions().clickButton("Далее");
     }
 
     @Step("Блок \"Подписание Заявки электронной подписью\"")

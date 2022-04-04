@@ -1,31 +1,35 @@
 package ru.exportcenter.dev.patents;
 
 import framework.RunTestAgain;
+import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.dev.HooksDEV;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
+public class Test_02_08_02_1 extends HooksDEV {
 
-import static com.codeborne.selenide.Selenide.*;
+    private String WAY_TEST = Ways.UIDM_DEV.getWay() + "/patents/Test_02_08_02_1/";
 
-public class Test_02_08_06 extends HooksDEV {
-
-    @Description("ТК 02 08 06")
+    @Description("ТК 02 08 02 1")
     @Owner(value="Петрищев Руслан, Теребков Андрей")
-    @Link(name="Test_02_08_06", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123868584")
+    @Link(name="Test_02_08_02_1", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123868584")
 
     @Test(retryAnalyzer = RunTestAgain.class)
-    public void steps() throws AWTException {
+    public void steps(){
         step01();
         step02();
         step03();
+    }
+
+    @AfterMethod
+    public void screenShot() {
+        CommonFunctions.screenShot(WAY_TEST + "screen.png");
     }
 
     @Step("Авторизация")
@@ -46,7 +50,7 @@ public class Test_02_08_06 extends HooksDEV {
 
         //Перейти во вкладку «Сервисы»
         new GUIFunctions().selectTab("Сервисы")
-                .waitForURL("http://master-portal-dev.d.exportcenter.ru/services/business");
+                .waitForURL("http://master-portal-dev.d.exportcenter.ru/services/");
 
         //Выбрать сервис «Компенсация части затрат на регистрацию ОИС за рубежом»
         new GUIFunctions().waitForElementDisplayed("//input[@placeholder='Поиск по разделу']")
@@ -55,7 +59,7 @@ public class Test_02_08_06 extends HooksDEV {
     }
 
     @Step("Получение информации о сервисе")
-    private void step03() throws AWTException {
+    private void step03() {
         CommonFunctions.printStep();
 
         //Нажать кнопку «Подробнее»

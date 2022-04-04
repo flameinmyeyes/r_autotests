@@ -17,15 +17,15 @@ import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_11  extends HooksTEST {
+public class Test_03_07_02_4 extends HooksTEST {
 
-    private String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_11/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_11_properties.xml";
+    private String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_4/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_4_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     @Owner(value = "Петрищев Руслан")
-    @Description("ТК 03 07 02.4")
-    @Link(name = "Test_03_07_02.4", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123878662")
+    @Description("ТК 03 07 02 4")
+    @Link(name = "Test_03_07_02_4", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123878662")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
@@ -47,8 +47,8 @@ public class Test_03_07_11  extends HooksTEST {
 
         //Ввести логин и пароль test-otr@yandex.ru/Password1!
         new GUIFunctions().inContainer("Вход в личный кабинет")
-                .inField("Email").inputValue("test-otr@yandex.ru")
-                .inField("Пароль").inputValue("Password1!")
+                .inField("Email").inputValue(PROPERTIES.getProperty("Авторизация.Email"))
+                .inField("Пароль").inputValue(PROPERTIES.getProperty("Авторизация.Пароль"))
                 .clickButton("Войти");
 
         //Ввести код
@@ -89,6 +89,7 @@ public class Test_03_07_11  extends HooksTEST {
         //Нажать кнопку «Продолжить»
         new GUIFunctions().clickButton("Продолжить")
                 .waitForElementDisplayed("//div[@class='FormOpenPanel_panelBody__2UbuF']");
+
     }
 
     @Step("Ознакомление с функциональными возможностями сервиса (Onboarding)")
