@@ -71,8 +71,6 @@ public class JupyterLabIntegration {
                         .getStatusCode();
 
         Assert.assertTrue(statusCode == 200 || statusCode == 201);
-
-        System.out.println(statusCode);
     }
 
 //    public static ByteArrayInputStream toByteArray(String content) {

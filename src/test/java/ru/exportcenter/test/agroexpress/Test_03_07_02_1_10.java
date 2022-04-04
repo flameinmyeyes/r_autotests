@@ -26,6 +26,7 @@ public class Test_03_07_02_1_10 extends HooksTEST {
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_10.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String docNum;
+    private String processID;
 
     @Owner(value="Камаев Евгений")
     @Description("03 07 02.1.10 Ввод и редактирование данных Заявки (Сборный груз). Отправка Заявки на рассмотрение")
@@ -79,8 +80,7 @@ public class Test_03_07_02_1_10 extends HooksTEST {
         new GUIFunctions().waitForLoading();
         CommonFunctions.wait(3);
 
-        String processID = CommonFunctions.getProcessIDFromURL();
-        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
+        processID = CommonFunctions.getProcessIDFromURL();
 
         if ($x("//div[contains(@class, 'CardInfo_nameBlock' )]/*[text()='Логистика. Доставка продукции \"Агроэкспрессом\"']").isDisplayed()){
             refreshTab("//*[contains(text(), 'Продолжить')]", 60);
@@ -128,13 +128,13 @@ public class Test_03_07_02_1_10 extends HooksTEST {
                 .inContainer("Информация о грузе")
                 .clickButton("Сборный груз")
                 .waitForElementDisplayed("//*[text()= 'Температурный режим на всю партию (от -30°C до 0°C или от 0°C до +30°C) ']")
-                .inField("Температурный режим на всю партию (от -30°C до 0°C или от 0°C до +30°C) ").setCheckboxON().assertNoControl().assertValue()
+                .inField("Температурный режим на всю партию (от -30°C до 0°C или от 0°C до +30°C) ").setCheckboxON().assertNoControl()
                 .inField("От").inputValue(PROPERTIES.getProperty("Информация о грузе.От")).assertNoControl().assertValue()
                 .inField("До").inputValue(PROPERTIES.getProperty("Информация о грузе.До")).assertNoControl().assertValue()
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
                .inField("Наименование продукции").selectValue(PROPERTIES.getProperty("Информация о грузе.Наименование продукции")).assertNoControl().assertValue()
-                .inField("Код ТН ВЭД").assertValue(PROPERTIES.getProperty("Информация о грузе.Код ТН ВЭД")).assertNoControl().assertUneditable().assertValue()
+                .inField("Код ТН ВЭД").assertValue(PROPERTIES.getProperty("Информация о грузе.Код ТН ВЭД")).assertNoControl().assertUneditable()
                 .inField("Вес продукции, кг").inputValue(PROPERTIES.getProperty("Информация о грузе.Вес продукции, кг")).assertNoControl().assertValue()
                 .inField("Упаковка").selectValue(PROPERTIES.getProperty("Информация о грузе.Упаковка")).assertNoControl().assertValue()
                 .inField("Длина, см").inputValue(PROPERTIES.getProperty("Информация о грузе.Длина, см")).assertValue().assertNoControl().assertValue()
@@ -165,7 +165,7 @@ public class Test_03_07_02_1_10 extends HooksTEST {
                 "/following-sibling::td[text() = '" + PROPERTIES.getProperty("Информация о грузе.Количество грузовых мест, шт.2") + "']" +
                 "/following-sibling::td[text() = '" + PROPERTIES.getProperty("Информация о грузе.Вес продукции, кг.2").split(",")[0] + "']" +
                 "/following-sibling::td");
-        new GUIFunctions().inContainer("Сведения о продукции").clickByLocator("//td[text() = '2']/following-sibling::td//button[@class = 'dropdown-icon']");
+        new GUIFunctions().inContainer("Информация о грузе").clickByLocator("//td[text() = '2']/following-sibling::td//button[@class = 'dropdown-icon']");
         new GUIFunctions().clickByLocator("//td[text() = '2']/following-sibling::td//*[text() = ' Удалить' ]")
                 //.clickButton("")
                 .waitForElementDisappeared("//td[text() = '2']" +
@@ -216,6 +216,7 @@ public class Test_03_07_02_1_10 extends HooksTEST {
         new GUIFunctions().clickButton("Далее").waitForLoading();
         docNum = $x("//div[contains (@class, 'FormHeader_title' )]//span[contains (@class, 'Typography_body' )]").getText().split("№")[1];
         JupyterLabIntegration.uploadTextContent(docNum,WAY_TEST,"docNum.txt");
+        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
     }
 
 
