@@ -11,7 +11,7 @@ public class Field extends ElementData {
     }
 
     public void inputValue(String value) {
-        $x(new XPath(this).getInputXPath()).sendKeys(value);
+        $x(new XPath(this).getInputXPath()).setValue(value);
     }
 
     public void selectValue(String value) {
