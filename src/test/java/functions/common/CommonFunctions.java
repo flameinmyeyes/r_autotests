@@ -1,19 +1,22 @@
 package functions.common;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import framework.integration.JupyterLabIntegration;
 import functions.file.FileFunctions;
 import io.qameta.allure.Attachment;
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.*;
 import java.util.Date;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -244,5 +247,19 @@ public class CommonFunctions {
         return timeTransaction;
     }
 
+    public static String getProcessID() {
+
+        String processID = null;
+
+        String url = WebDriverRunner.url();
+        Pattern pattern = Pattern.compile("\\p{XDigit}{8}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{12}");
+        Matcher matcher = pattern.matcher(url);
+
+        while (matcher.find()) {
+            processID = matcher.group(0);
+        }
+
+        return processID;
+    }
 
 }
