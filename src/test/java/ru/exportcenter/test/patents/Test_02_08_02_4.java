@@ -82,10 +82,13 @@ public class Test_02_08_02_4 extends HooksTEST {
         //Нажать на иконку "три точки" в верхнем правом углу
         //Нажать на "Отменить заявку"
         new GUIFunctions()
-                .inContainer("Заявка «Субсидия по компенсации части затрат, связанных с регистрацией на внешних рынках объектов интеллектуальной собственности» S/2022/08554")
-                    .clickByLocator("//button[@class='dropdown-icon']")
-                    .clickByLocator("//li[text()='Отменить заявку']")
-                    .waitForURL("https://lk.t.exportcenter.ru/ru/main");
+                .clickByLocator("//*[contains(text(), 'Заявка «Субсидия по компенсации части затрат, связанных с " +
+                        "регистрацией на внешних рынках объектов интеллектуальной собственности»')]/ancestor::div[contains(@class, 'container')][1]" +
+                        "//button[@class='dropdown-icon']")
+                .clickByLocator("//*[contains(text(), 'Заявка «Субсидия по компенсации части затрат, связанных с " +
+                        "регистрацией на внешних рынках объектов интеллектуальной собственности»')]/ancestor::div[contains(@class, 'container')][1]" +
+                        "//li[text()='Отменить заявку']")
+                .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
     private void refreshTab(String expectedXpath, int times) {
