@@ -27,8 +27,8 @@ public class HooksTEST implements HooksInterface {
 
         //плагины
         List<File> pluginsList = new ArrayList<>();
-        pluginsList.add(new File(setWay("drivers\\CryptoPro.crx")));
-//        pluginsList.add(new File(setWay("drivers\\ModHeader.crx")));
+        pluginsList.add(new File("drivers/CryptoPro.crx"));
+//        pluginsList.add(new File("drivers/ModHeader.crx"));
 
         //инициализируем драйвер
         DriverInit driverInit = new DriverInit();
@@ -52,19 +52,6 @@ public class HooksTEST implements HooksInterface {
     @Override
     public void completeTest() {
         closeWebDriver();
-    }
-
-    /**
-     * Преобразование пути к файлу под Linux (в случае запуска в докере)
-     */
-    public static String setWay(String way) {
-        if (RUN_MODE.equals("remote")) {
-            way = way.replace("Z:", "/share").replace("\\", "/");
-            //System.out.println("Путь к файлам преобразован под Linux");
-        } else {
-            //System.out.println("Преобразование пути к файлам под Linux не требуется");
-        }
-        return way;
     }
 
 }

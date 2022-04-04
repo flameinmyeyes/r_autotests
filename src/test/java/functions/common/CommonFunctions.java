@@ -262,4 +262,17 @@ public class CommonFunctions {
         return processID;
     }
 
+    /**
+     * Преобразование пути к файлу под Linux (в случае запуска в докере)
+     */
+    public static String setWay(String runMode, String way) {
+        if (runMode.equals("remote")) {
+            way = way.replace("Z:", "/share").replace("\\", "/");
+            //System.out.println("Путь к файлам преобразован под Linux");
+        } else {
+            //System.out.println("Преобразование пути к файлам под Linux не требуется");
+        }
+        return way;
+    }
+
 }

@@ -34,7 +34,6 @@ public class Test_03_07_02_1_10 extends HooksTEST {
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
-        WAY_TEST = setWay(WAY_TEST);
         step01();
         step02();
         step03();
