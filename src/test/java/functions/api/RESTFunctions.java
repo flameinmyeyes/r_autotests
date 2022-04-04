@@ -518,6 +518,37 @@ public class RESTFunctions {
         return orderID;
     }
 
+    public static String getOrderStatus(String processID) {
+
+        String token = getAccessToken();
+
+//        String baseUri = "http://bpmn-api-service.bpms-dev.d.exportcenter.ru";
+        String baseUri = "https://lk.t.exportcenter.ru/";
+
+        String response = RestAssured
+                .given()
+                .baseUri(baseUri)
+                .basePath("/bpmn/api/v1/bpmn/history/process-instance")
+                .param("variableName", "mdmOrder")
+                .header("Accept", "application/json")
+                .header("camundaId", "camunda-exp-search")
+                .header("Authorization", token)
+                .when()
+                .get("/" + processID + "/variables")
+                .then()
+                .assertThat().statusCode(200)
+                .extract().response().jsonPath().prettify();
+
+        JsonObject jsonObject = JSONHandler.parseJSONfromString(response);
+
+        String orderStatus = jsonObject.getAsJsonArray("content")
+                .get(1).getAsJsonObject()
+                .get("value").getAsJsonObject()
+                .get("status").toString().replace("\"", "");
+
+        return orderStatus;
+    }
+
     public static String getCargoID(String processID) {
 
         String token = getAccessToken();
