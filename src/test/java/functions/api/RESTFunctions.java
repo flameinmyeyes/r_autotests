@@ -1,24 +1,13 @@
 package functions.api;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
+import com.google.gson.JsonObject;
 import functions.common.Base64Encoder;
-import functions.common.CommonFunctions;
+import functions.file.JSONHandler;
 import io.restassured.RestAssured;
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
 
-import javax.xml.soap.*;
-import javax.xml.transform.*;
-import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.file.Paths;
-import java.sql.*;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
 
 public class RESTFunctions {
 
@@ -452,7 +441,8 @@ public class RESTFunctions {
 
     public static String getAccessToken() {
 
-        String baseUri = "http://uidm.uidm-dev.d.exportcenter.ru";
+//        String baseUri = "http://uidm.uidm-dev.d.exportcenter.ru";
+        String baseUri = "https://lk.t.exportcenter.ru";
 
         String execution = RestAssured
                 .given()
@@ -497,5 +487,67 @@ public class RESTFunctions {
         return token;
     }
 
+    public static String getOrderID(String processID) {
+
+        String token = getAccessToken();
+
+//        String baseUri = "http://bpmn-api-service.bpms-dev.d.exportcenter.ru";
+        String baseUri = "https://lk.t.exportcenter.ru/";
+
+        String response = RestAssured
+                .given()
+                    .baseUri(baseUri)
+                    .basePath("/bpmn/api/v1/bpmn/history/process-instance")
+                    .param("variableName", "mdmOrder")
+                    .header("Accept", "application/json")
+                    .header("camundaId", "camunda-exp-search")
+                    .header("Authorization", token)
+                .when()
+                    .get("/" + processID + "/variables")
+                .then()
+                    .assertThat().statusCode(200)
+                    .extract().response().jsonPath().prettify();
+
+        JsonObject jsonObject = JSONHandler.parseJSONfromString(response);
+
+        String orderID = jsonObject.getAsJsonArray("content")
+                .get(1).getAsJsonObject()
+                .get("value").getAsJsonObject()
+                .get("uuid").toString().replace("\"", "");
+
+        return orderID;
+    }
+
+    public static String getCargoID(String processID) {
+
+        String token = getAccessToken();
+
+//        String baseUri = "http://bpmn-api-service.bpms-dev.d.exportcenter.ru";
+        String baseUri = "https://lk.t.exportcenter.ru/";
+
+        String response = RestAssured
+                .given()
+                    .baseUri(baseUri)
+                    .basePath("/bpmn/api/v1/bpmn/history/process-instance")
+                    .param("variableName", "goodsProTable")
+                    .header("Accept", "application/json")
+                    .header("camundaId", "camunda-exp-search")
+                    .header("Authorization", token)
+                .when()
+                    .get("/" + processID + "/variables")
+                .then()
+                    .assertThat().statusCode(200)
+                    .extract().response().jsonPath().prettify();
+
+        JsonObject jsonObject = JSONHandler.parseJSONfromString(response);
+
+        String cargoID = jsonObject.getAsJsonArray("content")
+                .get(0).getAsJsonObject()
+                .get("value").getAsJsonArray()
+                .get(0).getAsJsonObject()
+                .get("id").toString().replace("\"", "");
+
+        return cargoID;
+    }
 
 }
