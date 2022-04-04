@@ -1,6 +1,5 @@
 package ru.exportcenter.test.agroexpress;
 
-import com.codeborne.selenide.Condition;
 import framework.RunTestAgain;
 import framework.Ways;
 import framework.integration.JupyterLabIntegration;
@@ -16,7 +15,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.test.HooksTEST;
 
-import java.time.Duration;
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.$x;
@@ -28,7 +26,6 @@ public class Test_03_07_02_1_10 extends HooksTEST {
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_10.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String docNum;
-    private String instanceID;
 
     @Owner(value="Камаев Евгений")
     @Description("03 07 02.1.10 Ввод и редактирование данных Заявки (Сборный груз). Отправка Заявки на рассмотрение")
@@ -82,11 +79,12 @@ public class Test_03_07_02_1_10 extends HooksTEST {
         new GUIFunctions().waitForLoading();
         CommonFunctions.wait(3);
 
-        instanceID = CommonFunctions.getProcessID();
+        String processID = CommonFunctions.getProcessIDFromURL();
+        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
 
         if ($x("//div[contains(@class, 'CardInfo_nameBlock' )]/*[text()='Логистика. Доставка продукции \"Агроэкспрессом\"']").isDisplayed()){
-        refreshTab("//*[contains(text(), 'Продолжить')]", 60);
-        new GUIFunctions().clickButton("Продолжить");
+            refreshTab("//*[contains(text(), 'Продолжить')]", 60);
+            new GUIFunctions().clickButton("Продолжить");
         }
 
     }
@@ -104,7 +102,7 @@ public class Test_03_07_02_1_10 extends HooksTEST {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Информация о заявителе")
-                .inField("Дополнительный контакт").setCheckboxON().assertCheckboxON().assertNoControl()
+                .inField("Дополнительный контакт").setCheckboxON().assertNoControl()
                 .inField("ФИО").inputValue(PROPERTIES.getProperty("Информация о заявителе.ФИО")).assertNoControl().assertValue()
                 .inField("Телефон").inputValue(PROPERTIES.getProperty("Информация о заявителе.Телефон")).assertNoControl().assertValue()
                 .inField("Должность").inputValue(PROPERTIES.getProperty("Информация о заявителе.Должность")).assertNoControl().assertValue()
@@ -130,13 +128,13 @@ public class Test_03_07_02_1_10 extends HooksTEST {
                 .inContainer("Информация о грузе")
                 .clickButton("Сборный груз")
                 .waitForElementDisplayed("//*[text()= 'Температурный режим на всю партию (от -30°C до 0°C или от 0°C до +30°C) ']")
-                .inField("Температурный режим на всю партию (от -30°C до 0°C или от 0°C до +30°C) ").setCheckboxON().assertCheckboxON().assertNoControl()
+                .inField("Температурный режим на всю партию (от -30°C до 0°C или от 0°C до +30°C) ").setCheckboxON().assertNoControl().assertValue()
                 .inField("От").inputValue(PROPERTIES.getProperty("Информация о грузе.От")).assertNoControl().assertValue()
                 .inField("До").inputValue(PROPERTIES.getProperty("Информация о грузе.До")).assertNoControl().assertValue()
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
-                .inField("Наименование продукции").selectValue(PROPERTIES.getProperty("Информация о грузе.Наименование продукции")).assertNoControl().assertValue()
-                .inField("Код ТН ВЭД").assertValue(PROPERTIES.getProperty("Информация о грузе.Код ТН ВЭД")).assertNoControl().assertUneditable()
+               .inField("Наименование продукции").selectValue(PROPERTIES.getProperty("Информация о грузе.Наименование продукции")).assertNoControl().assertValue()
+                .inField("Код ТН ВЭД").assertValue(PROPERTIES.getProperty("Информация о грузе.Код ТН ВЭД")).assertNoControl().assertUneditable().assertValue()
                 .inField("Вес продукции, кг").inputValue(PROPERTIES.getProperty("Информация о грузе.Вес продукции, кг")).assertNoControl().assertValue()
                 .inField("Упаковка").selectValue(PROPERTIES.getProperty("Информация о грузе.Упаковка")).assertNoControl().assertValue()
                 .inField("Длина, см").inputValue(PROPERTIES.getProperty("Информация о грузе.Длина, см")).assertValue().assertNoControl().assertValue()
@@ -167,7 +165,7 @@ public class Test_03_07_02_1_10 extends HooksTEST {
                 "/following-sibling::td[text() = '" + PROPERTIES.getProperty("Информация о грузе.Количество грузовых мест, шт.2") + "']" +
                 "/following-sibling::td[text() = '" + PROPERTIES.getProperty("Информация о грузе.Вес продукции, кг.2").split(",")[0] + "']" +
                 "/following-sibling::td");
-        new GUIFunctions().inContainer("Информация о грузе").clickByLocator("//td[text() = '2']/following-sibling::td//button[@class = 'dropdown-icon']");
+        new GUIFunctions().inContainer("Сведения о продукции").clickByLocator("//td[text() = '2']/following-sibling::td//button[@class = 'dropdown-icon']");
         new GUIFunctions().clickByLocator("//td[text() = '2']/following-sibling::td//*[text() = ' Удалить' ]")
                 //.clickButton("")
                 .waitForElementDisappeared("//td[text() = '2']" +
@@ -218,7 +216,6 @@ public class Test_03_07_02_1_10 extends HooksTEST {
         new GUIFunctions().clickButton("Далее").waitForLoading();
         docNum = $x("//div[contains (@class, 'FormHeader_title' )]//span[contains (@class, 'Typography_body' )]").getText().split("№")[1];
         JupyterLabIntegration.uploadTextContent(docNum,WAY_TEST,"docNum.txt");
-        JupyterLabIntegration.uploadTextContent(instanceID, WAY_TEST, "instanceID");
     }
 
 
