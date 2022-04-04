@@ -48,7 +48,7 @@ public class Test_03_07_02_1_20 extends HooksTEST {
         CommonFunctions.screenShot(WAY_TEST);
     }
 
-    @Step("Авторизация")
+    @Step("Предусловия")
     public void precondition() {
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
         RESTFunctions.getOrderStatus(processID);
@@ -61,7 +61,7 @@ public class Test_03_07_02_1_20 extends HooksTEST {
         }
     }
 
-    @Step("Авторизация")
+    @Step("Отправка JSON-запроса в Swagger")
     public void step01() {
         CommonFunctions.printStep();
         docUUID = RESTFunctions.getOrderID(processID);
@@ -91,10 +91,9 @@ public class Test_03_07_02_1_20 extends HooksTEST {
                         .assertThat().statusCode(200);
     }
 
-    @Step("Навигация")
+    @Step("Открыть заявку и проверить статус")
     public void step02() {
         CommonFunctions.printStep();
-
         Assert.assertEquals(RESTFunctions.getOrderStatus(processID), "Расчёт стоимости");
     }
 }
