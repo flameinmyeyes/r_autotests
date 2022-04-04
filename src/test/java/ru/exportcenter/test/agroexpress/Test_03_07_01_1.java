@@ -15,19 +15,19 @@ import ru.exportcenter.test.HooksTEST;
 
 import java.util.Properties;
 
-public class Test_03_07_02_3 extends HooksTEST {
+public class Test_03_07_01_1 extends HooksTEST {
 
     /*
-     * http://selenoidshare.d.exportcenter.ru/lab/tree/work/files_for_tests/test/agroexpress/Test_03_07_02_3
-     * https://gitlab.exportcenter.ru/sub-service/autotests/rec_autotests/-/blob/master/src/test/java/ru/exportcenter/test/agroexpress/Test_03_07_02_3.java
+     * http://selenoidshare.d.exportcenter.ru/lab/tree/work/files_for_tests/test/agroexpress/Test_03_07_01_1
+     * https://gitlab.exportcenter.ru/sub-service/autotests/rec_autotests/-/blob/master/src/test/java/ru/exportcenter/test/agroexpress/Test_03_07_01_1.java
      */
 
-    private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_3/";
-    private final Properties P = PropertiesHandler.parseProperties(WAY_TEST + "Test_03_07_02_3.xml");
+    private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_01_1/";
+    private final Properties P = PropertiesHandler.parseProperties(WAY_TEST + "Test_03_07_01_1.xml");
 
     @Owner(value = "Максимова Диана")
-    @Description("03 07 02.3 Авторизация экспортера в ФГАИС \"Одно окно\". Выбор Сервиса. Ознакомление с описанием Сервиса")
-    @Link(name = "Test_03_07_02_3", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123878353")
+    @Description("03 07 01.1 Авторизация экспортера в ФГАИС \"Одно окно\". Выбор Сервиса. Ознакомление с описанием Сервиса")
+    @Link(name = "Test_03_07_01_1", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=127898840")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
@@ -38,7 +38,7 @@ public class Test_03_07_02_3 extends HooksTEST {
 
     @Step("Авторизация")
     public void step01() {
-        new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль"))
+        new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль"), P.getProperty("Код подтвержения"))
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
@@ -51,8 +51,7 @@ public class Test_03_07_02_3 extends HooksTEST {
 
     @Step("Получение информации о сервисе")
     public void step03() {
-        new GUIFunctions()
-                .closeAllPopupWindows()
+        new GUIFunctions().closeAllPopupWindows()
                 .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Подробнее")
                 .waitForURL("https://master-portal.t.exportcenter.ru/services/business" +
                         "/Prodvizhenie_na_vneshnie_rynki/Poisk_pokupatelya,_soprovozhdenie_peregovorov/" +
@@ -70,8 +69,7 @@ public class Test_03_07_02_3 extends HooksTEST {
             new GUIFunctions().waitForElementDisplayed(byText(P.getProperty("Услуга " + service)));
         }
 
-        new GUIFunctions()
-                .clickButton("Оферта АО «РЖД Логистика» на оказание услуг транспортной экспедиции")
+        new GUIFunctions().clickButton("Оферта АО «РЖД Логистика» на оказание услуг транспортной экспедиции")
                 .switchPageTo(1)
                 .waitForURL(P.getProperty("Оферта.URL"));
     }
