@@ -13,14 +13,12 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.HooksTEST;
 
 import java.util.Properties;
 
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.refresh;
+import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_02_1_10 extends HooksTEST {
+public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_10/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_10.xml";
@@ -55,30 +53,15 @@ public class Test_03_07_02_1_10 extends HooksTEST {
     public void step01() {
         CommonFunctions.printStep();
         new GUIFunctions()
-                .inContainer("Вход в личный кабинет")
-                .inField("Email").inputValue("test-otr@yandex.ru")
-                .inField("Пароль").inputValue("Password1!")
-                .clickButton("Войти");
-        $x("//div[contains(@class, 'CodeInput_input' )]/input[@data-id= '0']").sendKeys("1");
-        $x("//div[contains(@class, 'CodeInput_input' )]/input[@data-id= '1']").sendKeys("2");
-        $x("//div[contains(@class, 'CodeInput_input' )]/input[@data-id= '2']").sendKeys("3");
-        $x("//div[contains(@class, 'CodeInput_input' )]/input[@data-id= '3']").sendKeys("4");
-        new GUIFunctions().waitForURL("https://lk.t.exportcenter.ru/ru/main");
-
+                .authorization("test-otr@yandex.ru", "Password1!", "1234")
+                .waitForLoading();
     }
 
     @Step("Навигация")
     public void step02() {
         CommonFunctions.printStep();
-        new GUIFunctions()
-                .selectTab("Сервисы")
-                .waitForURL("https://master-portal.t.exportcenter.ru/services/business")
-                .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
-                .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Оформить")
-                .switchPageTo(1);
-        new GUIFunctions().waitForLoading();
-        CommonFunctions.wait(3);
 
+        CommonFunctions.wait(3);
         processID = CommonFunctions.getProcessIDFromURL();
 
         if ($x("//div[contains(@class, 'CardInfo_nameBlock' )]/*[text()='Логистика. Доставка продукции \"Агроэкспрессом\"']").isDisplayed()){
@@ -115,8 +98,8 @@ public class Test_03_07_02_1_10 extends HooksTEST {
                 .inContainer("Информация для оказания услуги")
                 .inField("Город отправления").selectValue(PROPERTIES.getProperty("Информация для оказания услуги.Город отправления")).assertNoControl().assertValue()
                 .inField("Город назначения").selectValue(PROPERTIES.getProperty("Информация для оказания услуги.Город назначения")).assertNoControl().assertValue()
-                .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON()
-                .inField("Адрес").inputValue(PROPERTIES.getProperty("Информация для оказания услуги.Адрес")).assertNoControl().assertValue()
+//                .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON()
+//                .inField("Адрес").inputValue(PROPERTIES.getProperty("Информация для оказания услуги.Адрес")).assertNoControl().assertValue()
                 .inField("Предполагаемая дата отправления груза").inputValue(DateFunctions.dateShift("dd.MM.yyyy", 14)).assertValue();
     }
 
@@ -199,14 +182,13 @@ public class Test_03_07_02_1_10 extends HooksTEST {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Дополнительные услуги")
-                .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertNoControl()
+//                .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertNoControl()
                 .inField("Таможенное оформление").setCheckboxON().assertNoControl()
                 .inField("РЖД Логистика").setRadiobuttonByDescription("Комплексная услуга таможенного оформления")
                 .inField("Оформление ветеринарного сертификата").setCheckboxON().assertNoControl()
                 .inField("РЖД Логистика").setRadiobuttonByDescription("Содействие в получении ветеринарных сертификатов")
                 .inField("Оформление фитосанитарного сертификата").setCheckboxON().assertNoControl()
                 .inField("РЖД Логистика").setRadiobuttonByDescription("Содействие в получении фитосанитарных сертификатов");
-
     }
 
     @Step("Отправка Заявки на рассмотрение ")

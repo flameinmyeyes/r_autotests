@@ -5,8 +5,6 @@ import framework.Ways;
 import framework.integration.JupyterLabIntegration;
 import functions.api.RESTFunctions;
 import functions.common.CommonFunctions;
-import functions.common.DateFunctions;
-import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
@@ -14,12 +12,9 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import net.sf.json.JSONObject;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.test.HooksTEST;
-
-import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -36,6 +31,7 @@ public class Test_03_07_02_1_20 extends HooksTEST {
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
+//        System.out.println(RESTFunctions.getAccessToken());
         precondition();
         step01();
         step02();
@@ -48,15 +44,14 @@ public class Test_03_07_02_1_20 extends HooksTEST {
 
     @Step("Предусловия")
     public void precondition() {
-        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-        RESTFunctions.getOrderStatus(processID);
-
-        if (!processID.equals("Черновик")) {
-            System.out.println("Перепрогон предыдущего теста");
-            Test_03_07_02_1_20 previous_test = new Test_03_07_02_1_20();
+//        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+//
+//        if (!$x("//*[text() = 'Проводится проверка']").isDisplayed()) {
+//            System.out.println("Перепрогон предыдущего теста");
+            Test_03_07_02_1_10 previous_test = new Test_03_07_02_1_10();
             previous_test.steps();
             processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-        }
+//        }
     }
 
     @Step("Отправка JSON-запроса в Swagger")
@@ -92,6 +87,22 @@ public class Test_03_07_02_1_20 extends HooksTEST {
     @Step("Открыть заявку и проверить статус")
     public void step02() {
         CommonFunctions.printStep();
-        Assert.assertEquals(RESTFunctions.getOrderStatus(processID), "Расчёт стоимости");
+
+        new GUIFunctions()
+                .inContainer("Вход в личный кабинет")
+                .inField("Email").inputValue("test-otr@yandex.ru")
+                .inField("Пароль").inputValue("Password1!")
+                .clickButton("Войти");
+        $x("//div[contains(@class, 'CodeInput_input' )]/input[@data-id= '0']").sendKeys("1");
+        $x("//div[contains(@class, 'CodeInput_input' )]/input[@data-id= '1']").sendKeys("2");
+        $x("//div[contains(@class, 'CodeInput_input' )]/input[@data-id= '2']").sendKeys("3");
+        $x("//div[contains(@class, 'CodeInput_input' )]/input[@data-id= '3']").sendKeys("4");
+        new GUIFunctions().waitForURL("https://lk.t.exportcenter.ru/ru/main");
+
+        open("https://lk.t.exportcenter.ru/ru/services/drafts/info/" + processID);
+        new GUIFunctions().waitForElementDisplayed("//*[text() = 'Расчёт стоимости']");
+
+        JupyterLabIntegration.uploadTextContent(docUUID,WAY_TEST,"docUUID.txt");
+        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
     }
 }
