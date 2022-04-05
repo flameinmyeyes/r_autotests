@@ -42,7 +42,7 @@ public class XPath extends ElementData {
     }
 
     public String getSearchedValueXPath(String value) {
-        return getContainerXPath() + getFieldXPath() + "//*[contains(text(), '" + value + "')][last()]";
+        return getContainerXPath() + getFieldXPath() + "//span[contains(text(), '" + value + "')]";
     }
 
     public String getErrorXPath() {
