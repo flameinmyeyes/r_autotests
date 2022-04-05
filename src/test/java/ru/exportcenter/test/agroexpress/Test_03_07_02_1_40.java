@@ -16,18 +16,19 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.test.HooksTEST;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.open;
 
-public class Test_03_07_02_1_20 extends HooksTEST {
+public class Test_03_07_02_1_40 extends HooksTEST {
 
-    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_20/";
-    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_10/";
+    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_40/";
+    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_20/";
     private String processID;
     private String docUUID;
 
     @Owner(value="Ворожко Александр")
-    @Description("03 07 02.1.20 Получение результатов верификации от АО \"РЖД Логистика\"")
-    @Link(name="Test_03_07_02_1_20", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123870742")
+    @Description("03 07 02.1.40 Получение скорректированной заявки с расчетом (интеграция)")
+    @Link(name="Test_03_07_02_1_40", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123872990")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
