@@ -1,5 +1,8 @@
 package ru.exportcenter.test.agroexpress;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.WebDriverRunner;
+import com.google.gson.JsonObject;
 import framework.RunTestAgain;
 import framework.Ways;
 import framework.integration.JupyterLabIntegration;
@@ -11,9 +14,11 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
+import net.sf.json.JSONObject;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -60,14 +65,15 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
     @Step("Навигация")
     public void step02() {
         CommonFunctions.printStep();
+//        new GUIFunctions().waitForElementDisplayed("//button[contains(text(), 'Логистика. Доставка продукции')]")
 
         CommonFunctions.wait(3);
-        processID = CommonFunctions.getProcessIDFromURL();
 
-        if ($x("//div[contains(@class, 'CardInfo_nameBlock' )]/*[text()='Логистика. Доставка продукции \"Агроэкспрессом\"']").isDisplayed()){
-            refreshTab("//*[contains(text(), 'Продолжить')]", 60);
-            new GUIFunctions().clickButton("Продолжить");
-        }
+
+//        if ($x("//div[contains(@class, 'CardInfo_nameBlock' )]/*[text()='Логистика. Доставка продукции \"Агроэкспрессом\"']").isDisplayed()){
+//            refreshTab("//*[contains(text(), 'Продолжить')]", 60);
+//            new GUIFunctions().clickButton("Продолжить");
+//        }
 
     }
 
@@ -202,16 +208,14 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
 
 
 
-    private void refreshTab(String expectedXpath, int times) {
+    public void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
-            new GUIFunctions().waitForLoading();
-            CommonFunctions.wait(1);
             if($x(expectedXpath).isDisplayed()) {
                 break;
             }
+            System.out.println("Refreshing");
             refresh();
             CommonFunctions.wait(1);
         }
     }
-
 }
