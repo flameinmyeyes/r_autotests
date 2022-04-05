@@ -19,7 +19,7 @@ import ru.exportcenter.test.HooksTEST;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.open;
 
-public class Test_03_07_02_1_40 extends HooksTEST {
+public class Test_03_07_02_1_40 extends HooksTEST_agroexpress {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_40/";
     public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_20/";
