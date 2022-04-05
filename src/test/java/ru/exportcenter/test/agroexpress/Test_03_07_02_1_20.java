@@ -18,7 +18,7 @@ import ru.exportcenter.test.HooksTEST;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_02_1_20 extends HooksTEST {
+public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_20/";
     public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_10/";
@@ -45,18 +45,16 @@ public class Test_03_07_02_1_20 extends HooksTEST {
     @Step("Предусловия")
     public void precondition() {
 //        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-//
-//        if (!$x("//*[text() = 'Проводится проверка']").isDisplayed()) {
-//            System.out.println("Перепрогон предыдущего теста");
-            Test_03_07_02_1_10 previous_test = new Test_03_07_02_1_10();
-            previous_test.steps();
-            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-//        }
+
+//        Test_03_07_02_1_10 previous_test = new Test_03_07_02_1_10();
+//        previous_test.steps();
+        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
     }
 
     @Step("Отправка JSON-запроса в Swagger")
     public void step01() {
         CommonFunctions.printStep();
+        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
         docUUID = RESTFunctions.getOrderID(processID);
 
         String token = RESTFunctions.getAccessToken();
@@ -87,6 +85,7 @@ public class Test_03_07_02_1_20 extends HooksTEST {
     @Step("Открыть заявку и проверить статус")
     public void step02() {
         CommonFunctions.printStep();
+        CommonFunctions.wait(20);
 
         new GUIFunctions()
                 .inContainer("Вход в личный кабинет")
@@ -97,7 +96,7 @@ public class Test_03_07_02_1_20 extends HooksTEST {
         $x("//div[contains(@class, 'CodeInput_input' )]/input[@data-id= '1']").sendKeys("2");
         $x("//div[contains(@class, 'CodeInput_input' )]/input[@data-id= '2']").sendKeys("3");
         $x("//div[contains(@class, 'CodeInput_input' )]/input[@data-id= '3']").sendKeys("4");
-        new GUIFunctions().waitForURL("https://lk.t.exportcenter.ru/ru/main");
+        new GUIFunctions().waitForLoading();
 
         open("https://lk.t.exportcenter.ru/ru/services/drafts/info/" + processID);
         new GUIFunctions().waitForElementDisplayed("//*[text() = 'Расчёт стоимости']");
