@@ -14,7 +14,7 @@ import ru.exportcenter.dev.HooksDEV;
 
 public class Test_02_08_02_1 extends HooksDEV {
 
-    private String WAY_TEST = Ways.UIDM_DEV.getWay() + "/patents/Test_02_08_02_1/";
+    private String WAY_TEST = Ways.DEV.getWay() + "/patents/Test_02_08_02_1/";
 
     @Description("ТК 02 08 02 1")
     @Owner(value="Петрищев Руслан, Теребков Андрей")
