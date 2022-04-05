@@ -9,6 +9,7 @@ import functions.api.RESTFunctions;
 import functions.common.CommonFunctions;
 import functions.file.FileFunctions;
 import functions.file.JSONHandler;
+import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
@@ -23,14 +24,17 @@ import ru.exportcenter.test.HooksTEST;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_02_1_40 extends HooksTEST {
+public class Test_03_07_02_1_40 extends HooksTEST_agroexpress {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_40/";
-    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_10/";
+    public String WAY_TEST_Test_03_07_02_1_10 = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_10/";
+    public String WAY_TEST_Test_03_07_02_1_20 = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_20/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_40_properties.xml";
+    public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
     private String token;
     private String orderID;
@@ -56,43 +60,55 @@ public class Test_03_07_02_1_40 extends HooksTEST {
 
     @Step("Предусловия")
     public void preconditions() {
-        Test_03_07_02_1_10 previous_test = new Test_03_07_02_1_10();
-        previous_test.steps();
-        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        Test_03_07_02_1_10 test_03_07_02_1_10 = new Test_03_07_02_1_10();
+        test_03_07_02_1_10.steps();
+        clearBrowserCookies();
+        refresh();
+        switchTo().alert().accept();
+
+        processID = JupyterLabIntegration.getFileContent(WAY_TEST_Test_03_07_02_1_10 + "processID.txt");
         System.out.println("processID: " + processID);
+
+        Test_03_07_02_1_20 test_03_07_02_1_20 = new Test_03_07_02_1_20();
+        test_03_07_02_1_20.steps();
+        clearBrowserCookies();
+        refresh();
+        switchTo().alert().accept();
     }
 
     @Step("Авторизация")
     public void step01() {
+        CommonFunctions.printStep();
         token = RESTFunctions.getAccessToken();
     }
 
     @Step("Навигация и отправка JSON-запроса в Swagger")
     public void step02() {
         CommonFunctions.printStep();
-
         orderID = RESTFunctions.getOrderID(processID);
         System.out.println("orderID: " + orderID);
 
-        cargoID = RESTFunctions.getCargoID(processID);
-        System.out.println("cargoID: " + cargoID);
-        JupyterLabIntegration.uploadTextContent(cargoID, WAY_TEST,"cargoID.txt");
+//        cargoID = RESTFunctions.getCargoID(processID);
+//        System.out.println("cargoID: " + cargoID);
+//        JupyterLabIntegration.uploadTextContent(cargoID, WAY_TEST,"cargoID.txt");
 
         String jsonContent = JupyterLabIntegration.getFileContent(WAY_TEST + "Операция 3.json");
         JsonObject jsonObject = JSONHandler.parseJSONfromString(jsonContent);
-        jsonObject.addProperty("applicationId", orderID);
-        jsonObject.addProperty("processInstanceId", processID);
-        jsonObject.addProperty("cargoId", cargoID);
+
+        JsonObject systemProp = jsonObject.get("systemProp").getAsJsonObject();
+        systemProp.addProperty("applicationId", orderID);
+        systemProp.addProperty("processInstanceId", processID);
+//        jsonObject.addProperty("cargoId", cargoID);
         System.out.println(jsonObject);
 
         RestAssured
                 .given()
                         .baseUri("https://lk.t.exportcenter.ru")
-                        .basePath("/agroexpress-adapter/api/v1/response/order-status")
+                        .basePath("/agroexpress-adapter/api/v1/response/order-change")
                         .header("accept", "*/*")
                         .header("Content-Type", "application/json")
                         .header("Authorization", token)
-                        .body(jsonObject)
+                        .body(String.valueOf(jsonObject))
                 .when()
                         .post()
                 .then()
@@ -102,14 +118,17 @@ public class Test_03_07_02_1_40 extends HooksTEST {
     @Step("Авторизация")
     public void step03() {
         CommonFunctions.printStep();
-        new GUIFunctions().authorization("test-otr@yandex.ru", "Password1!", "1234");
-        new GUIFunctions().waitForURL("https://lk.t.exportcenter.ru/ru/main");
+        open("https://lk.t.exportcenter.ru/ru/services/drafts/info/" + processID);
+        new GUIFunctions()
+                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"))
+                .waitForLoading()
+                .closeAllPopupWindows();
     }
 
     @Step("Навигация")
     public void step04() {
         CommonFunctions.printStep();
-
+        new GUIFunctions().waitForElementDisplayed("//div[text()='Статус']/following-sibling::div[text()='Подтверждение выбранных услуг']");
     }
 
 }

@@ -5,6 +5,7 @@ import framework.Ways;
 import framework.integration.JupyterLabIntegration;
 import functions.api.RESTFunctions;
 import functions.common.CommonFunctions;
+import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
@@ -16,12 +17,16 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.test.HooksTEST;
 
+import java.util.Properties;
+
 import static com.codeborne.selenide.Selenide.*;
 
 public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_20/";
     public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_10/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_20_properties.xml";
+    public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
     private String docUUID;
 
@@ -51,8 +56,14 @@ public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
     }
 
-    @Step("Отправка JSON-запроса в Swagger")
+    @Step("Авторизация в Swagger")
     public void step01() {
+        CommonFunctions.printStep();
+        //
+    }
+
+    @Step("Отправка JSON-запроса в Swagger")
+    public void step02() {
         CommonFunctions.printStep();
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
         docUUID = RESTFunctions.getOrderID(processID);
@@ -83,25 +94,24 @@ public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
     }
 
     @Step("Открыть заявку и проверить статус")
-    public void step02() {
+    public void step03() {
         CommonFunctions.printStep();
         CommonFunctions.wait(20);
 
         new GUIFunctions()
-                .inContainer("Вход в личный кабинет")
-                .inField("Email").inputValue("test-otr@yandex.ru")
-                .inField("Пароль").inputValue("Password1!")
-                .clickButton("Войти");
-        $x("//div[contains(@class, 'CodeInput_input' )]/input[@data-id= '0']").sendKeys("1");
-        $x("//div[contains(@class, 'CodeInput_input' )]/input[@data-id= '1']").sendKeys("2");
-        $x("//div[contains(@class, 'CodeInput_input' )]/input[@data-id= '2']").sendKeys("3");
-        $x("//div[contains(@class, 'CodeInput_input' )]/input[@data-id= '3']").sendKeys("4");
-        new GUIFunctions().waitForLoading();
+                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"))
+                .waitForLoading()
+                .closeAllPopupWindows();
+    }
 
+    @Step("Навигация в ЕЛК")
+    public void step04() {
+        CommonFunctions.printStep();
         open("https://lk.t.exportcenter.ru/ru/services/drafts/info/" + processID);
         new GUIFunctions().waitForElementDisplayed("//*[text() = 'Расчёт стоимости']");
 
-        JupyterLabIntegration.uploadTextContent(docUUID,WAY_TEST,"docUUID.txt");
+        JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST,"docUUID.txt");
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
     }
+
 }

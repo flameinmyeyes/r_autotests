@@ -74,6 +74,7 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
 //        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
 
         new GUIFunctions()
+                .closeAllPopupWindows()
                 .clickButton("Продолжить");
     }
 
@@ -217,11 +218,9 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
         CommonFunctions.printStep();
         new GUIFunctions().clickButton("Далее").waitForLoading();
         docNum = $x("//div[contains (@class, 'FormHeader_title' )]//span[contains (@class, 'Typography_body' )]").getText().split("№")[1];
-        JupyterLabIntegration.uploadTextContent(docNum,WAY_TEST,"docNum.txt");
+        JupyterLabIntegration.uploadTextContent(docNum, WAY_TEST,"docNum.txt");
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
     }
-
-
 
     public void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
