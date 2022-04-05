@@ -37,7 +37,7 @@ public class Test_03_07_02_4 extends HooksTEST {
 
     @AfterMethod
     public void screenShot() {
-        CommonFunctions.screenShot(WAY_TEST + "screen.png");
+        CommonFunctions.screenShot(WAY_TEST);
     }
 
     @Step("Авторизация")
@@ -45,17 +45,10 @@ public class Test_03_07_02_4 extends HooksTEST {
         CommonFunctions.printStep();
 
         //Ввести логин и пароль test-otr@yandex.ru/Password1!
-        new GUIFunctions().inContainer("Вход в личный кабинет")
-                .inField("Email").inputValue(PROPERTIES.getProperty("Авторизация.Email"))
-                .inField("Пароль").inputValue(PROPERTIES.getProperty("Авторизация.Пароль"))
-                .clickButton("Войти");
-
         //Ввести код
-        $x("//input[@data-id='0']").sendKeys("1");
-        $x("//input[@data-id='1']").sendKeys("2");
-        $x("//input[@data-id='2']").sendKeys("3");
-        $x("//input[@data-id='3']").sendKeys("4");
-        new GUIFunctions().waitForURL("https://lk.t.exportcenter.ru/ru/main");
+        new GUIFunctions().inContainer("Вход в личный кабинет")
+                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), "1234")
+                .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
     @Step("Просмотр данных заявки из перечня ")
@@ -64,7 +57,7 @@ public class Test_03_07_02_4 extends HooksTEST {
 
         //Выбрать любую заявку из реестра и нажать на нее
         new GUIFunctions().clickByLocator("(//div[@class='ServiceCard_cardWrapper__1GgdB'])[1]")
-                .waitForLoading();
+                .waitForElementDisplayed("//*[text()='Завершено']");
     }
 
     @Step("Создание заявки")
@@ -73,28 +66,30 @@ public class Test_03_07_02_4 extends HooksTEST {
 
         //Нажать на кнопку "Сервисы"
         new GUIFunctions().selectTab("Сервисы")
-                .waitForURL("https://master-portal.t.exportcenter.ru/services/business");
+                .waitForURL("https://master-portal.t.exportcenter.ru/services/");
 
         //Выбрать сервис «Компенсация части затрат на регистрацию ОИС за рубежом»
-        new GUIFunctions().waitForElementDisplayed("//input[@placeholder='Поиск по разделу']")
-                .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
-                .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Оформить");
+        open("https://lk.t.exportcenter.ru/ru/promo-service?key=agroexpress&serviceId=199d1559-632f-435b-a482-a5bb849b30ce&next_query=true");
+        new GUIFunctions().waitForLoading();
 
-        //Перезагрузить страницу
-        switchTo().window(1);
-        new GUIFunctions().waitForElementDisplayed("//div[@class='Steps_stepsWrapper__2dJpS']");
-        refreshTab("//*[text()='Продолжить']", 5);
-
-        //Нажать кнопку «Продолжить»
-        new GUIFunctions().clickButton("Продолжить")
-                .waitForElementDisplayed("//div[@class='FormOpenPanel_panelBody__2UbuF']");
+//        new GUIFunctions().waitForElementDisplayed("//input[@placeholder='Поиск по разделу']")
+//                .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
+//                .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Оформить");
+//
+//        //Перезагрузить страницу
+//        switchTo().window(1);
+//        new GUIFunctions().waitForElementDisplayed("//div[@class='Steps_stepsWrapper__2dJpS']");
+//        refreshTab("//*[text()='Продолжить']", 5);
+//
+//        //Нажать кнопку «Продолжить»
+//        new GUIFunctions().clickButton("Продолжить")
+//                .waitForElementDisplayed("//div[@class='FormOpenPanel_panelBody__2UbuF']");
 
     }
 
     @Step("Ознакомление с функциональными возможностями сервиса (Onboarding)")
     public void step04() {
         CommonFunctions.printStep();
-
     }
 
     private void refreshTab(String expectedXpath, int times) {
