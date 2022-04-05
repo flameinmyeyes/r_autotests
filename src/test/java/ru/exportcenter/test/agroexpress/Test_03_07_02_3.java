@@ -38,7 +38,8 @@ public class Test_03_07_02_3 extends HooksTEST {
 
     @Step("Авторизация")
     public void step01() {
-        new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль"), P.getProperty("Код подтвержения"))
+        new GUIFunctions()
+                .authorization(P.getProperty("Логин"), P.getProperty("Пароль")/*, P.getProperty("Код подтвержения")*/)
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
