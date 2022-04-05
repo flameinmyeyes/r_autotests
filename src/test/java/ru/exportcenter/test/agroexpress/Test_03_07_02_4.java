@@ -68,7 +68,7 @@ public class Test_03_07_02_4 extends HooksTEST {
         new GUIFunctions().selectTab("Сервисы")
                 .waitForURL("https://master-portal.t.exportcenter.ru/services/");
 
-        //Выбрать сервис «Компенсация части затрат на регистрацию ОИС за рубежом»
+        //Выбрать сервис «Логистика. Доставка продукции "Агроэкспрессом"»
         open("https://lk.t.exportcenter.ru/ru/promo-service?key=agroexpress&serviceId=199d1559-632f-435b-a482-a5bb849b30ce&next_query=true");
         new GUIFunctions().waitForLoading();
 

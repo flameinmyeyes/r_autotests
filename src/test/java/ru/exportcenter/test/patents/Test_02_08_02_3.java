@@ -1,8 +1,8 @@
 package ru.exportcenter.test.patents;
-
 import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
+
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
@@ -12,14 +12,13 @@ import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.test.HooksTEST;
-
 import java.util.Properties;
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_02_08_02_3 extends HooksTEST {
+public class Test_02_08_02_3 extends HooksTEST{
 
-    private String WAY_TEST = Ways.TEST.getWay() + "/patents/Test_02_08_02_1/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_02_08_02_1_properties.xml";
+    private String WAY_TEST = Ways.TEST.getWay() + "/patents/Test_02_08_02_3/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_02_08_02_3_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     @Description("ТК 02 08 02 3")
@@ -55,12 +54,8 @@ public class Test_02_08_02_3 extends HooksTEST {
 
         //Ввести логин и пароль demo_exporter/password
         new GUIFunctions().inContainer("Вход в личный кабинет")
-                .inField("Email").inputValue(PROPERTIES.getProperty("Авторизация.Email"))
-                .inField("Пароль").inputValue(PROPERTIES.getProperty("Авторизация.Пароль"))
-                .clickButton("Войти")
-                .waitForURL("https://lk.t.exportcenter.ru/ru/main");
-
-        new GUIFunctions().closeAllPopupWindows();
+                .authorization(PROPERTIES.getProperty("Авторизация.Email"),PROPERTIES.getProperty("Авторизация.Пароль"), "1234")
+                .waitForLoading();
     }
 
     @Step("Навигация")
@@ -79,6 +74,9 @@ public class Test_02_08_02_3 extends HooksTEST {
     public void step03() {
         CommonFunctions.printStep();
 
+        CommonFunctions.wait(5);
+        new GUIFunctions().closeAllPopupWindows();
+
         new GUIFunctions().inContainer("Сведения о заявителе")
                 .inField("Регион").selectValue("Республика Коми");
 
@@ -89,6 +87,9 @@ public class Test_02_08_02_3 extends HooksTEST {
     @Step("Заполнить область «Информация о компании»")
     public void step04() {
         CommonFunctions.printStep();
+
+        CommonFunctions.wait(5);
+        new GUIFunctions().closeAllPopupWindows();
 
         //Нажать на кнопку «Добавить способ получения услуги»
         new GUIFunctions().clickButton("Добавить способ получения услуг");
@@ -111,17 +112,17 @@ public class Test_02_08_02_3 extends HooksTEST {
     private void step05(){
         CommonFunctions.printStep();
 
+        CommonFunctions.wait(5);
         new GUIFunctions().closeAllPopupWindows();
-        closePop();
 
         //Нажать кнопку «Добавить тип заявки»
         new GUIFunctions().clickButton("Добавить тип заявки");
-        CommonFunctions.wait(5);
 
         //Заполнение полей
         new GUIFunctions()
                 .closeAllPopupWindows()
                 .inContainer("Заявка")
+                .closeAllPopupWindows()
                 .inField("Тип заявки").selectValue("Международная заявка")
                 .inField("Подтип международной заявки").selectValue("Международная заявка на регистрацию промышленного образца в соответствии с Женевским актом Гаагского соглашения")
                 .inField("Номер базовой заявки/свидетельства").inputValue("987654321")
@@ -139,8 +140,8 @@ public class Test_02_08_02_3 extends HooksTEST {
     private void step06(){
         CommonFunctions.printStep();
 
+        CommonFunctions.wait(5);
         new GUIFunctions().closeAllPopupWindows();
-        closePop();
 
         //Заполнение полей
         new GUIFunctions()
@@ -153,8 +154,6 @@ public class Test_02_08_02_3 extends HooksTEST {
                 .inField("Описание бизнес-модели вывода продукции на внешние рынки").inputValue("ввод")
                 .inField("Оценка вероятного экономического эффекта от введения за рубежом в гражданский оборот продукции, в состав которой будет входить предлагаемый объект интеллектуальной собственности").inputValue("Ocenka");
 
-        new GUIFunctions().closeAllPopupWindows();
-
         //Выбрать приложенный файл с устройства формата pdf и нажать кнопку «Открыть»
         new GUIFunctions().uploadFile("Заявка на регистрацию ОИС","C:\\auto-tests\\tmp.pdf");
         CommonFunctions.wait(5);
@@ -164,8 +163,8 @@ public class Test_02_08_02_3 extends HooksTEST {
     private void step07(){
         CommonFunctions.printStep();
 
+        CommonFunctions.wait(5);
         new GUIFunctions().closeAllPopupWindows();
-        closePop();
 
         //Нажать на кнопку «Добавить затрату на оплату пошлины»
         new GUIFunctions().clickButton("Добавить затрату на оплату пошлины");
@@ -185,8 +184,8 @@ public class Test_02_08_02_3 extends HooksTEST {
     private void step08(){
         CommonFunctions.printStep();
 
+        CommonFunctions.wait(5);
         new GUIFunctions().closeAllPopupWindows();
-        closePop();
 
         //Нажать на кнопку «Добавить затрату на оплату услуги»
         new GUIFunctions().clickButton("Добавить затрату на оплату услуги");
@@ -208,10 +207,11 @@ public class Test_02_08_02_3 extends HooksTEST {
     private void step09() {
         CommonFunctions.printStep();
 
+        CommonFunctions.wait(5);
         new GUIFunctions().closeAllPopupWindows();
-        closePop();
 
         new GUIFunctions().clickButton("Сведения для регистрации / актуализации в ГИИС \"Электронный бюджет\"");
+
         //Заполнение полей
         new GUIFunctions().inContainer("Сведения для регистрации / актуализации в ГИИС \"Электронный бюджет\"")
                 .inField("Компания зарегистрирована в ГИИС \"Электронный бюджет\"").setCheckboxOFF()
@@ -227,8 +227,8 @@ public class Test_02_08_02_3 extends HooksTEST {
     private void step10() {
         CommonFunctions.printStep();
 
+        CommonFunctions.wait(5);
         new GUIFunctions().closeAllPopupWindows();
-        closePop();
 
         //Заполнение полей
         new GUIFunctions().inContainer("Сведения для регистрации / актуализации в ГИИС \"Электронный бюджет\"")
@@ -241,9 +241,6 @@ public class Test_02_08_02_3 extends HooksTEST {
     private void step11(){
         CommonFunctions.printStep();
 
-        new GUIFunctions().closeAllPopupWindows();
-        closePop();
-
         //Нажать кнопку «Добавить +»
         new GUIFunctions().clickButton("Добавить +");
 
@@ -251,8 +248,8 @@ public class Test_02_08_02_3 extends HooksTEST {
         new GUIFunctions().inContainer("Лицевые счета, открытые в территориальном органе Федерального казначейства (ТОФК)")
                 .inField("Полное наименование ТОФК").selectValue("Отдел № 1 Управления Федерального казначейства по Республике Башкортостан")
                 .inField("Код ТОФК открытия по сводному реестру").inputValue("6000")
-                .inField("Код ОРФК обслуживания").inputValue("0100")
-                .inField("Код типа лицевого счёта").inputValue("05")
+                .inField("Код ОРФК обслуживания").selectValue("0100")
+                .inField("Код типа лицевого счёта").selectValue("05")
                 .inField("Номер лицевого счёта").inputValue("05601863340")
                 .inField("Дата открытия").inputValue("02.02.2022")
                 .clickButton("Сохранить");
@@ -261,8 +258,8 @@ public class Test_02_08_02_3 extends HooksTEST {
     private void step12(){
         CommonFunctions.printStep();
 
+        CommonFunctions.wait(5);
         new GUIFunctions().closeAllPopupWindows();
-        closePop();
 
         //Выбрать чекбокс «Уполномоченное лицо»
         new GUIFunctions().inContainer("Данные о руководителе / уполномоченном лице компании")
@@ -285,8 +282,8 @@ public class Test_02_08_02_3 extends HooksTEST {
     private void step13(){
         CommonFunctions.printStep();
 
+        CommonFunctions.wait(5);
         new GUIFunctions().closeAllPopupWindows();
-        closePop();
 
         //Выбрать чекбокс «Уполномоченное лицо»
         new GUIFunctions().inContainer("Контактные данные лица, ответственного за работу в ГИИС \"Электронный бюджет\"")
@@ -304,8 +301,8 @@ public class Test_02_08_02_3 extends HooksTEST {
     private void step14(){
         CommonFunctions.printStep();
 
+        CommonFunctions.wait(5);
         new GUIFunctions().closeAllPopupWindows();
-        closePop();
 
         //Выбрать чекбокс «Уполномоченное лицо»
         new GUIFunctions().inContainer("Подтверждение сведений Заявителем")
@@ -327,14 +324,22 @@ public class Test_02_08_02_3 extends HooksTEST {
                 break;
             }
             refresh();
+            System.out.println("refresh()");
             CommonFunctions.wait(1);
         }
     }
 
-    private void closePop(){
-        if ($x("//*[@stroke='white']").isDisplayed()){
-            $x("//*[@stroke='white']").click();
+    public class MyThread extends Thread {
+        @Override
+        public void run() {
+            int i = 1;
+            GUIFunctions GUIF = new GUIFunctions();
+            while(i>0) {
+                System.out.println("closeAllPopupWindows()");
+                GUIF.closeAllPopupWindows();
+                CommonFunctions.wait(5);
+            }
         }
     }
-}
 
+}
