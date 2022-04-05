@@ -21,7 +21,7 @@ public class HooksTEST_agroexpress implements HooksInterface {
 
     @Parameters({"runMode"})
     @BeforeClass
-    public DriverInit setDriver(@Optional("local") String runModeFromSuite) {
+    public DriverInit setDriver(@Optional("remote") String runModeFromSuite) {
         //определяем режим запуска (по тест-сьюту)
         RUN_MODE = runModeFromSuite;
 
