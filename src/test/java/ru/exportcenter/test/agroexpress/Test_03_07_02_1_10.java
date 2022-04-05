@@ -60,6 +60,21 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
         new GUIFunctions()
                 .authorization("test-otr@yandex.ru", "Password1!", "1234")
                 .waitForLoading();
+
+        $x("//*[contains(text(), 'Логистика. Доставка продукции \"Агроэкспрессом\"')]").shouldBe(Condition.visible, Duration.ofSeconds(60));
+
+        if ($x("//*[contains(text(), 'Информация о заявителе')]").isDisplayed()) {
+            $x("//button[contains(text(), 'Логистика. Доставка продукции \"Агроэкспрессом\". Заявка')]").click();
+            switchTo().alert().accept();
+        }
+
+        refreshTab("//*[contains(text(), 'Продолжить')]", 20);
+        processID = CommonFunctions.getProcessIDFromURL();
+
+//        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
+
+        new GUIFunctions()
+                .clickButton("Продолжить");
     }
 
     @Step("Навигация")
