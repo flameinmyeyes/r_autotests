@@ -17,7 +17,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class Test_02_08_01 extends HooksDEV {
 
-    private String WAY_TEST = Ways.UIDM_DEV.getWay() + "/patents/Test_02_08_01/";
+    private String WAY_TEST = Ways.DEV.getWay() + "/patents/Test_02_08_01/";
 
     @Description("ТК 02 08 01")
     @Owner(value="Теребков Андрей, Петрищев Руслан")

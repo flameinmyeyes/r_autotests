@@ -2,17 +2,20 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 <!--<suite name="TSE_all_tests_Balashov" verbose="1" thread-count="1" preserve-order="true">-->
-<suite name="TSE_all_tests_Balashov" parallel="tests" verbose="1" thread-count="1" preserve-order="true">
-	<parameter name="runMode" value="local"/>
-	<parameter name="testrun" value="TSE-C72"/>
-	<parameter name="rerunFailedTestsOnly" value="true"/>
-	<listeners>
-		<listener class-name="framework.integration.zephyrscale.TestListener"/>
-	</listeners>
+<suite name="REC_all_tests_Balashov" parallel="tests" verbose="1" thread-count="1" preserve-order="true">
+	<parameter name="runMode" value="remote"/>
+<!--	<parameter name="testrun" value="TSE-C72"/>-->
+<!--	<parameter name="rerunFailedTestsOnly" value="true"/>-->
+<!--	<listeners>-->
+<!--		<listener class-name="framework.integration.zephyrscale.TestListener"/>-->
+<!--	</listeners>-->
 
-	<test name="TSE_all_tests_Balashov" thread-count="1" preserve-order="true">
+	<test name="REC_all_tests_Balashov" thread-count="1" preserve-order="true">
 		<classes>
-<!--			<class name="ru.otr.eb_tse_demo_ufos_28080.FUN_07.BP_016.FUN_07_BP_016_MT_1_KP_6_6"/>-->
+			<class name="ru.exportcenter.test.agroexpress.Test_03_07_03"/>
+			<class name="ru.exportcenter.test.agroexpress.Test_03_07_03_parameterized"/>
+			<class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1_40"/>
+			<class name="ru.exportcenter.test.patents.Test_02_08_02_4"/>
 		</classes>
 	</test>
 
