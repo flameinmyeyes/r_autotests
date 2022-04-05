@@ -56,6 +56,11 @@ public class Click extends ElementData {
         if ($x(closeMyExport).isDisplayed()) {
             $x(closeMyExport).click();
         }
+
+        String closeServicesInfo = "//div[div[text()='Логистика. Доставка продукции \"Агроэкспрессом\"']]/button";
+        if ($x(closeServicesInfo).isDisplayed()) {
+            $x(closeServicesInfo).click();
+        }
     }
 
 }

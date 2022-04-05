@@ -58,10 +58,10 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
 
     private void refreshTab(int times) {
         for (int i = 0; i < times; i++) {
-            new GUIFunctions().waitForLoading();
+            new GUIFunctions().waitForLoading().closeAllPopupWindows();
             if ($x("//*[contains(text(), 'Продолжить')]").isDisplayed()
                     || $x("//*[contains(text(), 'Информация о заявителе')]").isDisplayed()) {
-                break;
+                return;
             }
             refresh();
         }
