@@ -36,7 +36,7 @@ public class Test_03_07_02_1_40 extends HooksTEST {
     private String orderID;
     private String cargoID;
 
-    @Owner(value="Балашов Илья, Ворожко Александр")
+    @Owner(value="Балашов Илья")
     @Description("03 07 02.1.40 Получение скорректированной заявки с расчетом (интеграция)")
     @Link(name="Test_03_07_02_1_40", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123872990")
 
@@ -76,6 +76,7 @@ public class Test_03_07_02_1_40 extends HooksTEST {
 
         cargoID = RESTFunctions.getCargoID(processID);
         System.out.println("cargoID: " + cargoID);
+        JupyterLabIntegration.uploadTextContent(cargoID, WAY_TEST,"cargoID.txt");
 
         String jsonContent = JupyterLabIntegration.getFileContent(WAY_TEST + "Операция 3.json");
         JsonObject jsonObject = JSONHandler.parseJSONfromString(jsonContent);
