@@ -13,14 +13,13 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.HooksTEST;
 
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.refresh;
 
-public class Test_03_07_03_1_10 extends HooksTEST {
+public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
 
     /*
      * http://selenoidshare.d.exportcenter.ru/lab/tree/work/files_for_tests/test/agroexpress/Test_03_07_03_1_10
@@ -44,29 +43,17 @@ public class Test_03_07_03_1_10 extends HooksTEST {
         step06();
         step07();
         step08();
-        step09();
     }
 
     @Step("Авторизация")
     public void step01() {
         new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль"), P.getProperty("Код подтвержения"))
-                .waitForURL("https://lk.t.exportcenter.ru/ru/main");
-    }
-
-    @Step("Навигация")
-    public void step02() {
-        new GUIFunctions().selectTab("Сервисы")
-                .waitForURL("https://master-portal.t.exportcenter.ru/services/business")
-                .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
-                .closeAllPopupWindows()
-                .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Оформить")
-                .switchPageTo(1);
+                .waitForLoading();
 
         refreshTab(15);
         if ($x("//*[contains(text(), 'Продолжить')]").isDisplayed()) {
             new GUIFunctions().clickButton("Продолжить");
         }
-
     }
 
     private void refreshTab(int times) {
@@ -81,13 +68,13 @@ public class Test_03_07_03_1_10 extends HooksTEST {
     }
 
     @Step("Заполнить область «Информация о компании»")
-    public void step03() {
+    public void step02() {
         new GUIFunctions().inContainer("Информация о компании")
                 .inField("Почтовый адрес").inputValue(P.getProperty("Почтовый адрес")).assertValue().assertNoControl();
     }
 
     @Step("Заполнить область «Информация о заявителе»")
-    public void step04() {
+    public void step03() {
         new GUIFunctions().closeAllPopupWindows()
                 .inContainer("Информация о заявителе")
                 .inField("Дополнительный контакт").setCheckboxON().assertNoControl()
@@ -98,7 +85,7 @@ public class Test_03_07_03_1_10 extends HooksTEST {
     }
 
     @Step("Заполнить область «Информация для оказания услуги»")
-    public void step05() {
+    public void step04() {
         String departureDate = P.getProperty("Дата отправления");
         if (departureDate.equals("")) {
             departureDate = DateFunctions.dateShift("dd.MM.yyyy", 14);
@@ -113,7 +100,7 @@ public class Test_03_07_03_1_10 extends HooksTEST {
     }
 
     @Step("Заполнить область «Информация о грузе»")
-    public void step06() {
+    public void step05() {
 
         String removedName = P.getProperty("1.Наименование продукции");
 
@@ -151,7 +138,7 @@ public class Test_03_07_03_1_10 extends HooksTEST {
     }
 
     @Step("Заполнить область «Информация о грузополучаеле»")
-    public void step07() {
+    public void step06() {
         new GUIFunctions().closeAllPopupWindows()
                 .inContainer("Информация о грузополучателе")
                 .inField("Наименование грузополучателя").inputValue(P.getProperty("Наименование грузополучателя")).assertValue().assertNoControl()
@@ -170,7 +157,7 @@ public class Test_03_07_03_1_10 extends HooksTEST {
     }
 
     @Step("Заполнить область «Дополнительные услуги»")
-    public void step08() {
+    public void step07() {
         new GUIFunctions().closeAllPopupWindows()
                 .inContainer("Дополнительные услуги")
                 .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertNoControl()
@@ -184,7 +171,7 @@ public class Test_03_07_03_1_10 extends HooksTEST {
     }
 
     @Step("Отправка Заявки на рассмотрение ")
-    public void step09() {
+    public void step08() {
         String docNum = $x("//div[contains (@class, 'FormHeader_title' )]//span[contains (@class, 'Typography_body' )]").getText().split("№")[1];
 
         new GUIFunctions().clickButton("Далее")
