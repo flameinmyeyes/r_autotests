@@ -19,7 +19,7 @@ public class XPath extends ElementData {
     public String getFieldXPath() {
         if (isFieldDefined()) {
             return "//*[text() = '" + field + "']/ancestor::div[contains(@class,'Column_col') " +
-                    "or contains(@class, 'inputWrapper') " +
+                    "or contains(@class, 'Info_definition') " +
                     "or contains(@class, 'Input_fullWidth')][1]";
         }
         Assert.fail("Не удалось создать xPath. Поле ввода не было задано\n" +
@@ -38,7 +38,7 @@ public class XPath extends ElementData {
 
     public String getUneditableInputXPath() {
         return getContainerXPath() + getFieldXPath() + "//*[(name()='input' and @disabled) " +
-                "or (name()='span' and preceding-sibling::span[text()='" + field + "'] and text()!='" + field + "')][not(@style)]";
+                "or (preceding-sibling::*[text()='" + field + "'] and text()!='" + field + "')][not(@style)]";
     }
 
     public String getSearchedValueXPath(String value) {
