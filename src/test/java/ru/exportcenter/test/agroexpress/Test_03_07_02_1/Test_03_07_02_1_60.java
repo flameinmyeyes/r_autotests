@@ -85,16 +85,16 @@ public class Test_03_07_02_1_60 extends HooksTEST_agroexpress {
 
         RestAssured
                 .given()
-                .baseUri("https://lk.t.exportcenter.ru")
-                .basePath("/agroexpress-adapter/api/v1/response/download-count")
-                .header("accept", "*/*")
-                .header("Content-Type", "application/json")
-                .header("Authorization", token)
-                .body(String.valueOf(jsonObject))
+                    .baseUri("https://lk.t.exportcenter.ru")
+                    .basePath("/agroexpress-adapter/api/v1/response/download-count")
+                    .header("accept", "*/*")
+                    .header("Content-Type", "application/json")
+                    .header("Authorization", token)
+                    .body(String.valueOf(jsonObject))
                 .when()
-                .post()
+                    .post()
                 .then()
-                .assertThat().statusCode(200);
+                    .assertThat().statusCode(200);
     }
 
     @Step("Авторизация")

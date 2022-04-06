@@ -28,7 +28,7 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
      * https://gitlab.exportcenter.ru/sub-service/autotests/rec_autotests/-/blob/master/src/test/java/ru/exportcenter/test/agroexpress/Test_03_07_03_1_10.java
      */
 
-    private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1_10/";
+    private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1/Test_03_07_03_1_10/";
     private final Properties P = PropertiesHandler.parseProperties(WAY_TEST + "Test_03_07_03_1_10.xml");
     private String processID;
 
