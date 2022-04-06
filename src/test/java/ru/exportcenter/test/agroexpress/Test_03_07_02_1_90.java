@@ -1,13 +1,11 @@
 package ru.exportcenter.test.agroexpress;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import framework.RunTestAgain;
 import framework.Ways;
 import framework.integration.JupyterLabIntegration;
 import functions.api.RESTFunctions;
 import functions.common.CommonFunctions;
-import functions.file.FileFunctions;
 import functions.file.JSONHandler;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
@@ -16,31 +14,26 @@ import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
-import jdk.nashorn.internal.parser.JSONParser;
-import net.sf.json.JSONObject;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.HooksTEST;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_02_1_40 extends HooksTEST_agroexpress {
+public class Test_03_07_02_1_90 extends HooksTEST_agroexpress {
 
-    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_40/";
-    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_20/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_40_properties.xml";
+    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_90/";
+    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_60/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_90_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
     private String token;
     private String docUUID;
 
     @Owner(value="Балашов Илья")
-    @Description("03 07 02.1.40 Получение скорректированной заявки с расчетом (интеграция)")
-    @Link(name="Test_03_07_02_1_40", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123872990")
+    @Description("03 07 02.1.60 Получение скорректированной заявки с расчетом (интеграция)")
+    @Link(name="Test_03_07_02_1_60", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123872990")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
@@ -78,10 +71,10 @@ public class Test_03_07_02_1_40 extends HooksTEST_agroexpress {
     public void step02() {
         CommonFunctions.printStep();
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-        docUUID = RESTFunctions.getOrderID(processID);
+        docUUID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "docUUID.txt");
         System.out.println("orderID: " + docUUID);
 
-        String jsonContent = JupyterLabIntegration.getFileContent(WAY_TEST + "Операция 3.json");
+        String jsonContent = JupyterLabIntegration.getFileContent(WAY_TEST + "Операция 2.json");
         JsonObject jsonObject = JSONHandler.parseJSONfromString(jsonContent);
 
         JsonObject systemProp = jsonObject.get("systemProp").getAsJsonObject();
@@ -92,7 +85,7 @@ public class Test_03_07_02_1_40 extends HooksTEST_agroexpress {
         RestAssured
                 .given()
                         .baseUri("https://lk.t.exportcenter.ru")
-                        .basePath("/agroexpress-adapter/api/v1/response/order-change")
+                        .basePath("/agroexpress-adapter/api/v1/response/order-status")
                         .header("accept", "*/*")
                         .header("Content-Type", "application/json")
                         .header("Authorization", token)
@@ -116,7 +109,7 @@ public class Test_03_07_02_1_40 extends HooksTEST_agroexpress {
     @Step("Навигация")
     public void step04() {
         CommonFunctions.printStep();
-        new GUIFunctions().waitForElementDisplayed("//div[text()='Статус']/following-sibling::div[text()='Подтверждение выбранных услуг']");
+        new GUIFunctions().waitForElementDisplayed("//div[text()='Статус']/following-sibling::div[text()='Передача груза']");
 
         JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST,"docUUID.txt");
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
