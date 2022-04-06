@@ -51,8 +51,7 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
     @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
-        new GUIFunctions()
-                .authorization("test-otr@yandex.ru", "Password1!", "1234")
+        new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль"), P.getProperty("Код подтвержения"))
                 .waitForLoading();
 
         $x("//*[contains(text(), 'Логистика. Доставка продукции \"Агроэкспрессом\"')]").shouldBe(Condition.visible, Duration.ofSeconds(60));
@@ -65,10 +64,7 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
         refreshTab("//*[contains(text(), 'Продолжить')]", 20);
         processID = CommonFunctions.getProcessIDFromURL();
 
-//        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
-
-        new GUIFunctions()
-                .closeAllPopupWindows()
+        new GUIFunctions().closeAllPopupWindows()
                 .clickButton("Продолжить");
     }
 
