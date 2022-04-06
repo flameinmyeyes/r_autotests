@@ -13,6 +13,7 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import net.sf.json.JSONObject;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
@@ -29,6 +30,7 @@ public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
     private String docUUID;
+    private String token;
 
     @Owner(value="Ворожко Александр")
     @Description("03 07 02.1.20 Получение результатов верификации от АО \"РЖД Логистика\"")
@@ -36,12 +38,10 @@ public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
-//        System.out.println(RESTFunctions.getAccessToken());
-//        precondition();
+        precondition();
         step01();
         step02();
         step03();
-        step04();
     }
 
     @AfterMethod
@@ -51,27 +51,31 @@ public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
 
     @Step("Предусловия")
     public void precondition() {
-        Test_03_07_02_1_10 test_03_07_02_1_10 = new Test_03_07_02_1_10();
-        test_03_07_02_1_10.steps();
-        clearBrowserCookies();
-        refresh();
-        switchTo().alert().accept();
-
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        String status = RESTFunctions.getOrderStatus(processID);
+        System.out.println(status);
+
+        if(!status.equals("Проводится проверка")) {
+            System.out.println("Перепрогон предыдущего теста");
+
+            Test_03_07_02_1_10 test_03_07_02_1_10 = new Test_03_07_02_1_10();
+            test_03_07_02_1_10.steps();
+            CommonFunctions.wait(20);
+            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        }
     }
 
     @Step("Авторизация в Swagger")
     public void step01() {
         CommonFunctions.printStep();
+        token = RESTFunctions.getAccessToken("bpmn_admin");
     }
 
     @Step("Отправка JSON-запроса в Swagger")
     public void step02() {
         CommonFunctions.printStep();
-        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-        docUUID = RESTFunctions.getOrderID(processID);
 
-        String token = RESTFunctions.getAccessToken();
+        docUUID = RESTFunctions.getOrderID(processID);
 
         JSONObject systemProp = new JSONObject();
         systemProp.put("applicationId", docUUID);
@@ -96,25 +100,13 @@ public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
                         .assertThat().statusCode(200);
     }
 
-    @Step("Открыть заявку и проверить статус")
+    @Step("Проверить статус заявки")
     public void step03() {
         CommonFunctions.printStep();
-        CommonFunctions.wait(20);
-
-        new GUIFunctions()
-                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"))
-                .waitForLoading()
-                .closeAllPopupWindows();
-    }
-
-    @Step("Навигация в ЕЛК")
-    public void step04() {
-        CommonFunctions.printStep();
-        open("https://lk.t.exportcenter.ru/ru/services/drafts/info/" + processID);
-        new GUIFunctions().waitForElementDisplayed("//*[text() = 'Расчёт стоимости']");
+        String status = RESTFunctions.getOrderStatus(processID);
+        Assert.assertEquals(status, "Расчёт стоимости");
 
         JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST,"docUUID.txt");
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
     }
-
 }
