@@ -38,7 +38,7 @@ public class Test_03_07_02_1_40 extends HooksTEST_agroexpress {
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
-//        preconditions();
+        precondition();
         step01();
         step02();
         step03();
@@ -51,21 +51,25 @@ public class Test_03_07_02_1_40 extends HooksTEST_agroexpress {
     }
 
     @Step("Предусловия")
-    public void preconditions() {
-
-        Test_03_07_02_1_20 test_03_07_02_1_20 = new Test_03_07_02_1_20();
-        test_03_07_02_1_20.steps();
-        clearBrowserCookies();
-        refresh();
-        switchTo().alert().accept();
+    public void precondition() {
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-        System.out.println("processID: " + processID);
+        String status = RESTFunctions.getOrderStatus(processID);
+        System.out.println(status);
+
+        if(!status.equals("Проводится проверка")) {
+            System.out.println("Перепрогон предыдущего теста");
+
+            Test_03_07_02_1_20 test_03_07_02_1_20 = new Test_03_07_02_1_20();
+            test_03_07_02_1_20.steps();
+            CommonFunctions.wait(20);
+            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        }
     }
 
     @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
-        token = RESTFunctions.getAccessToken();
+        token = RESTFunctions.getAccessToken("bpmn_admin");
     }
 
     @Step("Навигация и отправка JSON-запроса в Swagger")
@@ -100,11 +104,12 @@ public class Test_03_07_02_1_40 extends HooksTEST_agroexpress {
     @Step("Авторизация")
     public void step03() {
         CommonFunctions.printStep();
-        open("https://lk.t.exportcenter.ru/ru/services/drafts/info/" + processID);
         new GUIFunctions()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"))
                 .waitForLoading()
                 .closeAllPopupWindows();
+
+        open("https://lk.t.exportcenter.ru/ru/services/drafts/info/" + processID);
     }
 
     @Step("Навигация")

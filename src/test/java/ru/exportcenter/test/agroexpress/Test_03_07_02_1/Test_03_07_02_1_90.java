@@ -65,7 +65,7 @@ public class Test_03_07_02_1_90 extends HooksTEST_agroexpress {
     @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
-        token = RESTFunctions.getAccessToken();
+        token = RESTFunctions.getAccessToken("bpmn_admin");
     }
 
     @Step("Навигация и отправка JSON-запроса в Swagger")

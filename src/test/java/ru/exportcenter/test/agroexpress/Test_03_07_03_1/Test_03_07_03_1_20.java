@@ -69,7 +69,7 @@ public class Test_03_07_03_1_20 extends HooksTEST_agroexpress {
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
         docUUID = RESTFunctions.getOrderID(processID);
 
-        String token = RESTFunctions.getAccessToken();
+        String token = RESTFunctions.getAccessToken("bpmn_admin");
 
         JSONObject systemProp = new JSONObject();
         systemProp.put("applicationId", docUUID);
