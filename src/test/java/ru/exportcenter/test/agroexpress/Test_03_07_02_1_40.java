@@ -46,7 +46,7 @@ public class Test_03_07_02_1_40 extends HooksTEST_agroexpress {
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
-        preconditions();
+//        preconditions();
         step01();
         step02();
         step03();
