@@ -14,6 +14,7 @@ import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
@@ -42,7 +43,6 @@ public class Test_03_07_02_1_40 extends HooksTEST_agroexpress {
         step01();
         step02();
         step03();
-        step04();
     }
 
     @AfterMethod
@@ -56,7 +56,7 @@ public class Test_03_07_02_1_40 extends HooksTEST_agroexpress {
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
-        if(!status.equals("Проводится проверка")) {
+        if(!status.equals("Расчёт стоимости")) {
             System.out.println("Перепрогон предыдущего теста");
 
             Test_03_07_02_1_20 test_03_07_02_1_20 = new Test_03_07_02_1_20();
@@ -104,18 +104,8 @@ public class Test_03_07_02_1_40 extends HooksTEST_agroexpress {
     @Step("Авторизация")
     public void step03() {
         CommonFunctions.printStep();
-        new GUIFunctions()
-                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"))
-                .waitForLoading()
-                .closeAllPopupWindows();
-
-        open("https://lk.t.exportcenter.ru/ru/services/drafts/info/" + processID);
-    }
-
-    @Step("Навигация")
-    public void step04() {
-        CommonFunctions.printStep();
-        new GUIFunctions().waitForElementDisplayed("//div[text()='Статус']/following-sibling::div[text()='Подтверждение выбранных услуг']");
+        String status = RESTFunctions.getOrderStatus(processID);
+        Assert.assertEquals(status, "Подтверждение выбранных услуг");
 
         JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST,"docUUID.txt");
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");

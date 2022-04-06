@@ -1,11 +1,10 @@
 package ru.exportcenter.test.agroexpress.Test_03_07_02_1;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.WebDriverRunner;
-import com.google.gson.JsonObject;
 import framework.RunTestAgain;
 import framework.Ways;
 import framework.integration.JupyterLabIntegration;
+import functions.api.RESTFunctions;
 import functions.common.CommonFunctions;
 import functions.common.DateFunctions;
 import functions.file.PropertiesHandler;
@@ -14,7 +13,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
-import net.sf.json.JSONObject;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
@@ -24,16 +22,18 @@ import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
+public class Test_03_07_02_1_50 extends HooksTEST_agroexpress {
 
-    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_10/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_10.xml";
+    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_50/";
+    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_40/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_50_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
-    private String docNum;
     private String processID;
+    private String token;
+    private String docUUID;
 
     @Owner(value="Камаев Евгений")
-    @Description("03 07 02.1.10 Ввод и редактирование данных Заявки (Сборный груз). Отправка Заявки на рассмотрение")
+    @Description("03 07 02.1.50 Ввод и редактирование данных Заявки (Сборный груз). Отправка Заявки на рассмотрение")
     @Link(name="Test_03_07_02_1_10", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123880785")
 
     @Test(retryAnalyzer = RunTestAgain.class)
@@ -54,7 +54,6 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
         CommonFunctions.screenShot(WAY_TEST);
     }
 
-
     @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
@@ -70,7 +69,6 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
         }
 
         refreshTab("//*[contains(text(), 'Продолжить')]", 20);
-        processID = CommonFunctions.getProcessIDFromURL();
 
 //        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
 
@@ -216,8 +214,8 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
     public void step09() {
         CommonFunctions.printStep();
         new GUIFunctions().clickButton("Далее").waitForLoading();
-        docNum = $x("//div[contains (@class, 'FormHeader_title' )]//span[contains (@class, 'Typography_body' )]").getText().split("№")[1];
-        JupyterLabIntegration.uploadTextContent(docNum, WAY_TEST,"docNum.txt");
+//        docNum = $x("//div[contains (@class, 'FormHeader_title' )]//span[contains (@class, 'Typography_body' )]").getText().split("№")[1];
+//        JupyterLabIntegration.uploadTextContent(docNum, WAY_TEST,"docNum.txt");
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
     }
 

@@ -38,7 +38,7 @@ public class Test_03_07_02_1_110 extends HooksTEST_agroexpress {
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
-//        preconditions();
+        precondition();
         step01();
         step02();
         step03();
@@ -53,15 +53,19 @@ public class Test_03_07_02_1_110 extends HooksTEST_agroexpress {
     }
 
     @Step("Предусловия")
-    public void preconditions() {
-
-        Test_03_07_02_1_20 test_03_07_02_1_20 = new Test_03_07_02_1_20();
-        test_03_07_02_1_20.steps();
-        clearBrowserCookies();
-        refresh();
-        switchTo().alert().accept();
+    public void precondition() {
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-        System.out.println("processID: " + processID);
+        String status = RESTFunctions.getOrderStatus(processID);
+        System.out.println(status);
+
+        if(!status.equals("Оказание услуги")) {
+            System.out.println("Перепрогон предыдущего теста");
+
+            Test_03_07_02_1_100 test_03_07_02_1_100 = new Test_03_07_02_1_100();
+            test_03_07_02_1_100.steps();
+            CommonFunctions.wait(20);
+            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        }
     }
 
     @Step("Авторизация")
@@ -99,16 +103,45 @@ public class Test_03_07_02_1_110 extends HooksTEST_agroexpress {
                         .assertThat().statusCode(200);
     }
 
-    @Step("Авторизация")
+//    @Step("Авторизация")
+//    public void step03() {
+//        CommonFunctions.printStep();
+//        new GUIFunctions()
+//                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"))
+//                .waitForLoading()
+//                .closeAllPopupWindows();
+//
+//        open("https://lk.t.exportcenter.ru/ru/services/drafts/info/" + processID);
+////        switchTo().alert().accept();
+//    }
+
+    @Step("Навигация и отправка JSON-запроса в Swagger")
     public void step03() {
         CommonFunctions.printStep();
-        new GUIFunctions()
-                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"))
-                .waitForLoading()
-                .closeAllPopupWindows();
+        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        docUUID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "docUUID.txt");
+        System.out.println("orderID: " + docUUID);
 
-        open("https://lk.t.exportcenter.ru/ru/services/drafts/info/" + processID);
-//        switchTo().alert().accept();
+        String jsonContent = JupyterLabIntegration.getFileContent(WAY_TEST + "Операция 8 (код 1011).json");
+        JsonObject jsonObject = JSONHandler.parseJSONfromString(jsonContent);
+
+        JsonObject systemProp = jsonObject.get("systemProp").getAsJsonObject();
+        systemProp.addProperty("applicationId", docUUID);
+        systemProp.addProperty("processInstanceId", processID);
+        System.out.println(jsonObject);
+
+        RestAssured
+                .given()
+                .baseUri("https://lk.t.exportcenter.ru")
+                .basePath("/agroexpress-adapter/api/v1/response/location-status")
+                .header("accept", "*/*")
+                .header("Content-Type", "application/json")
+                .header("Authorization", token)
+                .body(String.valueOf(jsonObject))
+                .when()
+                .post()
+                .then()
+                .assertThat().statusCode(200);
     }
 
     @Step("Навигация")

@@ -14,6 +14,7 @@ import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
@@ -38,11 +39,10 @@ public class Test_03_07_02_1_90 extends HooksTEST_agroexpress {
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
-//        preconditions();
+        precondition();
         step01();
         step02();
         step03();
-        step04();
     }
 
     @AfterMethod
@@ -51,15 +51,19 @@ public class Test_03_07_02_1_90 extends HooksTEST_agroexpress {
     }
 
     @Step("Предусловия")
-    public void preconditions() {
-
-        Test_03_07_02_1_20 test_03_07_02_1_20 = new Test_03_07_02_1_20();
-        test_03_07_02_1_20.steps();
-        clearBrowserCookies();
-        refresh();
-        switchTo().alert().accept();
+    public void precondition() {
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-        System.out.println("processID: " + processID);
+        String status = RESTFunctions.getOrderStatus(processID);
+        System.out.println(status);
+
+        if(!status.equals("Проверка оплаты")) {
+            System.out.println("Перепрогон предыдущего теста");
+
+//            Test_03_07_02_1_40 test_03_07_02_1_40 = new Test_03_07_02_1_40();
+//            test_03_07_02_1_40.steps();
+//            CommonFunctions.wait(10);
+//            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        }
     }
 
     @Step("Авторизация")
@@ -100,17 +104,9 @@ public class Test_03_07_02_1_90 extends HooksTEST_agroexpress {
     @Step("Авторизация")
     public void step03() {
         CommonFunctions.printStep();
-        open("https://lk.t.exportcenter.ru/ru/services/drafts/info/" + processID);
-        new GUIFunctions()
-                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"))
-                .waitForLoading()
-                .closeAllPopupWindows();
-    }
-
-    @Step("Навигация")
-    public void step04() {
-        CommonFunctions.printStep();
-        new GUIFunctions().waitForElementDisplayed("//div[text()='Статус']/following-sibling::div[text()='Передача груза']");
+        String status = RESTFunctions.getOrderStatus(processID);
+        System.out.println(status);
+        Assert.assertEquals(status, "Передача груза");
 
         JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST,"docUUID.txt");
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
