@@ -19,7 +19,7 @@
 
     <test name="REC_all_tests_patents" thread-count="1" preserve-order="true">
         <classes>
-            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_100"/>
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_110"/>
 <!--            <class name="ru.exportcenter.test.patents.Test_02_08_02"/>-->
 <!--            <class name="ru.exportcenter.test.patents.Test_02_08_02_1"/>-->
 <!--            <class name="ru.exportcenter.test.patents.Test_02_08_02_3"/>-->
