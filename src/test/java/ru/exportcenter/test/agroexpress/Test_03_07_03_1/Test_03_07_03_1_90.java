@@ -34,8 +34,8 @@ public class Test_03_07_03_1_90 extends HooksTEST_agroexpress {
     private String docUUID;
 
     @Owner(value="Балашов Илья")
-    @Description("03 07 02.1.60 Получение скорректированной заявки с расчетом (интеграция)")
-    @Link(name="Test_03_07_02_1_60", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123872990")
+    @Description("03 07 03.1.90 (A) Получение подтверждения от РЖДЛ о получении денежных средств")
+    @Link(name="Test_03_07_03_1_90", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=127898036")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
