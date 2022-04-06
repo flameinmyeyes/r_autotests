@@ -42,7 +42,7 @@ public class Test_02_08_01 extends HooksTEST {
         step10();
         step11();
         step12();
-//        step13();
+        step13();
     }
 
     @AfterMethod
@@ -54,11 +54,9 @@ public class Test_02_08_01 extends HooksTEST {
     private void step01(){
         CommonFunctions.printStep();
 
-        //Ввести логин и пароль demo_exporter/password
+        //Ввести логин и пароль test-otr@yandex.ru/Password1!
         new GUIFunctions().inContainer("Вход в личный кабинет")
-                .inField("Email").inputValue(PROPERTIES.getProperty("Авторизация.Email"))
-                .inField("Пароль").inputValue(PROPERTIES.getProperty("Авторизация.Пароль"))
-                .clickButton("Войти")
+                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
@@ -68,7 +66,7 @@ public class Test_02_08_01 extends HooksTEST {
 
         //Перейти во вкладку «Сервисы»
         new GUIFunctions().selectTab("Сервисы")
-                .waitForURL("https://master-portal.t.exportcenter.ru/services/");
+                .waitForURL("https://master-portal.t.exportcenter.ru/services/business");
 
         //Выбрать сервис «Компенсация части затрат на регистрацию ОИС за рубежом» и нажать кнопку «Оформить»
         new GUIFunctions().waitForElementDisplayed("//input[@placeholder='Поиск по разделу']")
@@ -113,8 +111,8 @@ public class Test_02_08_01 extends HooksTEST {
                 .inField("Способ оказания услуг").selectValue(PROPERTIES.getProperty("Способ получения услуги.Способ оказания услуг"));
 
         //Выбрать приложенный файл с устройства формата txt и нажать кнопку «Открыть»
-//        new GUIFunctions().uploadFile("Прикрепить платежное поручение","C:\\auto-tests\\tmp.txt");
-        new GUIFunctions().uploadFile("Прикрепить платежное поручение",WAY_TEST + "tmp.txt");
+        new GUIFunctions().uploadFile("Прикрепить платежное поручение","C:\\auto-tests\\tmp.txt");
+//        new GUIFunctions().uploadFile("Прикрепить платежное поручение",WAY_TEST + "tmp.txt");
         CommonFunctions.wait(5);
 
         //Нажать кнопку «Далее»
@@ -156,8 +154,8 @@ public class Test_02_08_01 extends HooksTEST {
                 .closeAllPopupWindows();
 
         //Нажать на кнопку «Загрузите документ»
-//        new GUIFunctions().uploadFile("Заявка на регистрацию ОИС","C:\\auto-tests\\tmp.pdf");
-        new GUIFunctions().uploadFile("Заявка на регистрацию ОИС",WAY_TEST + "tmp.pdf");
+        new GUIFunctions().uploadFile("Заявка на регистрацию ОИС","C:\\auto-tests\\tmp.pdf");
+//        new GUIFunctions().uploadFile("Заявка на регистрацию ОИС",WAY_TEST + "tmp.pdf");
         CommonFunctions.wait(5);
 
         //Нажать на кнопку «Медиа-файл объекта»
@@ -165,8 +163,8 @@ public class Test_02_08_01 extends HooksTEST {
                 .closeAllPopupWindows();
 
         //Выбрать приложенный файл с устройства формата pdf и нажать кнопку «Открыть»
-//        new GUIFunctions().uploadFile("Прикрепить медиа-файл объекта","C:\\auto-tests\\tmp.pdf");
-        new GUIFunctions().uploadFile("Прикрепить медиа-файл объекта",WAY_TEST + "tmp.pdf");
+        new GUIFunctions().uploadFile("Прикрепить медиа-файл объекта","C:\\auto-tests\\tmp.pdf");
+//        new GUIFunctions().uploadFile("Прикрепить медиа-файл объекта",WAY_TEST + "tmp.pdf");
         CommonFunctions.wait(5);
     }
 
