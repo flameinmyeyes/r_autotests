@@ -19,11 +19,11 @@
 
     <test name="REC_all_tests_patents" thread-count="1" preserve-order="true">
         <classes>
-<!--            <class name="ru.exportcenter.test.patents.Test_02_08_01"/>-->
-            <class name="ru.exportcenter.test.patents.Test_02_08_02"/>
-            <class name="ru.exportcenter.test.patents.Test_02_08_02_1"/>
-            <class name="ru.exportcenter.test.patents.Test_02_08_02_3"/>
-            <class name="ru.exportcenter.test.patents.Test_02_08_02_4"/>
+            <class name="ru.exportcenter.test.patents.Test_02_08_01"/>
+<!--            <class name="ru.exportcenter.test.patents.Test_02_08_02"/>-->
+<!--            <class name="ru.exportcenter.test.patents.Test_02_08_02_1"/>-->
+<!--            <class name="ru.exportcenter.test.patents.Test_02_08_02_3"/>-->
+<!--            <class name="ru.exportcenter.test.patents.Test_02_08_02_4"/>-->
         </classes>
     </test>
 
