@@ -1,10 +1,12 @@
-package ru.exportcenter.test.agroexpress;
+package ru.exportcenter.test.agroexpress.Test_03_07_03_1;
 
+import com.google.gson.JsonObject;
 import framework.RunTestAgain;
 import framework.Ways;
 import framework.integration.JupyterLabIntegration;
 import functions.api.RESTFunctions;
 import functions.common.CommonFunctions;
+import functions.file.JSONHandler;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
@@ -12,32 +14,32 @@ import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
-import net.sf.json.JSONObject;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.HooksTEST;
+import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
+import ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_20;
 
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
+public class Test_03_07_03_1_60 extends HooksTEST_agroexpress {
 
-    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_20/";
-    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_10/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_20_properties.xml";
+    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1_60/";
+    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1_40/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_03_1_60_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
+    private String token;
     private String docUUID;
 
-    @Owner(value="Ворожко Александр")
-    @Description("03 07 02.1.20 Получение результатов верификации от АО \"РЖД Логистика\"")
-    @Link(name="Test_03_07_02_1_20", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123870742")
+    @Owner(value="Балашов Илья")
+    @Description("03 07 02.1.60 Получение скорректированной заявки с расчетом (интеграция)")
+    @Link(name="Test_03_07_02_1_60", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123872990")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
-//        System.out.println(RESTFunctions.getAccessToken());
-//        precondition();
+//        preconditions();
         step01();
         step02();
         step03();
@@ -50,68 +52,66 @@ public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
     }
 
     @Step("Предусловия")
-    public void precondition() {
-        Test_03_07_02_1_10 test_03_07_02_1_10 = new Test_03_07_02_1_10();
-        test_03_07_02_1_10.steps();
+    public void preconditions() {
+
+        Test_03_07_02_1_20 test_03_07_02_1_20 = new Test_03_07_02_1_20();
+        test_03_07_02_1_20.steps();
         clearBrowserCookies();
         refresh();
         switchTo().alert().accept();
-
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        System.out.println("processID: " + processID);
     }
 
-    @Step("Авторизация в Swagger")
+    @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
+        token = RESTFunctions.getAccessToken();
     }
 
-    @Step("Отправка JSON-запроса в Swagger")
+    @Step("Навигация и отправка JSON-запроса в Swagger")
     public void step02() {
         CommonFunctions.printStep();
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-        docUUID = RESTFunctions.getOrderID(processID);
+        docUUID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "docUUID.txt");
+        System.out.println("orderID: " + docUUID);
 
-        String token = RESTFunctions.getAccessToken();
+        String jsonContent = JupyterLabIntegration.getFileContent(WAY_TEST + "Операция 6.json");
+        JsonObject jsonObject = JSONHandler.parseJSONfromString(jsonContent);
 
-        JSONObject systemProp = new JSONObject();
-        systemProp.put("applicationId", docUUID);
-        systemProp.put("camundaId", "camunda-exp-search");
-        systemProp.put("processInstanceId", processID);
-        systemProp.put("status", "cost_calculation");
-
-        JSONObject requestBody = new JSONObject();
-        requestBody.put("systemProp", systemProp);
+        JsonObject systemProp = jsonObject.get("systemProp").getAsJsonObject();
+        systemProp.addProperty("applicationId", docUUID);
+        systemProp.addProperty("processInstanceId", processID);
+        System.out.println(jsonObject);
 
         RestAssured
                 .given()
                         .baseUri("https://lk.t.exportcenter.ru")
-                        .basePath("/agroexpress-adapter/api/v1/response/order-status")
+                        .basePath("/agroexpress-adapter/api/v1/response/download-count")
                         .header("accept", "*/*")
                         .header("Content-Type", "application/json")
                         .header("Authorization", token)
-                        .body(requestBody)
+                        .body(String.valueOf(jsonObject))
                 .when()
                         .post()
                 .then()
                         .assertThat().statusCode(200);
     }
 
-    @Step("Открыть заявку и проверить статус")
+    @Step("Авторизация")
     public void step03() {
         CommonFunctions.printStep();
-        CommonFunctions.wait(20);
-
+        open("https://lk.t.exportcenter.ru/ru/services/drafts/info/" + processID);
         new GUIFunctions()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"))
                 .waitForLoading()
                 .closeAllPopupWindows();
     }
 
-    @Step("Навигация в ЕЛК")
+    @Step("Навигация")
     public void step04() {
         CommonFunctions.printStep();
-        open("https://lk.t.exportcenter.ru/ru/services/drafts/info/" + processID);
-        new GUIFunctions().waitForElementDisplayed("//*[text() = 'Расчёт стоимости']");
+        new GUIFunctions().waitForElementDisplayed("//div[text()='Статус']/following-sibling::div[text()='Оплата счёта']");
 
         JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST,"docUUID.txt");
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");

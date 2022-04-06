@@ -1,4 +1,4 @@
-package ru.exportcenter.test.agroexpress;
+package ru.exportcenter.test.agroexpress.Test_03_07_02_1;
 
 import com.google.gson.JsonObject;
 import framework.RunTestAgain;
@@ -16,6 +16,7 @@ import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
 
 import java.util.Properties;
 

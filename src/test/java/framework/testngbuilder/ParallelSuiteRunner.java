@@ -14,7 +14,7 @@ public class ParallelSuiteRunner {
     private static String[] suiteFiles = {
             "smoke_tests.xml",
             "smoke_tests_2.xml"
-//            "test_suites/eb_tse_demo_ufos_28080/TSE_all_tests_Balashov.xml",
+//            "test_suites/eb_tse_demo_ufos_28080/REC_all_tests_Balashov.xml",
 //            "test_suites/eb_tse_demo_ufos_28080/TSE_all_tests_Kamaev.xml",
 //            "test_suites/eb_tse_demo_ufos_28080/TSE_all_tests_Kaverina.xml",
 //            "test_suites/eb_tse_demo_ufos_28080/TSE_all_tests_Maksimova.xml",
@@ -33,7 +33,7 @@ public class ParallelSuiteRunner {
 //
 //        //читаем общий сьют
 //        XmlSuite suiteOfSuites = new XmlSuite();
-//        suiteOfSuites.setSuiteFiles(Arrays.asList("test_suites/TSE/TSE_all_tests_Balashov.xml"));
+//        suiteOfSuites.setSuiteFiles(Arrays.asList("test_suites/TSE/REC_all_tests_Balashov.xml"));
 ////        System.out.println("log1: " + suiteOfSuites.getName());
 //
 //        //читаем запускаемый сьют

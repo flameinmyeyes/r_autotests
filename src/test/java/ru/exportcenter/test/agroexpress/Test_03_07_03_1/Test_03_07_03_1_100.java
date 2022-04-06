@@ -1,4 +1,4 @@
-package ru.exportcenter.test.agroexpress;
+package ru.exportcenter.test.agroexpress.Test_03_07_03_1;
 
 import com.google.gson.JsonObject;
 import framework.RunTestAgain;
@@ -16,16 +16,18 @@ import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
+import ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_20;
 
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_02_1_120 extends HooksTEST_agroexpress {
+public class Test_03_07_03_1_100 extends HooksTEST_agroexpress {
 
-    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_120/";
-    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_110/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_120_properties.xml";
+    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1_100/";
+    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1_90/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_03_1_100_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
     private String token;
@@ -33,7 +35,7 @@ public class Test_03_07_02_1_120 extends HooksTEST_agroexpress {
 
     @Owner(value="Балашов Илья")
     @Description("03 07 02.1.100 Получение скорректированной заявки с расчетом (интеграция)")
-    @Link(name="Test_03_07_02_1_120", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123872990")
+    @Link(name="Test_03_07_02_1_100", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123872990")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
@@ -74,7 +76,7 @@ public class Test_03_07_02_1_120 extends HooksTEST_agroexpress {
         docUUID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "docUUID.txt");
         System.out.println("orderID: " + docUUID);
 
-        String jsonContent = JupyterLabIntegration.getFileContent(WAY_TEST + "Операция 2 данные о готовности УПД.json");
+        String jsonContent = JupyterLabIntegration.getFileContent(WAY_TEST + "Операция 2 сведения о получении груза.json");
         JsonObject jsonObject = JSONHandler.parseJSONfromString(jsonContent);
 
         JsonObject systemProp = jsonObject.get("systemProp").getAsJsonObject();
@@ -109,7 +111,7 @@ public class Test_03_07_02_1_120 extends HooksTEST_agroexpress {
     @Step("Навигация")
     public void step04() {
         CommonFunctions.printStep();
-        new GUIFunctions().waitForElementDisplayed("//div[text()='Статус']/following-sibling::div[text()='Выбор вида предоставления закрывающих документов']");
+        new GUIFunctions().waitForElementDisplayed("//div[text()='Статус']/following-sibling::div[text()='Оказание услуги']");
 
         JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST,"docUUID.txt");
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");

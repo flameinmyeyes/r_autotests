@@ -9,7 +9,7 @@
             <class name="ru.exportcenter.test.agroexpress.Test_03_07_01"/>
             <class name="ru.exportcenter.test.agroexpress.Test_03_07_01_1"/>
             <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_3"/>
-            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1_10"/>
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_10"/>
         </classes>
     </test>
 </suite>
