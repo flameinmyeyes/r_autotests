@@ -24,17 +24,17 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class Test_03_07_02_1_110 extends HooksTEST_agroexpress {
 
-    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_110/";
-    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_100/";
+    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_110/";
+    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_100/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_110_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
     private String token;
     private String docUUID;
 
-    @Owner(value="Балашов Илья")
+    @Owner(value="Ворожко Александр")
     @Description("03 07 02.1.110 Получение скорректированной заявки с расчетом (интеграция)")
-    @Link(name="Test_03_07_02_1_110", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123872990")
+    @Link(name="Test_03_07_02_1_110", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123882163")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
