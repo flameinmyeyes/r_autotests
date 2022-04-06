@@ -29,8 +29,8 @@
     <test name="REC_all_tests_agroexpress" thread-count="1" preserve-order="true">
         <classes>
 <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_10"/>-->
-            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_20"/>
-<!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_40"/>-->
+<!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_20"/>-->
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_40"/>
 <!--            &lt;!&ndash;            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_50"/>&ndash;&gt; &lt;!&ndash;вручную&ndash;&gt;-->
 <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_60"/>-->
 <!--            &lt;!&ndash;            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_80"/>&ndash;&gt; &lt;!&ndash;вручную&ndash;&gt;-->
