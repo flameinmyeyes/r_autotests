@@ -1,6 +1,5 @@
 package ru.exportcenter.test.agroexpress.Test_03_07_03_1;
 
-import com.codeborne.selenide.Condition;
 import framework.RunTestAgain;
 import framework.Ways;
 import framework.integration.JupyterLabIntegration;
@@ -16,7 +15,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
 
-import java.time.Duration;
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -24,8 +22,8 @@ import static com.codeborne.selenide.Selenide.*;
 public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
 
     /*
-     * http://selenoidshare.d.exportcenter.ru/lab/tree/work/files_for_tests/test/agroexpress/Test_03_07_03_1_10
-     * https://gitlab.exportcenter.ru/sub-service/autotests/rec_autotests/-/blob/master/src/test/java/ru/exportcenter/test/agroexpress/Test_03_07_03_1_10.java
+     * http://selenoidshare.d.exportcenter.ru/lab/tree/work/files_for_tests/test/agroexpress/Test_03_07_03_1/Test_03_07_03_1_10
+     * https://gitlab.exportcenter.ru/sub-service/autotests/rec_autotests/-/blob/master/src/test/java/ru/exportcenter/test/agroexpress/Test_03_07_03_1/Test_03_07_03_1_10.java
      */
 
     private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1/Test_03_07_03_1_10/";
@@ -50,32 +48,28 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
 
     @Step("Авторизация")
     public void step01() {
-        CommonFunctions.printStep();
-        new GUIFunctions()
-                .authorization("test-otr@yandex.ru", "Password1!", "1234")
+        new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль"), P.getProperty("Код подтвержения"))
                 .waitForLoading();
 
-        $x("//*[contains(text(), 'Логистика. Доставка продукции \"Агроэкспрессом\"')]").shouldBe(Condition.visible, Duration.ofSeconds(60));
+        errorCompensation();
+
+        processID = CommonFunctions.getProcessIDFromURL();
+
+        new GUIFunctions().clickButton("Продолжить");
+    }
+
+    public void errorCompensation() {
+        new GUIFunctions().waitForElementDisplayed("(//*[contains(text(),'Логистика. Доставка продукции \"Агроэкспрессом\"')])[1]");
 
         if ($x("//*[contains(text(), 'Информация о заявителе')]").isDisplayed()) {
             $x("//button[contains(text(), 'Логистика. Доставка продукции \"Агроэкспрессом\". Заявка')]").click();
             switchTo().alert().accept();
         }
 
-        refreshTab("//*[contains(text(), 'Продолжить')]", 20);
-        processID = CommonFunctions.getProcessIDFromURL();
-
-//        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
-
-        new GUIFunctions()
-                .closeAllPopupWindows()
-                .clickButton("Продолжить");
-    }
-
-    public void refreshTab(String expectedXpath, int times) {
-        for (int i = 0; i < times; i++) {
-            if($x(expectedXpath).isDisplayed()) {
-                break;
+        for (int i = 0; i < 20; i++) {
+            new GUIFunctions().waitForLoading().closeAllPopupWindows();
+            if ($x("//*[contains(text(), 'Продолжить')]").isDisplayed()) {
+                return;
             }
             System.out.println("Refreshing");
             refresh();
@@ -194,7 +188,7 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
                 .waitForElementDisplayed("//*[text()='Заявка отправлена на рассмотрение. Срок рассмотрения до 3 рабочих дней']");
 
         JupyterLabIntegration.uploadTextContent(docNum, WAY_TEST, "docNum.txt");
-        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
+        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
     }
 
     @AfterMethod
