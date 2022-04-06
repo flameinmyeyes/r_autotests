@@ -25,8 +25,8 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class Test_03_07_03_1_110 extends HooksTEST_agroexpress {
 
-    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1_110/";
-    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1_100/";
+    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1/Test_03_07_03_1_110/";
+    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1/Test_03_07_03_1_100/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_03_1_110_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
