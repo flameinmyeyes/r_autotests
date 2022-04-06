@@ -24,8 +24,8 @@ import static com.codeborne.selenide.Selenide.*;
 public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
 
     /*
-     * http://selenoidshare.d.exportcenter.ru/lab/tree/work/files_for_tests/test/agroexpress/Test_03_07_03_1_10
-     * https://gitlab.exportcenter.ru/sub-service/autotests/rec_autotests/-/blob/master/src/test/java/ru/exportcenter/test/agroexpress/Test_03_07_03_1_10.java
+     * http://selenoidshare.d.exportcenter.ru/lab/tree/work/files_for_tests/test/agroexpress/Test_03_07_03_1/Test_03_07_03_1_10
+     * https://gitlab.exportcenter.ru/sub-service/autotests/rec_autotests/-/blob/master/src/test/java/ru/exportcenter/test/agroexpress/Test_03_07_03_1/Test_03_07_03_1_10.java
      */
 
     private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1/Test_03_07_03_1_10/";
