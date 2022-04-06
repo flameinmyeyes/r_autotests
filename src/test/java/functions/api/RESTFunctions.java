@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import functions.common.Base64Encoder;
 import functions.file.JSONHandler;
 import io.restassured.RestAssured;
+import net.sf.json.JSONObject;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -439,7 +440,7 @@ public class RESTFunctions {
         return response;
     }
 
-    public static String getAccessToken() {
+    public static String getAccessToken(String login) {
 
 //        String baseUri = "http://uidm.uidm-dev.d.exportcenter.ru";
         String baseUri = "https://lk.t.exportcenter.ru";
@@ -473,7 +474,7 @@ public class RESTFunctions {
                         .formParam("grant_type", "urn:roox:params:oauth:grant-type:m2m")
                         .formParam("service", "dispatcher")
                         .formParam("_eventId", "next")
-                        .formParam("username", "bpmn_admin")
+                        .formParam("username", login)
                         .formParam("password", "password")
                         .formParam("execution", execution)
                 .when()
@@ -489,7 +490,7 @@ public class RESTFunctions {
 
     public static String getOrderID(String processID) {
 
-        String token = getAccessToken();
+        String token = getAccessToken("bpmn_admin");
 
 //        String baseUri = "http://bpmn-api-service.bpms-dev.d.exportcenter.ru";
         String baseUri = "https://lk.t.exportcenter.ru/";
@@ -511,7 +512,7 @@ public class RESTFunctions {
         JsonObject jsonObject = JSONHandler.parseJSONfromString(response);
 
         String orderID = jsonObject.getAsJsonArray("content")
-                .get(1).getAsJsonObject()
+                .get(0).getAsJsonObject()
                 .get("value").getAsJsonObject()
                 .get("uuid").toString().replace("\"", "");
 
@@ -520,38 +521,44 @@ public class RESTFunctions {
 
     public static String getOrderStatus(String processID) {
 
-        String token = getAccessToken();
+        String token = getAccessToken("mdm_admin");
 
 //        String baseUri = "http://bpmn-api-service.bpms-dev.d.exportcenter.ru";
         String baseUri = "https://lk.t.exportcenter.ru/";
 
+        JSONObject body = new JSONObject();
+        body.put("processId_like", processID);
+
         String response = RestAssured
                 .given()
-                .baseUri(baseUri)
-                .basePath("/bpmn/api/v1/bpmn/history/process-instance")
-                .param("variableName", "mdmOrder")
-                .header("Accept", "application/json")
-                .header("camundaId", "camunda-exp-search")
-                .header("Authorization", token)
+                    .baseUri(baseUri)
+                    .basePath("/mdm-adapter/api/v1/catalogs/order/items/search")
+                    .queryParam("hideDeprecated", "true")
+                    .queryParam("showDetails", "0")
+                    .queryParam("showRefs", "1")
+                    .header("accept", "*/*")
+                    .header("Content-Type", "application/json")
+                    .header("Authorization", token)
+                    .body(body)
                 .when()
-                .get("/" + processID + "/variables")
+                    .post()
                 .then()
-                .assertThat().statusCode(200)
+                    .assertThat().statusCode(200)
                 .extract().response().jsonPath().prettify();
 
         JsonObject jsonObject = JSONHandler.parseJSONfromString(response);
 
         String orderStatus = jsonObject.getAsJsonArray("content")
-                .get(1).getAsJsonObject()
-                .get("value").getAsJsonObject()
-                .get("status").toString().replace("\"", "");
+                .get(0).getAsJsonObject()
+                .get("statusCode").getAsJsonObject()
+                .get("name").getAsString();
 
         return orderStatus;
     }
 
     public static String getCargoID(String processID) {
 
-        String token = getAccessToken();
+        String token = getAccessToken("bpmn_admin");
 
 //        String baseUri = "http://bpmn-api-service.bpms-dev.d.exportcenter.ru";
         String baseUri = "https://lk.t.exportcenter.ru/";
