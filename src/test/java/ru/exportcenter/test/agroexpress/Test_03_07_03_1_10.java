@@ -1,5 +1,6 @@
 package ru.exportcenter.test.agroexpress;
 
+import com.codeborne.selenide.Condition;
 import framework.RunTestAgain;
 import framework.Ways;
 import framework.integration.JupyterLabIntegration;
@@ -14,10 +15,10 @@ import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.Properties;
 
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.refresh;
+import static com.codeborne.selenide.Selenide.*;
 
 public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
 
@@ -28,6 +29,7 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
 
     private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1_10/";
     private final Properties P = PropertiesHandler.parseProperties(WAY_TEST + "Test_03_07_03_1_10.xml");
+    private String processID;
 
     @Owner(value = "Максимова Диана")
     @Description("03 07 03.1.10 Ввод и редактирование данных Заявки (Полный контейнер). Отправка Заявки на рассмотрение")
@@ -47,23 +49,36 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
 
     @Step("Авторизация")
     public void step01() {
-        new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль"), P.getProperty("Код подтвержения"))
+        CommonFunctions.printStep();
+        new GUIFunctions()
+                .authorization("test-otr@yandex.ru", "Password1!", "1234")
                 .waitForLoading();
 
-        refreshTab(15);
-        if ($x("//*[contains(text(), 'Продолжить')]").isDisplayed()) {
-            new GUIFunctions().clickButton("Продолжить");
+        $x("//*[contains(text(), 'Логистика. Доставка продукции \"Агроэкспрессом\"')]").shouldBe(Condition.visible, Duration.ofSeconds(60));
+
+        if ($x("//*[contains(text(), 'Информация о заявителе')]").isDisplayed()) {
+            $x("//button[contains(text(), 'Логистика. Доставка продукции \"Агроэкспрессом\". Заявка')]").click();
+            switchTo().alert().accept();
         }
+
+        refreshTab("//*[contains(text(), 'Продолжить')]", 20);
+        processID = CommonFunctions.getProcessIDFromURL();
+
+//        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
+
+        new GUIFunctions()
+                .closeAllPopupWindows()
+                .clickButton("Продолжить");
     }
 
-    private void refreshTab(int times) {
+    public void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
-            new GUIFunctions().waitForLoading().closeAllPopupWindows();
-            if ($x("//*[contains(text(), 'Продолжить')]").isDisplayed()
-                    || $x("//*[contains(text(), 'Информация о заявителе')]").isDisplayed()) {
-                return;
+            if($x(expectedXpath).isDisplayed()) {
+                break;
             }
+            System.out.println("Refreshing");
             refresh();
+            CommonFunctions.wait(1);
         }
     }
 
@@ -178,6 +193,7 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
                 .waitForElementDisplayed("//*[text()='Заявка отправлена на рассмотрение. Срок рассмотрения до 3 рабочих дней']");
 
         JupyterLabIntegration.uploadTextContent(docNum, WAY_TEST, "docNum.txt");
+        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
     }
 
     @AfterMethod

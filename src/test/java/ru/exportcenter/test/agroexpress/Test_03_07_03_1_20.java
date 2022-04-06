@@ -15,28 +15,27 @@ import io.restassured.RestAssured;
 import net.sf.json.JSONObject;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.HooksTEST;
 
 import java.util.Properties;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.open;
 
-public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
+public class Test_03_07_03_1_20 extends HooksTEST_agroexpress {
 
-    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_20/";
-    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_10/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_20_properties.xml";
+    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1_20/";
+    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1_10/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_03_1_20_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
     private String docUUID;
 
     @Owner(value="Ворожко Александр")
-    @Description("03 07 02.1.20 Получение результатов верификации от АО \"РЖД Логистика\"")
-    @Link(name="Test_03_07_02_1_20", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123870742")
+    @Description("03 07 03.1.20 Получение результатов верификации от АО \"РЖД Логистика\"")
+    @Link(name="Test_03_07_03_1_20", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123870742")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
-//        System.out.println(RESTFunctions.getAccessToken());
 //        precondition();
         step01();
         step02();
@@ -51,12 +50,10 @@ public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
 
     @Step("Предусловия")
     public void precondition() {
-        Test_03_07_02_1_10 test_03_07_02_1_10 = new Test_03_07_02_1_10();
-        test_03_07_02_1_10.steps();
-        clearBrowserCookies();
-        refresh();
-        switchTo().alert().accept();
+//        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
 
+//        Test_03_07_02_1_10 previous_test = new Test_03_07_02_1_10();
+//        previous_test.steps();
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
     }
 
@@ -84,16 +81,16 @@ public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
 
         RestAssured
                 .given()
-                        .baseUri("https://lk.t.exportcenter.ru")
-                        .basePath("/agroexpress-adapter/api/v1/response/order-status")
-                        .header("accept", "*/*")
-                        .header("Content-Type", "application/json")
-                        .header("Authorization", token)
-                        .body(requestBody)
+                .baseUri("https://lk.t.exportcenter.ru")
+                .basePath("/agroexpress-adapter/api/v1/response/order-status")
+                .header("accept", "*/*")
+                .header("Content-Type", "application/json")
+                .header("Authorization", token)
+                .body(requestBody)
                 .when()
-                        .post()
+                .post()
                 .then()
-                        .assertThat().statusCode(200);
+                .assertThat().statusCode(200);
     }
 
     @Step("Открыть заявку и проверить статус")
@@ -116,5 +113,4 @@ public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
         JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST,"docUUID.txt");
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
     }
-
 }
