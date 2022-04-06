@@ -19,6 +19,7 @@
 
 <!--    <test name="REC_all_tests_patents" thread-count="1" preserve-order="true">-->
 <!--        <classes>-->
+<!--            &lt;!&ndash;            <class name="ru.exportcenter.test.patents.Test_02_08_01"/>&ndash;&gt;-->
 <!--            &lt;!&ndash;            <class name="ru.exportcenter.test.patents.Test_02_08_02"/>&ndash;&gt;-->
 <!--            &lt;!&ndash;            <class name="ru.exportcenter.test.patents.Test_02_08_02_1"/>&ndash;&gt;-->
 <!--            &lt;!&ndash;            <class name="ru.exportcenter.test.patents.Test_02_08_02_3"/>&ndash;&gt;-->
@@ -28,27 +29,27 @@
 
     <test name="REC_all_tests_agroexpress" thread-count="1" preserve-order="true">
         <classes>
-<!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_10"/>-->
-<!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_20"/>-->
-<!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_40"/>-->
-<!--            &lt;!&ndash;            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_50"/>&ndash;&gt; &lt;!&ndash;вручную&ndash;&gt;-->
-<!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_60"/>-->
-<!--            &lt;!&ndash;            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_80"/>&ndash;&gt; &lt;!&ndash;вручную&ndash;&gt;-->
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_10"/>
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_20"/>
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_40"/>
+            <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_50"/>--> <!--вручную-->
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_60"/>
+            <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_80"/>--> <!--вручную-->
             <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_90"/>
-<!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_100"/>-->
-<!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_110"/>-->
-<!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_120"/>-->
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_100"/>
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_110"/>
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_120"/>
 
-<!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_10"/>-->
-<!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_20"/>-->
-<!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_40"/>-->
-<!--            &lt;!&ndash;            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_50"/>&ndash;&gt; &lt;!&ndash;вручную&ndash;&gt;-->
-<!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_60"/>-->
-<!--            &lt;!&ndash;            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_80"/>&ndash;&gt; &lt;!&ndash;вручную&ndash;&gt;-->
-<!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_90"/>-->
-<!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_100"/>-->
-<!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_110"/>-->
-<!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_120"/>-->
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_10"/>
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_20"/>
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_40"/>
+            <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_50"/>--> <!--вручную-->
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_60"/>
+            <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_80"/>--> <!--вручную-->
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_90"/>
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_100"/>
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_110"/>
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_120"/>
         </classes>
     </test>
 
