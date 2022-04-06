@@ -1,4 +1,4 @@
-package ru.exportcenter.test.agroexpress;
+package ru.exportcenter.test.agroexpress.Test_03_07_02_1;
 
 import com.google.gson.JsonObject;
 import framework.RunTestAgain;
@@ -16,20 +16,21 @@ import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
 
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_03_1_40 extends HooksTEST_agroexpress {
+public class Test_03_07_02_1_40 extends HooksTEST_agroexpress {
 
-    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1_40/";
-    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1_20/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_03_1_40_properties.xml";
+    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_40/";
+    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_20/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_40_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
     private String token;
-    private String orderID;
+    private String docUUID;
 
     @Owner(value="Балашов Илья")
     @Description("03 07 02.1.40 Получение скорректированной заявки с расчетом (интеграция)")
@@ -37,6 +38,7 @@ public class Test_03_07_03_1_40 extends HooksTEST_agroexpress {
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
+//        preconditions();
         step01();
         step02();
         step03();
@@ -46,6 +48,18 @@ public class Test_03_07_03_1_40 extends HooksTEST_agroexpress {
     @AfterMethod
     public void screenShot() {
         CommonFunctions.screenShot(WAY_TEST);
+    }
+
+    @Step("Предусловия")
+    public void preconditions() {
+
+        Test_03_07_02_1_20 test_03_07_02_1_20 = new Test_03_07_02_1_20();
+        test_03_07_02_1_20.steps();
+        clearBrowserCookies();
+        refresh();
+        switchTo().alert().accept();
+        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        System.out.println("processID: " + processID);
     }
 
     @Step("Авторизация")
@@ -58,20 +72,15 @@ public class Test_03_07_03_1_40 extends HooksTEST_agroexpress {
     public void step02() {
         CommonFunctions.printStep();
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-        orderID = RESTFunctions.getOrderID(processID);
-        System.out.println("orderID: " + orderID);
-
-//        cargoID = RESTFunctions.getCargoID(processID);
-//        System.out.println("cargoID: " + cargoID);
-//        JupyterLabIntegration.uploadTextContent(cargoID, WAY_TEST,"cargoID.txt");
+        docUUID = RESTFunctions.getOrderID(processID);
+        System.out.println("orderID: " + docUUID);
 
         String jsonContent = JupyterLabIntegration.getFileContent(WAY_TEST + "Операция 3.json");
         JsonObject jsonObject = JSONHandler.parseJSONfromString(jsonContent);
 
         JsonObject systemProp = jsonObject.get("systemProp").getAsJsonObject();
-        systemProp.addProperty("applicationId", orderID);
+        systemProp.addProperty("applicationId", docUUID);
         systemProp.addProperty("processInstanceId", processID);
-//        jsonObject.addProperty("cargoId", cargoID);
         System.out.println(jsonObject);
 
         RestAssured
@@ -103,7 +112,7 @@ public class Test_03_07_03_1_40 extends HooksTEST_agroexpress {
         CommonFunctions.printStep();
         new GUIFunctions().waitForElementDisplayed("//div[text()='Статус']/following-sibling::div[text()='Подтверждение выбранных услуг']");
 
-        JupyterLabIntegration.uploadTextContent(orderID, WAY_TEST,"docUUID.txt");
+        JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST,"docUUID.txt");
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
     }
 

@@ -1,4 +1,4 @@
-package ru.exportcenter.test.agroexpress;
+package ru.exportcenter.test.agroexpress.Test_03_07_03_1;
 
 import com.codeborne.selenide.Condition;
 import framework.RunTestAgain;
@@ -14,6 +14,7 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
 
 import java.time.Duration;
 import java.util.Properties;

@@ -14,8 +14,12 @@
 		<classes>
 			<class name="ru.exportcenter.test.agroexpress.Test_03_07_03"/>
 			<class name="ru.exportcenter.test.agroexpress.Test_03_07_03_parameterized"/>
-			<class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1_40"/>
+			<class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_40"/>
+			<class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1_140"/>
+
 			<class name="ru.exportcenter.test.patents.Test_02_08_02_4"/>
+
+
 		</classes>
 	</test>
 
