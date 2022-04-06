@@ -46,6 +46,7 @@ public class Test_02_08_02_4 extends HooksTEST {
         //Ввести логин и пароль demo_exporter/password, нажать «Войти»
         new GUIFunctions()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
+                .waitForLoading()
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
