@@ -23,23 +23,24 @@ import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_02_1_70 extends HooksTEST {
+public class Test_03_07_02_1_80 extends HooksTEST {
 
-
-    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_70/";
-    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_60/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_70_properties.xml";
+    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_80/";
+    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_70/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_80_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
+    private String token;
+    private String docUUID;
     private String docNum;
 
     @Owner(value="Теребкова Андрей")
-    @Description("03 07 02.1.70 Получение скорректированной заявки с расчетом (интеграция)")
-    @Link(name="Test_03_07_02_1_70", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123879143")
+    @Description("03 07 02.1.80 Отправка сведений ПД / ЭПД (загрузка ЭПД)")
+    @Link(name="Test_03_07_02_1_80", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123879970")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
-      preconditions();
+        preconditions();
         step01();
         step02();
     }
@@ -55,12 +56,12 @@ public class Test_03_07_02_1_70 extends HooksTEST {
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
-        if (!status.equals("Оплата счёта")) {
+        if(!status.equals("Оплата счёта")) {
             System.out.println("Перепрогон предыдущего теста");
 
-            Test_03_07_02_1_60 test_03_07_02_1_60 = new Test_03_07_02_1_60();
-            test_03_07_02_1_60.steps();
-            CommonFunctions.wait(20);
+            Test_03_07_02_1_70 test_03_07_02_1_70 = new Test_03_07_02_1_70();
+            test_03_07_02_1_70.steps();
+            CommonFunctions.wait(10);
             processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
         }
     }
@@ -74,8 +75,7 @@ public class Test_03_07_02_1_70 extends HooksTEST {
                 ,PROPERTIES.getProperty("Пароль")
                 ,PROPERTIES.getProperty("Код")
             )
-                .waitForLoading()
-                .closeAllPopupWindows();
+            .waitForLoading();
     }
 
     @Step("Навигация")
@@ -85,26 +85,19 @@ public class Test_03_07_02_1_70 extends HooksTEST {
 
         System.out.println(docNum);
 
-        new GUIFunctions().clickByLocator("//*[@class='Button_text__3lYJC']");
-
-//      Открыть заявку, проверить ставку
         new GUIFunctions()
-                .clickByLocator("//*[text()='№" + docNum + "']")
-                .waitForElementDisplayed("//div[text()='Статус']/following-sibling::div[text()='Оплата счёта']")
-                .closeAllPopupWindows();
+            .clickByLocator("//*[@class='Button_text__3lYJC']");
+
+        new GUIFunctions()
+            .clickByLocator("//*[text()='№" + docNum + "']")
+            .waitForElementDisplayed("//div[text()='Статус']/following-sibling::div[text()='Подтверждение выбранных услуг']");
 
         refreshTab("//*[contains(text(), 'Продолжить')]", 60);
 
-        CommonFunctions.wait(5);
-
-//      Нажать кнопку «Продолжить»
         new GUIFunctions()
             .closeAllPopupWindows()
             .clickButton("Продолжить")
             .waitForElementDisplayed("//*[text()='Подтверждение оплаты счета']");
-
-//      Развернуть аккордеон "Подтверждение оплаты счета"
-        new GUIFunctions().clickButton("Подтверждение оплаты счета");
     }
 
     private void refreshTab(String expectedXpath, int times) {
@@ -118,5 +111,4 @@ public class Test_03_07_02_1_70 extends HooksTEST {
             CommonFunctions.wait(1);
         }
     }
-
 }
