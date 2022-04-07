@@ -68,7 +68,7 @@ public class Test_03_07_02_1_100 extends HooksTEST_agroexpress {
         Assert.assertEquals(status, "Оказание услуги");
 
         //Сева должен
-        System.out.println("Ждем отправки 2ого JSON'а: \"Операция 8 (код 1010).json\"");
+        System.out.println("Ждем отправки 2ого JSON'а, который мы не можем отловить: \"Операция 8 (код 1010).json\"");
 
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
     }
