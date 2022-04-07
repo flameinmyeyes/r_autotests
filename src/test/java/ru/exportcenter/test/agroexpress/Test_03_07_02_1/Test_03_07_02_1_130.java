@@ -35,7 +35,6 @@ public class Test_03_07_02_1_130 extends HooksTEST {
     private String docNum;
     private  String docUUID;
 
-
     @Owner(value = "Диана Максимова")
     @Description("03 07 02.1.130 Выбор вида предоставления Закрывающих документов")
     @Link(name = "Test_03_07_02_1_130", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=127893558")
@@ -47,6 +46,11 @@ public class Test_03_07_02_1_130 extends HooksTEST {
         step02();
         step03();
         step04();
+    }
+
+    @AfterMethod
+    public void screenShot() {
+        CommonFunctions.screenShot(WAY_TEST);
     }
 
     @Step("Выполнение предусловий")
@@ -144,8 +148,4 @@ public class Test_03_07_02_1_130 extends HooksTEST {
         }
     }
 
-    @AfterMethod
-    public void screenShot() {
-        CommonFunctions.screenShot(WAY_TEST);
-    }
 }

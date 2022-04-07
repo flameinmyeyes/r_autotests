@@ -5,7 +5,6 @@ import framework.Ways;
 import framework.integration.JupyterLabIntegration;
 import functions.api.RESTFunctions;
 import functions.common.CommonFunctions;
-import functions.file.PropertiesHandler;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -15,14 +14,10 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
 
-import java.util.Properties;
-
 public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_20/";
     public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_10/";
-//    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_20_properties.xml";
-//    public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
 
     @Owner(value="Ворожко Александр")

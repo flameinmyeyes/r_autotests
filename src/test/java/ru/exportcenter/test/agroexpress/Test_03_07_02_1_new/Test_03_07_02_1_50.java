@@ -1,12 +1,10 @@
 package ru.exportcenter.test.agroexpress.Test_03_07_02_1_new;
 
-import com.codeborne.selenide.Condition;
 import framework.RunTestAgain;
 import framework.Ways;
 import framework.integration.JupyterLabIntegration;
 import functions.api.RESTFunctions;
 import functions.common.CommonFunctions;
-import functions.common.DateFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
@@ -17,12 +15,11 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
-import ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_40;
 
-import java.time.Duration;
 import java.util.Properties;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.refresh;
 
 public class Test_03_07_02_1_50 extends HooksTEST_agroexpress {
 
@@ -60,7 +57,7 @@ public class Test_03_07_02_1_50 extends HooksTEST_agroexpress {
         if (!status.equals("Подтверждение выбранных услуг")) {
             System.out.println("Перепрогон предыдущего теста");
 
-            ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_40 test_03_07_02_1_40 = new Test_03_07_02_1_40();
+            Test_03_07_02_1_40 test_03_07_02_1_40 = new Test_03_07_02_1_40();
             test_03_07_02_1_40.steps();
             CommonFunctions.wait(20);
             processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
@@ -116,7 +113,8 @@ public class Test_03_07_02_1_50 extends HooksTEST_agroexpress {
 
     public void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
-            if($x(expectedXpath).isDisplayed()) {
+            if ($x(expectedXpath).isDisplayed()) {
+                new GUIFunctions().closeAllPopupWindows();
                 break;
             }
             System.out.println("Refreshing");
