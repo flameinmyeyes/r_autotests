@@ -6,8 +6,8 @@
 
     <test name="REC_all_tests_agroexpress" thread-count="1" preserve-order="true">
         <classes>
-            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1_new.Test_03_07_02_1_10"/>
-<!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1_new.Test_03_07_02_1_20"/>-->
+<!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1_new.Test_03_07_02_1_10"/>-->
+            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1_new.Test_03_07_02_1_20"/>
 <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1_new.Test_03_07_02_1_40"/>-->
 <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1_new.Test_03_07_02_1_50"/>-->
 <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1_new.Test_03_07_02_1_60"/>-->
