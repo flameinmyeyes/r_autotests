@@ -15,9 +15,9 @@ public class Upload extends ElementData {
     }
 
     public void uploadFile (String upload, String wayToFile) {
-        File file = new File(wayToFile);
-        String fileName = file.getName();
-        $x(new XPath(this).getUploadXPath(upload)).uploadFile(file);
-        new GUIFunctions().waitForElementDisplayed(new XPath(this).getUploadedFileNameXPath(upload, fileName));
+//        File file = new File(wayToFile);
+//        String fileName = file.getName();
+        $x(new XPath(this).getUploadXPath(upload)).sendKeys(wayToFile);
+//        new GUIFunctions().waitForElementDisplayed(new XPath(this).getUploadedFileNameXPath(upload, fileName));
     }
 }
