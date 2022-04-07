@@ -43,7 +43,7 @@ public class GUIFunctions extends ElementData {
                 .inField("Email").inputValue(login)
                 .inField("Пароль").inputValue(password)
                 .clickButton("Войти");
-        return this;
+        return new GUIFunctions();
     }
 
     public GUIFunctions authorization(String login, String password, String code) {
@@ -58,7 +58,7 @@ public class GUIFunctions extends ElementData {
                     .sendKeys(code.substring(n, n + 1));
             n++;
         }
-        return this;
+        return new GUIFunctions();
     }
 
     /**
