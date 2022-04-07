@@ -1,8 +1,6 @@
-package ru.exportcenter.test.agroexpress.Test_03_07_02_1;
+package ru.exportcenter.test.agroexpress.Test_03_07_02_1_new;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.WebDriverRunner;
-import com.google.gson.JsonObject;
 import framework.RunTestAgain;
 import framework.Ways;
 import framework.integration.JupyterLabIntegration;
@@ -15,7 +13,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
-import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
@@ -28,7 +25,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
 
-    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_10/";
+    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_10/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_10.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String docNum;
@@ -244,5 +241,4 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
             CommonFunctions.wait(1);
         }
     }
-
 }

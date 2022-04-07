@@ -1,10 +1,12 @@
-package ru.exportcenter.test.agroexpress.Test_03_07_02_1;
+package ru.exportcenter.test.agroexpress.Test_03_07_02_1_new;
 
+import com.codeborne.selenide.Condition;
 import framework.RunTestAgain;
 import framework.Ways;
 import framework.integration.JupyterLabIntegration;
 import functions.api.RESTFunctions;
 import functions.common.CommonFunctions;
+import functions.common.DateFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
@@ -14,14 +16,18 @@ import io.qameta.allure.Step;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.HooksTEST;
+import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
+import ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_40;
+
+import java.time.Duration;
 import java.util.Properties;
+
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_02_1_50 extends HooksTEST {
+public class Test_03_07_02_1_50 extends HooksTEST_agroexpress {
 
-    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_50/";
-    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_40/";
+    public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_50/";
+    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_40/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_50_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
@@ -54,7 +60,7 @@ public class Test_03_07_02_1_50 extends HooksTEST {
         if (!status.equals("Подтверждение выбранных услуг")) {
             System.out.println("Перепрогон предыдущего теста");
 
-            Test_03_07_02_1_40 test_03_07_02_1_40 = new Test_03_07_02_1_40();
+            ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_40 test_03_07_02_1_40 = new Test_03_07_02_1_40();
             test_03_07_02_1_40.steps();
             CommonFunctions.wait(20);
             processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
@@ -110,8 +116,7 @@ public class Test_03_07_02_1_50 extends HooksTEST {
 
     public void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
-            if ($x(expectedXpath).isDisplayed()) {
-                new GUIFunctions().closeAllPopupWindows();
+            if($x(expectedXpath).isDisplayed()) {
                 break;
             }
             System.out.println("Refreshing");
