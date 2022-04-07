@@ -90,11 +90,28 @@ public class Test_03_07_02_1_50 extends HooksTEST {
     public void step03() {
         CommonFunctions.printStep();
 
-        //Нажать «Далее»
-        new GUIFunctions().clickButton("Далее").waitForElementDisplayed("//*[text()='Расчет стоимости услуги']");
+        for (int i = 0; i<2; i++) {
+            if($x("//*[text() = 'Далее']").isDisplayed()) {
+                new GUIFunctions().clickButton("Далее");
+                CommonFunctions.wait(2);
+            } else {
+                break;
+            }
+        }
 
         //Нажать «Далее»
-        new GUIFunctions().clickButton("Далее").waitForElementDisplayed("//*[text()='Подтверждение отправлено в АО \"РЖД Логистика\"']");
+        new GUIFunctions().waitForElementDisplayed("//*[text()='Расчет стоимости услуги']");
+
+        for (int i = 0; i<2; i++) {
+            if($x("//*[text() = 'Далее']").isDisplayed()) {
+                new GUIFunctions().clickButton("Далее");
+                CommonFunctions.wait(2);
+            } else {
+                break;
+            }
+        }
+        //Нажать «Далее»
+        new GUIFunctions().waitForElementDisplayed("//*[text()='Подтверждение отправлено в АО \"РЖД Логистика\"']");
 
         //Нажать на ссылку "Логистика. Доставка продукции "Агроэкспрессом". Заявка №(Номер заявки)"
         new GUIFunctions().clickByLocator("//button[text()='Логистика. Доставка продукции \"Агроэкспрессом\". Заявка №" + docNum + "']").waitForElementDisplayed("//*[contains(text(), 'Подтверждение отправлено')]");
