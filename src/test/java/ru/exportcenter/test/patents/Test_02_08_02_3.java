@@ -53,7 +53,7 @@ public class Test_02_08_02_3 extends HooksTEST{
         CommonFunctions.printStep();
 
         //Ввести логин и пароль demo_exporter/password
-        new GUIFunctions().inContainer("Вход в личный кабинет")
+        new GUIFunctions()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"),PROPERTIES.getProperty("Авторизация.Пароль"), "1234")
                 .waitForLoading();
     }
@@ -101,7 +101,7 @@ public class Test_02_08_02_3 extends HooksTEST{
                 .selectValue("Напрямую организацией");
 
         //Выбрать приложенный файл с устройства формата txt и нажать кнопку «Открыть»
-        new GUIFunctions().uploadFile("Прикрепить платежное поручение", "C:\\auto-tests\\tmp.txt");
+        new GUIFunctions().uploadFile("Прикрепить платежное поручение", WAY_TEST + "tmp.txt");
         CommonFunctions.wait(5);
 
         //Нажать кнопку «Далее»
@@ -155,7 +155,7 @@ public class Test_02_08_02_3 extends HooksTEST{
                 .inField("Оценка вероятного экономического эффекта от введения за рубежом в гражданский оборот продукции, в состав которой будет входить предлагаемый объект интеллектуальной собственности").inputValue("Ocenka");
 
         //Выбрать приложенный файл с устройства формата pdf и нажать кнопку «Открыть»
-        new GUIFunctions().uploadFile("Заявка на регистрацию ОИС","C:\\auto-tests\\tmp.pdf");
+        new GUIFunctions().uploadFile("Заявка на регистрацию ОИС",WAY_TEST + "tmp.pdf");
         CommonFunctions.wait(5);
     }
 
