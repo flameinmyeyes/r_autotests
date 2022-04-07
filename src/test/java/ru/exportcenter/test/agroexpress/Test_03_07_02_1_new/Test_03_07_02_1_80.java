@@ -101,8 +101,16 @@ public class Test_03_07_02_1_80 extends HooksTEST {
         new GUIFunctions()
                 .uploadFile("Электроннный платежный документ", "/share/" + WAY_TEST + "tmp.txt");
 
+        for (int i = 0; i<2; i++) {
+            if($x("//*[text() = 'Далее']").isDisplayed()) {
+                new GUIFunctions().clickButton("Далее");
+                CommonFunctions.wait(2);
+            } else {
+                break;
+            }
+        }
+
         new GUIFunctions()
-                .clickButton("Далее")
                 .waitForElementDisplayed("//*[contains(text(), 'АО \"РЖД Логистика\" осуществляет проверку поступления денежных средств на Счет')]");
 
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
