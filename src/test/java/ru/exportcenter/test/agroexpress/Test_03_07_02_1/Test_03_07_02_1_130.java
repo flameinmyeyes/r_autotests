@@ -17,6 +17,8 @@ import ru.exportcenter.test.HooksTEST;
 
 import java.util.Properties;
 
+import static com.codeborne.selenide.Selenide.$x;
+
 public class Test_03_07_02_1_130 extends HooksTEST {
 
     /*
@@ -41,7 +43,7 @@ public class Test_03_07_02_1_130 extends HooksTEST {
         precondition();
         step01();
         step02();
-//        step03(); метод не реализован и не влияет на БП
+        step03();
         step04();
     }
 
@@ -79,7 +81,14 @@ public class Test_03_07_02_1_130 extends HooksTEST {
 
     @Step("Блок, содержащий управляющие элементы")
     public void step03() {
-        // Проверка сохранения, печати и просмотра документа (методы не реализованы)
+        // Проверка сохранения, печати и просмотра документа (проверка кнопок)
+        String downloadXPath = "//button[contains(@class,'downloadButton')][not(@disabled)][*[@viewBox='0 0 16 16']]";
+        String printXPath = "//button[contains(@class,'printButton')][not(@disabled)][*[@viewBox='0 0 22 22']]";
+        String viewXPath = "//button[contains(@class,'printButton')][not(@disabled)][*[@viewBox='0 0 16 10']]";
+
+        new GUIFunctions().waitForElementDisplayed(downloadXPath)
+                .waitForElementDisplayed(printXPath)
+                .waitForElementDisplayed(viewXPath);
     }
 
     @Step("Блок Вид предоставления УПД")
