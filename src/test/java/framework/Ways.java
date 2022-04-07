@@ -2,7 +2,7 @@ package framework;
 
 public enum Ways {
     COMMON("files_for_tests"),
-    DOWNLOADS("files_for_tests/downloads"),
+    DOWNLOADS("/share/files_for_tests/downloads"),
     DEV("files_for_tests/dev"),
     TEST("files_for_tests/test"),
 

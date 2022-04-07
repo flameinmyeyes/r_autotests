@@ -26,6 +26,7 @@ public class Test_03_07_02_1_50 extends HooksTEST {
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
     private String docNum;
+    private String docUUID;
 
     @Owner(value = "Петрищев Руслан")
     @Description("03 07 02.1.50")
@@ -48,6 +49,7 @@ public class Test_03_07_02_1_50 extends HooksTEST {
     @Step("Предусловия")
     public void precondition() {
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        docUUID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "docUUID.txt");
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
@@ -105,6 +107,7 @@ public class Test_03_07_02_1_50 extends HooksTEST {
         System.out.println(status);
         Assert.assertEquals(status, "Формирование счёта");
 
+        JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST,"docUUID.txt");
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
     }
 

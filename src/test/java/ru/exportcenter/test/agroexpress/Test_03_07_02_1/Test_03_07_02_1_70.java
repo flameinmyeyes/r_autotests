@@ -6,6 +6,7 @@ import framework.Ways;
 import framework.integration.JupyterLabIntegration;
 import functions.api.RESTFunctions;
 import functions.common.CommonFunctions;
+import functions.file.FileFunctions;
 import functions.file.JSONHandler;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
@@ -32,6 +33,7 @@ public class Test_03_07_02_1_70 extends HooksTEST {
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
     private String docNum;
+    private String docUUID;
 
     @Owner(value="Теребкова Андрей")
     @Description("03 07 02.1.70 Получение скорректированной заявки с расчетом (интеграция)")
@@ -52,6 +54,7 @@ public class Test_03_07_02_1_70 extends HooksTEST {
     @Step("Предусловия")
     public void preconditions() {
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        docUUID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "docUUID.txt");
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
@@ -104,7 +107,11 @@ public class Test_03_07_02_1_70 extends HooksTEST {
             .waitForElementDisplayed("//*[text()='Подтверждение оплаты счета']");
 
 //      Развернуть аккордеон "Подтверждение оплаты счета"
-        new GUIFunctions().clickButton("Подтверждение оплаты счета");
+        new GUIFunctions().clickButton("Подтверждение оплаты счета")
+                .clickByLocator("//div[@role = 'button' and text() = 'Заявка Логистика. Доставка продукции \"Агроэкспрессом.pdf']");
+
+        JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST,"docUUID.txt");
+        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
     }
 
     private void refreshTab(String expectedXpath, int times) {

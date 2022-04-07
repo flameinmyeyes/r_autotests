@@ -77,6 +77,7 @@ public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
         CommonFunctions.printStep();
 
         docUUID = RESTFunctions.getOrderID(processID);
+        System.out.println(docUUID);
 
         JSONObject systemProp = new JSONObject();
         systemProp.put("applicationId", docUUID);
