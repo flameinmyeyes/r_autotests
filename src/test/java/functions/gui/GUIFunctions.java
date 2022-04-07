@@ -61,6 +61,18 @@ public class GUIFunctions extends ElementData {
         return new GUIFunctions();
     }
 
+
+    /**
+     * logout
+     */
+
+    public GUIFunctions logout() {
+        new Click(this).clickByLocator("//div[@class='header-right']//div[contains(@class, 'exit')]");
+//        waitForElementDisplayed("//*[text()='Вход в личный кабинет']/ancestor::div[contains(@class, 'container')][1]");
+        return this;
+    }
+
+
     /**
      * search in page
      */

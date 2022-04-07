@@ -43,6 +43,7 @@ public class Test_03_07_02_1_40 extends HooksTEST_agroexpress {
         step01();
         step02();
         step03();
+        step04();
     }
 
     @AfterMethod
@@ -103,6 +104,13 @@ public class Test_03_07_02_1_40 extends HooksTEST_agroexpress {
 
     @Step("Авторизация")
     public void step03() {
+        CommonFunctions.printStep();
+        //
+
+    }
+
+    @Step("Навигация")
+    public void step04() {
         CommonFunctions.printStep();
         String status = RESTFunctions.getOrderStatus(processID);
         Assert.assertEquals(status, "Подтверждение выбранных услуг");

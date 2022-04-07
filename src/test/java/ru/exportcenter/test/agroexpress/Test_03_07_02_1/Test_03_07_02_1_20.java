@@ -100,13 +100,23 @@ public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
                         .assertThat().statusCode(200);
     }
 
-    @Step("Проверить статус заявки")
+    @Step("Авторизация в ЕЛК")
     public void step03() {
+        CommonFunctions.printStep();
+
+    }
+
+    @Step("Навигация в ЕЛК")
+    public void step04() {
         CommonFunctions.printStep();
         String status = RESTFunctions.getOrderStatus(processID);
         Assert.assertEquals(status, "Расчёт стоимости");
 
         JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST,"docUUID.txt");
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
+
+//        new GUIFunctions().logout();
+
     }
+
 }
