@@ -62,7 +62,7 @@ public class Test_03_07_02_1_130 extends HooksTEST {
 
     @Step("Авторизация в ЕЛК")
     public void step01() {
-        new GUIFunctions().authorization("test-otr@yandex.ru", "Password1!", "1234")
+        new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль"), P.getProperty("Код подтвержения"))
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
