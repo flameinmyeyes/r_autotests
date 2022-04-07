@@ -1,5 +1,6 @@
 package ru.exportcenter.test.agroexpress.Test_03_07_02_1;
 
+import com.codeborne.selenide.Condition;
 import com.google.gson.JsonObject;
 import framework.RunTestAgain;
 import framework.Ways;
@@ -14,10 +15,12 @@ import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
 
+import java.time.Duration;
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -38,13 +41,14 @@ public class Test_03_07_02_1_110 extends HooksTEST_agroexpress {
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
-//        precondition();
+        precondition();
         step01();
         step02();
         step03();
-//        step04();
+        step04();
         step05();
-//        step06();
+        step06();
+        step07();
     }
 
     @AfterMethod
@@ -55,17 +59,18 @@ public class Test_03_07_02_1_110 extends HooksTEST_agroexpress {
     @Step("Предусловия")
     public void precondition() {
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        docUUID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "docUUID.txt");
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
-        if(!status.equals("Оказание услуги")) {
-            System.out.println("Перепрогон предыдущего теста");
-
-            Test_03_07_02_1_100 test_03_07_02_1_100 = new Test_03_07_02_1_100();
-            test_03_07_02_1_100.steps();
-            CommonFunctions.wait(20);
-            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-        }
+//        if(!status.equals("Оказание услуги")) {
+//            System.out.println("Перепрогон предыдущего теста");
+//
+//            Test_03_07_02_1_100 test_03_07_02_1_100 = new Test_03_07_02_1_100();
+//            test_03_07_02_1_100.steps();
+//            CommonFunctions.wait(20);
+//            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+//        }
     }
 
     @Step("Авторизация")
@@ -78,7 +83,7 @@ public class Test_03_07_02_1_110 extends HooksTEST_agroexpress {
     public void step02() {
         CommonFunctions.printStep();
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-        docUUID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "docUUID.txt");
+
         System.out.println("orderID: " + docUUID);
 
         String jsonContent = JupyterLabIntegration.getFileContent(WAY_TEST + "Операция 8 (код 1010).json");
@@ -103,20 +108,29 @@ public class Test_03_07_02_1_110 extends HooksTEST_agroexpress {
                         .assertThat().statusCode(200);
     }
 
-//    @Step("Авторизация")
-//    public void step03() {
-//        CommonFunctions.printStep();
-//        new GUIFunctions()
-//                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"))
-//                .waitForLoading()
-//                .closeAllPopupWindows();
-//
-//        open("https://lk.t.exportcenter.ru/ru/services/drafts/info/" + processID);
-////        switchTo().alert().accept();
-//    }
+    @Step("Авторизация в ЕЛК")
+    public void step03() {
+        CommonFunctions.printStep();
+        open("https://lk.t.exportcenter.ru/ru/services/drafts/info/" + processID);
+        new GUIFunctions()
+                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"))
+                .waitForLoading()
+                .closeAllPopupWindows();
+        refreshTab("//*[contains(text(), 'Продолжить')]", 60);
+    }
+
+    @Step("Навигация в ЕЛК")
+    public void step04() {
+        CommonFunctions.printStep();
+
+        new GUIFunctions()
+                .closeAllPopupWindows()
+                .clickButton("Продолжить")
+                .waitForElementDisplayed("//*[text() = 'Осуществляется перевозка']");
+    }
 
     @Step("Навигация и отправка JSON-запроса в Swagger")
-    public void step03() {
+    public void step05() {
         CommonFunctions.printStep();
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
         docUUID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "docUUID.txt");
@@ -144,20 +158,10 @@ public class Test_03_07_02_1_110 extends HooksTEST_agroexpress {
                 .assertThat().statusCode(200);
     }
 
-    @Step("Навигация")
-    public void step04() {
-        CommonFunctions.printStep();
-        new GUIFunctions().waitForElementDisplayed("//div[text()='Статус']/following-sibling::div[text()='Оказание услуги']");
-        refreshTab("//*[contains(text(), 'Продолжить')]", 20);
 
-        new GUIFunctions()
-                .closeAllPopupWindows()
-                .clickButton("Продолжить")
-                .waitForElementDisplayed("//*[text() = 'Осуществляется перевозка']");
-    }
 
     @Step("Навигация и отправка JSON-запроса в Swagger")
-    public void step05() {
+    public void step06() {
         CommonFunctions.printStep();
 
         String jsonContent = JupyterLabIntegration.getFileContent(WAY_TEST + "Операция 8 (код 1015).json");
@@ -180,21 +184,16 @@ public class Test_03_07_02_1_110 extends HooksTEST_agroexpress {
                         .post()
                 .then()
                         .assertThat().statusCode(200);
+
+        CommonFunctions.wait(10);
     }
 
-    @Step("Навигация")
-    public void step06() {
+    @Step("Авторизация")
+    public void step07() {
         CommonFunctions.printStep();
-        open("https://lk.t.exportcenter.ru/ru/services/drafts/info/" + processID);
-        switchTo().alert().accept();
-
-        new GUIFunctions().waitForElementDisplayed("//div[text()='Статус']/following-sibling::div[text()='Оказание услуги']");
-        refreshTab("//*[contains(text(), 'Продолжить')]", 20);
-
-        new GUIFunctions()
-                .closeAllPopupWindows()
-                .clickButton("Продолжить")
-                .waitForElementDisplayed("//*[text() = 'Перевозка завершена']");
+        String status = RESTFunctions.getOrderStatus(processID);
+        System.out.println(status);
+        Assert.assertEquals(status, "Формирование закрывающих документов");
 
         JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST,"docUUID.txt");
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");

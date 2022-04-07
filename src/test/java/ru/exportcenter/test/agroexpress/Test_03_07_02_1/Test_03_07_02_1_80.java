@@ -34,7 +34,7 @@ public class Test_03_07_02_1_80 extends HooksTEST {
     private String docUUID;
     private String docNum;
 
-    @Owner(value="Теребкова Андрей")
+    @Owner(value="Теребков Андрей")
     @Description("03 07 02.1.80 Отправка сведений ПД / ЭПД (загрузка ЭПД)")
     @Link(name="Test_03_07_02_1_80", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123879970")
 
@@ -53,6 +53,7 @@ public class Test_03_07_02_1_80 extends HooksTEST {
     @Step("Предусловия")
     public void preconditions() {
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        docUUID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "docUUID.txt");
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
@@ -89,8 +90,8 @@ public class Test_03_07_02_1_80 extends HooksTEST {
             .clickByLocator("//*[@class='Button_text__3lYJC']");
 
         new GUIFunctions()
-            .clickByLocator("//*[text()='№" + docNum + "']")
-            .waitForElementDisplayed("//div[text()='Статус']/following-sibling::div[text()='Подтверждение выбранных услуг']");
+                .clickByLocator("//*[text()='№" + docNum + "']")
+                .inField("Статус").assertValue("Оплата счёта");
 
         refreshTab("//*[contains(text(), 'Продолжить')]", 60);
 
@@ -98,6 +99,19 @@ public class Test_03_07_02_1_80 extends HooksTEST {
             .closeAllPopupWindows()
             .clickButton("Продолжить")
             .waitForElementDisplayed("//*[text()='Подтверждение оплаты счета']");
+
+//        new GUIFunctions()
+//                .clickButton("Подтверждение оплаты счета");
+
+        new GUIFunctions()
+                .uploadFile("Электроннный платежный документ", "/share/" + WAY_TEST + "tmp.txt");
+
+        new GUIFunctions()
+                .clickButton("Далее")
+                .waitForElementDisplayed("//*[contains(text(), 'АО \"РЖД Логистика\" осуществляет проверку поступления денежных средств на Счет')]");
+
+        JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST,"docUUID.txt");
+        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
     }
 
     private void refreshTab(String expectedXpath, int times) {
