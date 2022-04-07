@@ -26,7 +26,7 @@ public class Test_03_07_02_1_110_2 extends HooksTEST_agroexpress {
     public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_100/";
     private String processID;
 
-    @Owner(value="Ворожко Александр")
+    @Owner(value="Балашов Илья")
     @Description("03 07 02.1.110_2 Получение скорректированной заявки с расчетом (интеграция)")
     @Link(name="Test_03_07_02_1_110_2", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123882163")
 
