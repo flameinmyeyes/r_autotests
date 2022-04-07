@@ -14,11 +14,12 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.test.HooksTEST;
+import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
 import ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_130;
 
 import java.util.Properties;
 
-public class Test_03_07_02_1_140 extends HooksTEST {
+public class Test_03_07_02_1_140 extends HooksTEST_agroexpress {
 
     private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_140/";
     private final String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_130/";
