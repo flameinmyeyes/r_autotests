@@ -12,6 +12,7 @@ public class Field extends ElementData {
 
     public void inputValue(String value) {
         $x(new XPath(this).getInputXPath()).setValue(value);
+        $x(new XPath(this).getInputXPath()).click();
     }
 
     public void selectValue(String value) {

@@ -3,7 +3,6 @@ package ru.exportcenter.test.patents;
 import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
-
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
@@ -13,6 +12,7 @@ import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.test.HooksTEST;
+
 import java.util.Properties;
 
 public class Test_02_08_02_1 extends HooksTEST {
@@ -21,12 +21,12 @@ public class Test_02_08_02_1 extends HooksTEST {
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_02_08_02_1_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
-    @Description("ТК 02 08 02 1")
-    @Owner(value="Петрищев Руслан, Теребков Андрей")
-    @Link(name="Test_02_08_02_1", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123868584")
+    @Owner(value = "Петрищев Руслан, Теребков Андрей")
+    @Description("ТК 02 08 02.1 Авторизация экспортера в ФГАИС \"Одно окно\". Выбор Сервиса. Ознакомление с описанием Сервиса")
+    @Link(name = "Test_02_08_02_1", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123868584")
 
     @Test(retryAnalyzer = RunTestAgain.class)
-    public void steps(){
+    public void steps() {
         step01();
         step02();
         step03();
@@ -38,19 +38,16 @@ public class Test_02_08_02_1 extends HooksTEST {
     }
 
     @Step("Авторизация")
-    private void step01(){
+    private void step01() {
         CommonFunctions.printStep();
 
         //Ввести логин и пароль demo_exporter/password
-        new GUIFunctions().inContainer("Вход в личный кабинет")
-                .inField("Email").inputValue(PROPERTIES.getProperty("Авторизация.Email"))
-                .inField("Пароль").inputValue(PROPERTIES.getProperty("Авторизация.Пароль"))
-                .clickButton("Войти")
+        new GUIFunctions().authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
     @Step("Навигация")
-    private void step02(){
+    private void step02() {
         CommonFunctions.printStep();
 
         //Перейти во вкладку «Сервисы»
