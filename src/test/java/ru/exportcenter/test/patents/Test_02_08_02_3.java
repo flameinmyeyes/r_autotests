@@ -323,8 +323,6 @@ public class Test_02_08_02_3 extends HooksTEST{
 
         //Нажать на кнопку «Далее»
         new GUIFunctions().clickButton("Далее");
-
-        CommonFunctions.wait(300);
     }
 
     private void refreshTab(String expectedXpath, int times) {
@@ -339,17 +337,17 @@ public class Test_02_08_02_3 extends HooksTEST{
         }
     }
 
-    public class MyThread extends Thread {
-        @Override
-        public void run() {
-            int i = 1;
-            GUIFunctions GUIF = new GUIFunctions();
-            while(i>0) {
-                System.out.println("closeAllPopupWindows()");
-                GUIF.closeAllPopupWindows();
-                CommonFunctions.wait(5);
-            }
-        }
-    }
+//    public class MyThread extends Thread {
+//        @Override
+//        public void run() {
+//            int i = 1;
+//            GUIFunctions GUIF = new GUIFunctions();
+//            while(i>0) {
+//                System.out.println("closeAllPopupWindows()");
+//                GUIF.closeAllPopupWindows();
+//                CommonFunctions.wait(5);
+//            }
+//        }
+//    }
 
 }
