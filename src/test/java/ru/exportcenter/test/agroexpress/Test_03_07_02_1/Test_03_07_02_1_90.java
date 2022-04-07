@@ -59,10 +59,10 @@ public class Test_03_07_02_1_90 extends HooksTEST_agroexpress {
         if(!status.equals("Проверка оплаты")) {
             System.out.println("Перепрогон предыдущего теста");
 
-//            Test_03_07_02_1_40 test_03_07_02_1_40 = new Test_03_07_02_1_40();
-//            test_03_07_02_1_40.steps();
-//            CommonFunctions.wait(10);
-//            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+            Test_03_07_02_1_80 test_03_07_02_1_80 = new Test_03_07_02_1_80();
+            test_03_07_02_1_80.steps();
+            CommonFunctions.wait(10);
+            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
         }
     }
 

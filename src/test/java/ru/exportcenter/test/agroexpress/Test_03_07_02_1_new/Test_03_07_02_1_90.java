@@ -18,8 +18,6 @@ public class Test_03_07_02_1_90 extends HooksTEST_agroexpress {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_90/";
     public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_80/";
-//    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_90_properties.xml";
-//    public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
 
     @Owner(value="Ворожко Александр")
@@ -46,10 +44,10 @@ public class Test_03_07_02_1_90 extends HooksTEST_agroexpress {
         if(!status.equals("Проверка оплаты")) {
             System.out.println("Перепрогон предыдущего теста");
 
-//            Test_03_07_02_1_80 test_03_07_02_1_80 = new Test_03_07_02_1_80();
-//            test_03_07_02_1_80.steps();
-//            CommonFunctions.wait(10);
-//            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+            Test_03_07_02_1_80 test_03_07_02_1_80 = new Test_03_07_02_1_80();
+            test_03_07_02_1_80.steps();
+            CommonFunctions.wait(10);
+            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
         }
     }
 

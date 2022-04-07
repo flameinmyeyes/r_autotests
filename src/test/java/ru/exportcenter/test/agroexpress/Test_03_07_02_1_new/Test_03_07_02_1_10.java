@@ -138,7 +138,7 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
                 .inField("До").inputValue(PROPERTIES.getProperty("Информация о грузе.До")).assertNoControl().assertValue()
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
-               .inField("Наименование продукции").selectValue(PROPERTIES.getProperty("Информация о грузе.Наименование продукции")).assertNoControl().assertValue()
+                .inField("Наименование продукции").selectValue(PROPERTIES.getProperty("Информация о грузе.Наименование продукции")).assertNoControl().assertValue()
                 .inField("Код ТН ВЭД").assertValue(PROPERTIES.getProperty("Информация о грузе.Код ТН ВЭД")).assertNoControl().assertUneditable()
                 .inField("Вес продукции, кг").inputValue(PROPERTIES.getProperty("Информация о грузе.Вес продукции, кг")).assertNoControl().assertValue()
                 .inField("Упаковка").selectValue(PROPERTIES.getProperty("Информация о грузе.Упаковка")).assertNoControl().assertValue()
@@ -175,9 +175,9 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
                 //.clickButton("")
                 .waitForElementDisappeared("//td[text() = '2']" +
                         "/following-sibling::td[text() = '" + PROPERTIES.getProperty("Информация о грузе.Наименование продукции.2") + "']" +
-                                "/following-sibling::td[text() = '" + PROPERTIES.getProperty("Информация о грузе.Количество грузовых мест, ш.2") + "']" +
-                                "/following-sibling::td[text() = '" + PROPERTIES.getProperty("Информация о грузе.Вес продукции, кг.2") + "']" +
-                                "/following-sibling::td");
+                        "/following-sibling::td[text() = '" + PROPERTIES.getProperty("Информация о грузе.Количество грузовых мест, ш.2") + "']" +
+                        "/following-sibling::td[text() = '" + PROPERTIES.getProperty("Информация о грузе.Вес продукции, кг.2") + "']" +
+                        "/following-sibling::td");
     }
 
     @Step("Блок  «Информация о грузополучателе»")
@@ -241,4 +241,5 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
             CommonFunctions.wait(1);
         }
     }
+
 }
