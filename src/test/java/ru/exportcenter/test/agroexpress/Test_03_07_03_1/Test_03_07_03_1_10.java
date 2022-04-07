@@ -49,7 +49,7 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
     @Step("Авторизация")
     public void step01() {
         new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль"), P.getProperty("Код подтвержения"))
-                .waitForLoading();
+                .waitForElementDisplayed("(//*[contains(text(),'Логистика. Доставка продукции \"Агроэкспрессом\"')])[1]");
 
         errorCompensation();
 
@@ -59,8 +59,6 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
     }
 
     public void errorCompensation() {
-        new GUIFunctions().waitForElementDisplayed("(//*[contains(text(),'Логистика. Доставка продукции \"Агроэкспрессом\"')])[1]");
-
         if ($x("//*[contains(text(), 'Информация о заявителе')]").isDisplayed()) {
             $x("//button[contains(text(), 'Логистика. Доставка продукции \"Агроэкспрессом\". Заявка')]").click();
             switchTo().alert().accept();
