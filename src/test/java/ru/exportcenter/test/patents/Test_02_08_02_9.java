@@ -21,8 +21,8 @@ public class Test_02_08_02_9 extends HooksTEST {
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_02_08_02_9_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
-    @Description("ТК 02 08 02 9")
     @Owner(value="Петрищев Руслан")
+    @Description("02 08 02.9 Просмотр перечня Заявок по сервису, созданных организацией")
     @Link(name="Test_02_08_02_9", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=127905125")
 
     @Test(retryAnalyzer = RunTestAgain.class)
