@@ -16,8 +16,7 @@ import ru.exportcenter.test.HooksTEST;
 
 import java.util.Properties;
 
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.refresh;
+import static ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_10.errorCompensation;
 
 public class Test_03_07_01 extends HooksTEST {
 
@@ -60,19 +59,9 @@ public class Test_03_07_01 extends HooksTEST {
                 .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Оформить")
                 .switchPageTo(1);
 
-        refreshTab(15);
+        errorCompensation();
 
         new GUIFunctions().clickButton("Продолжить");
-    }
-
-    private void refreshTab(int times) {
-        for (int i = 0; i < times; i++) {
-            new GUIFunctions().waitForLoading();
-            if ($x("//*[contains(text(), 'Продолжить')]").isDisplayed()) {
-                break;
-            }
-            refresh();
-        }
     }
 
     @Step("Заполнить область «Информация о компании»")

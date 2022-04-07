@@ -58,7 +58,7 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
         new GUIFunctions().clickButton("Продолжить");
     }
 
-    public void errorCompensation() {
+    public static void errorCompensation() {
         if ($x("//*[contains(text(), 'Информация о заявителе')]").isDisplayed()) {
             $x("//button[contains(text(), 'Логистика. Доставка продукции \"Агроэкспрессом\". Заявка')]").click();
             switchTo().alert().accept();
