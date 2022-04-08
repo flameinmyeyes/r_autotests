@@ -49,7 +49,7 @@ public class Test_03_07_02_1_70 extends HooksTEST {
 
     @Step("Предусловия")
     public void preconditions() {
-        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        processID = "c387e189-b70e-11ec-8aa5-9ea965516645";
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
