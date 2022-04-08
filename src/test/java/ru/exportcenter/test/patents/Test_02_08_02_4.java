@@ -82,6 +82,7 @@ public class Test_02_08_02_4 extends HooksTEST {
         //Нажать на иконку "три точки" в верхнем правом углу
         //Нажать на "Отменить заявку"
         new GUIFunctions()
+                .clickByLocator("//*[text() = 'Компенсация части затрат на регистрацию ОИС за рубежом']/following-sibling::button")
                 .clickByLocator("//*[contains(text(), 'Заявка «Субсидия по компенсации части затрат, связанных с " +
                         "регистрацией на внешних рынках объектов интеллектуальной собственности»')]/ancestor::div[contains(@class, 'container')][1]" +
                         "//button[@class='dropdown-icon']")
