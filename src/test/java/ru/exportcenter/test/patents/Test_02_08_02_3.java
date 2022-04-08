@@ -83,7 +83,7 @@ public class Test_02_08_02_3 extends HooksTEST{
         new GUIFunctions().closeAllPopupWindows();
 
         new GUIFunctions().inContainer("Сведения о заявителе")
-                .inField("Регион").selectValue("Республика Коми");
+                .inField("Регион").selectValue(PROPERTIES.getProperty("Сведения о заявителе.Регион"));
 
         new GUIFunctions().clickButton("Далее").clickButton("Далее")
                 .waitForElementDisplayed("//form[@class='Form_form__Vhvzn']");
@@ -128,17 +128,17 @@ public class Test_02_08_02_3 extends HooksTEST{
                 .closeAllPopupWindows()
                 .inContainer("Заявка")
                 .closeAllPopupWindows()
-                .inField("Тип заявки").selectValue("Международная заявка")
-                .inField("Подтип международной заявки").selectValue("Международная заявка на регистрацию промышленного образца в соответствии с Женевским актом Гаагского соглашения")
-                .inField("Номер базовой заявки/свидетельства").inputValue("987654321")
-                .inField("Дата подачи базовой заявки/свидетельства").inputValue("02.02.2022")
-                .inField("Номер международной заявки").inputValue("987654321")
-                .inField("Дата подачи международной заявки").inputValue("02.02.2022")
-                .inField("Номер электронного дела").inputValue("987654321")
-                .inField("Страны регистрации").selectValue("Абхазия")
-                .inField("Наименование объекта").inputValue("Объект")
-                .inField("Наименование заявителя (организации)").inputValue("Заявитель")
-                .inField("Региональное патентное ведомство").selectValue("Европейское патентное ведомство (ЕПВ)");
+                .inField("Тип заявки").selectValue(PROPERTIES.getProperty("Заявка.Тип заявки"))
+                .inField("Подтип международной заявки").selectValue(PROPERTIES.getProperty("Заявка.Подтип международной заявки"))
+                .inField("Номер базовой заявки/свидетельства").inputValue(PROPERTIES.getProperty("Заявка.Номер базовой заявки/свидетельства"))
+                .inField("Дата подачи базовой заявки/свидетельства").inputValue(PROPERTIES.getProperty("Заявка.Дата подачи базовой заявки/свидетельства"))
+                .inField("Номер международной заявки").inputValue(PROPERTIES.getProperty("Заявка.Номер международной заявки"))
+                .inField("Дата подачи международной заявки").inputValue(PROPERTIES.getProperty("Заявка.Дата подачи международной заявки"))
+                .inField("Номер электронного дела").inputValue(PROPERTIES.getProperty("Заявка.Номер электронного дела"))
+                .inField("Страны регистрации").selectValue(PROPERTIES.getProperty("Заявка.Страны регистрации"))
+                .inField("Наименование объекта").inputValue(PROPERTIES.getProperty("Заявка.Наименование объекта"))
+                .inField("Наименование заявителя (организации)").inputValue(PROPERTIES.getProperty("Наименование заявителя (организации)"))
+                .inField("Региональное патентное ведомство").selectValue(PROPERTIES.getProperty("Заявка.Региональное патентное ведомство"));
     }
 
     @Step("Блок «Цель затрат и описание»")
