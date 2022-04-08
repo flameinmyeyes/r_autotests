@@ -53,14 +53,14 @@ public class Test_03_07_02_1_70 extends HooksTEST {
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
-        if (!status.equals("Оплата счёта")) {
-            System.out.println("Перепрогон предыдущего теста");
-
-            Test_03_07_02_1_60 test_03_07_02_1_60 = new Test_03_07_02_1_60();
-            test_03_07_02_1_60.steps();
-            CommonFunctions.wait(20);
-            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-        }
+//        if (!status.equals("Оплата счёта")) {
+//            System.out.println("Перепрогон предыдущего теста");
+//
+//            Test_03_07_02_1_60 test_03_07_02_1_60 = new Test_03_07_02_1_60();
+//            test_03_07_02_1_60.steps();
+//            CommonFunctions.wait(20);
+//            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+//        }
     }
 
     @Step("Авторизация")
@@ -80,6 +80,7 @@ public class Test_03_07_02_1_70 extends HooksTEST {
     public void step02() {
         CommonFunctions.printStep();
         docNum = JupyterLabIntegration.getFileContent(WAY_TEST_DOC_NUM + "docNum.txt");
+        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
 
         System.out.println(docNum);
 
