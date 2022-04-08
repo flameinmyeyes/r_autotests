@@ -4,9 +4,9 @@
 <suite name="REC_all_tests" parallel="tests" verbose="1" thread-count="1">
     <parameter name="runMode" value="remote"/>
 
-    <test name="REC_all_tests_agroexpress" thread-count="1" preserve-order="true">
-        <classes>
-            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1_new.Test_03_07_02_1_10"/>
+<!--    <test name="REC_all_tests_agroexpress" thread-count="1" preserve-order="true">-->
+<!--        <classes>-->
+<!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1_new.Test_03_07_02_1_10"/>-->
 <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1_new.Test_03_07_02_1_20"/>-->
 <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1_new.Test_03_07_02_1_40"/>-->
 <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1_new.Test_03_07_02_1_50"/>-->
@@ -20,17 +20,17 @@
 <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1_new.Test_03_07_02_1_120"/>-->
 <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1_new.Test_03_07_02_1_130"/>-->
 <!--            <class name="ru.exportcenter.test.agroexpress.Test_03_07_02_1_new.Test_03_07_02_1_140"/>-->
-        </classes>
-    </test>
-
-<!--    <test name="REC_all_tests_patents" thread-count="1" preserve-order="true">-->
-<!--        <classes>-->
-<!--            <class name="ru.exportcenter.test.patents.Test_02_08_02_1"/>-->
-<!--            <class name="ru.exportcenter.test.patents.Test_02_08_02_3"/>-->
-<!--            <class name="ru.exportcenter.test.patents.Test_02_08_02_4"/>-->
-<!--            <class name="ru.exportcenter.test.patents.Test_02_08_02_8"/>-->
-<!--            <class name="ru.exportcenter.test.patents.Test_02_08_02_9"/>-->
 <!--        </classes>-->
 <!--    </test>-->
+
+    <test name="REC_all_tests_patents" thread-count="1" preserve-order="true">
+        <classes>
+            <class name="ru.exportcenter.test.patents.Test_02_08_02_1"/>
+            <class name="ru.exportcenter.test.patents.Test_02_08_02_3"/>
+            <class name="ru.exportcenter.test.patents.Test_02_08_02_4"/>
+            <class name="ru.exportcenter.test.patents.Test_02_08_02_8"/>
+            <class name="ru.exportcenter.test.patents.Test_02_08_02_9"/>
+        </classes>
+    </test>
 
 </suite>
