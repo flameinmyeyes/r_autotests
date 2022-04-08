@@ -152,12 +152,12 @@ public class Test_02_08_02_3 extends HooksTEST{
         new GUIFunctions()
                 .closeAllPopupWindows()
                 .inContainer("Заявка")
-                .inField("Цель правовой охраны за рубежом").selectValue("Продажа прав на технологию путем заключения лицензионного договора или договора отчуждения исключительного права")
-                .inField("Описание конечного продукта/технологии, в том числе его конкурентные преимущества").inputValue("Значение")
-                .inField("Описание потребителя конечного продукта (технологии)").inputValue("word")
-                .inField("Описание целевых рынков для реализации продукции").inputValue("Значениеss")
-                .inField("Описание бизнес-модели вывода продукции на внешние рынки").inputValue("ввод")
-                .inField("Оценка вероятного экономического эффекта от введения за рубежом в гражданский оборот продукции, в состав которой будет входить предлагаемый объект интеллектуальной собственности").inputValue("Ocenka");
+                .inField("Цель правовой охраны за рубежом").selectValue(PROPERTIES.getProperty("Цель правовой охраны за рубежом"))
+                .inField("Описание конечного продукта/технологии, в том числе его конкурентные преимущества").inputValue(PROPERTIES.getProperty("Описание конечного продукта/технологии"))
+                .inField("Описание потребителя конечного продукта (технологии)").inputValue(PROPERTIES.getProperty("Описание потребителя конечного продукта"))
+                .inField("Описание целевых рынков для реализации продукции").inputValue(PROPERTIES.getProperty("Описание целевых рынков для реализации продукции"))
+                .inField("Описание бизнес-модели вывода продукции на внешние рынки").inputValue(PROPERTIES.getProperty("Описание бизнес-модели вывода продукции на внешние рынки"))
+                .inField("Оценка вероятного экономического эффекта от введения за рубежом в гражданский оборот продукции, в состав которой будет входить предлагаемый объект интеллектуальной собственности").inputValue(PROPERTIES.getProperty("Оценка вероятного экономического эффекта от введения за рубежом в гражданский оборот продукции"));
 
         //Выбрать приложенный файл с устройства формата pdf и нажать кнопку «Открыть»
         new GUIFunctions().uploadFile("Заявка на регистрацию ОИС","/share/" + WAY_TEST + "tmp.pdf");
@@ -176,13 +176,13 @@ public class Test_02_08_02_3 extends HooksTEST{
 
         //Заполнение полей
         new GUIFunctions().inContainer("Затраты на оплату пошлины")
-                .inField("Наименование пошлины").inputValue("Пошлина")
-                .inField("Объем затрат").inputValue("1230,00")
-                .inField("Валюта").selectValue("Грузинский лари")
-                .inField("Дата платежа").inputValue("23.02.2022")
-                .inField("Способ получения услуги").selectValue("Напрямую организацией")
+                .inField("Наименование пошлины").inputValue(PROPERTIES.getProperty("Наименование пошлины"))
+                .inField("Объем затрат").inputValue(PROPERTIES.getProperty("Объем затрат"))
+                .inField("Валюта").selectValue(PROPERTIES.getProperty("Валюта"))
+                .inField("Дата платежа").inputValue(PROPERTIES.getProperty("Дата платежа"))
+                .inField("Способ получения услуги").selectValue(PROPERTIES.getProperty("Способ получения услуги"))
                 .closeAllPopupWindows()
-                .inField("Платёжное поручение").selectValue("tmp.txt");
+                .inField("Платёжное поручение").selectValue(PROPERTIES.getProperty("Платёжное поручение"));
     }
 
     @Step("Блок «Добавить затрату на оплату услуги»")
@@ -197,12 +197,12 @@ public class Test_02_08_02_3 extends HooksTEST{
 
         //Заполнение полей
         new GUIFunctions().inContainer("Затраты на оплату услуги")
-                .inField("Наименование услуги по подготовке, подаче заявки и делопроизводству по ней").inputValue("Услуга")
-                .inField("Объем затрат").inputValue("1230,00")
-                .inField("Валюта").selectValue("Грузинский лари")
-                .inField("Дата платежа").inputValue("23.02.2022")
-                .inField("Способ получения услуги").selectValue("Напрямую организацией")
-                .inField("Платёжное поручение").selectValue("tmp.txt");
+                .inField("Наименование услуги по подготовке, подаче заявки и делопроизводству по ней").inputValue(PROPERTIES.getProperty("Наименование услуги по подготовке"))
+                .inField("Объем затрат").inputValue(PROPERTIES.getProperty("Объем затрат"))
+                .inField("Валюта").selectValue(PROPERTIES.getProperty("Валюта"))
+                .inField("Дата платежа").inputValue(PROPERTIES.getProperty("Дата платежа"))
+                .inField("Способ получения услуги").selectValue(PROPERTIES.getProperty("Способ получения услуги"))
+                .inField("Платёжное поручение").selectValue(PROPERTIES.getProperty("Платёжное поручение"));
 
         //Нажать на кнопку «Далее»
         new GUIFunctions().clickButton("Далее");
@@ -220,12 +220,12 @@ public class Test_02_08_02_3 extends HooksTEST{
         //Заполнение полей
         new GUIFunctions().inContainer("Сведения для регистрации / актуализации в ГИИС \"Электронный бюджет\"")
                 .inField("Компания зарегистрирована в ГИИС \"Электронный бюджет\"").setCheckboxOFF()
-                .inField("Код по ОКОПФ").inputValue("12247")
-                .inField("Наименование по ОКОПФ").inputValue("Наименование")
-                .inField("Код по ОКПО").inputValue("12345678")
-                .inField("Код по ОКТМО").inputValue("12345678901")
-                .inField("Почтовый индекс").inputValue("630000")
-                .inField("Дата постановки на налоговый учёт").inputValue("02.02.2022");
+                .inField("Код по ОКОПФ").inputValue(PROPERTIES.getProperty("Код по ОКОПФ"))
+                .inField("Наименование по ОКОПФ").inputValue(PROPERTIES.getProperty("Наименование по ОКОПФ"))
+                .inField("Код по ОКПО").inputValue(PROPERTIES.getProperty("Код по ОКПО"))
+                .inField("Код по ОКТМО").inputValue(PROPERTIES.getProperty("Код по ОКТМО"))
+                .inField("Почтовый индекс").inputValue(PROPERTIES.getProperty("Почтовый индекс"))
+                .inField("Дата постановки на налоговый учёт").inputValue(PROPERTIES.getProperty("Дата постановки на налоговый учёт"));
     }
 
     @Step("Блок «Банковские реквизиты заявителя»")
@@ -237,9 +237,9 @@ public class Test_02_08_02_3 extends HooksTEST{
 
         //Заполнение полей
         new GUIFunctions().inContainer("Сведения для регистрации / актуализации в ГИИС \"Электронный бюджет\"")
-                .inField("Номер банковского счета").inputValue("40702810000000000046")
-                .inField("БИК банка").selectValue("200000614")
-                .inField("Корреспондентский счет").inputValue("30101810100000000722");
+                .inField("Номер банковского счета").inputValue(PROPERTIES.getProperty("Номер банковского счета"))
+                .inField("БИК банка").selectValue(PROPERTIES.getProperty("БИК банка"))
+                .inField("Корреспондентский счет").inputValue(PROPERTIES.getProperty("Корреспондентский счет"));
     }
 
     @Step("Блок «Лицевые счета, открытые в территориальном органе Федерального казначейства (ТОФК)»")
@@ -251,12 +251,12 @@ public class Test_02_08_02_3 extends HooksTEST{
 
         //Заполнение полей
         new GUIFunctions().inContainer("Лицевые счета, открытые в территориальном органе Федерального казначейства (ТОФК)")
-                .inField("Полное наименование ТОФК").selectValue("Отдел № 1 Управления Федерального казначейства по Республике Башкортостан")
-                .inField("Код ТОФК открытия по сводному реестру").inputValue("6000")
-                .inField("Код ОРФК обслуживания").selectValue("0100")
-                .inField("Код типа лицевого счёта").selectValue("05")
-                .inField("Номер лицевого счёта").inputValue("05601863340")
-                .inField("Дата открытия").inputValue("02.02.2022")
+                .inField("Полное наименование ТОФК").selectValue(PROPERTIES.getProperty("Полное наименование ТОФК"))
+                .inField("Код ТОФК открытия по сводному реестру").inputValue(PROPERTIES.getProperty("Код ТОФК открытия по сводному реестру"))
+                .inField("Код ОРФК обслуживания").selectValue(PROPERTIES.getProperty("Код ОРФК обслуживания"))
+                .inField("Код типа лицевого счёта").selectValue(PROPERTIES.getProperty("Код типа лицевого счёта"))
+                .inField("Номер лицевого счёта").inputValue(PROPERTIES.getProperty("Номер лицевого счёта"))
+                .inField("Дата открытия").inputValue(PROPERTIES.getProperty("Дата открытия"))
                 .clickButton("Сохранить");
     }
     @Step("Блок «Данные о руководителе / уполномоченном лице компании»")
@@ -272,15 +272,15 @@ public class Test_02_08_02_3 extends HooksTEST{
 
         //Заполнение полей
         new GUIFunctions().inContainer("Данные о руководителе / уполномоченном лице компании")
-                .inField("Фамилия").inputValue("Летов")
-                .inField("Имя").inputValue("Игорь")
-                .inField("Отчество").inputValue("Федорович")
-                .inField("Должность").inputValue("поэт")
-                .inField("Реквизиты документа, на основании которого действует руководитель / уполномоченное лицо").inputValue("доверенность")
-                .inField("ИНН").inputValue("1234567890")
-                .inField("СНИЛС").inputValue("12345678901")
-                .inField("E-mail").inputValue("wor_ld@mai-l.ru")
-                .inField("Телефон").inputValue("1234567891");
+                .inField("Фамилия").inputValue(PROPERTIES.getProperty("Фамилия"))
+                .inField("Имя").inputValue(PROPERTIES.getProperty("Имя"))
+                .inField("Отчество").inputValue(PROPERTIES.getProperty("Отчество"))
+                .inField("Должность").inputValue(PROPERTIES.getProperty("Должность"))
+                .inField("Реквизиты документа, на основании которого действует руководитель / уполномоченное лицо").inputValue(PROPERTIES.getProperty("Реквизиты документа"))
+                .inField("ИНН").inputValue(PROPERTIES.getProperty("ИНН"))
+                .inField("СНИЛС").inputValue(PROPERTIES.getProperty("СНИЛС"))
+                .inField("E-mail").inputValue(PROPERTIES.getProperty("E-mail"))
+                .inField("Телефон").inputValue(PROPERTIES.getProperty("Телефон"));
     }
 
     @Step("Блок «Контактные данные лица, ответственного за работу в ГИИС Электронный бюджет»")
@@ -296,11 +296,11 @@ public class Test_02_08_02_3 extends HooksTEST{
 
         //Заполнение полей
         new GUIFunctions().inContainer("Контактные данные лица, ответственного за работу в ГИИС \"Электронный бюджет\"")
-                .inField("Фамилия").inputValue("Летов")
-                .inField("Имя").inputValue("Игорь")
-                .inField("Отчество").inputValue("Федорович")
-                .inField("Телефон").inputValue("1234567891")
-                .inField("E-mail").inputValue("wor_ld@mai-l.ru");
+                .inField("Фамилия").inputValue(PROPERTIES.getProperty("Фамилия"))
+                .inField("Имя").inputValue(PROPERTIES.getProperty("Имя"))
+                .inField("Отчество").inputValue(PROPERTIES.getProperty("Отчество"))
+                .inField("Телефон").inputValue(PROPERTIES.getProperty("Телефон"))
+                .inField("E-mail").inputValue(PROPERTIES.getProperty("E-mail"));
     }
     @Step("Блок «Подтверждение сведений Заявителем»")
     private void step14(){
