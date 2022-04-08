@@ -51,12 +51,12 @@ public class Test_03_07_02_1_130 extends HooksTEST {
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PRECONDITION + "processID.txt");
         docNum = JupyterLabIntegration.getFileContent(WAY_TEST_DOC_NUM + "docNum.txt");
 
-        if (!RESTFunctions.getOrderStatus(processID).equals(DOC_STATUS)) {
-            System.out.println("Перепрогон предыдущего теста");
-            new Test_03_07_02_1_120().steps();
-            CommonFunctions.wait(20);
-            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PRECONDITION + "processID.txt");
-        }
+//        if (!RESTFunctions.getOrderStatus(processID).equals(DOC_STATUS)) {
+//            System.out.println("Перепрогон предыдущего теста");
+//            new Test_03_07_02_1_120().steps();
+//            CommonFunctions.wait(20);
+//            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PRECONDITION + "processID.txt");
+//        }
     }
 
     @Step("Авторизация в ЕЛК")

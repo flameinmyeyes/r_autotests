@@ -52,14 +52,14 @@ public class Test_03_07_02_1_80 extends HooksTEST {
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
-        if(!status.equals("Оплата счёта")) {
-            System.out.println("Перепрогон предыдущего теста");
-
-            Test_03_07_02_1_70 test_03_07_02_1_70 = new Test_03_07_02_1_70();
-            test_03_07_02_1_70.steps();
-            CommonFunctions.wait(10);
-            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-        }
+//        if(!status.equals("Оплата счёта")) {
+//            System.out.println("Перепрогон предыдущего теста");
+//
+//            Test_03_07_02_1_70 test_03_07_02_1_70 = new Test_03_07_02_1_70();
+//            test_03_07_02_1_70.steps();
+//            CommonFunctions.wait(10);
+//            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+//        }
     }
 
     @Step("Авторизация")
