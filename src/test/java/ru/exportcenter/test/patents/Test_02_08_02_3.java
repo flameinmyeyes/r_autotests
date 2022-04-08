@@ -58,10 +58,8 @@ public class Test_02_08_02_3 extends HooksTEST{
 //                .authorization(PROPERTIES.getProperty("Авторизация.Email"),PROPERTIES.getProperty("Авторизация.Пароль"))
 //                .waitForLoading();
 
-        new GUIFunctions().inContainer("Вход в личный кабинет")
-                .inField("Email").inputValue(PROPERTIES.getProperty("Авторизация.Email"))
-                .inField("Пароль").inputValue(PROPERTIES.getProperty("Авторизация.Пароль"))
-                .clickButton("Войти")
+        new GUIFunctions()
+                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"))
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
