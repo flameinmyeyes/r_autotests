@@ -19,7 +19,7 @@ public class Field extends ElementData {
         String inputField = new XPath(this).getInputXPath();
         String item = new XPath(this).getSearchedValueXPath(value);
         $x(inputField).click();
-        $x(inputField).setValue(value);
+//        $x(inputField).setValue(value);
         $x(item).click();
     }
 
