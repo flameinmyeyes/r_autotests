@@ -26,10 +26,9 @@ public class Test_03_07_02_1_130 extends HooksTEST {
      */
 
     private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_130/";
-    private final String WAY_TEST_PRECONDITION = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_120/";
-    private final String WAY_TEST_DOC_NUM = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_10/";
+//    private final String WAY_TEST_PRECONDITION = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_120/";
+    public String WAY_TEST_FIRST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_10/";
     private final Properties P = PropertiesHandler.parseProperties(WAY_TEST + "Test_03_07_02_1_130.xml");
-    private final String DOC_STATUS = "Выбор вида предоставления закрывающих документов";
     private String processID;
     private String docNum;
 
@@ -48,10 +47,12 @@ public class Test_03_07_02_1_130 extends HooksTEST {
 
     @Step("Выполнение предусловий")
     public void precondition() {
-        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PRECONDITION + "processID.txt");
-        docNum = JupyterLabIntegration.getFileContent(WAY_TEST_DOC_NUM + "docNum.txt");
+        processID = JupyterLabIntegration.getFileContent(WAY_TEST_FIRST + "processID.txt");
+        docNum = JupyterLabIntegration.getFileContent(WAY_TEST_FIRST + "docNum.txt");
+        String status = RESTFunctions.getOrderStatus(processID);
+        System.out.println(status);
 
-//        if (!RESTFunctions.getOrderStatus(processID).equals(DOC_STATUS)) {
+//        if (!status.equals("Выбор вида предоставления закрывающих документов")) {
 //            System.out.println("Перепрогон предыдущего теста");
 //            new Test_03_07_02_1_120().steps();
 //            CommonFunctions.wait(20);
@@ -123,9 +124,6 @@ public class Test_03_07_02_1_130 extends HooksTEST {
         }
 
         System.out.println(RESTFunctions.getOrderStatus(processID));
-
-        JupyterLabIntegration.uploadTextContent(docNum, WAY_TEST, "docNum.txt");
-        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
     }
 
     public void refreshTab(String expectedXpath, int times) {
