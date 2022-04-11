@@ -77,7 +77,7 @@ run_regression_tests_job: #Test_&_send:
     - whoami
     - chmod +x ./send_results.sh
     - >
-      if [ -z $TEST_NAME ]; then
+      if [ -z "$TEST_NAME" ]; then
         echo "run specific test"
         mvn test -Dtest=$TEST_NAME || echo "[ERROR] Выполнение тестов завершилось с ошибкой"
       else
