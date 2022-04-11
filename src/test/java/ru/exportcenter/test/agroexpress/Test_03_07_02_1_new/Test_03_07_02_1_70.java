@@ -24,8 +24,8 @@ public class Test_03_07_02_1_70 extends HooksTEST {
 
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_70/";
-    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_60/";
-    private final String WAY_TEST_DOC_NUM = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_10/";
+//    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_60/";
+    public String WAY_TEST_FIRST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_10/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_70_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
@@ -49,7 +49,7 @@ public class Test_03_07_02_1_70 extends HooksTEST {
 
     @Step("Предусловия")
     public void preconditions() {
-        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        processID = JupyterLabIntegration.getFileContent(WAY_TEST_FIRST + "processID.txt");
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
@@ -79,8 +79,8 @@ public class Test_03_07_02_1_70 extends HooksTEST {
     @Step("Навигация")
     public void step02() {
         CommonFunctions.printStep();
-        docNum = JupyterLabIntegration.getFileContent(WAY_TEST_DOC_NUM + "docNum.txt");
-        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        docNum = JupyterLabIntegration.getFileContent(WAY_TEST_FIRST + "docNum.txt");
+        processID = JupyterLabIntegration.getFileContent(WAY_TEST_FIRST + "processID.txt");
 
         System.out.println(docNum);
 
@@ -105,8 +105,6 @@ public class Test_03_07_02_1_70 extends HooksTEST {
 //      Развернуть аккордеон "Подтверждение оплаты счета"
         new GUIFunctions().clickButton("Подтверждение оплаты счета")
                 .clickByLocator("//div[@role = 'button' and text() = 'Заявка Логистика. Доставка продукции \"Агроэкспрессом.pdf']");
-
-        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
     }
 
     private void refreshTab(String expectedXpath, int times) {

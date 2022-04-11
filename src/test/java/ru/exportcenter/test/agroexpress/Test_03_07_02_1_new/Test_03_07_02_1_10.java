@@ -227,8 +227,6 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
         Assert.assertEquals(status, "Проводится проверка");
-
-        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
     }
 
     public void refreshTab(String expectedXpath, int times) {
