@@ -25,7 +25,7 @@ public class Test_03_07_01_1 extends HooksTEST {
     private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_01_1/";
     private final Properties P = PropertiesHandler.parseProperties(WAY_TEST + "Test_03_07_01_1.xml");
 
-    @Owner(value = "Максимова Диана")
+    @Owner(value = "Диана Максимова")
     @Description("03 07 01.1 Авторизация экспортера в ФГАИС \"Одно окно\". Выбор Сервиса. Ознакомление с описанием Сервиса")
     @Link(name = "Test_03_07_01_1", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=127898840")
 
@@ -38,12 +38,16 @@ public class Test_03_07_01_1 extends HooksTEST {
 
     @Step("Авторизация")
     public void step01() {
+        CommonFunctions.printStep();
+
         new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль"), P.getProperty("Код подтвержения"))
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
     @Step("Навигация через Поиск")
     public void step02() {
+        CommonFunctions.printStep();
+
         new GUIFunctions().selectTab("Сервисы")
                 .waitForURL("https://master-portal.t.exportcenter.ru/services/business")
                 .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"");
@@ -51,6 +55,8 @@ public class Test_03_07_01_1 extends HooksTEST {
 
     @Step("Получение информации о сервисе")
     public void step03() {
+        CommonFunctions.printStep();
+
         new GUIFunctions().closeAllPopupWindows()
                 .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Подробнее")
                 .waitForURL("https://master-portal.t.exportcenter.ru/services/business" +
