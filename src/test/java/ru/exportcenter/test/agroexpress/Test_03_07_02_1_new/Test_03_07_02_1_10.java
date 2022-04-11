@@ -121,8 +121,8 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
                 .inContainer("Информация для оказания услуги")
                 .inField("Город отправления").selectValue(PROPERTIES.getProperty("Информация для оказания услуги.Город отправления")).assertNoControl().assertValue()
                 .inField("Город назначения").selectValue(PROPERTIES.getProperty("Информация для оказания услуги.Город назначения")).assertNoControl().assertValue()
-//                .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON()
-//                .inField("Адрес").inputValue(PROPERTIES.getProperty("Информация для оказания услуги.Адрес")).assertNoControl().assertValue()
+                .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON()
+                .inField("Адрес").inputValue(PROPERTIES.getProperty("Информация для оказания услуги.Адрес")).assertNoControl().assertValue()
                 .inField("Предполагаемая дата отправления груза").inputValue(DateFunctions.dateShift("dd.MM.yyyy", 14)).assertValue();
     }
 
@@ -203,7 +203,7 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Дополнительные услуги")
-//                .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertNoControl()
+                .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertNoControl()
                 .inField("Таможенное оформление").setCheckboxON().assertNoControl()
                 .inField("РЖД Логистика").setRadiobuttonByDescription("Комплексная услуга таможенного оформления")
                 .inField("Оформление ветеринарного сертификата").setCheckboxON().assertNoControl()
@@ -224,6 +224,7 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
     @Step("Проверка изменения статуса заявки")
     public void step10() {
         CommonFunctions.printStep();
+        CommonFunctions.wait(20);
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
         Assert.assertEquals(status, "Проводится проверка");
