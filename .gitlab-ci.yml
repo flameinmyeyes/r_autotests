@@ -78,8 +78,10 @@ run_regression_tests_job: #Test_&_send:
     - chmod +x ./send_results.sh
     - >
       if [ -z "$TEST_NAME" ]; then
+        echo "run specific test"
         mvn test -Dtest=$TEST_NAME || echo "[ERROR] Выполнение тестов завершилось с ошибкой"
       else
+        echo "run testng"
         mvn test -Dsurefire.suiteXmlFiles=testng.xml || echo "[ERROR] Выполнение тестов завершилось с ошибкой"
       fi
     - ./send_results.sh || echo "[ERROR] Отправка результатов в Allure завершилась с ошибкой"
