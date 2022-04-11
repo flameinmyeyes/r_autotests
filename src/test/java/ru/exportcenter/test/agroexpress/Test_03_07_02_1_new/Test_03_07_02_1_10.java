@@ -224,6 +224,7 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
     @Step("Проверка изменения статуса заявки")
     public void step10() {
         CommonFunctions.printStep();
+        CommonFunctions.wait(20);
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
         Assert.assertEquals(status, "Проводится проверка");
