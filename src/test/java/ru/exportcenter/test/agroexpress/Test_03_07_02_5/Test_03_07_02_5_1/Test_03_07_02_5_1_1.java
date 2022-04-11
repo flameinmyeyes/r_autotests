@@ -27,7 +27,7 @@ public class Test_03_07_02_5_1_1 extends HooksTEST_agroexpress {
     private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_5/Test_03_07_02_5_1/Test_03_07_02_5_1_1/";
     private final Properties P = PropertiesHandler.parseProperties(WAY_TEST + "Test_03_07_02_5_1_1.xml");
 
-    @Owner(value = "Максимова Диана")
+    @Owner(value = "Диана Максимова")
     @Description("03 07 02.5.1.1 Отмена Заявки на шаге \"Заполнение заявки\" по инициативе Клиента")
     @Link(name = "Test_03_07_02_5_1_1", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=127896596")
 
@@ -45,6 +45,7 @@ public class Test_03_07_02_5_1_1 extends HooksTEST_agroexpress {
 
     @Step("Авторизация")
     public void step01() {
+        CommonFunctions.printStep();
 
         new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль"), P.getProperty("Код подтвержения"))
                 .waitForElementDisplayed("(//*[contains(text(),'Логистика. Доставка продукции \"Агроэкспрессом\"')])[1]")
@@ -76,6 +77,8 @@ public class Test_03_07_02_5_1_1 extends HooksTEST_agroexpress {
 
     @Step("Авторизация")
     public void step02() {
+        CommonFunctions.printStep();
+
         String titleLocator = "//span[contains(text(),'Логистика. Доставка продукции \"Агроэкспрессом\"')]";
 
         String docNum = $x(titleLocator).getText().split("№")[1];
