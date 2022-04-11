@@ -28,7 +28,7 @@ public class Test_03_07_01 extends HooksTEST {
     private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_01/";
     private final Properties P = PropertiesHandler.parseProperties(WAY_TEST + "Test_03_07_01.xml");
 
-    @Owner(value = "Максимова Диана")
+    @Owner(value = "Диана Максимова")
     @Description("03 07 01 Заполнение Заявки на получение услуги (сценарий 1)")
     @Link(name = "Test_03_07_01", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=117902466")
 
@@ -46,12 +46,16 @@ public class Test_03_07_01 extends HooksTEST {
 
     @Step("Авторизация")
     public void step01() {
+        CommonFunctions.printStep();
+
         new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль"))
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
     @Step("Навигация")
     public void step02() {
+        CommonFunctions.printStep();
+
         new GUIFunctions().selectTab("Сервисы")
                 .waitForURL("https://master-portal.t.exportcenter.ru/services/business")
                 .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
@@ -66,12 +70,16 @@ public class Test_03_07_01 extends HooksTEST {
 
     @Step("Заполнить область «Информация о компании»")
     public void step03() {
+        CommonFunctions.printStep();
+
         new GUIFunctions().inContainer("Информация о компании")
                 .inField("Почтовый адрес").inputValue(P.getProperty("Почтовый адрес")).assertValue().assertNoControl();
     }
 
     @Step("Заполнить область «Информация о заявителе»")
     public void step04() {
+        CommonFunctions.printStep();
+
         new GUIFunctions().inContainer("Информация о заявителе")
                 .inField("Дополнительный контакт").setCheckboxON().assertNoControl()
                 .inField("ФИО").inputValue(P.getProperty("Заявитель.ФИО")).assertValue().assertNoControl()
@@ -82,6 +90,8 @@ public class Test_03_07_01 extends HooksTEST {
 
     @Step("Заполнить область «Информация для оказания услуги»")
     public void step05() {
+        CommonFunctions.printStep();
+
         String departureDate = P.getProperty("Дата отправления");
         if (departureDate.equals("")) {
             departureDate = DateFunctions.dateShift("dd.MM.yyyy", 14);
@@ -97,6 +107,8 @@ public class Test_03_07_01 extends HooksTEST {
 
     @Step("Заполнить область «Информация о грузе»")
     public void step06() {
+        CommonFunctions.printStep();
+
         new GUIFunctions().inContainer("Информация о грузе")
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
@@ -111,8 +123,9 @@ public class Test_03_07_01 extends HooksTEST {
 
     @Step("Заполнить область «Информация о грузополучателе»")
     public void step07() {
-        new GUIFunctions()
-                .inContainer("Информация о грузополучателе")
+        CommonFunctions.printStep();
+
+        new GUIFunctions().inContainer("Информация о грузополучателе")
                 .inField("Наименование грузополучателя").inputValue(P.getProperty("Наименование грузополучателя")).assertValue().assertNoControl()
                 .inField("Страна").inputValue(P.getProperty("Страна")).assertValue().assertNoControl()
                 .inField("Город").inputValue(P.getProperty("Город")).assertValue().assertNoControl()
@@ -127,6 +140,8 @@ public class Test_03_07_01 extends HooksTEST {
 
     @Step("Заполнить область «Дополнительные услуги»")
     public void step08() {
+        CommonFunctions.printStep();
+
         new GUIFunctions().inContainer("Дополнительные услуги")
                 .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertNoControl()
                 .inField("Адрес").assertValue(P.getProperty("Адрес")).assertEditable().assertNoControl()

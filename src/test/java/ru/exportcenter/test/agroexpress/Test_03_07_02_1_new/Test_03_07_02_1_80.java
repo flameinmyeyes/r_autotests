@@ -23,8 +23,8 @@ import static com.codeborne.selenide.Selenide.refresh;
 public class Test_03_07_02_1_80 extends HooksTEST {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_80/";
-    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_70/";
-    private final String WAY_TEST_DOC_NUM = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_10/";
+//    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_70/";
+    public String WAY_TEST_FIRST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_10/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_80_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
@@ -48,7 +48,7 @@ public class Test_03_07_02_1_80 extends HooksTEST {
 
     @Step("Предусловия")
     public void preconditions() {
-        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        processID = JupyterLabIntegration.getFileContent(WAY_TEST_FIRST + "processID.txt");
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
@@ -77,7 +77,7 @@ public class Test_03_07_02_1_80 extends HooksTEST {
     @Step("Навигация")
     public void step02() {
         CommonFunctions.printStep();
-        docNum = JupyterLabIntegration.getFileContent(WAY_TEST_DOC_NUM + "docNum.txt");
+        docNum = JupyterLabIntegration.getFileContent(WAY_TEST_FIRST + "docNum.txt");
 
         System.out.println(docNum);
 
@@ -110,10 +110,7 @@ public class Test_03_07_02_1_80 extends HooksTEST {
             }
         }
 
-        new GUIFunctions()
-                .waitForElementDisplayed("//*[contains(text(), 'АО \"РЖД Логистика\" осуществляет проверку поступления денежных средств на Счет')]");
-
-        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
+        new GUIFunctions().waitForElementDisplayed("//*[contains(text(), 'АО \"РЖД Логистика\" осуществляет проверку поступления денежных средств на Счет')]");
     }
 
     private void refreshTab(String expectedXpath, int times) {

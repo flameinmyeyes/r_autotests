@@ -30,7 +30,7 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
     private final Properties P = PropertiesHandler.parseProperties(WAY_TEST + "Test_03_07_03_1_10.xml");
     private String processID;
 
-    @Owner(value = "Максимова Диана")
+    @Owner(value = "Диана Максимова")
     @Description("03 07 03.1.10 Ввод и редактирование данных Заявки (Полный контейнер). Отправка Заявки на рассмотрение")
     @Link(name = "Test_03_07_03_1_10", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123878854")
 
@@ -48,14 +48,19 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
 
     @Step("Авторизация")
     public void step01() {
+        CommonFunctions.printStep();
+
         new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль"), P.getProperty("Код подтвержения"))
-                .waitForElementDisplayed("(//*[contains(text(),'Логистика. Доставка продукции \"Агроэкспрессом\"')])[1]");
+                .waitForElementDisplayed("(//*[contains(text(),'Логистика. Доставка продукции \"Агроэкспрессом\"')])[1]")
+                .closeAllPopupWindows();
 
         errorCompensation();
 
         processID = CommonFunctions.getProcessIDFromURL();
 
-        new GUIFunctions().clickButton("Продолжить");
+        new GUIFunctions().clickButton("Продолжить")
+                .waitForElementDisplayed("//div[div[text()='Логистика. Доставка продукции \"Агроэкспрессом\"']]/button")
+                .closeAllPopupWindows();
     }
 
     public static void errorCompensation() {
@@ -77,14 +82,17 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
 
     @Step("Заполнить область «Информация о компании»")
     public void step02() {
+        CommonFunctions.printStep();
+
         new GUIFunctions().inContainer("Информация о компании")
                 .inField("Почтовый адрес").inputValue(P.getProperty("Почтовый адрес")).assertValue().assertNoControl();
     }
 
     @Step("Заполнить область «Информация о заявителе»")
     public void step03() {
-        new GUIFunctions().closeAllPopupWindows()
-                .inContainer("Информация о заявителе")
+        CommonFunctions.printStep();
+
+        new GUIFunctions().inContainer("Информация о заявителе")
                 .inField("Дополнительный контакт").setCheckboxON().assertNoControl()
                 .inField("ФИО").inputValue(P.getProperty("Заявитель.ФИО")).assertValue().assertNoControl()
                 .inField("Телефон").inputValue(P.getProperty("Заявитель.Телефон")).assertValue().assertNoControl()
@@ -94,6 +102,8 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
 
     @Step("Заполнить область «Информация для оказания услуги»")
     public void step04() {
+        CommonFunctions.printStep();
+
         String departureDate = P.getProperty("Дата отправления");
         if (departureDate.equals("")) {
             departureDate = DateFunctions.dateShift("dd.MM.yyyy", 14);
@@ -109,11 +119,11 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
 
     @Step("Заполнить область «Информация о грузе»")
     public void step05() {
+        CommonFunctions.printStep();
 
         String removedName = P.getProperty("1.Наименование продукции");
 
-        new GUIFunctions().closeAllPopupWindows()
-                .inContainer("Информация о грузе")
+        new GUIFunctions().inContainer("Информация о грузе")
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
                 .inField("Наименование продукции").selectValue(removedName).assertValue().assertNoControl()
@@ -127,8 +137,7 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
                 .inField("Тип контейнера").selectValue(P.getProperty("1.Тип контейнера")).assertValue().assertNoControl()
                 .clickButton("Сохранить");
 
-        new GUIFunctions().closeAllPopupWindows()
-                .inContainer("Информация о грузе")
+        new GUIFunctions().inContainer("Информация о грузе")
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
                 .clickButton("Добавить новую")
@@ -147,8 +156,9 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
 
     @Step("Заполнить область «Информация о грузополучаеле»")
     public void step06() {
-        new GUIFunctions().closeAllPopupWindows()
-                .inContainer("Информация о грузополучателе")
+        CommonFunctions.printStep();
+
+        new GUIFunctions().inContainer("Информация о грузополучателе")
                 .inField("Наименование грузополучателя").inputValue(P.getProperty("Наименование грузополучателя")).assertValue().assertNoControl()
                 .inField("Страна").inputValue(P.getProperty("Страна")).assertValue().assertNoControl()
                 .inField("Город").inputValue(P.getProperty("Город")).assertValue().assertNoControl()
@@ -166,8 +176,9 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
 
     @Step("Заполнить область «Дополнительные услуги»")
     public void step07() {
-        new GUIFunctions().closeAllPopupWindows()
-                .inContainer("Дополнительные услуги")
+        CommonFunctions.printStep();
+
+        new GUIFunctions().inContainer("Дополнительные услуги")
                 .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertNoControl()
                 .inField("Адрес").assertValue(P.getProperty("Адрес")).assertEditable().assertNoControl()
                 .inField("Таможенное оформление").setCheckboxON().assertNoControl()
@@ -180,6 +191,8 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
 
     @Step("Отправка Заявки на рассмотрение ")
     public void step08() {
+        CommonFunctions.printStep();
+
         String docNum = $x("//div[contains (@class, 'FormHeader_title' )]//span[contains (@class, 'Typography_body' )]").getText().split("№")[1];
 
         new GUIFunctions().clickButton("Далее")

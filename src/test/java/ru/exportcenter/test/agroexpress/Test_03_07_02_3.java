@@ -25,7 +25,7 @@ public class Test_03_07_02_3 extends HooksTEST {
     private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_3/";
     private final Properties P = PropertiesHandler.parseProperties(WAY_TEST + "Test_03_07_02_3.xml");
 
-    @Owner(value = "Максимова Диана")
+    @Owner(value = "Диана Максимова")
     @Description("03 07 02.3 Авторизация экспортера в ФГАИС \"Одно окно\". Выбор Сервиса. Ознакомление с описанием Сервиса")
     @Link(name = "Test_03_07_02_3", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123878353")
 
@@ -38,13 +38,16 @@ public class Test_03_07_02_3 extends HooksTEST {
 
     @Step("Авторизация")
     public void step01() {
-        new GUIFunctions()
-                .authorization(P.getProperty("Логин"), P.getProperty("Пароль")/*, P.getProperty("Код подтвержения")*/)
+        CommonFunctions.printStep();
+
+        new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль")/*, P.getProperty("Код подтвержения")*/)
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
     @Step("Навигация через Поиск")
     public void step02() {
+        CommonFunctions.printStep();
+
         new GUIFunctions().selectTab("Сервисы")
                 .waitForURL("https://master-portal.t.exportcenter.ru/services/business")
                 .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"");
@@ -52,8 +55,9 @@ public class Test_03_07_02_3 extends HooksTEST {
 
     @Step("Получение информации о сервисе")
     public void step03() {
-        new GUIFunctions()
-                .closeAllPopupWindows()
+        CommonFunctions.printStep();
+
+        new GUIFunctions().closeAllPopupWindows()
                 .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Подробнее")
                 .waitForURL("https://master-portal.t.exportcenter.ru/services/business" +
                         "/Prodvizhenie_na_vneshnie_rynki/Poisk_pokupatelya,_soprovozhdenie_peregovorov/" +

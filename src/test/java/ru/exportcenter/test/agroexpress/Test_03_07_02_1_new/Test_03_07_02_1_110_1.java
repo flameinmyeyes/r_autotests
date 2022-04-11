@@ -22,7 +22,8 @@ import static com.codeborne.selenide.Selenide.*;
 public class Test_03_07_02_1_110_1 extends HooksTEST_agroexpress {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_110_1/";
-    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_100/";
+//    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_100/";
+    public String WAY_TEST_FIRST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_10/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_110_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
@@ -45,7 +46,7 @@ public class Test_03_07_02_1_110_1 extends HooksTEST_agroexpress {
 
     @Step("Предусловия")
     public void precondition() {
-        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        processID = JupyterLabIntegration.getFileContent(WAY_TEST_FIRST + "processID.txt");
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
@@ -78,8 +79,6 @@ public class Test_03_07_02_1_110_1 extends HooksTEST_agroexpress {
                 .closeAllPopupWindows()
                 .clickButton("Продолжить")
                 .waitForElementDisplayed("//*[text() = 'Осуществляется перевозка']");
-
-        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
     }
 
     public void refreshTab(String expectedXpath, int times) {
