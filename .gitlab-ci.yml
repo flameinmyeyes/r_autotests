@@ -76,12 +76,5 @@ run_regression_tests_job: #Test_&_send:
     - echo $RUN_TYPE
     - whoami
     - chmod +x ./send_results.sh
-    - >
-      if [ -z "$TEST_NAME" ]; then
-        echo $TEST_NAME
-        mvn test -Dtest=$TEST_NAME || echo "[ERROR] Выполнение тестов завершилось с ошибкой"
-      else
-        echo $TEST_NAME
-        mvn test -Dsurefire.suiteXmlFiles=testng.xml || echo "[ERROR] Выполнение тестов завершилось с ошибкой"
-      fi
+    - mvn test -Dsurefire.suiteXmlFiles=testng.xml || echo "[ERROR] Выполнение тестов завершилось с ошибкой"
     - ./send_results.sh || echo "[ERROR] Отправка результатов в Allure завершилась с ошибкой"
