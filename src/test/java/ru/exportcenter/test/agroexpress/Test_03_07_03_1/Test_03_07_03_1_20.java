@@ -16,6 +16,7 @@ import net.sf.json.JSONObject;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
+import ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_10;
 
 import java.util.Properties;
 
@@ -25,7 +26,8 @@ import static com.codeborne.selenide.Selenide.open;
 public class Test_03_07_03_1_20 extends HooksTEST_agroexpress {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1/Test_03_07_03_1_20/";
-    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1/Test_03_07_03_1_10/";
+//    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1/Test_03_07_03_1_10/";
+    public String WAY_TEST_FIRST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1/Test_03_07_03_1_10/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_03_1_20_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
@@ -37,7 +39,7 @@ public class Test_03_07_03_1_20 extends HooksTEST_agroexpress {
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
-//        precondition();
+        precondition();
         step01();
         step02();
         step03();
@@ -51,11 +53,18 @@ public class Test_03_07_03_1_20 extends HooksTEST_agroexpress {
 
     @Step("Предусловия")
     public void precondition() {
-//        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        processID = JupyterLabIntegration.getFileContent(WAY_TEST_FIRST + "processID.txt");
+        String status = RESTFunctions.getOrderStatus(processID);
+        System.out.println(status);
 
-//        Test_03_07_02_1_10 previous_test = new Test_03_07_02_1_10();
-//        previous_test.steps();
-        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        if(!status.equals("Проводится проверка")) {
+            System.out.println("Перепрогон предыдущего теста");
+
+            Test_03_07_03_1_10 test_03_07_03_1_10 = new Test_03_07_03_1_10();
+            test_03_07_03_1_10.steps();
+            CommonFunctions.wait(20);
+            processID = JupyterLabIntegration.getFileContent(WAY_TEST_FIRST + "processID.txt");
+        }
     }
 
     @Step("Авторизация в Swagger")
@@ -66,7 +75,7 @@ public class Test_03_07_03_1_20 extends HooksTEST_agroexpress {
     @Step("Отправка JSON-запроса в Swagger")
     public void step02() {
         CommonFunctions.printStep();
-        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        processID = JupyterLabIntegration.getFileContent(WAY_TEST_FIRST + "processID.txt");
         docUUID = RESTFunctions.getOrderID(processID);
 
         String token = RESTFunctions.getAccessToken("bpmn_admin");
@@ -112,6 +121,5 @@ public class Test_03_07_03_1_20 extends HooksTEST_agroexpress {
         new GUIFunctions().waitForElementDisplayed("//*[text() = 'Расчёт стоимости']");
 
         JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST,"docUUID.txt");
-        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
     }
 }
