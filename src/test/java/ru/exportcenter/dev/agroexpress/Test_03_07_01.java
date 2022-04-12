@@ -1,5 +1,6 @@
 package ru.exportcenter.dev.agroexpress;
 
+import functions.common.CommonFunctions;
 import functions.gui.GUIFunctions;
 import framework.RunTestAgain;
 import io.qameta.allure.Description;
@@ -11,11 +12,15 @@ import ru.exportcenter.dev.HooksDEV;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.refresh;
-
+@Deprecated
 public class Test_03_07_01 extends HooksDEV {
 
-    @Owner(value = "Максимова Диана")
-    @Description("03 07 01 Заполнение Заявки на получение услуги (сценарий 1)")
+    /**
+     * Тестовый сценарий находится в орхиве
+     */
+
+    @Owner(value = "Диана Максимова")
+    @Description("03 07 01 Заполнение Заявки на получение услуги (сценарий 1) - архив")
     @Link(name = "Test_03_07_01", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=117902466")
 
     @Test(retryAnalyzer = RunTestAgain.class)
@@ -32,6 +37,8 @@ public class Test_03_07_01 extends HooksDEV {
 
     @Step("Авторизация")
     public void step01() {
+        CommonFunctions.printStep();
+
         new GUIFunctions().inContainer("Вход в личный кабинет")
                 .inField("Email").inputValue("demo_exporter")
                 .inField("Пароль").inputValue("password")
@@ -42,6 +49,8 @@ public class Test_03_07_01 extends HooksDEV {
 
     @Step("Навигация")
     public void step02() {
+        CommonFunctions.printStep();
+
         new GUIFunctions().selectTab("Сервисы")
                 .waitForURL("http://master-portal-dev.d.exportcenter.ru/services/business")
                 .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
@@ -65,12 +74,16 @@ public class Test_03_07_01 extends HooksDEV {
 
     @Step("Заполнить область «Информация о компании»")
     public void step03() {
+        CommonFunctions.printStep();
+
         new GUIFunctions().inContainer("Информация о компании")
                 .inField("Почтовый адрес").inputValue("Корнилаева 2").assertNoControl();
     }
 
     @Step("Заполнить область «Информация о заявителе»")
     public void step04() {
+        CommonFunctions.printStep();
+
         new GUIFunctions().inContainer("Информация о заявителе")
                 .inField("Дополнительный контакт").setCheckboxON().assertNoControl()
                 .inField("ФИО").inputValue("Иванов Иван Иванович").assertNoControl()
@@ -81,6 +94,8 @@ public class Test_03_07_01 extends HooksDEV {
 
     @Step("Заполнить область «Информация для оказания услуги»")
     public void step05() {
+        CommonFunctions.printStep();
+
         new GUIFunctions().inContainer("Информация для оказания услуги")
                 .inField("Город отправления").selectValue("Ярославль").assertNoControl()
                 .inField("Город назначения").selectValue("Шанхай").assertNoControl()
@@ -91,6 +106,8 @@ public class Test_03_07_01 extends HooksDEV {
 
     @Step("Заполнить область «Информация о грузе»")
     public void step06() {
+        CommonFunctions.printStep();
+
         new GUIFunctions().inContainer("Информация о грузе")
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
@@ -105,6 +122,8 @@ public class Test_03_07_01 extends HooksDEV {
 
     @Step("Заполнить область «Информация о грузополучателе»")
     public void step07() {
+        CommonFunctions.printStep();
+
         new GUIFunctions().inContainer("Информация о грузополучателе")
                 .inField("Наименование грузополучателя").inputValue("Ss-password").assertNoControl()
                 .inField("Страна").inputValue("USA").assertNoControl()
@@ -120,6 +139,8 @@ public class Test_03_07_01 extends HooksDEV {
 
     @Step("Заполнить область «Дополнительные услуги»")
     public void step08() {
+        CommonFunctions.printStep();
+
         new GUIFunctions().inContainer("Дополнительные услуги")
                 .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertNoControl()
                 .inField("Адрес").assertValue("Молодежная улица").assertEditable().assertNoControl()

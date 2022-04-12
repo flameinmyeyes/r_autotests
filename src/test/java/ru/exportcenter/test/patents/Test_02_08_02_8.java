@@ -39,12 +39,16 @@ public class Test_02_08_02_8 extends HooksTEST {
 
     @Step("Авторизация")
     public void step01() {
+        CommonFunctions.printStep();
+
         new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль"))
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
     @Step("Навигация через Поиск")
     public void step02() {
+        CommonFunctions.printStep();
+
         //Перейти во вкладку «Сервисы»
         new GUIFunctions().selectTab("Сервисы")
                 .waitForURL("https://master-portal.t.exportcenter.ru/services/business");

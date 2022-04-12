@@ -24,8 +24,8 @@ import static com.codeborne.selenide.Selenide.refresh;
 public class Test_03_07_02_1_50 extends HooksTEST {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_50/";
-    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_40/";
-    private final String WAY_TEST_DOC_NUM = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_10/";
+//    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_40/";
+    private String WAY_TEST_FIRST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_10/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_50_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
@@ -51,7 +51,7 @@ public class Test_03_07_02_1_50 extends HooksTEST {
 
     @Step("Предусловия")
     public void precondition() {
-        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        processID = JupyterLabIntegration.getFileContent(WAY_TEST_FIRST + "processID.txt");
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
@@ -61,7 +61,7 @@ public class Test_03_07_02_1_50 extends HooksTEST {
             Test_03_07_02_1_40 test_03_07_02_1_40 = new Test_03_07_02_1_40();
             test_03_07_02_1_40.steps();
             CommonFunctions.wait(20);
-            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+            processID = JupyterLabIntegration.getFileContent(WAY_TEST_FIRST + "processID.txt");
         }
     }
 
@@ -77,7 +77,7 @@ public class Test_03_07_02_1_50 extends HooksTEST {
     @Step("Навигация")
     public void step02() {
         CommonFunctions.printStep();
-        docNum = JupyterLabIntegration.getFileContent(WAY_TEST_DOC_NUM + "docNum.txt");
+        docNum = JupyterLabIntegration.getFileContent(WAY_TEST_FIRST + "docNum.txt");
 
         System.out.println(docNum);
 
@@ -125,8 +125,6 @@ public class Test_03_07_02_1_50 extends HooksTEST {
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
         Assert.assertEquals(status, "Формирование счёта");
-
-        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
     }
 
     public void refreshTab(String expectedXpath, int times) {

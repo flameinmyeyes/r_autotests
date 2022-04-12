@@ -17,7 +17,8 @@ import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
 public class Test_03_07_02_1_60 extends HooksTEST_agroexpress {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_60/";
-    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_40/";
+//    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_40/";
+    public String WAY_TEST_FIRST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_10/";
     private String processID;
 
     @Owner(value="Ворожко Александр")
@@ -37,7 +38,7 @@ public class Test_03_07_02_1_60 extends HooksTEST_agroexpress {
 
     @Step("Предусловия")
     public void precondition() {
-        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        processID = JupyterLabIntegration.getFileContent(WAY_TEST_FIRST + "processID.txt");
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
@@ -47,7 +48,7 @@ public class Test_03_07_02_1_60 extends HooksTEST_agroexpress {
             Test_03_07_02_1_50 test_03_07_02_1_50 = new Test_03_07_02_1_50();
             test_03_07_02_1_50.steps();
             CommonFunctions.wait(10);
-            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+            processID = JupyterLabIntegration.getFileContent(WAY_TEST_FIRST + "processID.txt");
         }
     }
 
@@ -67,8 +68,6 @@ public class Test_03_07_02_1_60 extends HooksTEST_agroexpress {
         }
 
         Assert.assertEquals(status, "Оплата счёта");
-
-        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
     }
 
 }

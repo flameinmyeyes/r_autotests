@@ -17,6 +17,7 @@ import io.restassured.RestAssured;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
+import ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_20;
 
 import java.util.Properties;
 
@@ -25,19 +26,21 @@ import static com.codeborne.selenide.Selenide.*;
 public class Test_03_07_03_1_40 extends HooksTEST_agroexpress {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1/Test_03_07_03_1_40/";
-    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1/Test_03_07_03_1_20/";
+//    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1/Test_03_07_03_1_20/";
+    public String WAY_TEST_FIRST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1/Test_03_07_03_1_10/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_03_1_40_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
     private String token;
-    private String orderID;
+    private String docUUID;
 
     @Owner(value="Балашов Илья")
-    @Description("03 07 02.1.40 Получение скорректированной заявки с расчетом (интеграция)")
-    @Link(name="Test_03_07_02_1_40", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123872990")
+    @Description("03 07 03.1.40 (А)  Получение скорректированной заявки с расчетом (интеграция)")
+    @Link(name="Test_03_07_03_1_40", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=127897817")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
+        precondition();
         step01();
         step02();
         step03();
@@ -49,6 +52,23 @@ public class Test_03_07_03_1_40 extends HooksTEST_agroexpress {
         CommonFunctions.screenShot(WAY_TEST);
     }
 
+
+    @Step("Предусловия")
+    public void precondition() {
+        processID = JupyterLabIntegration.getFileContent(WAY_TEST_FIRST + "processID.txt");
+        String status = RESTFunctions.getOrderStatus(processID);
+        System.out.println(status);
+
+        if(!status.equals("Расчёт стоимости")) {
+            System.out.println("Перепрогон предыдущего теста");
+
+            Test_03_07_03_1_20 test_03_07_03_1_20 = new Test_03_07_03_1_20();
+            test_03_07_03_1_20.steps();
+            CommonFunctions.wait(20);
+            processID = JupyterLabIntegration.getFileContent(WAY_TEST_FIRST + "processID.txt");
+        }
+    }
+
     @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
@@ -58,9 +78,9 @@ public class Test_03_07_03_1_40 extends HooksTEST_agroexpress {
     @Step("Навигация и отправка JSON-запроса в Swagger")
     public void step02() {
         CommonFunctions.printStep();
-        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-        orderID = RESTFunctions.getOrderID(processID);
-        System.out.println("orderID: " + orderID);
+        processID = JupyterLabIntegration.getFileContent(WAY_TEST_FIRST + "processID.txt");
+        docUUID = RESTFunctions.getOrderID(processID);
+        System.out.println("docUUID: " + docUUID);
 
 //        cargoID = RESTFunctions.getCargoID(processID);
 //        System.out.println("cargoID: " + cargoID);
@@ -70,7 +90,7 @@ public class Test_03_07_03_1_40 extends HooksTEST_agroexpress {
         JsonObject jsonObject = JSONHandler.parseJSONfromString(jsonContent);
 
         JsonObject systemProp = jsonObject.get("systemProp").getAsJsonObject();
-        systemProp.addProperty("applicationId", orderID);
+        systemProp.addProperty("applicationId", docUUID);
         systemProp.addProperty("processInstanceId", processID);
 //        jsonObject.addProperty("cargoId", cargoID);
         System.out.println(jsonObject);
@@ -103,9 +123,6 @@ public class Test_03_07_03_1_40 extends HooksTEST_agroexpress {
     public void step04() {
         CommonFunctions.printStep();
         new GUIFunctions().waitForElementDisplayed("//div[text()='Статус']/following-sibling::div[text()='Подтверждение выбранных услуг']");
-
-        JupyterLabIntegration.uploadTextContent(orderID, WAY_TEST,"docUUID.txt");
-        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
     }
 
 }
