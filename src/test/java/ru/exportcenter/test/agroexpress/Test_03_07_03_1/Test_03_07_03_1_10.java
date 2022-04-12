@@ -197,7 +197,7 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
         String docNum = $x("//div[contains (@class, 'FormHeader_title' )]//span[contains (@class, 'Typography_body' )]").getText().split("№")[1];
 
         new GUIFunctions().clickButton("Далее")
-                .waitForElementDisplayed("//*[text()='Заявка отправлена на рассмотрение. Срок рассмотрения до 3 рабочих дней']");
+                .waitForElementDisplayed("//*[text()='Заявка отправлена на рассмотрение. Срок рассмотрения до 4 рабочих дней']");
 
         JupyterLabIntegration.uploadTextContent(docNum, WAY_TEST, "docNum.txt");
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
