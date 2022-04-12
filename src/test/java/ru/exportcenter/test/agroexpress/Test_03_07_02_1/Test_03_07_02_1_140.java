@@ -35,6 +35,8 @@ public class Test_03_07_02_1_140 extends HooksTEST_agroexpress {
     public void steps() {
         precondition();
         step01();
+        step02();
+        step03();
     }
 
     @AfterMethod
@@ -45,6 +47,7 @@ public class Test_03_07_02_1_140 extends HooksTEST_agroexpress {
     @Step("Выполнение предусловий")
     public void precondition() {
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        System.out.println(processID);
         docUUID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "docUUID.txt");
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
