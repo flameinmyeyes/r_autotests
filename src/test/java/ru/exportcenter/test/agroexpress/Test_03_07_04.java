@@ -18,6 +18,7 @@ import java.io.File;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.refresh;
 
+@Deprecated
 public class Test_03_07_04 extends HooksTEST {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_04/";
@@ -28,12 +29,12 @@ public class Test_03_07_04 extends HooksTEST {
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
         step01();
-//        step02();
-//        step03();
-//        step04();
-//        step05();
-//        step06();
-//        step07();
+        step02();
+        step03();
+        step04();
+        step05();
+        step06();
+        step07();
     }
 
     @AfterMethod
@@ -47,19 +48,19 @@ public class Test_03_07_04 extends HooksTEST {
         new GUIFunctions()
                 .inContainer("Вход в личный кабинет")
                         .inField("Email").inputValue("demo_exporter")
-                        .inField("Пароль").inputValue("password");
-//                .clickButton("Войти")
-//                .waitForURL("https://lk.t.exportcenter.ru/ru/main")
-//                .selectTab("Сервисы")
-//                .waitForURL("https://master-portal.t.exportcenter.ru/services/business")
-//                .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
-//                .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Оформить")
-//                .switchPageTo(1)
-//                .waitForLoading();
+                        .inField("Пароль").inputValue("password")
+                        .clickButton("Войти")
+                .waitForURL("https://lk.t.exportcenter.ru/ru/main")
+                .selectTab("Сервисы")
+                .waitForURL("https://master-portal.t.exportcenter.ru/services/business")
+                .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
+                .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Оформить")
+                .switchPageTo(1)
+                .waitForLoading();
 
-//        refreshTab("//*[contains(text(), 'Продолжить')]", 20);
-//        new GUIFunctions()
-//                .clickButton("Продолжить");
+        refreshTab("//*[contains(text(), 'Продолжить')]", 20);
+        new GUIFunctions()
+                .clickButton("Продолжить");
     }
 
     @Step("Заполнить область «Информация о компании»")

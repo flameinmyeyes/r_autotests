@@ -53,6 +53,7 @@ public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
     @Step("Предусловия")
     public void precondition() {
         processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        System.out.println(processID);
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 

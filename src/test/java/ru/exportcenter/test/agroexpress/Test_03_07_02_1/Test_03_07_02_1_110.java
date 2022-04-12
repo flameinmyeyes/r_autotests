@@ -43,10 +43,10 @@ public class Test_03_07_02_1_110 extends HooksTEST_agroexpress {
     public void steps() {
         precondition();
         step01();
-        step02();
-        step03();
-        step04();
-        step05();
+//        step02();
+//        step03();
+//        step04();
+//        step05();
         step06();
         step07();
     }
@@ -63,14 +63,14 @@ public class Test_03_07_02_1_110 extends HooksTEST_agroexpress {
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
-        if(!status.equals("Оказание услуги")) {
-            System.out.println("Перепрогон предыдущего теста");
-
-            Test_03_07_02_1_100 test_03_07_02_1_100 = new Test_03_07_02_1_100();
-            test_03_07_02_1_100.steps();
-            CommonFunctions.wait(20);
-            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-        }
+//        if(!status.equals("Оказание услуги")) {
+//            System.out.println("Перепрогон предыдущего теста");
+//
+//            Test_03_07_02_1_100 test_03_07_02_1_100 = new Test_03_07_02_1_100();
+//            test_03_07_02_1_100.steps();
+//            CommonFunctions.wait(20);
+//            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+//        }
     }
 
     @Step("Авторизация")
@@ -82,7 +82,6 @@ public class Test_03_07_02_1_110 extends HooksTEST_agroexpress {
     @Step("Навигация и отправка JSON-запроса в Swagger")
     public void step02() {
         CommonFunctions.printStep();
-        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
 
         System.out.println("orderID: " + docUUID);
 
