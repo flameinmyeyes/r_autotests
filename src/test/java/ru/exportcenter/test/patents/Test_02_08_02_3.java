@@ -41,6 +41,7 @@ public class Test_02_08_02_3 extends HooksTEST{
         step12();
         step13();
         step14();
+        step15();
     }
 
     @AfterMethod
@@ -51,12 +52,6 @@ public class Test_02_08_02_3 extends HooksTEST{
     @Step("Авторизация")
     private void step01(){
         CommonFunctions.printStep();
-
-        //Ввести логин и пароль demo_exporter/password
-//        new GUIFunctions()
-////                .authorization(PROPERTIES.getProperty("Авторизация.Email"),PROPERTIES.getProperty("Авторизация.Пароль"), "1234")
-//                .authorization(PROPERTIES.getProperty("Авторизация.Email"),PROPERTIES.getProperty("Авторизация.Пароль"))
-//                .waitForLoading();
 
         new GUIFunctions()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"))
@@ -302,6 +297,7 @@ public class Test_02_08_02_3 extends HooksTEST{
                 .inField("Телефон").inputValue(PROPERTIES.getProperty("Телефон"))
                 .inField("E-mail").inputValue(PROPERTIES.getProperty("E-mail"));
     }
+
     @Step("Блок «Подтверждение сведений Заявителем»")
     private void step14(){
         CommonFunctions.printStep();
@@ -323,6 +319,20 @@ public class Test_02_08_02_3 extends HooksTEST{
         new GUIFunctions().clickButton("Далее");
     }
 
+    @Step("Блок «Загрузка Заявки на локальный компьютер пользователя»")
+    private void step15() {
+        CommonFunctions.printStep();
+
+        // Проверка сохранения, печати и просмотра документа (проверка кнопок)
+        String downloadXPath = "//button[contains(@class,'downloadButton')][not(@disabled)][*[@viewBox='0 0 16 16']]";
+        String printXPath = "//button[contains(@class,'printButton')][not(@disabled)][*[@viewBox='0 0 22 22']]";
+        String viewXPath = "//button[contains(@class,'printButton')][not(@disabled)][*[@viewBox='0 0 16 10']]";
+
+        new GUIFunctions().waitForElementDisplayed(downloadXPath)
+                .waitForElementDisplayed(printXPath)
+                .waitForElementDisplayed(viewXPath);
+    }
+
     private void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
             new GUIFunctions().waitForLoading();
@@ -334,18 +344,4 @@ public class Test_02_08_02_3 extends HooksTEST{
             CommonFunctions.wait(1);
         }
     }
-
-//    public class MyThread extends Thread {
-//        @Override
-//        public void run() {
-//            int i = 1;
-//            GUIFunctions GUIF = new GUIFunctions();
-//            while(i>0) {
-//                System.out.println("closeAllPopupWindows()");
-//                GUIF.closeAllPopupWindows();
-//                CommonFunctions.wait(5);
-//            }
-//        }
-//    }
-
 }
