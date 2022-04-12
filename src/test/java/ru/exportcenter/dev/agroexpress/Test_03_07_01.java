@@ -12,11 +12,15 @@ import ru.exportcenter.dev.HooksDEV;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.refresh;
-
+@Deprecated
 public class Test_03_07_01 extends HooksDEV {
 
+    /**
+     * Тестовый сценарий находится в орхиве
+     */
+
     @Owner(value = "Диана Максимова")
-    @Description("03 07 01 Заполнение Заявки на получение услуги (сценарий 1)")
+    @Description("03 07 01 Заполнение Заявки на получение услуги (сценарий 1) - архив")
     @Link(name = "Test_03_07_01", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=117902466")
 
     @Test(retryAnalyzer = RunTestAgain.class)
