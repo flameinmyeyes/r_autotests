@@ -42,8 +42,6 @@ public class Test_02_08_02_4 extends HooksTEST {
 
     @Step("Авторизация")
     public void step01() {
-        //В браузере перейти по ссылке https://lk.t.exportcenter.ru/ru/login
-        //Ввести логин и пароль demo_exporter/password, нажать «Войти»
         new GUIFunctions()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForLoading()
