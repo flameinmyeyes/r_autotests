@@ -24,7 +24,6 @@ import static com.codeborne.selenide.Selenide.refresh;
 public class Test_03_07_02_1_50 extends HooksTEST {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_50/";
-//    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_40/";
     private String WAY_TEST_FIRST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_10/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_50_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
@@ -32,7 +31,7 @@ public class Test_03_07_02_1_50 extends HooksTEST {
     private String docNum;
 
     @Owner(value = "Петрищев Руслан")
-    @Description("03 07 02.1.50")
+    @Description("03 07 02.1.50 Редактирование выбранных услуг")
     @Link(name = "Test_03_07_02_1_50", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123878515")
 
     @Test(retryAnalyzer = RunTestAgain.class)
@@ -68,6 +67,8 @@ public class Test_03_07_02_1_50 extends HooksTEST {
     @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
+
+        //Ввести логин и пароль
         new GUIFunctions()
                 .authorization(PROPERTIES.getProperty("Логин"), PROPERTIES.getProperty("Пароль"), PROPERTIES.getProperty("Код подтвержения"))
                 .waitForLoading()
@@ -81,10 +82,12 @@ public class Test_03_07_02_1_50 extends HooksTEST {
 
         System.out.println(docNum);
 
+        //Открыть заявку
         new GUIFunctions().clickByLocator("//*[@class='Button_text__3lYJC']");
 
         new GUIFunctions().clickByLocator("//*[text()='№" + docNum + "']").waitForElementDisplayed("//div[text()='Статус']/following-sibling::div[text()='Подтверждение выбранных услуг']");
 
+        //Нажать кнопку «Продолжить»
         new GUIFunctions().closeAllPopupWindows().clickButton("Продолжить").waitForElementDisplayed("//*[text()='Расчет стоимости услуги']");
     }
 

@@ -24,7 +24,7 @@ public class Test_03_07_02_4 extends HooksTEST {
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     @Owner(value = "Петрищев Руслан")
-    @Description("ТК 03 07 02 4")
+    @Description("03 07 02.4 Просмотр перечня Заявок по сервису, созданных организацией. Создание Заявки. Ознакомление с функциональными возможностями сервиса (Onboarding)")
     @Link(name = "Test_03_07_02_4", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123878662")
 
     @Test(retryAnalyzer = RunTestAgain.class)
@@ -32,7 +32,6 @@ public class Test_03_07_02_4 extends HooksTEST {
         step01();
         step02();
         step03();
-//      step04(); //Недоделан функционал
     }
 
     @AfterMethod
@@ -72,24 +71,6 @@ public class Test_03_07_02_4 extends HooksTEST {
         open("https://lk.t.exportcenter.ru/ru/promo-service?key=agroexpress&serviceId=199d1559-632f-435b-a482-a5bb849b30ce&next_query=true");
         new GUIFunctions().waitForLoading();
 
-//        new GUIFunctions().waitForElementDisplayed("//input[@placeholder='Поиск по разделу']")
-//                .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"")
-//                .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Оформить");
-//
-//        //Перезагрузить страницу
-//        switchTo().window(1);
-//        new GUIFunctions().waitForElementDisplayed("//div[@class='Steps_stepsWrapper__2dJpS']");
-//        refreshTab("//*[text()='Продолжить']", 5);
-//
-//        //Нажать кнопку «Продолжить»
-//        new GUIFunctions().clickButton("Продолжить")
-//                .waitForElementDisplayed("//div[@class='FormOpenPanel_panelBody__2UbuF']");
-
-    }
-
-    @Step("Ознакомление с функциональными возможностями сервиса (Onboarding)")
-    public void step04() {
-        CommonFunctions.printStep();
     }
 
     private void refreshTab(String expectedXpath, int times) {
