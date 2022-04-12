@@ -12,6 +12,7 @@ import ru.exportcenter.dev.HooksDEV;
 
 import static com.codeborne.selenide.Selenide.*;
 
+@Deprecated
 public class Test_03_07_03 extends HooksDEV {
 
 //    private String WAY_TEST = Ways.UIDM_DEV.getWay() + "\\FUN_02\\BP_016\\FUN_02_BP_016_NSI_016_PZ_2_7_2_1\\";
