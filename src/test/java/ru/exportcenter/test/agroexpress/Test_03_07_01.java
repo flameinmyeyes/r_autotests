@@ -18,9 +18,11 @@ import java.util.Properties;
 
 import static ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_10.errorCompensation;
 
+@Deprecated
 public class Test_03_07_01 extends HooksTEST {
 
-    /*
+    /**
+     * Тестовый сценарий находится в орхиве
      * http://selenoidshare.d.exportcenter.ru/lab/tree/work/files_for_tests/test/agroexpress/Test_03_07_01
      * https://gitlab.exportcenter.ru/sub-service/autotests/rec_autotests/-/blob/master/src/test/java/ru/exportcenter/test/agroexpress/Test_03_07_01.java
      */
