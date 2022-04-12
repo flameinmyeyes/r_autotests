@@ -121,7 +121,7 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
     public void step05() {
         CommonFunctions.printStep();
 
-        String removedName = P.getProperty("1.Наименование продукции");
+        String removedName = P.getProperty("1.Наименование продукции"); // Название товара, который будет отменен
 
         new GUIFunctions().inContainer("Информация о грузе")
                 .clickButton("Добавить +")
@@ -149,9 +149,10 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
                 .inField("Тип контейнера").selectValue(P.getProperty("2.Тип контейнера")).assertValue().assertNoControl()
                 .clickButton("Сохранить");
 
-        $x("//td[text()='" + removedName + "']/ancestor::tr[1]//button").click();
-        $x("//td[text()='" + removedName + "']/ancestor::tr[1]//span[contains(text(), 'Удалить')]").click();
-        new GUIFunctions().waitForElementDisappeared("//td[text()='" + removedName + "']/ancestor::tr[1]");
+        new GUIFunctions() // Удалить первый товар
+                .clickByLocator("//td[text()='" + removedName + "']/ancestor::tr[1]//button")
+                .clickByLocator("//td[text()='" + removedName + "']/ancestor::tr[1]//span[contains(text(), 'Удалить')]")
+                .waitForElementDisappeared("//td[text()='" + removedName + "']/ancestor::tr[1]");
     }
 
     @Step("Заполнить область «Информация о грузополучаеле»")
@@ -196,7 +197,7 @@ public class Test_03_07_03_1_10 extends HooksTEST_agroexpress {
         String docNum = $x("//div[contains (@class, 'FormHeader_title' )]//span[contains (@class, 'Typography_body' )]").getText().split("№")[1];
 
         new GUIFunctions().clickButton("Далее")
-                .waitForElementDisplayed("//*[text()='Заявка отправлена на рассмотрение. Срок рассмотрения до 3 рабочих дней']");
+                .waitForElementDisplayed("//*[text()='Заявка отправлена на рассмотрение. Срок рассмотрения до 4 рабочих дней']");
 
         JupyterLabIntegration.uploadTextContent(docNum, WAY_TEST, "docNum.txt");
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
