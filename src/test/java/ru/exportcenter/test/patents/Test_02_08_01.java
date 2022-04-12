@@ -18,6 +18,9 @@ import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
+//АРХИВ
+
+@Deprecated()
 public class Test_02_08_01 extends HooksTEST {
 
     private String WAY_TEST = Ways.TEST.getWay() + "/patents/Test_02_08_01/";
