@@ -45,7 +45,6 @@ public class Test_03_07_04_1_10 extends HooksTEST_agroexpress {
         step06();
         step07();
         step08();
-        step09();
     }
 
     @AfterMethod
@@ -71,41 +70,23 @@ public class Test_03_07_04_1_10 extends HooksTEST_agroexpress {
         refreshTab("//*[contains(text(), 'Продолжить')]", 20);
         processID = CommonFunctions.getProcessIDFromURL();
 
-//        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
-
         new GUIFunctions()
                 .closeAllPopupWindows()
                 .clickButton("Продолжить");
     }
 
-    @Step("Навигация")
-    public void step02() {
-        CommonFunctions.printStep();
-//        new GUIFunctions().waitForElementDisplayed("//button[contains(text(), 'Логистика. Доставка продукции')]")
-
-        CommonFunctions.wait(3);
-
-
-//        if ($x("//div[contains(@class, 'CardInfo_nameBlock' )]/*[text()='Логистика. Доставка продукции \"Агроэкспрессом\"']").isDisplayed()){
-//            refreshTab("//*[contains(text(), 'Продолжить')]", 60);
-//            new GUIFunctions().clickButton("Продолжить");
-//        }
-
-    }
 
     @Step("Блок «Информация о компании»")
-    public void step03() {
+    public void step02() {
         CommonFunctions.printStep();
-        if($x("//button[text() = 'Позже']").isDisplayed()) {
-            new GUIFunctions().clickButton("Позже");
-        }
         new GUIFunctions()
+                .closeAllPopupWindows()
                 .inContainer("Информация о компании")
                 .inField("Почтовый адрес").inputValue(PROPERTIES.getProperty("Информация о компании.Почтовый адрес")).assertNoControl();
     }
 
     @Step("Блок «Информация о заявителе»")
-    public void step04() {
+    public void step03() {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Информация о заявителе")
@@ -117,7 +98,7 @@ public class Test_03_07_04_1_10 extends HooksTEST_agroexpress {
     }
 
     @Step("Блок  «Информация для оказания услуги»")
-    public void step05() {
+    public void step04() {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Информация для оказания услуги")
@@ -129,7 +110,7 @@ public class Test_03_07_04_1_10 extends HooksTEST_agroexpress {
     }
 
     @Step("Блок «Информация о грузе»")
-    public void step06() {
+    public void step05() {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Информация о грузе")
@@ -183,7 +164,7 @@ public class Test_03_07_04_1_10 extends HooksTEST_agroexpress {
     }
 
     @Step("Блок  «Информация о грузополучателе»")
-    public void step07() {
+    public void step06() {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Информация о грузополучателе")
@@ -204,7 +185,7 @@ public class Test_03_07_04_1_10 extends HooksTEST_agroexpress {
     }
 
     @Step("Блок «Дополнительные услуги»")
-    public void step08() {
+    public void step07() {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Дополнительные услуги")
@@ -218,7 +199,7 @@ public class Test_03_07_04_1_10 extends HooksTEST_agroexpress {
     }
 
     @Step("Отправка Заявки на рассмотрение ")
-    public void step09() {
+    public void step08() {
         CommonFunctions.printStep();
         new GUIFunctions().clickButton("Далее").waitForLoading();
         docNum = $x("//div[contains (@class, 'FormHeader_title' )]//span[contains (@class, 'Typography_body' )]").getText().split("№")[1];

@@ -64,9 +64,7 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
         new GUIFunctions()
                 .authorization("test-otr@yandex.ru", "Password1!", "1234")
                 .waitForLoading();
-
         $x("//*[contains(text(), 'Логистика. Доставка продукции \"Агроэкспрессом\"')]").shouldBe(Condition.visible, Duration.ofSeconds(60));
-
         if ($x("//*[contains(text(), 'Информация о заявителе')]").isDisplayed()) {
             $x("//button[contains(text(), 'Логистика. Доставка продукции \"Агроэкспрессом\". Заявка')]").click();
             switchTo().alert().accept();
@@ -74,8 +72,6 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
 
         refreshTab("//*[contains(text(), 'Продолжить')]", 20);
         processID = CommonFunctions.getProcessIDFromURL();
-
-//        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
 
         new GUIFunctions()
                 .closeAllPopupWindows()
@@ -86,10 +82,7 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
     public void step02() {
         CommonFunctions.printStep();
 //        new GUIFunctions().waitForElementDisplayed("//button[contains(text(), 'Логистика. Доставка продукции')]")
-
         CommonFunctions.wait(3);
-
-
 //        if ($x("//div[contains(@class, 'CardInfo_nameBlock' )]/*[text()='Логистика. Доставка продукции \"Агроэкспрессом\"']").isDisplayed()){
 //            refreshTab("//*[contains(text(), 'Продолжить')]", 60);
 //            new GUIFunctions().clickButton("Продолжить");
@@ -101,6 +94,7 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
     public void step03() {
         CommonFunctions.printStep();
         new GUIFunctions()
+                .closeAllPopupWindows()
                 .inContainer("Информация о компании")
                 .inField("Почтовый адрес").inputValue(PROPERTIES.getProperty("Информация о компании.Почтовый адрес")).assertNoControl();
     }
@@ -150,6 +144,7 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
                 .inField("Высота, см").inputValue(PROPERTIES.getProperty("Информация о грузе.Высота, см")).assertValue().assertNoControl().assertValue()
                 .inField("Количество грузовых мест, шт").inputValue(PROPERTIES.getProperty("Информация о грузе.Количество грузовых мест, шт")).assertValue().assertNoControl().assertValue()
                 .clickButton("Сохранить")
+                //проверить заполнение таблицы
                 .inContainer("Информация о грузе").waitForElementDisplayed("//td[text() = '1']" +
                 "/following-sibling::td[text() = '" + PROPERTIES.getProperty("Информация о грузе.Наименование продукции") + "']" +
                 "/following-sibling::td[text() = '" + PROPERTIES.getProperty("Информация о грузе.Количество грузовых мест, шт") + "']" +
@@ -168,11 +163,13 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
                 .inField("Количество грузовых мест, шт").inputValue(PROPERTIES.getProperty("Информация о грузе.Количество грузовых мест, шт.2"))
                 .assertValue().assertNoControl()
                 .clickButton("Сохранить")
+                //проверить заполнение таблицы
                 .inContainer("Информация о грузе").waitForElementDisplayed("//td[text() = '2']" +
                 "/following-sibling::td[text() = '" + PROPERTIES.getProperty("Информация о грузе.Наименование продукции.2") + "']" +
                 "/following-sibling::td[text() = '" + PROPERTIES.getProperty("Информация о грузе.Количество грузовых мест, шт.2") + "']" +
                 "/following-sibling::td[text() = '" + PROPERTIES.getProperty("Информация о грузе.Вес продукции, кг.2").split(",")[0] + "']" +
                 "/following-sibling::td");
+        // Удалить вторую позицию
         new GUIFunctions().inContainer("Информация о грузе").clickByLocator("//td[text() = '2']/following-sibling::td//button[@class = 'dropdown-icon']");
         new GUIFunctions().clickByLocator("//td[text() = '2']/following-sibling::td//*[text() = ' Удалить' ]")
                 //.clickButton("")
