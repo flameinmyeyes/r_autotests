@@ -35,7 +35,7 @@ public class Test_03_07_03_1_40 extends HooksTEST_agroexpress {
     private String docUUID;
 
     @Owner(value="Балашов Илья")
-    @Description("03 07 03.1.40 (А)  Получение скорректированной заявки с расчетом (интеграция)")
+    @Description("03 07 03.1.40 Получение скорректированной заявки с расчетом (интеграция)")
     @Link(name="Test_03_07_03_1_40", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=127897817")
 
     @Test(retryAnalyzer = RunTestAgain.class)
@@ -82,17 +82,12 @@ public class Test_03_07_03_1_40 extends HooksTEST_agroexpress {
         docUUID = RESTFunctions.getOrderID(processID);
         System.out.println("docUUID: " + docUUID);
 
-//        cargoID = RESTFunctions.getCargoID(processID);
-//        System.out.println("cargoID: " + cargoID);
-//        JupyterLabIntegration.uploadTextContent(cargoID, WAY_TEST,"cargoID.txt");
-
         String jsonContent = JupyterLabIntegration.getFileContent(WAY_TEST + "Операция 3.json");
         JsonObject jsonObject = JSONHandler.parseJSONfromString(jsonContent);
 
         JsonObject systemProp = jsonObject.get("systemProp").getAsJsonObject();
         systemProp.addProperty("applicationId", docUUID);
         systemProp.addProperty("processInstanceId", processID);
-//        jsonObject.addProperty("cargoId", cargoID);
         System.out.println(jsonObject);
 
         RestAssured

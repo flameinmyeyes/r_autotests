@@ -13,6 +13,7 @@ import ru.exportcenter.test.HooksTEST;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.refresh;
 
+@Deprecated
 public class Test_02_08_02 extends HooksTEST {
 
     @Owner(value = "Ворожко Александр")
@@ -36,10 +37,10 @@ public class Test_02_08_02 extends HooksTEST {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Вход в личный кабинет")
-                .inField("Email").inputValue("demo_exporter")
-                .inField("Пароль").inputValue("password")
-                .clickButton("Войти")
-                .waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
+                .inField("Email").inputValue("test-otr@yandex.ru")
+                .inField("Пароль").inputValue("Password1!")
+                .clickButton("Войти");
+//                .waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
     }
 
     @Step("Навигация")
@@ -47,7 +48,7 @@ public class Test_02_08_02 extends HooksTEST {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .selectTab("Сервисы")
-                .waitForURL("http://master-portal-dev.d.exportcenter.ru/services/business")
+//                .waitForURL("http://master-portal-dev.d.exportcenter.ru/services/business")
                 .inputInSearchField("Поиск по разделу", "Компенсация части затрат на регистрацию ОИС за рубежом")
                 .inContainer("Каталог сервисов")
                         .clickButton("Государственные")

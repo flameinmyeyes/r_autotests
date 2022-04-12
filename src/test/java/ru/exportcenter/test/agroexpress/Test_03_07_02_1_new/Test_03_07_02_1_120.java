@@ -17,7 +17,6 @@ import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
 public class Test_03_07_02_1_120 extends HooksTEST_agroexpress {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_120/";
-//    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_110_2/";
     public String WAY_TEST_FIRST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_10/";
     private String processID;
 
@@ -42,14 +41,14 @@ public class Test_03_07_02_1_120 extends HooksTEST_agroexpress {
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
-//        if(!status.equals("Формирование закрывающих документов")) {
-//            System.out.println("Перепрогон предыдущего теста");
-//
-//            Test_03_07_02_1_110_2 test_03_07_02_1_110_2 = new Test_03_07_02_1_110_2();
-//            test_03_07_02_1_110_2.steps();
-//            CommonFunctions.wait(20);
-//            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-//        }
+        if(!status.equals("Формирование закрывающих документов")) {
+            System.out.println("Перепрогон предыдущего теста");
+
+            Test_03_07_02_1_110_2 test_03_07_02_1_110_2 = new Test_03_07_02_1_110_2();
+            test_03_07_02_1_110_2.steps();
+            CommonFunctions.wait(20);
+            processID = JupyterLabIntegration.getFileContent(WAY_TEST_FIRST + "processID.txt");
+        }
     }
 
     @Step("Проверка изменения статуса заявки")
