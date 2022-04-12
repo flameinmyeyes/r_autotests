@@ -8,7 +8,6 @@ import functions.api.RESTFunctions;
 import functions.common.CommonFunctions;
 import functions.file.JSONHandler;
 import functions.file.PropertiesHandler;
-import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -20,8 +19,6 @@ import org.testng.annotations.Test;
 import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
 
 import java.util.Properties;
-
-import static com.codeborne.selenide.Selenide.*;
 
 public class Test_03_07_02_1_40 extends HooksTEST_agroexpress {
 

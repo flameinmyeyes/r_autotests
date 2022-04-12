@@ -42,14 +42,14 @@ public class Test_03_07_02_1_140 extends HooksTEST_agroexpress {
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
-//        if (!status.equals("Передача закрывающих документов")) {
-//            System.out.println("Перепрогон предыдущего теста");
-//
-//            Test_03_07_02_1_130 test_03_07_02_1_130 = new Test_03_07_02_1_130();
-//            test_03_07_02_1_130.steps();
-//            CommonFunctions.wait(20);
-//            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-//        }
+        if (!status.equals("Передача закрывающих документов")) {
+            System.out.println("Перепрогон предыдущего теста");
+
+            Test_03_07_02_1_130 test_03_07_02_1_130 = new Test_03_07_02_1_130();
+            test_03_07_02_1_130.steps();
+            CommonFunctions.wait(20);
+            processID = JupyterLabIntegration.getFileContent(WAY_TEST_FIRST + "processID.txt");
+        }
     }
 
     @Step("Проверка изменения статуса заявки")

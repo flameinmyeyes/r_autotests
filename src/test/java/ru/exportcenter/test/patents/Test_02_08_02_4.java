@@ -52,13 +52,6 @@ public class Test_02_08_02_4 extends HooksTEST {
 
     @Step("Навигация")
     public void step02() {
-        //Перейти во вкладку «Сервисы»
-        //В строке поиска ввести «Компенсация части затрат на регистрацию ОИС за рубежом»
-        //Нажать иконку "Лупа"
-        //Выбрать вкладку «Государственные»
-        //Нажать кнопку «Оформить»
-        //Перезагрузить страницу
-        //Нажать кнопку «Продолжить»
         new GUIFunctions()
                 .selectTab("Сервисы")
                 .waitForURL("https://master-portal.t.exportcenter.ru/services/business")
@@ -79,8 +72,6 @@ public class Test_02_08_02_4 extends HooksTEST {
     @Step("Отказ от услуги")
     public void step03() {
         CommonFunctions.printStep();
-        //Нажать на иконку "три точки" в верхнем правом углу
-        //Нажать на "Отменить заявку"
         new GUIFunctions()
                 .clickByLocator("//*[text() = 'Компенсация части затрат на регистрацию ОИС за рубежом']/following-sibling::button")
                 .clickByLocator("//*[contains(text(), 'Заявка «Субсидия по компенсации части затрат, связанных с " +
