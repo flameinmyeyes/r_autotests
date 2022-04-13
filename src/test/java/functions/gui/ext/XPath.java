@@ -20,6 +20,7 @@ public class XPath extends ElementData {
         if (isFieldDefined()) {
             return "//*[text() = '" + field + "']/ancestor::div[contains(@class,'Column_col') " +
                     "or contains(@class, 'Info_definition') " +
+                    "or contains(@class, 'CertificateSelector') " +
                     "or contains(@class, 'Input_fullWidth')][1]";
         }
         Assert.fail("Не удалось создать xPath. Поле ввода не было задано\n" +
