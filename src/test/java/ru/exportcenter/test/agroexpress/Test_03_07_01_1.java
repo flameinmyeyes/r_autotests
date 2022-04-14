@@ -11,11 +11,14 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+import ru.exportcenter.Hooks;
 import ru.exportcenter.test.HooksTEST;
 
 import java.util.Properties;
 
-public class Test_03_07_01_1 extends HooksTEST {
+import static com.codeborne.selenide.Selenide.open;
+
+public class Test_03_07_01_1 extends Hooks {
 
     /*
      * http://selenoidshare.d.exportcenter.ru/lab/tree/work/files_for_tests/test/agroexpress/Test_03_07_01_1
@@ -36,11 +39,18 @@ public class Test_03_07_01_1 extends HooksTEST {
         step03();
     }
 
+    @AfterMethod
+    public void screenShot() {
+        CommonFunctions.screenShot(WAY_TEST);
+    }
+
     @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
+        open(P.getProperty("start_URL"));
 
-        new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль"), P.getProperty("Код подтвержения"))
+        new GUIFunctions()
+                .authorization(P.getProperty("Логин"), P.getProperty("Пароль"), P.getProperty("Код подтвержения"))
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
@@ -84,9 +94,5 @@ public class Test_03_07_01_1 extends HooksTEST {
         return "//*[contains(text(), '" + text + "')]";
     }
 
-    @AfterMethod
-    public void screenShot() {
-        CommonFunctions.screenShot(WAY_TEST);
-    }
 }
 

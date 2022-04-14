@@ -11,13 +11,14 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+import ru.exportcenter.Hooks;
 import ru.exportcenter.test.HooksTEST;
 
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_02_4 extends HooksTEST {
+public class Test_03_07_02_4 extends Hooks {
 
     private String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_4/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_4_properties.xml";
@@ -42,10 +43,11 @@ public class Test_03_07_02_4 extends HooksTEST {
     @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
+        open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль test-otr@yandex.ru/Password1!
         //Ввести код
-        new GUIFunctions().inContainer("Вход в личный кабинет")
+        new GUIFunctions()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), "1234")
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
@@ -68,7 +70,7 @@ public class Test_03_07_02_4 extends HooksTEST {
                 .waitForURL("https://master-portal.t.exportcenter.ru/services/");
 
         //Выбрать сервис «Логистика. Доставка продукции "Агроэкспрессом"»
-        open("https://lk.t.exportcenter.ru/ru/promo-service?key=agroexpress&serviceId=199d1559-632f-435b-a482-a5bb849b30ce&next_query=true");
+        open(PROPERTIES.getProperty("direct_URL"));
         new GUIFunctions().waitForLoading();
 
     }

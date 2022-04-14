@@ -15,6 +15,8 @@ import ru.exportcenter.test.HooksTEST;
 
 import java.util.Properties;
 
+import static com.codeborne.selenide.Selenide.open;
+
 public class Test_02_08_02_9 extends HooksTEST {
 
     private String WAY_TEST = Ways.TEST.getWay() + "/patents/Test_02_08_02_9/";
@@ -39,9 +41,11 @@ public class Test_02_08_02_9 extends HooksTEST {
     @Step("Авторизация")
     private void step01(){
         CommonFunctions.printStep();
+        open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль demo_exporter/password
-        new GUIFunctions().authorization(PROPERTIES.getProperty("Логин"), PROPERTIES.getProperty("Пароль"), "1234")
+        new GUIFunctions()
+                .authorization(PROPERTIES.getProperty("Логин"), PROPERTIES.getProperty("Пароль"), "1234")
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 

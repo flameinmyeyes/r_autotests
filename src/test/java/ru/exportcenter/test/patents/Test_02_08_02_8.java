@@ -11,20 +11,22 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+import ru.exportcenter.Hooks;
 import ru.exportcenter.test.HooksTEST;
 
 import java.util.Properties;
 
-public class Test_02_08_02_8 extends HooksTEST {
+import static com.codeborne.selenide.Selenide.open;
+
+public class Test_02_08_02_8 extends Hooks {
 
     /*
      * http://selenoidshare.d.exportcenter.ru/lab/tree/work/files_for_tests/test/agroexpress/Test_02_08_02_8
      * https://gitlab.exportcenter.ru/sub-service/autotests/rec_autotests/-/blob/master/src/test/java/ru/exportcenter/test/agroexpress/Test_02_08_02_8.java
      */
 
-    private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_02_08_02_8/";
+    private final String WAY_TEST = Ways.TEST.getWay() + "/patents/Test_02_08_02_8/";
     private final Properties P = PropertiesHandler.parseProperties(WAY_TEST + "Test_02_08_02_8.xml");
-
 
     @Owner(value = "Диана Максимова")
     @Description("ТК 02 08 02.8 Создание новой Заявки")
@@ -36,12 +38,18 @@ public class Test_02_08_02_8 extends HooksTEST {
         step02();
     }
 
+    @AfterMethod
+    public void screenShot() {
+        CommonFunctions.screenShot(WAY_TEST);
+    }
 
     @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
+        open(P.getProperty("start_URL"));
 
-        new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль"))
+        new GUIFunctions()
+                .authorization(P.getProperty("Логин"), P.getProperty("Пароль"))
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
 
@@ -71,9 +79,4 @@ public class Test_02_08_02_8 extends HooksTEST {
                 "[text()=' ничего не найдено']";
     }
 
-
-    @AfterMethod
-    public void screenShot() {
-        CommonFunctions.screenShot(WAY_TEST);
-    }
 }
