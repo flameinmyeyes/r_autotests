@@ -11,24 +11,24 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.HooksTEST;
+import ru.exportcenter.Hooks;
 
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.open;
 
-public class Test_02_08_02_9 extends HooksTEST {
+public class Test_02_08_02_9 extends Hooks {
 
     private String WAY_TEST = Ways.TEST.getWay() + "/patents/Test_02_08_02_9/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_02_08_02_9_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
-    @Owner(value="Петрищев Руслан")
+    @Owner(value = "Петрищев Руслан")
     @Description("02 08 02.9 Просмотр перечня Заявок по сервису, созданных организацией")
-    @Link(name="Test_02_08_02_9", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=127905125")
+    @Link(name = "Test_02_08_02_9", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=127905125")
 
     @Test(retryAnalyzer = RunTestAgain.class)
-    public void steps(){
+    public void steps() {
         step01();
         step02();
     }
@@ -39,7 +39,7 @@ public class Test_02_08_02_9 extends HooksTEST {
     }
 
     @Step("Авторизация")
-    private void step01(){
+    private void step01() {
         CommonFunctions.printStep();
         open(PROPERTIES.getProperty("start_URL"));
 
@@ -50,7 +50,7 @@ public class Test_02_08_02_9 extends HooksTEST {
     }
 
     @Step("Просмотр данных заявки из перечня ")
-    private void step02(){
+    private void step02() {
         CommonFunctions.printStep();
 
         //Выбрать любую заявку из реестра и нажать на нее

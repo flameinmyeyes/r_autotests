@@ -15,9 +15,9 @@ import io.restassured.RestAssured;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
+import ru.exportcenter.Hooks;
 
-public class Test_03_07_02_1_140 extends HooksTEST_agroexpress {
+public class Test_03_07_02_1_140 extends Hooks {
 
     private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_140/";
     private final String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_130/";
@@ -27,9 +27,9 @@ public class Test_03_07_02_1_140 extends HooksTEST_agroexpress {
     private String token;
     private String docUUID;
 
-    @Owner(value="Балашов Илья")
+    @Owner(value = "Балашов Илья")
     @Description("03 07 02.1.140 Ответ от РЖДЛ с подтверждением о передаче закрывающих документов")
-    @Link(name="Test_03_07_02_1_140", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=127896179")
+    @Link(name = "Test_03_07_02_1_140", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=127896179")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
@@ -85,16 +85,16 @@ public class Test_03_07_02_1_140 extends HooksTEST_agroexpress {
 
         RestAssured
                 .given()
-                        .baseUri("https://lk.t.exportcenter.ru")
-                        .basePath("/agroexpress-adapter/api/v1/response/finish-document")
-                        .header("accept", "*/*")
-                        .header("Content-Type", "application/json")
-                        .header("Authorization", token)
-                        .body(String.valueOf(jsonObject))
+                .baseUri("https://lk.t.exportcenter.ru")
+                .basePath("/agroexpress-adapter/api/v1/response/finish-document")
+                .header("accept", "*/*")
+                .header("Content-Type", "application/json")
+                .header("Authorization", token)
+                .body(String.valueOf(jsonObject))
                 .when()
-                        .post()
+                .post()
                 .then()
-                        .assertThat().statusCode(200);
+                .assertThat().statusCode(200);
     }
 
     @Step("Авторизация")
@@ -104,8 +104,8 @@ public class Test_03_07_02_1_140 extends HooksTEST_agroexpress {
         System.out.println(status);
         Assert.assertEquals(status, "Услуга оказана");
 
-        JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST,"docUUID.txt");
-        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
+        JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST, "docUUID.txt");
+        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
     }
 
 }

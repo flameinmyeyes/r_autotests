@@ -14,11 +14,12 @@ import io.qameta.allure.Step;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+import ru.exportcenter.Hooks;
 import ru.exportcenter.test.HooksTEST;
 import java.util.Properties;
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_02_1_50 extends HooksTEST {
+public class Test_03_07_02_1_50 extends Hooks {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_50/";
     public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_40/";
@@ -67,6 +68,8 @@ public class Test_03_07_02_1_50 extends HooksTEST {
     @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
+        open(PROPERTIES.getProperty("start_URL"));
+
         new GUIFunctions()
                 .authorization(PROPERTIES.getProperty("Логин"), PROPERTIES.getProperty("Пароль"), PROPERTIES.getProperty("Код подтвержения"))
                 .waitForLoading()

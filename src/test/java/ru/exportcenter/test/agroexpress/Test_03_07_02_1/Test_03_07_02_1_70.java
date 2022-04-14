@@ -1,30 +1,25 @@
 package ru.exportcenter.test.agroexpress.Test_03_07_02_1;
 
-import com.google.gson.JsonObject;
 import framework.RunTestAgain;
 import framework.Ways;
 import framework.integration.JupyterLabIntegration;
 import functions.api.RESTFunctions;
 import functions.common.CommonFunctions;
-import functions.file.FileFunctions;
-import functions.file.JSONHandler;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
-import io.restassured.RestAssured;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.HooksTEST;
-import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
+import ru.exportcenter.Hooks;
 
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_02_1_70 extends HooksTEST {
+public class Test_03_07_02_1_70 extends Hooks {
 
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_70/";
@@ -36,13 +31,13 @@ public class Test_03_07_02_1_70 extends HooksTEST {
     private String docNum;
     private String docUUID;
 
-    @Owner(value="Теребкова Андрей")
+    @Owner(value = "Теребкова Андрей")
     @Description("03 07 02.1.70 Получение скорректированной заявки с расчетом (интеграция)")
-    @Link(name="Test_03_07_02_1_70", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123879143")
+    @Link(name = "Test_03_07_02_1_70", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123879143")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
-      preconditions();
+        preconditions();
         step01();
         step02();
     }
@@ -72,12 +67,9 @@ public class Test_03_07_02_1_70 extends HooksTEST {
     @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
+        open(PROPERTIES.getProperty("start_URL"));
         new GUIFunctions()
-            .authorization(
-                PROPERTIES.getProperty("Логин")
-                ,PROPERTIES.getProperty("Пароль")
-                ,PROPERTIES.getProperty("Код")
-            )
+                .authorization(PROPERTIES.getProperty("Логин"), PROPERTIES.getProperty("Пароль"), PROPERTIES.getProperty("Код"))
                 .waitForLoading()
                 .closeAllPopupWindows();
     }
@@ -103,22 +95,22 @@ public class Test_03_07_02_1_70 extends HooksTEST {
 
 //      Нажать кнопку «Продолжить»
         new GUIFunctions()
-            .closeAllPopupWindows()
-            .clickButton("Продолжить")
-            .waitForElementDisplayed("//*[text()='Подтверждение оплаты счета']");
+                .closeAllPopupWindows()
+                .clickButton("Продолжить")
+                .waitForElementDisplayed("//*[text()='Подтверждение оплаты счета']");
 
 //      Развернуть аккордеон "Подтверждение оплаты счета"
         new GUIFunctions().clickButton("Подтверждение оплаты счета")
                 .clickByLocator("//div[@role = 'button' and text() = 'Заявка Логистика. Доставка продукции \"Агроэкспрессом.pdf']");
 
-        JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST,"docUUID.txt");
-        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
+        JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST, "docUUID.txt");
+        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
     }
 
     private void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
             new GUIFunctions().waitForLoading();
-            if($x(expectedXpath).isDisplayed()) {
+            if ($x(expectedXpath).isDisplayed()) {
                 break;
             }
             refresh();

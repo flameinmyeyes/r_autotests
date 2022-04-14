@@ -11,13 +11,13 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
+import ru.exportcenter.Hooks;
 
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_02_5_1_1 extends HooksTEST_agroexpress {
+public class Test_03_07_02_5_1_1 extends Hooks {
 
     /*
      * http://selenoidshare.d.exportcenter.ru/lab/tree/work/files_for_tests/test/agroexpress/Test_03_07_02_5/Test_03_07_02_5_1/Test_03_07_02_5_1_1
@@ -46,7 +46,7 @@ public class Test_03_07_02_5_1_1 extends HooksTEST_agroexpress {
     @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
-
+        open(P.getProperty("start_URL"));
         new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль"), P.getProperty("Код подтвержения"))
                 .waitForElementDisplayed("(//*[contains(text(),'Логистика. Доставка продукции \"Агроэкспрессом\"')])[1]")
                 .closeAllPopupWindows();

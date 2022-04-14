@@ -6,7 +6,6 @@ import framework.integration.JupyterLabIntegration;
 import functions.api.RESTFunctions;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
-import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -16,13 +15,11 @@ import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
+import ru.exportcenter.Hooks;
 
 import java.util.Properties;
 
-import static com.codeborne.selenide.Selenide.*;
-
-public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
+public class Test_03_07_02_1_20 extends Hooks {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_20/";
     public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_10/";
@@ -32,9 +29,9 @@ public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
     private String docUUID;
     private String token;
 
-    @Owner(value="Ворожко Александр")
+    @Owner(value = "Ворожко Александр")
     @Description("03 07 02.1.20 Получение результатов верификации от АО \"РЖД Логистика\"")
-    @Link(name="Test_03_07_02_1_20", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123870742")
+    @Link(name = "Test_03_07_02_1_20", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123870742")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
@@ -57,7 +54,7 @@ public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
-        if(!status.equals("Проводится проверка")) {
+        if (!status.equals("Проводится проверка")) {
             System.out.println("Перепрогон предыдущего теста");
 
             Test_03_07_02_1_10 test_03_07_02_1_10 = new Test_03_07_02_1_10();
@@ -91,16 +88,16 @@ public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
 
         RestAssured
                 .given()
-                        .baseUri("https://lk.t.exportcenter.ru")
-                        .basePath("/agroexpress-adapter/api/v1/response/order-status")
-                        .header("accept", "*/*")
-                        .header("Content-Type", "application/json")
-                        .header("Authorization", token)
-                        .body(requestBody)
+                .baseUri("https://lk.t.exportcenter.ru")
+                .basePath("/agroexpress-adapter/api/v1/response/order-status")
+                .header("accept", "*/*")
+                .header("Content-Type", "application/json")
+                .header("Authorization", token)
+                .body(requestBody)
                 .when()
-                        .post()
+                .post()
                 .then()
-                        .assertThat().statusCode(200);
+                .assertThat().statusCode(200);
     }
 
     @Step("Авторизация в ЕЛК")
@@ -115,8 +112,8 @@ public class Test_03_07_02_1_20 extends HooksTEST_agroexpress {
         String status = RESTFunctions.getOrderStatus(processID);
         Assert.assertEquals(status, "Расчёт стоимости");
 
-        JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST,"docUUID.txt");
-        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
+        JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST, "docUUID.txt");
+        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
     }
 
 }

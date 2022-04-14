@@ -1,29 +1,25 @@
 package ru.exportcenter.test.agroexpress.Test_03_07_02_1;
 
-import com.google.gson.JsonObject;
 import framework.RunTestAgain;
 import framework.Ways;
 import framework.integration.JupyterLabIntegration;
 import functions.api.RESTFunctions;
 import functions.common.CommonFunctions;
-import functions.file.JSONHandler;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
-import io.restassured.RestAssured;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.HooksTEST;
-import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
+import ru.exportcenter.Hooks;
 
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_02_1_80 extends HooksTEST {
+public class Test_03_07_02_1_80 extends Hooks {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_80/";
     public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_70/";
@@ -35,9 +31,9 @@ public class Test_03_07_02_1_80 extends HooksTEST {
     private String docUUID;
     private String docNum;
 
-    @Owner(value="Теребков Андрей")
+    @Owner(value = "Теребков Андрей")
     @Description("03 07 02.1.80 Отправка сведений ПД / ЭПД (загрузка ЭПД)")
-    @Link(name="Test_03_07_02_1_80", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123879970")
+    @Link(name = "Test_03_07_02_1_80", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123879970")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
@@ -58,7 +54,7 @@ public class Test_03_07_02_1_80 extends HooksTEST {
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
-        if(!status.equals("Оплата счёта")) {
+        if (!status.equals("Оплата счёта")) {
             System.out.println("Перепрогон предыдущего теста");
 
             Test_03_07_02_1_70 test_03_07_02_1_70 = new Test_03_07_02_1_70();
@@ -71,13 +67,10 @@ public class Test_03_07_02_1_80 extends HooksTEST {
     @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
+        open(PROPERTIES.getProperty("start_URL"));
         new GUIFunctions()
-            .authorization(
-                PROPERTIES.getProperty("Логин")
-                ,PROPERTIES.getProperty("Пароль")
-                ,PROPERTIES.getProperty("Код")
-            )
-            .waitForLoading();
+                .authorization(PROPERTIES.getProperty("Логин"), PROPERTIES.getProperty("Пароль"), PROPERTIES.getProperty("Код"))
+                .waitForLoading();
     }
 
     @Step("Навигация")
@@ -88,7 +81,7 @@ public class Test_03_07_02_1_80 extends HooksTEST {
         System.out.println(docNum);
 
         new GUIFunctions()
-            .clickByLocator("//*[@class='Button_text__3lYJC']");
+                .clickByLocator("//*[@class='Button_text__3lYJC']");
 
         new GUIFunctions()
                 .clickByLocator("//*[text()='№" + docNum + "']")
@@ -97,9 +90,9 @@ public class Test_03_07_02_1_80 extends HooksTEST {
         refreshTab("//*[contains(text(), 'Продолжить')]", 60);
 
         new GUIFunctions()
-            .closeAllPopupWindows()
-            .clickButton("Продолжить")
-            .waitForElementDisplayed("//*[text()='Подтверждение оплаты счета']");
+                .closeAllPopupWindows()
+                .clickButton("Продолжить")
+                .waitForElementDisplayed("//*[text()='Подтверждение оплаты счета']");
 
 //        new GUIFunctions()
 //                .clickButton("Подтверждение оплаты счета");
@@ -111,14 +104,14 @@ public class Test_03_07_02_1_80 extends HooksTEST {
                 .clickButton("Далее")
                 .waitForElementDisplayed("//*[contains(text(), 'АО \"РЖД Логистика\" осуществляет проверку поступления денежных средств на Счет')]");
 
-        JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST,"docUUID.txt");
-        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
+        JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST, "docUUID.txt");
+        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
     }
 
     private void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
             new GUIFunctions().waitForLoading();
-            if($x(expectedXpath).isDisplayed()) {
+            if ($x(expectedXpath).isDisplayed()) {
                 break;
             }
             refresh();

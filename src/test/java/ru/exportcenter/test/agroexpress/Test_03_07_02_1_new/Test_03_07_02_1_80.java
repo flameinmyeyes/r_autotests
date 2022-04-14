@@ -13,26 +13,25 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.HooksTEST;
+import ru.exportcenter.Hooks;
 
 import java.util.Properties;
 
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.refresh;
+import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_02_1_80 extends HooksTEST {
+public class Test_03_07_02_1_80 extends Hooks {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_80/";
-//    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_70/";
+    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_70/";
     public String WAY_TEST_FIRST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_10/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_80_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
     private String docNum;
 
-    @Owner(value="Теребков Андрей")
+    @Owner(value = "Теребков Андрей")
     @Description("03 07 02.1.80 Отправка сведений ПД / ЭПД (загрузка ЭПД)")
-    @Link(name="Test_03_07_02_1_80", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123879970")
+    @Link(name = "Test_03_07_02_1_80", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123879970")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
@@ -52,26 +51,23 @@ public class Test_03_07_02_1_80 extends HooksTEST {
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
-//        if(!status.equals("Оплата счёта")) {
-//            System.out.println("Перепрогон предыдущего теста");
-//
-//            Test_03_07_02_1_70 test_03_07_02_1_70 = new Test_03_07_02_1_70();
-//            test_03_07_02_1_70.steps();
-//            CommonFunctions.wait(10);
-//            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-//        }
+        if (!status.equals("Оплата счёта")) {
+            System.out.println("Перепрогон предыдущего теста");
+
+            Test_03_07_02_1_70 test_03_07_02_1_70 = new Test_03_07_02_1_70();
+            test_03_07_02_1_70.steps();
+            CommonFunctions.wait(10);
+            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        }
     }
 
     @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
+        open(PROPERTIES.getProperty("start_URL"));
         new GUIFunctions()
-            .authorization(
-                PROPERTIES.getProperty("Логин")
-                ,PROPERTIES.getProperty("Пароль")
-                ,PROPERTIES.getProperty("Код")
-            )
-            .waitForLoading();
+                .authorization(PROPERTIES.getProperty("Логин"), PROPERTIES.getProperty("Пароль"), PROPERTIES.getProperty("Код"))
+                .waitForLoading();
     }
 
     @Step("Навигация")
@@ -82,7 +78,7 @@ public class Test_03_07_02_1_80 extends HooksTEST {
         System.out.println(docNum);
 
         new GUIFunctions()
-            .clickByLocator("//*[@class='Button_text__3lYJC']");
+                .clickByLocator("//*[@class='Button_text__3lYJC']");
 
         new GUIFunctions()
                 .clickByLocator("//*[text()='№" + docNum + "']")
@@ -91,9 +87,9 @@ public class Test_03_07_02_1_80 extends HooksTEST {
         refreshTab("//*[contains(text(), 'Продолжить')]", 60);
 
         new GUIFunctions()
-            .closeAllPopupWindows()
-            .clickButton("Продолжить")
-            .waitForElementDisplayed("//*[text()='Подтверждение оплаты счета']");
+                .closeAllPopupWindows()
+                .clickButton("Продолжить")
+                .waitForElementDisplayed("//*[text()='Подтверждение оплаты счета']");
 
 //        new GUIFunctions()
 //                .clickButton("Подтверждение оплаты счета");
@@ -101,8 +97,8 @@ public class Test_03_07_02_1_80 extends HooksTEST {
         new GUIFunctions()
                 .uploadFile("Электроннный платежный документ", "/share/" + WAY_TEST + "tmp.txt");
 
-        for (int i = 0; i<2; i++) {
-            if($x("//*[text() = 'Далее']").isDisplayed()) {
+        for (int i = 0; i < 2; i++) {
+            if ($x("//*[text() = 'Далее']").isDisplayed()) {
                 new GUIFunctions().clickButton("Далее");
                 CommonFunctions.wait(2);
             } else {
@@ -116,7 +112,7 @@ public class Test_03_07_02_1_80 extends HooksTEST {
     private void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
             new GUIFunctions().waitForLoading();
-            if($x(expectedXpath).isDisplayed()) {
+            if ($x(expectedXpath).isDisplayed()) {
                 break;
             }
             refresh();

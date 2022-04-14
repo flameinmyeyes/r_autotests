@@ -17,7 +17,6 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
-import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
 
 import java.time.Duration;
 import java.util.Properties;
