@@ -16,6 +16,7 @@ import io.qameta.allure.Step;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+import ru.exportcenter.Hooks;
 import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
 
 import java.time.Duration;
@@ -23,7 +24,7 @@ import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_04_1_10 extends HooksTEST_agroexpress {
+public class Test_03_07_04_1_10 extends Hooks {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_04_1/Test_03_07_04_1_10/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_04_1_10.xml";
@@ -52,12 +53,13 @@ public class Test_03_07_04_1_10 extends HooksTEST_agroexpress {
         CommonFunctions.screenShot(WAY_TEST);
     }
 
-
     @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
+        open(PROPERTIES.getProperty("direct_URL"));
+
         new GUIFunctions()
-                .authorization("test-otr@yandex.ru", "Password1!", "1234")
+                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"))
                 .waitForLoading();
 
         $x("//*[contains(text(), 'Логистика. Доставка продукции \"Агроэкспрессом\"')]").shouldBe(Condition.visible, Duration.ofSeconds(60));
@@ -74,7 +76,6 @@ public class Test_03_07_04_1_10 extends HooksTEST_agroexpress {
                 .closeAllPopupWindows()
                 .clickButton("Продолжить");
     }
-
 
     @Step("Блок «Информация о компании»")
     public void step02() {

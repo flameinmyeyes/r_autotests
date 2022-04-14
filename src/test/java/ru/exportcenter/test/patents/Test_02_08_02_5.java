@@ -12,13 +12,14 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+import ru.exportcenter.Hooks;
 import ru.exportcenter.test.HooksTEST;
 
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_02_08_02_5 extends HooksTEST {
+public class Test_02_08_02_5 extends Hooks {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/patents/Test_02_08_02_5/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_02_08_02_5_properties.xml";
@@ -46,6 +47,8 @@ public class Test_02_08_02_5 extends HooksTEST {
     @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
+        open(PROPERTIES.getProperty("start_URL"));
+
         new GUIFunctions()
                 .authorization(PROPERTIES.getProperty("Логин"), PROPERTIES.getProperty("Пароль")/*, PROPERTIES.getProperty("Код")*/)
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main");
@@ -54,7 +57,8 @@ public class Test_02_08_02_5 extends HooksTEST {
     @Step("Навигация")
     public void step02() {
         CommonFunctions.printStep();
-        open("https://lk.t.exportcenter.ru/ru/promo-service?key=ProcessPatent&serviceId=d3d7a7b0-934b-4ca9-b660-9940e9d8b1f2&next_query=true");
+
+        open(PROPERTIES.getProperty("direct_URL"));
         new GUIFunctions()
             .waitForURL("https://lk.t.exportcenter.ru/ru/promo-service?key=ProcessPatent&serviceId=d3d7a7b0-934b-4ca9-b660-9940e9d8b1f2&next_query=true");
 

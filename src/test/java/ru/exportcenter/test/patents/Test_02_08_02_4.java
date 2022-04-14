@@ -11,14 +11,13 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.HooksTEST;
+import ru.exportcenter.Hooks;
 
 import java.util.Properties;
 
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.refresh;
+import static com.codeborne.selenide.Selenide.*;
 
-public class Test_02_08_02_4 extends HooksTEST {
+public class Test_02_08_02_4 extends Hooks {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/patents/Test_02_08_02_4/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_02_08_02_4_properties.xml";
@@ -42,6 +41,8 @@ public class Test_02_08_02_4 extends HooksTEST {
 
     @Step("Авторизация")
     public void step01() {
+        open(PROPERTIES.getProperty("start_URL"));
+
         new GUIFunctions()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForLoading()

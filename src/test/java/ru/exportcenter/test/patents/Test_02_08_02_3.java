@@ -1,8 +1,8 @@
 package ru.exportcenter.test.patents;
+
 import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
-
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
@@ -11,14 +11,14 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.HooksTEST;
+import ru.exportcenter.Hooks;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.Properties;
+
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_02_08_02_3 extends HooksTEST{
+public class Test_02_08_02_3 extends Hooks {
 
     private String WAY_TEST = Ways.TEST.getWay() + "/patents/Test_02_08_02_3/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_02_08_02_3_properties.xml";
@@ -56,6 +56,7 @@ public class Test_02_08_02_3 extends HooksTEST{
     @Step("Авторизация")
     private void step01(){
         CommonFunctions.printStep();
+        open(PROPERTIES.getProperty("start_URL"));
 
         new GUIFunctions()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
@@ -69,7 +70,7 @@ public class Test_02_08_02_3 extends HooksTEST{
         CommonFunctions.printStep();
 
         // кастыль
-        open("https://lk.t.exportcenter.ru/ru/promo-service?key=ProcessPatent&serviceId=d3d7a7b0-934b-4ca9-b660-9940e9d8b1f2&next_query=true");
+        open(PROPERTIES.getProperty("direct_URL"));
         new GUIFunctions().waitForURL("https://lk.t.exportcenter.ru/ru/promo-service?key=ProcessPatent&serviceId=d3d7a7b0-934b-4ca9-b660-9940e9d8b1f2&next_query=true");
         refreshTab("//*[contains(text(), 'Продолжить')]", 60);
 

@@ -14,6 +14,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+import ru.exportcenter.Hooks;
 import ru.exportcenter.test.HooksTEST;
 
 import java.util.Properties;
@@ -22,7 +23,8 @@ import static com.codeborne.selenide.Configuration.browserCapabilities;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_06_1 extends HooksTEST {
+@Deprecated
+public class Test_03_07_06_1 extends Hooks {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_06_1/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_06_1_properties.xml";
