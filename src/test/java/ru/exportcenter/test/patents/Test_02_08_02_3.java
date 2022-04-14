@@ -12,6 +12,9 @@ import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.test.HooksTEST;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.Properties;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -26,7 +29,7 @@ public class Test_02_08_02_3 extends HooksTEST{
     @Link(name="Test_02_08_02_3", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123869661")
 
     @Test(retryAnalyzer = RunTestAgain.class)
-    public void steps(){
+    public void steps() throws AWTException{
         step01();
         step02();
         step03();
@@ -42,6 +45,7 @@ public class Test_02_08_02_3 extends HooksTEST{
         step13();
         step14();
         step15();
+        step16();
     }
 
     @AfterMethod
@@ -54,9 +58,11 @@ public class Test_02_08_02_3 extends HooksTEST{
         CommonFunctions.printStep();
 
         new GUIFunctions()
-                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"))
+                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main");
     }
+
+    //PROPERTIES.getProperty("Авторизация.Код")
 
     @Step("Навигация")
     private void step02(){
@@ -102,6 +108,7 @@ public class Test_02_08_02_3 extends HooksTEST{
 
         //Выбрать приложенный файл с устройства формата txt и нажать кнопку «Открыть»
         new GUIFunctions().uploadFile("Прикрепить платежное поручение", "/share/" + WAY_TEST + "tmp.txt");
+//        new GUIFunctions().uploadFile("Прикрепить платежное поручение", "C:\\auto-tests\\tmp.txt");
         CommonFunctions.wait(5);
 
         //Нажать кнопку «Далее»
@@ -114,6 +121,7 @@ public class Test_02_08_02_3 extends HooksTEST{
 
         CommonFunctions.wait(5);
         new GUIFunctions().closeAllPopupWindows();
+
 
         //Нажать кнопку «Добавить тип заявки»
         new GUIFunctions().clickButton("Добавить тип заявки");
@@ -155,7 +163,8 @@ public class Test_02_08_02_3 extends HooksTEST{
                 .inField("Оценка вероятного экономического эффекта от введения за рубежом в гражданский оборот продукции, в состав которой будет входить предлагаемый объект интеллектуальной собственности").inputValue(PROPERTIES.getProperty("Оценка вероятного экономического эффекта от введения за рубежом в гражданский оборот продукции"));
 
         //Выбрать приложенный файл с устройства формата pdf и нажать кнопку «Открыть»
-        new GUIFunctions().uploadFile("Заявка на регистрацию ОИС","/share/" + WAY_TEST + "tmp.pdf");
+      new GUIFunctions().uploadFile("Заявка на регистрацию ОИС","/share/" + WAY_TEST + "tmp.pdf");
+//        new GUIFunctions().uploadFile("Заявка на регистрацию ОИС","C:\\auto-tests\\tmp.pdf");
         CommonFunctions.wait(5);
     }
 
@@ -331,6 +340,25 @@ public class Test_02_08_02_3 extends HooksTEST{
         new GUIFunctions().waitForElementDisplayed(downloadXPath)
                 .waitForElementDisplayed(printXPath)
                 .waitForElementDisplayed(viewXPath);
+    }
+
+    @Step("Блок «Подписание Заявки электронной подписью»")
+    private void step16() {
+        CommonFunctions.printStep();
+
+        //Нажать на кнопку "Подписать электронной подписью"
+        new GUIFunctions().clickButton("Подписать электронной подписью");
+
+        //Из выпадающего списка выбрать сертификат "Ермухамбетова Балсикер Бисеньевна от 18.01.2022"
+        //Нажать на кнопку "Подписать"
+
+         new GUIFunctions().inContainer("Электронная подпись")
+                .inField("Выберите сертификат").selectValue("Ермухамбетова Балсикер Бисеньевна от 18.01.2022")
+                .clickButton("Подписать");
+
+        ////Нажать на кнопку «Далее»
+        new GUIFunctions().clickButton("Далее");
+
     }
 
     private void refreshTab(String expectedXpath, int times) {
