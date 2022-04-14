@@ -16,17 +16,15 @@ import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
-import ru.exportcenter.test.agroexpress.Test_03_07_02_1.Test_03_07_02_1_20;
+import ru.exportcenter.Hooks;
 
 import java.util.Properties;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.open;
 
-public class Test_03_07_03_1_40 extends HooksTEST_agroexpress {
+public class Test_03_07_03_1_40 extends Hooks {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1/Test_03_07_03_1_40/";
-//    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1/Test_03_07_03_1_20/";
     public String WAY_TEST_FIRST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_03_1/Test_03_07_03_1_10/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_03_1_40_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
@@ -34,9 +32,9 @@ public class Test_03_07_03_1_40 extends HooksTEST_agroexpress {
     private String token;
     private String docUUID;
 
-    @Owner(value="Балашов Илья")
+    @Owner(value = "Балашов Илья")
     @Description("03 07 03.1.40 Получение скорректированной заявки с расчетом (интеграция)")
-    @Link(name="Test_03_07_03_1_40", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=127897817")
+    @Link(name = "Test_03_07_03_1_40", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=127897817")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
@@ -59,7 +57,7 @@ public class Test_03_07_03_1_40 extends HooksTEST_agroexpress {
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
-        if(!status.equals("Расчёт стоимости")) {
+        if (!status.equals("Расчёт стоимости")) {
             System.out.println("Перепрогон предыдущего теста");
 
             Test_03_07_03_1_20 test_03_07_03_1_20 = new Test_03_07_03_1_20();
@@ -92,16 +90,16 @@ public class Test_03_07_03_1_40 extends HooksTEST_agroexpress {
 
         RestAssured
                 .given()
-                        .baseUri("https://lk.t.exportcenter.ru")
-                        .basePath("/agroexpress-adapter/api/v1/response/order-change")
-                        .header("accept", "*/*")
-                        .header("Content-Type", "application/json")
-                        .header("Authorization", token)
-                        .body(String.valueOf(jsonObject))
+                .baseUri("https://lk.t.exportcenter.ru")
+                .basePath("/agroexpress-adapter/api/v1/response/order-change")
+                .header("accept", "*/*")
+                .header("Content-Type", "application/json")
+                .header("Authorization", token)
+                .body(String.valueOf(jsonObject))
                 .when()
-                        .post()
+                .post()
                 .then()
-                        .assertThat().statusCode(200);
+                .assertThat().statusCode(200);
     }
 
     @Step("Авторизация")

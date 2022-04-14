@@ -14,6 +14,7 @@ import java.util.List;
 
 import static com.codeborne.selenide.Selenide.*;
 
+@Deprecated
 public class HooksTEST implements HooksInterface {
 
     private static final String URL = "https://lk.t.exportcenter.ru/ru/login";

@@ -12,18 +12,18 @@ import io.qameta.allure.Step;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
+import ru.exportcenter.Hooks;
 
-public class Test_03_07_02_1_140 extends HooksTEST_agroexpress {
+public class Test_03_07_02_1_140 extends Hooks {
 
     private final String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_140/";
-//    private final String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_130/";
+    //    private final String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_130/";
     public String WAY_TEST_FIRST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_10/";
     private String processID;
 
-    @Owner(value="Балашов Илья")
+    @Owner(value = "Балашов Илья")
     @Description("03 07 02.1.140 (Р) Ответ от РЖДЛ с подтверждением о передаче закрывающих документов")
-    @Link(name="Test_03_07_02_1_140", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=127896179")
+    @Link(name = "Test_03_07_02_1_140", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=127896179")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {

@@ -13,13 +13,13 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.HooksTEST;
+import ru.exportcenter.Hooks;
 
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_02_1_130 extends HooksTEST {
+public class Test_03_07_02_1_130 extends Hooks {
 
     /*
      * http://selenoidshare.d.exportcenter.ru/lab/tree/work/files_for_tests/test/agroexpress/Test_03_07_02_1/Test_03_07_02_1_130
@@ -33,7 +33,7 @@ public class Test_03_07_02_1_130 extends HooksTEST {
     private final String DOC_STATUS = "Выбор вида предоставления закрывающих документов";
     private String processID;
     private String docNum;
-    private  String docUUID;
+    private String docUUID;
 
     @Owner(value = "Диана Максимова")
     @Description("03 07 02.1.130 Выбор вида предоставления Закрывающих документов")
@@ -70,7 +70,9 @@ public class Test_03_07_02_1_130 extends HooksTEST {
     @Step("Авторизация в ЕЛК")
     public void step01() {
         CommonFunctions.printStep();
-//        new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль"), P.getProperty("Код подтвержения"))
+
+        open(P.getProperty("start_URL"));
+
         new GUIFunctions().authorization(P.getProperty("Логин"), P.getProperty("Пароль"))
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main");
 
@@ -89,6 +91,7 @@ public class Test_03_07_02_1_130 extends HooksTEST {
         new GUIFunctions()
                 .closeAllPopupWindows()
                 .clickButton("Продолжить");
+
         // Открыть нужную заявку
 //        new GUIFunctions().inContainer("Мои услуги")
 //                .clickByLocator("//*[contains(text(),'Показать все (')]")
@@ -121,8 +124,8 @@ public class Test_03_07_02_1_130 extends HooksTEST {
                 .inField("Оператор системы ЭДО").selectValue("ООО ЭТП ГПБ").assertValue().assertNoControl()
                 .inField("Идентификатор участника ЭДО").inputValue("2BM-170B038D96B34EODA1b2BB86B09585BA").assertValue().assertNoControl();
 
-        for (int i = 0; i<5; i++) {
-            if($x("//*[text() = 'Далее']").isDisplayed()) {
+        for (int i = 0; i < 5; i++) {
+            if ($x("//*[text() = 'Далее']").isDisplayed()) {
                 new GUIFunctions().clickButton("Далее");
                 CommonFunctions.wait(5);
             } else {
@@ -134,12 +137,12 @@ public class Test_03_07_02_1_130 extends HooksTEST {
 
         JupyterLabIntegration.uploadTextContent(docNum, WAY_TEST, "docNum.txt");
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
-        JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST,"docUUID.txt");
+        JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST, "docUUID.txt");
     }
 
     public void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
-            if($x(expectedXpath).isDisplayed()) {
+            if ($x(expectedXpath).isDisplayed()) {
                 break;
             }
             System.out.println("Refreshing");

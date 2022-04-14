@@ -12,17 +12,17 @@ import io.qameta.allure.Step;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
+import ru.exportcenter.Hooks;
 
-public class Test_03_07_02_1_100 extends HooksTEST_agroexpress {
+public class Test_03_07_02_1_100 extends Hooks {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_100/";
     public String WAY_TEST_FIRST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_10/";
     private String processID;
 
-    @Owner(value="Ворожко Александр")
+    @Owner(value = "Ворожко Александр")
     @Description("03 07 02.1.100 Получение скорректированной заявки с расчетом (интеграция)")
-    @Link(name="Test_03_07_02_1_100", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=127895135")
+    @Link(name = "Test_03_07_02_1_100", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=127895135")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
@@ -41,7 +41,7 @@ public class Test_03_07_02_1_100 extends HooksTEST_agroexpress {
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
-        if(!status.equals("Передача груза")) {
+        if (!status.equals("Передача груза")) {
             System.out.println("Перепрогон предыдущего теста");
 
             Test_03_07_02_1_90 test_03_07_02_1_90 = new Test_03_07_02_1_90();

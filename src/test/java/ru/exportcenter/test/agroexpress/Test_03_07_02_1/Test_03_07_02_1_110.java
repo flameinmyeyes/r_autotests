@@ -1,6 +1,5 @@
 package ru.exportcenter.test.agroexpress.Test_03_07_02_1;
 
-import com.codeborne.selenide.Condition;
 import com.google.gson.JsonObject;
 import framework.RunTestAgain;
 import framework.Ways;
@@ -18,14 +17,13 @@ import io.restassured.RestAssured;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
+import ru.exportcenter.Hooks;
 
-import java.time.Duration;
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_02_1_110 extends HooksTEST_agroexpress {
+public class Test_03_07_02_1_110 extends Hooks {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_110/";
     public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_100/";
@@ -35,18 +33,18 @@ public class Test_03_07_02_1_110 extends HooksTEST_agroexpress {
     private String token;
     private String docUUID;
 
-    @Owner(value="Ворожко Александр")
+    @Owner(value = "Ворожко Александр")
     @Description("03 07 02.1.110 Получение скорректированной заявки с расчетом (интеграция)")
-    @Link(name="Test_03_07_02_1_110", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123882163")
+    @Link(name = "Test_03_07_02_1_110", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123882163")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
         precondition();
         step01();
-//        step02();
-//        step03();
-//        step04();
-//        step05();
+        step02();
+        step03();
+        step04();
+        step05();
         step06();
         step07();
     }
@@ -63,14 +61,14 @@ public class Test_03_07_02_1_110 extends HooksTEST_agroexpress {
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
-//        if(!status.equals("Оказание услуги")) {
-//            System.out.println("Перепрогон предыдущего теста");
-//
-//            Test_03_07_02_1_100 test_03_07_02_1_100 = new Test_03_07_02_1_100();
-//            test_03_07_02_1_100.steps();
-//            CommonFunctions.wait(20);
-//            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-//        }
+        if (!status.equals("Оказание услуги")) {
+            System.out.println("Перепрогон предыдущего теста");
+
+            Test_03_07_02_1_100 test_03_07_02_1_100 = new Test_03_07_02_1_100();
+            test_03_07_02_1_100.steps();
+            CommonFunctions.wait(20);
+            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        }
     }
 
     @Step("Авторизация")
@@ -95,16 +93,16 @@ public class Test_03_07_02_1_110 extends HooksTEST_agroexpress {
 
         RestAssured
                 .given()
-                        .baseUri("https://lk.t.exportcenter.ru")
-                        .basePath("/agroexpress-adapter/api/v1/response/location-status")
-                        .header("accept", "*/*")
-                        .header("Content-Type", "application/json")
-                        .header("Authorization", token)
-                        .body(String.valueOf(jsonObject))
+                .baseUri("https://lk.t.exportcenter.ru")
+                .basePath("/agroexpress-adapter/api/v1/response/location-status")
+                .header("accept", "*/*")
+                .header("Content-Type", "application/json")
+                .header("Authorization", token)
+                .body(String.valueOf(jsonObject))
                 .when()
-                        .post()
+                .post()
                 .then()
-                        .assertThat().statusCode(200);
+                .assertThat().statusCode(200);
     }
 
     @Step("Авторизация в ЕЛК")
@@ -158,7 +156,6 @@ public class Test_03_07_02_1_110 extends HooksTEST_agroexpress {
     }
 
 
-
     @Step("Навигация и отправка JSON-запроса в Swagger")
     public void step06() {
         CommonFunctions.printStep();
@@ -173,16 +170,16 @@ public class Test_03_07_02_1_110 extends HooksTEST_agroexpress {
 
         RestAssured
                 .given()
-                        .baseUri("https://lk.t.exportcenter.ru")
-                        .basePath("/agroexpress-adapter/api/v1/response/location-status")
-                        .header("accept", "*/*")
-                        .header("Content-Type", "application/json")
-                        .header("Authorization", token)
-                        .body(String.valueOf(jsonObject))
+                .baseUri("https://lk.t.exportcenter.ru")
+                .basePath("/agroexpress-adapter/api/v1/response/location-status")
+                .header("accept", "*/*")
+                .header("Content-Type", "application/json")
+                .header("Authorization", token)
+                .body(String.valueOf(jsonObject))
                 .when()
-                        .post()
+                .post()
                 .then()
-                        .assertThat().statusCode(200);
+                .assertThat().statusCode(200);
 
         CommonFunctions.wait(10);
     }
@@ -194,13 +191,13 @@ public class Test_03_07_02_1_110 extends HooksTEST_agroexpress {
         System.out.println(status);
         Assert.assertEquals(status, "Формирование закрывающих документов");
 
-        JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST,"docUUID.txt");
-        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
+        JupyterLabIntegration.uploadTextContent(docUUID, WAY_TEST, "docUUID.txt");
+        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
     }
 
     public void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
-            if($x(expectedXpath).isDisplayed()) {
+            if ($x(expectedXpath).isDisplayed()) {
                 break;
             }
             System.out.println("Refreshing");

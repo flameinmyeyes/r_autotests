@@ -13,27 +13,26 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.HooksTEST;
+import ru.exportcenter.Hooks;
 
 import java.util.Properties;
 
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.refresh;
+import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_02_1_70 extends HooksTEST {
+public class Test_03_07_02_1_70 extends Hooks {
 
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_70/";
-//    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_60/";
+    public String WAY_TEST_PREVIOUS = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_60/";
     public String WAY_TEST_FIRST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_10/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_70_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
     private String docNum;
 
-    @Owner(value="Теребкова Андрей")
+    @Owner(value = "Теребкова Андрей")
     @Description("03 07 02.1.70 Получение скорректированной заявки с расчетом (интеграция)")
-    @Link(name="Test_03_07_02_1_70", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123879143")
+    @Link(name = "Test_03_07_02_1_70", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123879143")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
@@ -53,25 +52,22 @@ public class Test_03_07_02_1_70 extends HooksTEST {
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
-//        if (!status.equals("Оплата счёта")) {
-//            System.out.println("Перепрогон предыдущего теста");
-//
-//            Test_03_07_02_1_60 test_03_07_02_1_60 = new Test_03_07_02_1_60();
-//            test_03_07_02_1_60.steps();
-//            CommonFunctions.wait(20);
-//            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-//        }
+        if (!status.equals("Оплата счёта")) {
+            System.out.println("Перепрогон предыдущего теста");
+
+            Test_03_07_02_1_60 test_03_07_02_1_60 = new Test_03_07_02_1_60();
+            test_03_07_02_1_60.steps();
+            CommonFunctions.wait(20);
+            processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        }
     }
 
     @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
+        open(PROPERTIES.getProperty("start_URL"));
         new GUIFunctions()
-            .authorization(
-                PROPERTIES.getProperty("Логин")
-                ,PROPERTIES.getProperty("Пароль")
-                ,PROPERTIES.getProperty("Код")
-            )
+                .authorization(PROPERTIES.getProperty("Логин"), PROPERTIES.getProperty("Пароль"), PROPERTIES.getProperty("Код"))
                 .waitForLoading()
                 .closeAllPopupWindows();
     }
@@ -98,9 +94,9 @@ public class Test_03_07_02_1_70 extends HooksTEST {
 
 //      Нажать кнопку «Продолжить»
         new GUIFunctions()
-            .closeAllPopupWindows()
-            .clickButton("Продолжить")
-            .waitForElementDisplayed("//*[text()='Подтверждение оплаты счета']");
+                .closeAllPopupWindows()
+                .clickButton("Продолжить")
+                .waitForElementDisplayed("//*[text()='Подтверждение оплаты счета']");
 
 //      Развернуть аккордеон "Подтверждение оплаты счета"
         new GUIFunctions().clickButton("Подтверждение оплаты счета")
@@ -110,7 +106,7 @@ public class Test_03_07_02_1_70 extends HooksTEST {
     private void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
             new GUIFunctions().waitForLoading();
-            if($x(expectedXpath).isDisplayed()) {
+            if ($x(expectedXpath).isDisplayed()) {
                 break;
             }
             refresh();

@@ -1,8 +1,6 @@
 package ru.exportcenter.test.agroexpress.Test_03_07_02_1;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.WebDriverRunner;
-import com.google.gson.JsonObject;
 import framework.RunTestAgain;
 import framework.Ways;
 import framework.integration.JupyterLabIntegration;
@@ -15,18 +13,17 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
-import net.sf.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
+import ru.exportcenter.Hooks;
 
 import java.time.Duration;
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
+public class Test_03_07_02_1_10 extends Hooks {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1/Test_03_07_02_1_10/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_02_1_10.xml";
@@ -34,9 +31,9 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
     private String docNum;
     private String processID;
 
-    @Owner(value="Камаев Евгений")
+    @Owner(value = "Камаев Евгений")
     @Description("03 07 02.1.10 Ввод и редактирование данных Заявки (Сборный груз). Отправка Заявки на рассмотрение")
-    @Link(name="Test_03_07_02_1_10", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123880785")
+    @Link(name = "Test_03_07_02_1_10", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123880785")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
@@ -61,9 +58,12 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
     @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
+        open(PROPERTIES.getProperty("start_URL"));
+
         new GUIFunctions()
-                .authorization("test-otr@yandex.ru", "Password1!", "1234")
+                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"))
                 .waitForLoading();
+
         $x("//*[contains(text(), 'Логистика. Доставка продукции \"Агроэкспрессом\"')]").shouldBe(Condition.visible, Duration.ofSeconds(60));
         if ($x("//*[contains(text(), 'Информация о заявителе')]").isDisplayed()) {
             $x("//button[contains(text(), 'Логистика. Доставка продукции \"Агроэкспрессом\". Заявка')]").click();
@@ -135,7 +135,7 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
                 .inField("До").inputValue(PROPERTIES.getProperty("Информация о грузе.До")).assertNoControl().assertValue()
                 .clickButton("Добавить +")
                 .inContainer("Сведения о продукции")
-               .inField("Наименование продукции").selectValue(PROPERTIES.getProperty("Информация о грузе.Наименование продукции")).assertNoControl().assertValue()
+                .inField("Наименование продукции").selectValue(PROPERTIES.getProperty("Информация о грузе.Наименование продукции")).assertNoControl().assertValue()
                 .inField("Код ТН ВЭД").assertValue(PROPERTIES.getProperty("Информация о грузе.Код ТН ВЭД")).assertNoControl().assertUneditable()
                 .inField("Вес продукции, кг").inputValue(PROPERTIES.getProperty("Информация о грузе.Вес продукции, кг")).assertNoControl().assertValue()
                 .inField("Упаковка").selectValue(PROPERTIES.getProperty("Информация о грузе.Упаковка")).assertNoControl().assertValue()
@@ -175,9 +175,9 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
                 //.clickButton("")
                 .waitForElementDisappeared("//td[text() = '2']" +
                         "/following-sibling::td[text() = '" + PROPERTIES.getProperty("Информация о грузе.Наименование продукции.2") + "']" +
-                                "/following-sibling::td[text() = '" + PROPERTIES.getProperty("Информация о грузе.Количество грузовых мест, ш.2") + "']" +
-                                "/following-sibling::td[text() = '" + PROPERTIES.getProperty("Информация о грузе.Вес продукции, кг.2") + "']" +
-                                "/following-sibling::td");
+                        "/following-sibling::td[text() = '" + PROPERTIES.getProperty("Информация о грузе.Количество грузовых мест, ш.2") + "']" +
+                        "/following-sibling::td[text() = '" + PROPERTIES.getProperty("Информация о грузе.Вес продукции, кг.2") + "']" +
+                        "/following-sibling::td");
     }
 
     @Step("Блок  «Информация о грузополучателе»")
@@ -217,8 +217,8 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
         CommonFunctions.printStep();
         new GUIFunctions().clickButton("Далее").waitForLoading();
         docNum = $x("//div[contains (@class, 'FormHeader_title' )]//span[contains (@class, 'Typography_body' )]").getText().split("№")[1];
-        JupyterLabIntegration.uploadTextContent(docNum, WAY_TEST,"docNum.txt");
-        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
+        JupyterLabIntegration.uploadTextContent(docNum, WAY_TEST, "docNum.txt");
+        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
     }
 
     @Step("Проверка изменения статуса заявки")
@@ -228,12 +228,12 @@ public class Test_03_07_02_1_10 extends HooksTEST_agroexpress {
         System.out.println(status);
         Assert.assertEquals(status, "Проводится проверка");
 
-        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
+        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
     }
 
     public void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
-            if($x(expectedXpath).isDisplayed()) {
+            if ($x(expectedXpath).isDisplayed()) {
                 break;
             }
             System.out.println("Refreshing");

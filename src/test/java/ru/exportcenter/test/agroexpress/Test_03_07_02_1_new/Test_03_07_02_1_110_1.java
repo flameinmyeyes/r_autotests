@@ -13,13 +13,13 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import ru.exportcenter.test.agroexpress.HooksTEST_agroexpress;
+import ru.exportcenter.Hooks;
 
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_03_07_02_1_110_1 extends HooksTEST_agroexpress {
+public class Test_03_07_02_1_110_1 extends Hooks {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_110_1/";
     public String WAY_TEST_FIRST = Ways.TEST.getWay() + "/agroexpress/Test_03_07_02_1_new/Test_03_07_02_1_10/";
@@ -27,9 +27,9 @@ public class Test_03_07_02_1_110_1 extends HooksTEST_agroexpress {
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
 
-    @Owner(value="Ворожко Александр")
+    @Owner(value = "Ворожко Александр")
     @Description("03 07 02.1.110_1 Получение скорректированной заявки с расчетом (интеграция)")
-    @Link(name="Test_03_07_02_1_110_1", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123882163")
+    @Link(name = "Test_03_07_02_1_110_1", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=123882163")
 
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
@@ -49,7 +49,7 @@ public class Test_03_07_02_1_110_1 extends HooksTEST_agroexpress {
         String status = RESTFunctions.getOrderStatus(processID);
         System.out.println(status);
 
-        if(!status.equals("Оказание услуги")) {
+        if (!status.equals("Оказание услуги")) {
             System.out.println("Перепрогон предыдущего теста");
 
             Test_03_07_02_1_100 test_03_07_02_1_100 = new Test_03_07_02_1_100();
@@ -82,7 +82,7 @@ public class Test_03_07_02_1_110_1 extends HooksTEST_agroexpress {
 
     public void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
-            if($x(expectedXpath).isDisplayed()) {
+            if ($x(expectedXpath).isDisplayed()) {
                 break;
             }
             System.out.println("Refreshing");
