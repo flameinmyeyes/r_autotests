@@ -41,6 +41,7 @@ public class Test_02_08_02_4 extends Hooks {
 
     @Step("Авторизация")
     public void step01() {
+        CommonFunctions.printStep();
         open(PROPERTIES.getProperty("start_URL"));
 
         new GUIFunctions()
@@ -51,6 +52,7 @@ public class Test_02_08_02_4 extends Hooks {
 
     @Step("Навигация")
     public void step02() {
+        CommonFunctions.printStep();
         new GUIFunctions()
                 .selectTab("Сервисы")
                 .waitForURL("https://master-portal.t.exportcenter.ru/services/business")
