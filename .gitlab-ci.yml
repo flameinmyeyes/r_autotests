@@ -75,5 +75,5 @@ run_regression_tests_job: #Test_&_send:
     - echo $RUN_TYPE
     - whoami
     - chmod +x ./send_results.sh
-    - mvn test -Dsurefire.suiteXmlFiles=testng.xml || echo "[ERROR] Выполнение тестов завершилось с ошибкой"
+    - mvn test -Dsurefire.suiteXmlFiles=$SUITE_NAME || echo "[ERROR] Выполнение тестов завершилось с ошибкой"
     - ./send_results.sh || echo "[ERROR] Отправка результатов в Allure завершилась с ошибкой"
