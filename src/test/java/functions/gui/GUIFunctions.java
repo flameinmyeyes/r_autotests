@@ -1,5 +1,6 @@
 package functions.gui;
 
+import functions.common.CommonFunctions;
 import functions.gui.ext.*;
 
 import static com.codeborne.selenide.Selenide.$x;
@@ -40,9 +41,9 @@ public class GUIFunctions extends ElementData {
 
     public GUIFunctions authorization(String login, String password) {
         this.inContainer("Вход в личный кабинет")
-                .inField("Email").inputValue(login)
-                .inField("Пароль").inputValue(password)
-                .clickButton("Войти");
+            .inField("Email").inputValue(login)
+            .inField("Пароль").inputValue(password)
+            .clickButton("Войти");
         return new GUIFunctions();
     }
 
@@ -61,6 +62,13 @@ public class GUIFunctions extends ElementData {
         return new GUIFunctions();
     }
 
+    public GUIFunctions authorizationLib(String login, String password) {
+        $x("//input[@placeholder='E-mail']").setValue(login);
+        $x("//input[@placeholder='Пароль']").setValue(password);
+        CommonFunctions.wait(1);
+        $x("//button[@type='button']").click();
+        return new GUIFunctions();
+    }
 
     /**
      * logout
