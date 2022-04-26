@@ -32,6 +32,8 @@ public class Test_03_07_01  extends Hooks {
         step02();
         step03();
         step04();
+        step05();
+        step06();
     }
 
     @AfterMethod
@@ -43,16 +45,15 @@ public class Test_03_07_01  extends Hooks {
     public void step01() throws InterruptedException {
         CommonFunctions.printStep();
 
-
-        open("http://arm-lkb.arm-services-dev.d.exportcenter.ru/");
+        open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль demo_exporter/password
         new GUIFunctions()
                 .authorizationLib(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
-                .waitForURL("http://arm-lkb.arm-services-dev.d.exportcenter.ru/");
+                .waitForElementDisplayed("//a[@href='/products']");
     }
 
-    @Step("Сведения о продукте")
+    @Step("Новигация")
     public void step02() {
         CommonFunctions.printStep();
 
@@ -83,7 +84,6 @@ public class Test_03_07_01  extends Hooks {
             $x("//span[text()='Целевое назначение']/following::textarea").setValue("Целевое назначение");
             $x("//span[text()='Краткое описание продукта']/following::textarea").setValue("Краткое описание продукта");
 
-
             new GUIFunctions().clickButton("Продолжить");
     }
 
@@ -91,26 +91,18 @@ public class Test_03_07_01  extends Hooks {
     public void step04() {
         CommonFunctions.printStep();
 
-//        new GUIFunctions().inField("Иностранный покупатель").setCheckboxON()
-//                .inField("Банк иностранного покупателя").setCheckboxON()
-//                .inField("Российский экспортёр").setCheckboxON()
-//                .inField("Российский банк").setCheckboxON();
+    }
+
+    @Step("Финансовые параметры")
+    public void step05() {
+        CommonFunctions.printStep();
 
     }
 
+    @Step("Особенности погашения")
+    public void step06() {
+        CommonFunctions.printStep();
 
-
-
-
-
-    public void refreshTab(String expectedXpath, int times) {
-        for (int i = 0; i < times; i++) {
-            if($x(expectedXpath).isDisplayed()) {
-                break;
-            }
-            System.out.println("Refreshing");
-            refresh();
-            CommonFunctions.wait(1);
-        }
+//        new GUIFunctions().waitForURL("https://www.ya.ru");
     }
 }
