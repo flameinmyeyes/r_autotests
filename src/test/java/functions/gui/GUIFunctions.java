@@ -1,5 +1,6 @@
 package functions.gui;
 
+import framework.HooksInterface;
 import functions.common.CommonFunctions;
 import functions.gui.ext.*;
 
