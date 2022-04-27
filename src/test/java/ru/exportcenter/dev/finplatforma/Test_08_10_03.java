@@ -42,7 +42,7 @@ public class Test_08_10_03 extends Hooks {
         precondition();
         step01();
         step02();
-//        step03();
+        step03();
 //        step04();
 //        step05();
 //        step06();
@@ -87,19 +87,24 @@ public class Test_08_10_03 extends Hooks {
         //Нажать на кнопку «Создать новый продукт»
         new GUIFunctions().clickButton("Продукты");
         CommonFunctions.wait(2);
-        new GUIFunctions().clickButton("Создать новый продукт");
+        new GUIFunctions().clickButton("Черновики");
+        CommonFunctions.wait(2);
+        new GUIFunctions().clickButton("Сбросить фильтры");
+        $x("//*[@id='rc-tabs-1-panel-drafts']/div/div[1]/div[1]/input").setValue(newProductName);
+        new GUIFunctions().waitForElementDisplayed("//*[@id='rc-tabs-1-panel-drafts']/div/div[3]/div/div/div/div/div/div/table/tbody/tr");
+        $x("//*[@id='rc-tabs-1-panel-drafts']/div/div[3]/div/div/div/div/div/div/table/tbody/tr").click();
+        new GUIFunctions().clickButton("Редактировать");
     }
-//
-//    @Step("Сведения о продукте")
-//    public void step03() {
-//        CommonFunctions.printStep();
-//
-//        //Тип продукта - "Финансирование"
-//        setValueInField("Кредитование.\n" + "Прямой кредит российскому банку", "Наименование продукта");
-//
-//        //Нажать на кнопку «Продолжить»
-//        new GUIFunctions().clickButton("Продолжить");
-//    }
+
+    @Step("Сведения о продукте")
+    public void step03() {
+        CommonFunctions.printStep();
+
+        new GUIFunctions().waitForURL("");
+
+        //Нажать на кнопку «Продолжить»
+        new GUIFunctions().clickButton("Продолжить");
+    }
 //
 //    @Step("Условия предоставления")
 //    public void step04() {
