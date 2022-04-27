@@ -12,28 +12,31 @@ import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
-import static com.codeborne.selenide.Selenide.*;
 import ru.exportcenter.Hooks;
 
+import java.awt.event.KeyEvent;
 import java.util.Properties;
 
-public class Test_03_07_01  extends Hooks {
+import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.open;
 
-    private String WAY_TEST = Ways.DEV.getWay() + "/finpodderzhka/Test_03_07_01/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_03_07_01_properties.xml";
+public class Test_08_10_02 extends Hooks {
+
+    private String WAY_TEST = Ways.DEV.getWay() + "/finpodderzhka/Test_08_10_02/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_08_10_02_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
-    @Owner(value="Ворожко Александр")
-    @Description("03 07 04 Сценарий 4")
-    @Link(name="Test_03_07_04", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=117902512")
+    @Owner(value="Петрищев Руслан, Теребков Андрей")
+    @Description("08 10 02 Создание Черновика")
+    @Link(name="Test_08_10_02", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=133412554")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws InterruptedException {
         step01();
         step02();
         step03();
         step04();
-        step05();
-        step06();
+//        step05();
+//        step06();
     }
 
     @AfterMethod
@@ -86,7 +89,7 @@ public class Test_03_07_01  extends Hooks {
         setCheckboxON("Иностранный покупатель");
 
         setCheckboxONValueInFieldFromSelect("Любая ОПФ", "ОПФ российского получателя");
-//        setCheckboxONValueInFieldFromSelect("", "");
+        setValueInFieldFromSelect("от 6 месяцев", "Срок регистрации российского получателя");
         setCheckboxONValueInFieldFromSelect("Любой субъект РФ", "Регион регистрации российского получателя");
         setCheckboxONValueInFieldFromSelect("Все страны", "Страна регистрации иностранного покупателя");
         setValueInField("12","Минимальный срок");
@@ -122,6 +125,6 @@ public class Test_03_07_01  extends Hooks {
     public void setCheckboxONValueInFieldFromSelect(String value, String field){
         $x("//span[text()='" + field + "']/following::input").click();
         $x("//*[text()='" + field + "']//following::*[text()='" + value + "']//child::span[@class=\"ant-checkbox\"]").click();
-        $x("//span[text()='" + field + "']/following::input").click();
+        $x("//span[text()='" + field + "']/following::input").sendKeys(Keys.ESCAPE);
     }
 }
