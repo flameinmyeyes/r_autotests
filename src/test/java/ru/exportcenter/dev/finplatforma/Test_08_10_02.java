@@ -22,7 +22,7 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class Test_08_10_02 extends Hooks {
 
-    private String WAY_TEST = Ways.DEV.getWay() + "/finpodderzhka/Test_08_10_02/";
+    private String WAY_TEST = Ways.DEV.getWay() + "/finplatforma/Test_08_10_02/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_08_10_02_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
@@ -35,8 +35,9 @@ public class Test_08_10_02 extends Hooks {
         step02();
         step03();
         step04();
-//        step05();
-//        step06();
+        step05();
+        step06();
+        step07();
     }
 
     @AfterMethod
@@ -60,11 +61,10 @@ public class Test_08_10_02 extends Hooks {
     public void step02() {
         CommonFunctions.printStep();
 
-        //Переход на вкладку продукты
-        new GUIFunctions().clickButton("Продукты");
-
-        //Создать новый продукт
-        new GUIFunctions().clickButton("Создать новый продукт");
+        //В области навигации нажать на раздел «Продукты»
+        //Нажать на кнопку «Создать новый продукт»
+        new GUIFunctions().clickButton("Продукты")
+                .clickButton("Создать новый продукт");
     }
 
     @Step("Сведения о продукте")
@@ -72,13 +72,9 @@ public class Test_08_10_02 extends Hooks {
         CommonFunctions.printStep();
 
         //Тип продукта - "Финансирование"
-        //Категория продукта - "Инвестиционное финансирование"
-        setValueInFieldFromSelect("Финансирование", "Тип продукта");
-        setValueInFieldFromSelect("Инвестиционное финансирование", "Категория продукта");
-        new GUIFunctions().waitForElementDisplayed("//*[text()='Краткое описание продукта']");
-        setValueInField("Целевое назначение", "Целевое назначение");
-        setValueInField("Краткое описание продукта", "Краткое описание продукта");
+        setValueInField("Кредитование.\n" + "Прямой кредит российскому банку", "Наименование продукта");
 
+        //Нажать на кнопку «Продолжить»
         new GUIFunctions().clickButton("Продолжить");
     }
 
@@ -86,14 +82,7 @@ public class Test_08_10_02 extends Hooks {
     public void step04() {
         CommonFunctions.printStep();
 
-        setCheckboxON("Иностранный покупатель");
-
-        setCheckboxONValueInFieldFromSelect("Любая ОПФ", "ОПФ российского получателя");
-        setValueInFieldFromSelect("от 6 месяцев", "Срок регистрации российского получателя");
-        setCheckboxONValueInFieldFromSelect("Любой субъект РФ", "Регион регистрации российского получателя");
-        setCheckboxONValueInFieldFromSelect("Все страны", "Страна регистрации иностранного покупателя");
-        setValueInField("12","Минимальный срок");
-        setValueInField("24","Максимальный срок");
+        //Нажать на кнопку «Продолжить»
         new GUIFunctions().clickButton("Продолжить");
     }
 
@@ -101,12 +90,25 @@ public class Test_08_10_02 extends Hooks {
     public void step05() {
         CommonFunctions.printStep();
 
+        //Нажать на кнопку «Продолжить»
+        new GUIFunctions().clickButton("Продолжить");
     }
 
     @Step("Особенности погашения")
     public void step06() {
         CommonFunctions.printStep();
 
+        //Нажать на кнопку «Сохранить как черновик»
+        new GUIFunctions().clickButton("Сохранить как черновик");
+    }
+
+    @Step("Карточка продукта")
+    public void step07() {
+        CommonFunctions.printStep();
+
+        //Нажать на кнопку «Назад» (стрелкой)
+        $x("//img[@alt='Назад']").click();
+        new GUIFunctions().waitForElementDisplayed("//*[text()='Создать новый продукт']");
     }
 
     public void setValueInFieldFromSelect(String value, String field){
