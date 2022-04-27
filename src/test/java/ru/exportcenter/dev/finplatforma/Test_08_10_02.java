@@ -66,25 +66,20 @@ public class Test_08_10_02 extends Hooks {
 
         //В области навигации нажать на раздел «Продукты»
         //Нажать на кнопку «Создать новый продукт»
-        new GUIFunctions().clickButton("Продукты");
-        CommonFunctions.wait(2);
+        new GUIFunctions().clickButton("Продукты")
+                .waitForElementDisplayed("//*[text()='Создать новый продукт']");
         new GUIFunctions().clickButton("Создать новый продукт");
     }
 
     @Step("Сведения о продукте")
-    public void step03() {
+    public void step03() throws InterruptedException {
         CommonFunctions.printStep();
 
         //Тип продукта - "Финансирование"
-        newProductName = "Кредитование. Прямой кредит российскому банку " + getRandomName();
-        System.out.println(newProductName);
-
+        newProductName = "Кредитование. Прямой кредит российскому банку " + new Random().nextInt(999999999);
+        CommonFunctions.wait(2);
         setValueInField(newProductName, "Наименование продукта");
 
-        System.out.println(newProductName);
-//        $x("//*[@id='fullNameOfProduct']").setValue(newProductName);
-
-//        new GUIFunctions().waitForURL("''''");
         //Нажать на кнопку «Продолжить»
         new GUIFunctions().clickButton("Продолжить");
     }
@@ -111,7 +106,6 @@ public class Test_08_10_02 extends Hooks {
 
         //Нажать на кнопку «Сохранить как черновик»
         new GUIFunctions().clickButton("Сохранить как черновик");
-        new GUIFunctions().waitForURL("''''");
     }
 
     @Step("Карточка продукта")
@@ -119,8 +113,8 @@ public class Test_08_10_02 extends Hooks {
         CommonFunctions.printStep();
 
         //Нажать на кнопку «Назад» (стрелкой)
-        $x("//img[@alt='Назад']").click();
-        new GUIFunctions().waitForElementDisplayed("//*[text()='Создать новый продукт']");
+        new GUIFunctions().clickByLocator("//img[@alt='Назад']")
+                .waitForElementDisplayed("//*[text()='Создать новый продукт']");
     }
 
     public void setValueInFieldFromSelect(String value, String field){
@@ -140,11 +134,5 @@ public class Test_08_10_02 extends Hooks {
         $x("//span[text()='" + field + "']/following::input").click();
         $x("//*[text()='" + field + "']//following::*[text()='" + value + "']//child::span[@class=\"ant-checkbox\"]").click();
         $x("//span[text()='" + field + "']/following::input").sendKeys(Keys.ESCAPE);
-    }
-    protected String getRandomName(){
-        String name = "";
-        for(int i=0; i<16; i++)
-            name = name + new Random().nextInt(9);
-        return name;
     }
 }
