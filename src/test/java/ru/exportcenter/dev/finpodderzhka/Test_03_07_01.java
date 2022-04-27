@@ -47,7 +47,7 @@ public class Test_03_07_01  extends Hooks {
 
         open(PROPERTIES.getProperty("start_URL"));
 
-        //Ввести логин и пароль demo_exporter/password
+        //Ввести логин и пароль demo_exporter/password http://arm-lkb.arm-services-dev.d.exportcenter.ru/
         new GUIFunctions()
                 .authorizationLib(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//a[@href='/products']");
@@ -58,39 +58,40 @@ public class Test_03_07_01  extends Hooks {
         CommonFunctions.printStep();
 
         //Переход на вкладку продукты
-        $x("//a[@href='/products']").click();
+        new GUIFunctions().clickButton("Продукты");
 
         //Создать новый продукт
-        $x("//span[text()='Создать новый продукт']").click();
+        new GUIFunctions().clickButton("Создать новый продукт");
     }
 
     @Step("Сведения о продукте")
     public void step03() {
         CommonFunctions.printStep();
 
-            //Тип продукта - "Финансирование"
-            //Категория продукта - "Инвестиционное финансирование"
-            $x("//span[text()='Тип продукта']/following::input").click();
-            CommonFunctions.wait(1);
-            $x("//span[text()='Тип продукта']/following::input").setValue("Финансирование");
-            CommonFunctions.wait(1);
-            $x("//span[text()='Тип продукта']/following::input").sendKeys(Keys.ENTER);
-            $x("//span[text()='Категория продукта']/following::input").click();
-            CommonFunctions.wait(1);
-            $x("//span[text()='Категория продукта']/following::input").setValue("Инвестиционное финансирование");
-            $x("//span[text()='Категория продукта']/following::input").sendKeys(Keys.ENTER);
-            new GUIFunctions().waitForElementDisplayed("//*[text()='Краткое описание продукта']");
+        //Тип продукта - "Финансирование"
+        //Категория продукта - "Инвестиционное финансирование"
+        setValueInFieldFromSelect("Финансирование", "Тип продукта");
+        setValueInFieldFromSelect("Инвестиционное финансирование", "Категория продукта");
+        new GUIFunctions().waitForElementDisplayed("//*[text()='Краткое описание продукта']");
+        setValueInField("Целевое назначение", "Целевое назначение");
+        setValueInField("Краткое описание продукта", "Краткое описание продукта");
 
-            $x("//span[text()='Целевое назначение']/following::textarea").setValue("Целевое назначение");
-            $x("//span[text()='Краткое описание продукта']/following::textarea").setValue("Краткое описание продукта");
-
-            new GUIFunctions().clickButton("Продолжить");
+        new GUIFunctions().clickButton("Продолжить");
     }
 
     @Step("Условия предоставления")
     public void step04() {
         CommonFunctions.printStep();
 
+        setCheckboxON("Иностранный покупатель");
+
+        setCheckboxONValueInFieldFromSelect("Любая ОПФ", "ОПФ российского получателя");
+//        setCheckboxONValueInFieldFromSelect("", "");
+        setCheckboxONValueInFieldFromSelect("Любой субъект РФ", "Регион регистрации российского получателя");
+        setCheckboxONValueInFieldFromSelect("Все страны", "Страна регистрации иностранного покупателя");
+        setValueInField("12","Минимальный срок");
+        setValueInField("24","Максимальный срок");
+        new GUIFunctions().clickButton("Продолжить");
     }
 
     @Step("Финансовые параметры")
@@ -103,6 +104,24 @@ public class Test_03_07_01  extends Hooks {
     public void step06() {
         CommonFunctions.printStep();
 
-//        new GUIFunctions().waitForURL("https://www.ya.ru");
+    }
+
+    public void setValueInFieldFromSelect(String value, String field){
+        $x("//span[text()='" + field + "']/following::input").click();
+        $x("//*[text()='" + field + "']//following::*[text()='" + value + "']").click();
+    }
+
+    public void setValueInField(String value, String field){
+        $x("//span[text()='" + field + "']/following::textarea").setValue(value);
+    }
+
+    public void setCheckboxON(String field){
+        $x("//*[contains(text(), '" + field + "')]//preceding::span[@class=\"ant-checkbox\"]").click();
+    }
+
+    public void setCheckboxONValueInFieldFromSelect(String value, String field){
+        $x("//span[text()='" + field + "']/following::input").click();
+        $x("//*[text()='" + field + "']//following::*[text()='" + value + "']//child::span[@class=\"ant-checkbox\"]").click();
+        $x("//span[text()='" + field + "']/following::input").click();
     }
 }
