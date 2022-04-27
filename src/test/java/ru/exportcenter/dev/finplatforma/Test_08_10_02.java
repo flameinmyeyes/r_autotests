@@ -1,4 +1,4 @@
-package ru.exportcenter.dev.finpodderzhka;
+package ru.exportcenter.dev.finplatforma;
 
 import framework.RunTestAgain;
 import framework.Ways;
