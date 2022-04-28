@@ -57,7 +57,7 @@ public class Test_08_10_15 extends Hooks {
 
         //В области навигации нажать на раздел «Продукты»
         new GUIFunctions().clickButton("Продукты")
-                .waitForElementDisappeared("//div[@class=\"ant-spin-container ant-spin-blur\"]");
+                .waitForLoading();
     }
 
     @Step("Сортировка по полю «Наименование продукта»")
@@ -68,11 +68,11 @@ public class Test_08_10_15 extends Hooks {
         //Нажать на кнопку «Наименование продукта»
         //Нажать на кнопку «Наименование продукта»
         new GUIFunctions().clickButton("Наименование продукта")
-                .waitForElementDisappeared("//div[@class=\"ant-spin-container ant-spin-blur\"]")
+                .waitForLoading()
                 .clickButton("Наименование продукта")
-                .waitForElementDisappeared("//div[@class=\"ant-spin-container ant-spin-blur\"]")
+                .waitForLoading()
                 .clickButton("Наименование продукта")
-                .waitForElementDisappeared("//div[@class=\"ant-spin-container ant-spin-blur\"]");
+                .waitForLoading();
     }
 
     @Step("Сортировка по полю «Статус»")
@@ -83,10 +83,10 @@ public class Test_08_10_15 extends Hooks {
         //Нажать на кнопку «Наименование продукта»
         //Нажать на кнопку «Наименование продукта»
         new GUIFunctions().clickByLocator("//div[@class='ant-table-column-sorters']//following::span[text()='Статус']")
-                .waitForElementDisappeared("//div[@class=\"ant-spin-container ant-spin-blur\"]")
+                .waitForLoading()
                 .clickByLocator("//div[@class='ant-table-column-sorters']//following::span[text()='Статус']")
-                .waitForElementDisappeared("//div[@class=\"ant-spin-container ant-spin-blur\"]")
+                .waitForLoading()
                 .clickByLocator("//div[@class='ant-table-column-sorters']//following::span[text()='Статус']")
-                .waitForElementDisappeared("//div[@class=\"ant-spin-container ant-spin-blur\"]");
+                .waitForLoading();
     }
 }
