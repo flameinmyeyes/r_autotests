@@ -3,6 +3,7 @@ package functions.gui;
 import framework.HooksInterface;
 import functions.common.CommonFunctions;
 import functions.gui.ext.*;
+import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.switchTo;
@@ -60,14 +61,6 @@ public class GUIFunctions extends ElementData {
                     .sendKeys(code.substring(n, n + 1));
             n++;
         }
-        return new GUIFunctions();
-    }
-
-    public GUIFunctions authorizationLib(String login, String password) {
-        $x("//input[@placeholder='E-mail']").setValue(login);
-        $x("//input[@placeholder='Пароль']").setValue(password);
-        CommonFunctions.wait(1);
-        $x("//button[@type='button']").click();
         return new GUIFunctions();
     }
 
@@ -244,4 +237,38 @@ public class GUIFunctions extends ElementData {
         return this;
     }
 
+    /**
+     * finplatforma 28.04.2022
+     */
+
+    public GUIFunctions authorizationLib(String login, String password) {
+        $x("//input[@placeholder='E-mail']").setValue(login);
+        $x("//input[@placeholder='Пароль']").setValue(password);
+        CommonFunctions.wait(0.5);
+        $x("//button[@type='button']").click();
+        return new GUIFunctions();
+    }
+
+    public GUIFunctions setValueInFieldFromSelect(String value, String field){
+        $x("//span[text()='" + field + "']/following::input").click();
+        $x("//*[text()='" + field + "']//following::*[text()='" + value + "']").click();
+        return this;
+    }
+
+    public GUIFunctions setValueInField(String value, String field){
+        $x("//span[text()='" + field + "']/following::textarea").setValue(value);
+        return this;
+    }
+
+    public GUIFunctions setCheckboxOnInField(String field){
+        $x("//*[contains(text(), '" + field + "')]//preceding::span[@class=\"ant-checkbox\"]").click();
+        return this;
+    }
+
+    public GUIFunctions setCheckboxONValueInFieldFromSelect(String value, String field){
+        $x("//span[text()='" + field + "']/following::input").click();
+        $x("//*[text()='" + field + "']//following::*[text()='" + value + "']//child::span[@class=\"ant-checkbox\"]").click();
+        $x("//span[text()='" + field + "']/following::input").sendKeys(Keys.ESCAPE);
+        return this;
+    }
 }
