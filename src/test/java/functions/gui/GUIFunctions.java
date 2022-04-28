@@ -244,7 +244,7 @@ public class GUIFunctions extends ElementData {
     public GUIFunctions authorizationLib(String login, String password) {
         $x("//input[@placeholder='E-mail']").setValue(login);
         $x("//input[@placeholder='Пароль']").setValue(password);
-        CommonFunctions.wait(0.5);
+        CommonFunctions.wait(1);
         $x("//button[@type='button']").click();
         return new GUIFunctions();
     }
@@ -259,6 +259,12 @@ public class GUIFunctions extends ElementData {
         $x("//span[text()='" + field + "']/following::textarea").setValue(value);
         return this;
     }
+
+    public GUIFunctions setValueInPlaceholder(String value, String placeholder){
+        $x("//input[@placeholder='" + placeholder + "']").setValue(value);
+        return this;
+    }
+
 
     public GUIFunctions setCheckboxOnInField(String field){
         $x("//*[contains(text(), '" + field + "')]//preceding::span[@class=\"ant-checkbox\"]").click();
