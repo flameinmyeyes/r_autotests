@@ -35,7 +35,8 @@
 
     <test name="REC_all_dev_finplatforma" thread-count="1" preserve-order="true">
         <classes>
-            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_02"/>
+            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_02" />
+            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_15" />
         </classes>
     </test>
 
