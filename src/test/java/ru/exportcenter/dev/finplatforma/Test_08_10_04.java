@@ -64,8 +64,6 @@ public class Test_08_10_04 extends Hooks {
     public void step01(){
         CommonFunctions.printStep();
 
-        System.out.println(newProductName);
-
         open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль demo_exporter/password http://arm-lkb.arm-services-dev.d.exportcenter.ru/
@@ -96,22 +94,18 @@ public class Test_08_10_04 extends Hooks {
     public void step03(){
         CommonFunctions.printStep();
 
-        newProductName = "Кредитование. Прямой кредит российскому банку " + new Random().nextInt(999999999);
-
         //В поле атрибута «Наименование продукта» ввести значение «Кредитование. Прямой кредит иностранному покупателю"
         //В поле атрибута «Тип продукта» выбрать значение "Финансирование"
         //В поле атрибута «Категория продукта» выбрать значение "Инвестиционное финансирование"
         //В поле атрибута «Целевое назначение» ввести значение "Финансирование / рефинансирование расчетов по экспортному контракту"
         //В поле атрибута «Краткое описание продукта» ввести значение "Кредит на расчеты в случае если условия в стране нахождения менее привлекательны для заемщика"
         new GUIFunctions().waitForLoading()
-                .setValueInField(newProductName, "Наименование продукта")
                 .setValueInFieldFromSelect("Финансирование","Тип продукта")
                 .setValueInFieldFromSelect("Инвестиционное финансирование","Категория продукта")
-                .setValueInField("Финансирование / рефинансирование расчетов по экспортному контракту","Целевое назначение")
-                .setValueInField("Кредит на расчеты в случае если условия в стране нахождения менее привлекательны для заемщика","Краткое описание продукта");
-
-        //Нажать на кнопку «Продолжить»
-        new GUIFunctions().clickButton("Продолжить");
+                .setTextInField("Финансирование / рефинансирование расчетов по экспортному контракту","Целевое назначение")
+                .setTextInField("Кредит на расчеты в случае если условия в стране нахождения менее привлекательны для заемщика","Краткое описание продукта")
+                .clickButton("Условия предоставления")
+                .waitForLoading();
     }
 
     @Step("Заполнение полей обязательных атрибутов Блока 2  «Условия предоставления»")
@@ -121,11 +115,9 @@ public class Test_08_10_04 extends Hooks {
         //В чек-боксе атрибута «Получатель» поставить флаг в пункте «Иностранный покупатель»
         new GUIFunctions().setCheckboxOnInField("Иностранный покупатель")
                 .setCheckboxONValueInFieldFromSelect("Любая ОПФ","ОПФ российского получателя")
-                .setValueInFieldFromSelect("От 1 года","Срок регистрации российского получателя");
-
-        //Нажать на кнопку «Продолжить»
-        new GUIFunctions().clickButton("Продолжить");
-
+                .setValueInFieldFromSelect("от 1 года","Срок регистрации российского получателя")
+                .clickButton("Финансовые параметры")
+                .waitForLoading();
     }
 
     @Step("Заполнение полей обязательных атрибутов Блока 3 «Финансовые параметры»")
@@ -133,13 +125,13 @@ public class Test_08_10_04 extends Hooks {
         CommonFunctions.printStep();
 
         //Нажать на кнопку «Сохранить как черновик»
-        new GUIFunctions().setValueInFieldFromSelect("Евро,EUR", "Валюта")
-                .setValueInField("500 000 000", "Минимальная сумма")
-                .setValueInField("1 000 000 000", "Максимальная сумма")
-                .setRadiobuttonByDescription("На стандартных условиях");
 
-        //Нажать на кнопку «Продолжить»
-        new GUIFunctions().clickButton("Продолжить");
+//        $x("(//span[@class='ant-select-selection-item'])[2]").click();
+//        $x("//*[text()='Валюта']//following::*[text()='Евро, EUR']").click();
+        new GUIFunctions().setValueInField("500 000 000", "Минимальная сумма")
+                .setValueInField("1 000 000 000", "Максимальная сумма")
+                .setRadioButtonInField("На стандартных условиях")
+                .clickButton("Особенности погашения");
     }
 
     @Step("Отправка на публикацию")
@@ -147,15 +139,16 @@ public class Test_08_10_04 extends Hooks {
         CommonFunctions.printStep();
 
         //Нажать на кнопку "Отправить на публикацию"
-        new GUIFunctions().clickButton("Отправить на публикацию");
+        new GUIFunctions().clickButton("Отправить на публикацию")
+                .waitForLoading();
     }
 
     @Step("Отображение созданной записи продукта в списке продуктов со статусом «На модерации»")
     public void step07() {
         CommonFunctions.printStep();
 
-        //Нажать на кнопку "Отправить на публикацию"
-        new GUIFunctions().clickByLocator("//*[text()='Назад']");
+        //Нажать на кнопку «Назад»
+        new GUIFunctions().clickByLocator("//img[@alt='Назад']");
         CommonFunctions.wait(10);
     }
 }

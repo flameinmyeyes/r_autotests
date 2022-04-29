@@ -250,12 +250,17 @@ public class GUIFunctions extends ElementData {
     }
 
     public GUIFunctions setValueInFieldFromSelect(String value, String field){
-        $x("//span[text()='" + field + "']/following::input").click();
+        $x("//span[text()='" + field + "']/following::div[@class='ant-form-item-control-input-content']").click();
         $x("//*[text()='" + field + "']//following::*[text()='" + value + "']").click();
         return this;
     }
 
     public GUIFunctions setValueInField(String value, String field){
+        $x("//span[text()='" + field + "']/following::input").setValue(value);
+        return this;
+    }
+
+    public GUIFunctions setTextInField(String value, String field){
         $x("//span[text()='" + field + "']/following::textarea").setValue(value);
         return this;
     }
@@ -265,9 +270,13 @@ public class GUIFunctions extends ElementData {
         return this;
     }
 
-
     public GUIFunctions setCheckboxOnInField(String field){
         $x("//*[contains(text(), '" + field + "')]//preceding::span[@class=\"ant-checkbox\"]").click();
+        return this;
+    }
+
+    public GUIFunctions setRadioButtonInField(String field){
+        $x("//*[text()='" + field + "']//ancestor::label//child::input").click();
         return this;
     }
 
