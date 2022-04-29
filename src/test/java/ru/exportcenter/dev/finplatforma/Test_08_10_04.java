@@ -15,10 +15,8 @@ import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
 
 import java.util.Properties;
-import java.util.Random;
 
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.Selenide.$x;
 
 public class Test_08_10_04 extends Hooks {
 
@@ -113,6 +111,8 @@ public class Test_08_10_04 extends Hooks {
         CommonFunctions.printStep();
 
         //В чек-боксе атрибута «Получатель» поставить флаг в пункте «Иностранный покупатель»
+        //В поле атрибута «ОПФ российского получателя» выбрать значение "Любая ОПФ"
+        //В поле атрибута "Срок регистрации российского получателя" выбрать значение "От 1 года"
         new GUIFunctions().setCheckboxOnInField("Иностранный покупатель")
                 .setCheckboxONValueInFieldFromSelect("Любая ОПФ","ОПФ российского получателя")
                 .setValueInFieldFromSelect("от 1 года","Срок регистрации российского получателя")
@@ -124,8 +124,10 @@ public class Test_08_10_04 extends Hooks {
     public void step05() {
         CommonFunctions.printStep();
 
-        //Нажать на кнопку «Сохранить как черновик»
-
+        //В поле атрибута "Валюта" выбрать значение "Евро,EUR"
+        //В поле атрибута "Минимальная сумма" ввести значение "500 000 000"
+        //В поле атрибута "Максимальная сумма" ввести значение "1 000 000 000"
+        //В радио-баттоне атрибута "Применение НПА" выбрать значение "На стандартных условиях"
 //        $x("(//span[@class='ant-select-selection-item'])[2]").click();
 //        $x("//*[text()='Валюта']//following::*[text()='Евро, EUR']").click();
         new GUIFunctions().setValueInField("500 000 000", "Минимальная сумма")
@@ -149,6 +151,5 @@ public class Test_08_10_04 extends Hooks {
 
         //Нажать на кнопку «Назад»
         new GUIFunctions().clickByLocator("//img[@alt='Назад']");
-        CommonFunctions.wait(10);
     }
 }

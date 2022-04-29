@@ -256,7 +256,7 @@ public class GUIFunctions extends ElementData {
     }
 
     public GUIFunctions setValueInField(String value, String field){
-        $x("//span[text()='" + field + "']/following::input").setValue(value);
+        $x("//*[text()='" + field + "']/following::input").setValue(value);
         return this;
     }
 
