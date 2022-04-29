@@ -11,6 +11,7 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
 
@@ -35,7 +36,7 @@ public class Test_08_10_04 extends Hooks {
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws InterruptedException {
         precondition();
-        step01();
+//      step01();
         step02();
         step03();
         step04();
@@ -57,7 +58,7 @@ public class Test_08_10_04 extends Hooks {
         test_08_10_02.steps();
         newProductName = test_08_10_02.newProductName;
         CommonFunctions.wait(1);
-        closeWebDriver();
+//        closeWebDriver();
     }
 
     @Step("Авторизация")
