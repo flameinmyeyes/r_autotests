@@ -2,8 +2,6 @@ package ru.exportcenter.dev.finplatforma;
 
 import framework.RunTestAgain;
 import framework.Ways;
-import framework.integration.JupyterLabIntegration;
-import functions.api.RESTFunctions;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
@@ -13,39 +11,35 @@ import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
-import ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_10;
-import ru.exportcenter.test.agroexpress.Test_03_07_03_1.Test_03_07_03_1_20;
 
-import java.awt.event.KeyEvent;
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
 public class Test_08_10_03 extends Hooks {
+
     private String WAY_TEST = Ways.DEV.getWay() + "/finplatforma/Test_08_10_03/";
-    public String WAY_TEST_FIRST = Ways.DEV.getWay() + "/finplatforma/Test_08_10_02/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_08_10_03_properties.xml";
+    public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     public String newProductName;
 
-    public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
-    private String processID;
-    private String docUUID;
 
-    @Owner(value="Петрищев Руслан, Теребков Андрей")
-    @Description("08 10 02 Создание Черновика")
-    @Link(name="Test_08_10_02", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=133412554")
+    @Owner(value="Петрищев Руслан")
+    @Description("08 10 04 Отправка Черновика на публикацию. Валидация пройдена")
+    @Link(name="Test_08_10_04", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=133412728")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws InterruptedException {
         precondition();
-        step01();
+//      step01();
         step02();
         step03();
-//        step04();
-//        step05();
-//        step06();
-//        step07();
+        step04();
+        step05();
+        step06();
+        step07();
     }
 
     @AfterMethod
@@ -61,14 +55,12 @@ public class Test_08_10_03 extends Hooks {
         test_08_10_02.steps();
         newProductName = test_08_10_02.newProductName;
         CommonFunctions.wait(1);
-        closeWebDriver();
+//        closeWebDriver();
     }
 
     @Step("Авторизация")
-    public void step01() throws InterruptedException {
+    public void step01(){
         CommonFunctions.printStep();
-
-        System.out.println(newProductName);
 
         open(PROPERTIES.getProperty("start_URL"));
 
@@ -84,76 +76,81 @@ public class Test_08_10_03 extends Hooks {
 
         //В области навигации нажать на раздел «Продукты»
         //Нажать на кнопку «Создать новый продукт»
-        new GUIFunctions().clickButton("Продукты");
-        CommonFunctions.wait(2);
-        new GUIFunctions().clickButton("Черновики");
-        CommonFunctions.wait(2);
-        new GUIFunctions().clickButton("Сбросить фильтры");
-        $x("//*[@id='rc-tabs-1-panel-drafts']/div/div[1]/div[1]/input").setValue(newProductName);
-        new GUIFunctions().waitForElementDisplayed("//*[@id='rc-tabs-1-panel-drafts']/div/div[3]/div/div/div/div/div/div/table/tbody/tr");
-        $x("//*[@id='rc-tabs-1-panel-drafts']/div/div[3]/div/div/div/div/div/div/table/tbody/tr").click();
-        new GUIFunctions().clickButton("Редактировать");
+        new GUIFunctions().clickButton("Продукты")
+                .waitForElementDisplayed("//*[text()='Создать новый продукт']")
+                .clickButton("Черновики")
+                .waitForLoading()
+                .clickButton("Сбросить фильтры")
+                .setValueInPlaceholder(newProductName,"Наименование продукта")
+                .waitForLoading()
+                .clickButton(newProductName)
+                .waitForLoading()
+                .clickButton("Редактировать");
     }
 
-    @Step("Сведения о продукте")
-    public void step03() {
+    @Step("Заполнение полей обязательных атрибутов Блока 1 «Сведения о продукте»")
+    public void step03(){
         CommonFunctions.printStep();
 
-        new GUIFunctions().waitForURL("");
-
-        //Нажать на кнопку «Продолжить»
-        new GUIFunctions().clickButton("Продолжить");
-    }
-//
-//    @Step("Условия предоставления")
-//    public void step04() {
-//        CommonFunctions.printStep();
-//
-//        //Нажать на кнопку «Продолжить»
-//        new GUIFunctions().clickButton("Продолжить");
-//    }
-//
-//    @Step("Финансовые параметры")
-//    public void step05() {
-//        CommonFunctions.printStep();
-//
-//        //Нажать на кнопку «Продолжить»
-//        new GUIFunctions().clickButton("Продолжить");
-//    }
-//
-//    @Step("Особенности погашения")
-//    public void step06() {
-//        CommonFunctions.printStep();
-//
-//        //Нажать на кнопку «Сохранить как черновик»
-//        new GUIFunctions().clickButton("Сохранить как черновик");
-//    }
-//
-//    @Step("Карточка продукта")
-//    public void step07() {
-//        CommonFunctions.printStep();
-//
-//        //Нажать на кнопку «Назад» (стрелкой)
-//        $x("//img[@alt='Назад']").click();
-//        new GUIFunctions().waitForElementDisplayed("//*[text()='Создать новый продукт']");
-//    }
-
-    public void setValueInFieldFromSelect(String value, String field){
-        $x("//span[text()='" + field + "']/following::input").click();
-        $x("//*[text()='" + field + "']//following::*[text()='" + value + "']").click();
+        //В поле атрибута «Наименование продукта» ввести значение «Кредитование. Прямой кредит иностранному покупателю"
+        //В поле атрибута «Тип продукта» выбрать значение "Финансирование"
+        //В поле атрибута «Категория продукта» выбрать значение "Инвестиционное финансирование"
+        //В поле атрибута «Целевое назначение» ввести значение "Финансирование / рефинансирование расчетов по экспортному контракту"
+        //В поле атрибута «Краткое описание продукта» ввести значение "Кредит на расчеты в случае если условия в стране нахождения менее привлекательны для заемщика"
+        new GUIFunctions().waitForLoading()
+                .setValueInFieldFromSelect("Финансирование","Тип продукта")
+                .setValueInFieldFromSelect("Инвестиционное финансирование","Категория продукта")
+                .setTextInField("Финансирование / рефинансирование расчетов по экспортному контракту","Целевое назначение")
+                .setTextInField("Кредит на расчеты в случае если условия в стране нахождения менее привлекательны для заемщика","Краткое описание продукта")
+                .clickButton("Условия предоставления")
+                .waitForLoading();
     }
 
-    public void setValueInField(String value, String field){
-        $x("//span[text()='" + field + "']/following::textarea").setValue(value);
+    @Step("Заполнение полей обязательных атрибутов Блока 2  «Условия предоставления»")
+    public void step04() {
+        CommonFunctions.printStep();
+
+        //В чек-боксе атрибута «Получатель» поставить флаг в пункте «Иностранный покупатель»
+        //В поле атрибута «ОПФ российского получателя» выбрать значение "Любая ОПФ"
+        //В поле атрибута "Срок регистрации российского получателя" выбрать значение "От 1 года"
+        new GUIFunctions().setCheckboxOnInField("Иностранный покупатель")
+                .setCheckboxONValueInFieldFromSelect("Любая ОПФ","ОПФ российского получателя")
+//                .setValueInFieldFromSelect("от 1 года","Срок регистрации российского получателя")
+                .clickButton("Финансовые параметры")
+                .waitForLoading();
     }
 
-    public void setCheckboxON(String field){
-        $x("//*[contains(text(), '" + field + "')]//preceding::span[@class=\"ant-checkbox\"]").click();
+    @Step("Заполнение полей обязательных атрибутов Блока 3 «Финансовые параметры»")
+    public void step05() {
+        CommonFunctions.printStep();
+
+        //В поле атрибута "Валюта" выбрать значение "Евро,EUR"
+        //В поле атрибута "Минимальная сумма" ввести значение "500 000 000"
+        //В поле атрибута "Максимальная сумма" ввести значение "1 000 000 000"
+        //В радио-баттоне атрибута "Применение НПА" выбрать значение "На стандартных условиях"
+//        $x("(//span[@class='ant-select-selection-item'])[2]").click();
+//        $x("//*[text()='Валюта']//following::*[text()='Евро, EUR']").click();
+        new GUIFunctions()
+            .setValueInField("500 000 000", "Минимальная сумма")
+            .setValueInField("1 000 000 000", "Максимальная сумма")
+            .setRadioButtonInField("На стандартных условиях")
+            .clickButton("Особенности погашения");
     }
 
-    public void setCheckboxONValueInFieldFromSelect(String value, String field){
-        $x("//span[text()='" + field + "']/following::input").click();
-        $x("//*[text()='" + field + "']//following::*[text()='" + value + "']//child::span[@class=\"ant-checkbox\"]").click();
-        $x("//span[text()='" + field + "']/following::input").sendKeys(Keys.ESCAPE);
+    @Step("Отправка на публикацию")
+    public void step06() {
+        CommonFunctions.printStep();
+
+        //Нажать на кнопку "Отправить на публикацию"
+        new GUIFunctions().clickButton("Отправить на публикацию")
+                .waitForLoading();
+    }
+
+    @Step("Отображение созданной записи продукта в списке продуктов со статусом «На модерации»")
+    public void step07() {
+        CommonFunctions.printStep();
+
+        //Нажать на кнопку «Назад»
+        new GUIFunctions().clickByLocator("//img[@alt='Назад']");
     }
 }
