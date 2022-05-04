@@ -250,7 +250,11 @@ public class GUIFunctions extends ElementData {
     }
 
     public GUIFunctions setValueInFieldFromSelect(String value, String field){
-        $x("//span[text()='" + field + "']/following::div[@class='ant-form-item-control-input-content']").click();
+        if ($x("//span[text()='" + field + "']/following::span[@class='ant-select-selection-item']").isDisplayed()){
+            $x("//span[text()='" + field + "']/following::span[@class='ant-select-selection-item']").click();
+        } else {
+            $x("//span[text()='" + field + "']/following::div[@class='ant-form-item-control-input-content']").click();
+        }
         $x("//*[text()='" + field + "']//following::*[text()='" + value + "']").click();
         return this;
     }
