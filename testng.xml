@@ -41,6 +41,7 @@
             <class name="ru.exportcenter.dev.finplatforma.Test_08_10_14" />
             <class name="ru.exportcenter.dev.finplatforma.Test_08_10_15" />
             <class name="ru.exportcenter.dev.finplatforma.Test_08_10_17" />
+            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_23" />
         </classes>
     </test>
 
