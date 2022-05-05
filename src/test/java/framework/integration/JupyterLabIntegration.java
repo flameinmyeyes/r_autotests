@@ -12,7 +12,7 @@ public class JupyterLabIntegration {
                 .given()
                         .baseUri("http://selenoidshare.d.exportcenter.ru/")
                         .basePath("/api/contents/work")
-                        .param("token", "0a6a3f42bb6533339a7862e37f56c8cdbcee67a4baecf988")
+                        .param("token", "d5b0cbc7a313a6ddbe260787f0830c3ed2a292f174788bb6")
                 .when()
                         .get(filePath)
                 .then()
