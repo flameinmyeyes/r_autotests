@@ -46,8 +46,8 @@ public class Test_08_10_23 extends Hooks {
 
         open(PROPERTIES.getProperty("start_URL"));
         new GUIFunctions()
-            .authorizationLib(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
-            .waitForElementDisplayed("//a[@href='/products']");
+            .authorizationLib(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"));
+//            .waitForElementDisplayed("//a[@href='/products']");
     }
 
     @Step("Навигация")
