@@ -30,7 +30,7 @@ public class Test_08_10_23 extends Hooks {
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws InterruptedException {
         step01();
-//        step02();
+        step02();
 //        step03();
 //        step04();
     }
@@ -48,8 +48,8 @@ public class Test_08_10_23 extends Hooks {
         open("http://arm-lkb.arm-services-dev.d.exportcenter.ru/employees");
         new GUIFunctions()
 //            .authorizationLib(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
-            .authorizationLib("kromanovskaya+user2@roox.ru", "Password1!")
-            .waitForElementDisplayed("//a[@href='/products']");
+            .authorizationLib("kromanovskaya+user2@roox.ru", "Password1!");
+ //           .waitForElementDisplayed("//a[@href='/products']");
     }
 
     @Step("Навигация")
