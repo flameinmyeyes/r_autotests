@@ -22,7 +22,7 @@ public class Test_08_10_23 extends Hooks {
 
     private String WAY_TEST = Ways.DEV.getWay() + "/finplatforma/Test_08_10_23/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_08_10_23_properties.xml";
-    public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
+//    public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     @Owner(value = "Теребков Андрей")
     @Description("008 10 23 Профиль сотрудника. Блокировка/Разблокировка")
@@ -30,23 +30,25 @@ public class Test_08_10_23 extends Hooks {
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws InterruptedException {
         step01();
-        step02();
-        step03();
-        step04();
+//        step02();
+//        step03();
+//        step04();
     }
 
-    @AfterMethod
-    public void screenShot() {
-        CommonFunctions.screenShot(WAY_TEST + "screen.png");
-    }
+//    @AfterMethod
+//    public void screenShot() {
+//        CommonFunctions.screenShot(WAY_TEST + "screen.png");
+//    }
 
     @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
 
-        open(PROPERTIES.getProperty("start_URL"));
+//        open(PROPERTIES.getProperty("start_URL"));
+        open("http://arm-lkb.arm-services-dev.d.exportcenter.ru/employees");
         new GUIFunctions()
-            .authorizationLib(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
+//            .authorizationLib(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
+            .authorizationLib("kromanovskaya+user2@roox.ru", "Password1!")
             .waitForElementDisplayed("//a[@href='/products']");
     }
 
@@ -59,26 +61,26 @@ public class Test_08_10_23 extends Hooks {
             .clickButton("Сотрудники");
     }
 
-    @Step("Блокировка")
-    public void step03() {
-        CommonFunctions.printStep();
-
-        new GUIFunctions()
-            .clickButton(PROPERTIES.getProperty("AutoTest_Body.ФИО"))
-            .clickButton(PROPERTIES.getProperty("AutoTest_Body.Action1"))
-            .clickButton(PROPERTIES.getProperty("AutoTest_Body.Action2"));
-        CommonFunctions.wait(1);
-    }
-
-    @Step("Разблокировка")
-    public void step04() {
-        CommonFunctions.printStep();
-
-        CommonFunctions.wait(1);
-
-        new GUIFunctions()
-            .clickButton(PROPERTIES.getProperty("AutoTest_Body.ФИО"))
-            .clickButton(PROPERTIES.getProperty("AutoTest_Body.Action3"))
-            .clickButton(PROPERTIES.getProperty("AutoTest_Body.Action4"));
-    }
+//    @Step("Блокировка")
+//    public void step03() {
+//        CommonFunctions.printStep();
+//
+//        new GUIFunctions()
+//            .clickButton(PROPERTIES.getProperty("AutoTest_Body.ФИО"))
+//            .clickButton(PROPERTIES.getProperty("AutoTest_Body.Action1"))
+//            .clickButton(PROPERTIES.getProperty("AutoTest_Body.Action2"));
+//        CommonFunctions.wait(1);
+//    }
+//
+//    @Step("Разблокировка")
+//    public void step04() {
+//        CommonFunctions.printStep();
+//
+//        CommonFunctions.wait(1);
+//
+//        new GUIFunctions()
+//            .clickButton(PROPERTIES.getProperty("AutoTest_Body.ФИО"))
+//            .clickButton(PROPERTIES.getProperty("AutoTest_Body.Action3"))
+//            .clickButton(PROPERTIES.getProperty("AutoTest_Body.Action4"));
+//    }
 }
