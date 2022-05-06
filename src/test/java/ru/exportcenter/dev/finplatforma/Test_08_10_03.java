@@ -27,7 +27,7 @@ public class Test_08_10_03 extends Hooks {
     public String newProductName;
 
 
-    @Owner(value="Петрищев Руслан")
+    @Owner(value="Теребков Андрей")
     @Description("08 10 03 Отправка Черновика на публикацию. Валидация не пройдена")
     @Link(name="Test_08_10_03", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=133412585")
     @Test(retryAnalyzer = RunTestAgain.class)
