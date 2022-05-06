@@ -275,7 +275,8 @@ public class GUIFunctions extends ElementData {
     }
 
     public GUIFunctions setCheckboxOnInField(String field){
-        $x("//*[contains(text(), '" + field + "')]//preceding::span[@class=\"ant-checkbox\"]").click();
+        $x("//*[contains(text(), '" + field + "')]/parent::label/span").click();
+
         return this;
     }
 

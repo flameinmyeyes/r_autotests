@@ -9,14 +9,10 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
-import org.openqa.selenium.Keys;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
-
 import java.util.Properties;
-
 import static com.codeborne.selenide.Selenide.*;
 
 public class Test_08_10_04 extends Hooks {
@@ -26,7 +22,6 @@ public class Test_08_10_04 extends Hooks {
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_08_10_04_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     public String newProductName;
-
 
     @Owner(value="Петрищев Руслан")
     @Description("08 10 04 Отправка Черновика на публикацию. Валидация пройдена")
@@ -95,14 +90,15 @@ public class Test_08_10_04 extends Hooks {
 
         //В поле атрибута «Наименование продукта» ввести значение «Кредитование. Прямой кредит иностранному покупателю"
         //В поле атрибута «Тип продукта» выбрать значение "Финансирование"
-        //В поле атрибута «Категория продукта» выбрать значение "Инвестиционное финансирование"
-        //В поле атрибута «Целевое назначение» ввести значение "Финансирование / рефинансирование расчетов по экспортному контракту"
+        //В поле атрибута «Категория продукта» выбрать значение "Текущее финансирование"
+        //В поле атрибута «Целевое назначение» ввести значение "Текущее финансирование российского банка"
         //В поле атрибута «Краткое описание продукта» ввести значение "Кредит на расчеты в случае если условия в стране нахождения менее привлекательны для заемщика"
+        //Нажать на вкладку «Условия предоставления»
         new GUIFunctions().waitForLoading()
-                .setValueInFieldFromSelect("Финансирование","Тип продукта")
-                .setValueInFieldFromSelect("Инвестиционное финансирование","Категория продукта")
-                .setTextInField("Финансирование / рефинансирование расчетов по экспортному контракту","Целевое назначение")
-                .setTextInField("Кредит на расчеты в случае если условия в стране нахождения менее привлекательны для заемщика","Краткое описание продукта")
+                .setValueInFieldFromSelect(PROPERTIES.getProperty("Сведения о продукте.Тип продукта"),"Тип продукта")
+                .setValueInFieldFromSelect(PROPERTIES.getProperty("Сведения о продукте.Категория продукта"),"Категория продукта")
+                .setTextInField(PROPERTIES.getProperty("Сведения о продукте.Целевое назначение"),"Целевое назначение")
+                .setTextInField(PROPERTIES.getProperty("Сведения о продукте.Краткое описание продукта"),"Краткое описание продукта")
                 .clickButton("Условия предоставления")
                 .waitForLoading();
     }
@@ -111,12 +107,13 @@ public class Test_08_10_04 extends Hooks {
     public void step04() {
         CommonFunctions.printStep();
 
-        //В чек-боксе атрибута «Получатель» поставить флаг в пункте «Иностранный покупатель»
+        //В чек-боксе атрибута «Получатель» поставить флаг в пункте «Банк резидент»
         //В поле атрибута «ОПФ российского получателя» выбрать значение "Любая ОПФ"
-        //В поле атрибута "Срок регистрации российского получателя" выбрать значение "От 1 года"
-        new GUIFunctions().setCheckboxOnInField("Иностранный покупатель")
-                .setCheckboxONValueInFieldFromSelect("Любая ОПФ","ОПФ российского получателя")
-                .setValueInFieldFromSelect("от 1 года","Срок регистрации российского получателя")
+        //В поле атрибута "Срок регистрации российского получателя" выбрать значение "от 6 месяцев"
+        //Нажать на вкладку «Финансовые параметры»
+        new GUIFunctions().setCheckboxOnInField("Банк резидент")
+                .setCheckboxONValueInFieldFromSelect(PROPERTIES.getProperty("Условия предоставления.ОПФ российского получателя"),"ОПФ российского получателя")
+                .setValueInFieldFromSelect(PROPERTIES.getProperty("Условия предоставления.Срок регистрации российского получателя"),"Срок регистрации российского получателя")
                 .clickButton("Финансовые параметры")
                 .waitForLoading();
     }
@@ -130,9 +127,10 @@ public class Test_08_10_04 extends Hooks {
         //В поле атрибута "Максимальная сумма" ввести значение "1 000 000 000"
         //В радио-баттоне атрибута "Применение НПА" выбрать значение "На стандартных условиях"
         //Нажать на вкладку "Особенности погашения"
-        new GUIFunctions().setValueInFieldFromSelect("Южносуданский фунт, SSP","Валюта")
-                .setValueInField("500 000 000", "Минимальная сумма")
-                .setValueInField("1 000 000 000", "Максимальная сумма")
+        $x("//span[text()='Валюта']/following::input").setValue("Евро");
+        $x("//*[text()='Валюта']//following::*[text()='Евро, EUR']").click();
+        new GUIFunctions().setValueInField(PROPERTIES.getProperty("Финансовые параметры.Минимальная сумма"), "Минимальная сумма")
+                .setValueInField(PROPERTIES.getProperty("Финансовые параметры.Максимальная сумма"), "Максимальная сумма")
                 .setRadioButtonInField("На стандартных условиях")
                 .clickButton("Особенности погашения");
     }
