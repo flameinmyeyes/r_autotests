@@ -7,12 +7,15 @@ import org.testng.Assert;
 
 public class JupyterLabIntegration {
 
+// ~4-5 числа каждого месяца Токен "протухает" обращаться к  Михаилу @vostroknutovm
+    static String tokenNum = "d5b0cbc7a313a6ddbe260787f0830c3ed2a292f174788bb6";
+
     public static String getFileContent(String filePath) {
         String content = RestAssured
                 .given()
                         .baseUri("http://selenoidshare.d.exportcenter.ru/")
                         .basePath("/api/contents/work")
-                        .param("token", "d5b0cbc7a313a6ddbe260787f0830c3ed2a292f174788bb6")
+                        .param("token", tokenNum)
                 .when()
                         .get(filePath)
                 .then()
@@ -64,7 +67,7 @@ public class JupyterLabIntegration {
                 .given()
                         .baseUri("http://selenoidshare.d.exportcenter.ru/")
                         .basePath("/api/contents/work")
-                        .param("token", "d5b0cbc7a313a6ddbe260787f0830c3ed2a292f174788bb6")
+                        .param("token", tokenNum)
                         .body(body)
                 .when()
                         .put(path)

@@ -35,10 +35,11 @@ public class Test_08_10_23 extends Hooks {
         step04();
     }
 
-    @AfterMethod
-    public void screenShot() {
-        CommonFunctions.screenShot(WAY_TEST + "screen.png");
-    }
+//    @AfterMethod
+//    public void screenShot() {
+//        System.out.println(WAY_TEST + "screen.png");
+//        CommonFunctions.screenShot(WAY_TEST + "screen.png");
+//    }
 
     @Step("Авторизация")
     public void step01() {

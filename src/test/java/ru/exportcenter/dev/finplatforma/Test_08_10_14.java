@@ -93,24 +93,24 @@ public class Test_08_10_14 extends Hooks {
         CommonFunctions.printStep();
         setValue("6", "Аккредитив");
     }
-
+    //*[@id="rc_select_6"]
     @Step("Категория продукта")
     public void step05() {
         CommonFunctions.printStep();
         setValue("7", "Экспортный аккредитив");
     }
 
-//    @Step("Получатель")
-//    public void step06() {
-//        CommonFunctions.printStep();
-//        setValue("//*[@id='8']", "Российский банк");
-//    }
-//
-//    @Step("Валюта")
-//    public void step07() {
-//        CommonFunctions.printStep();
-//        setValue("//*[@id='9']", "Лоти, LST");
-//    }
+    @Step("Получатель")
+    public void step06() {
+        CommonFunctions.printStep();
+        setValue("8", "Банк резидент");
+    }
+
+    @Step("Валюта")
+    public void step07() {
+        CommonFunctions.printStep();
+        setValue("9", "Лоти, LST");
+    }
 
     @Step("Статус")
     public void step08() {
