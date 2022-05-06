@@ -50,7 +50,7 @@ public class Test_08_10_22 extends Hooks {
         //Ввести логин и пароль kromanovskaya+user2@roox.ru/Password1!
         new GUIFunctions()
                 .authorizationLib(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
-                .waitForElementDisplayed("//a[@href='/products']");
+                .waitForElementDisplayed("//*[text()='Сотрудники']");
     }
 
     @Step("Навигация")
