@@ -50,12 +50,14 @@ public class Test_08_10_14 extends Hooks {
     }
 
     public void setValue(String field, String value){
+        System.out.println(field + " - " + value);
         CommonFunctions.wait(2);
         $x("//*[@id='rc_select_"+field+"']").click();
         CommonFunctions.wait(2);
         $x("//*[@id='rc_select_"+field+"']//following::*[text()='"+value+"']").click();
         CommonFunctions.wait(2);
         new GUIFunctions().clickButton("Сбросить фильтры");
+        CommonFunctions.wait(2);
     }
 
     @Step("Авторизация")
@@ -88,12 +90,12 @@ public class Test_08_10_14 extends Hooks {
         new GUIFunctions().clickButton("Сбросить фильтры");
     }
 
-    @Step("Условия предоставления")
+    @Step("Тип категории")
     public void step04() {
         CommonFunctions.printStep();
         setValue("6", "Аккредитив");
     }
-    //*[@id="rc_select_6"]
+
     @Step("Категория продукта")
     public void step05() {
         CommonFunctions.printStep();
