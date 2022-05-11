@@ -18,19 +18,20 @@ import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_08_10_33 extends Hooks {
+public class Test_08_10_34 extends Hooks {
 
     private String WAY_TEST = Ways.DEV.getWay() + "/finplatforma/Test_08_10_17/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_08_10_17_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
-    @Owner(value = "Теребкова Андрей")
-    @Description("08 10 33 Просмотр списка сотрудников")
-    @Link(name = "Test_08_10_33", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=133427200")
+    @Owner(value = "Теребков Андрей")
+    @Description("08 10 34 Просмотр учетной записи сотрудника")
+    @Link(name = "Test_08_10_34", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=133427218")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws InterruptedException {
         step01();
         step02();
+        step03();
     }
 
     @AfterMethod
@@ -55,14 +56,14 @@ public class Test_08_10_33 extends Hooks {
         new GUIFunctions()
                 .waitForElementDisplayed("//*[text()='Сотрудники']")
                 .clickButton("Сотрудники")
-                .clickButton("Все");
-    }
+                .clickButton("Все");    }
 
     @Step("Заполнение данных по новому сотруднику")
     public void step03() {
         CommonFunctions.printStep();
 
         new GUIFunctions()
-            .clickButton("//*[title()='Выход']");
+                .clickButton("Романовская Ксения")
+                .clickButton("//*[title()='Выход']");
     }
 }
