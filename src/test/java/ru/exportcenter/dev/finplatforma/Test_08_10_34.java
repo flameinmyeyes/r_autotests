@@ -56,14 +56,14 @@ public class Test_08_10_34 extends Hooks {
         new GUIFunctions()
                 .waitForElementDisplayed("//*[text()='Сотрудники']")
                 .clickButton("Сотрудники")
-                .clickButton("Все");    }
+                .clickButton("Все");
+    }
 
     @Step("Заполнение данных по новому сотруднику")
     public void step03() {
         CommonFunctions.printStep();
 
         new GUIFunctions()
-                .clickButton("Романовская Ксения")
-                .clickButton("//*[title()='Выход']");
+                .clickButton("Романовская Ксения");
     }
 }
