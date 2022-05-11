@@ -20,8 +20,8 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class Test_08_10_34 extends Hooks {
 
-    private String WAY_TEST = Ways.DEV.getWay() + "/finplatforma/Test_08_10_17/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_08_10_17_properties.xml";
+    private String WAY_TEST = Ways.DEV.getWay() + "/finplatforma/Test_08_10_34/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_08_10_34_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     @Owner(value = "Теребков Андрей")
