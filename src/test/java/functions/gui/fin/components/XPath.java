@@ -59,7 +59,7 @@ public class XPath extends ElementData {
         } else {
             $x(getContainerXPath() + getFieldXPath() + "/following::div[@class='ant-form-item-control-input-content']").click();
         }
-        return "//*[text()='" + field + "']//following::*[text()='" + value + "']";
+        return getContainerXPath() + getFieldXPath() + "//following::*[text()='" + value + "']";
     }
 
     public String getErrorXPath() {
