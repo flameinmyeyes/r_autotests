@@ -36,23 +36,17 @@ public class Field extends ElementData {
         new Asserts(this).assertCheckboxON();
     }
 
-//    public void setCheckboxOFF() {
-//        if ($x(new XPath(this).getCheckedCheckboxXPath()).exists()) {
-//            $x(new XPath(this).getCheckboxXPath()).click();
-//        }
-//        new Asserts(this).assertCheckboxOFF();
-//    }
+    public void setCheckboxOFF() {
+        if ($x(new XPath(this).getCheckedCheckboxXPath()).exists()) {
+            $x(new XPath(this).getCheckboxXPath()).click();
+        }
+        new Asserts(this).assertCheckboxOFF();
+    }
 
     public void setCheckboxONInValue() {
         $x(new XPath(this).getFieldXPath() + "/following::input").click();
-        $x(new XPath(this).getFieldXPath() + "//following::*[text()='" + value + "']//child::span[@class=\"ant-checkbox\"]").click();
+        $x(new XPath(this).getFieldXPath() + "//following::*[text()='" + value + "']//child::span[@class='ant-checkbox']").click();
         $x(new XPath(this).getFieldXPath() + "/following::input").sendKeys(Keys.ESCAPE);
-        new Asserts(this).assertCheckboxON();
+//        new Asserts(this).assertCheckboxON();
     }
-
-//    public void setRadiobuttonByDescription() {
-//        $x(new XPath(this).getRadiobuttonByDescriptionXPath()).click();
-//        new Asserts(this).assertRadiobuttonONByDescription();
-//    }
-
 }

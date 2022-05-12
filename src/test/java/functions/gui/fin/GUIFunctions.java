@@ -116,28 +116,16 @@ public class GUIFunctions extends ElementData {
         return this;
     }
 
+    public GUIFunctions setCheckboxOFF() {
+        cbCondition = false;
+        new Field(this).setCheckboxOFF();
+        return this;
+    }
+
     public GUIFunctions setCheckboxONInValue(String value) {
         cbCondition = true;
-        $x(new XPath(this).getFieldXPath() + "/following::input").click();
-        $x(new XPath(this).getFieldXPath() + "//following::*[text()='" + value + "']//child::span[@class=\"ant-checkbox\"]").click();
-        $x(new XPath(this).getFieldXPath() + "/following::input").sendKeys(Keys.ESCAPE);
-//        new Field(this).setCheckboxONInValue();
-        return this;
-    }
-
-    public GUIFunctions assertCheckboxON() {
-        new Asserts(this).assertCheckboxON();
-        return this;
-    }
-
-//    public GUIFunctions setCheckboxOFF() {
-//        cbCondition = false;
-//        new Field(this).setCheckboxOFF();
-//        return this;
-//    }
-
-    public GUIFunctions assertCheckboxOFF() {
-        new Asserts(this).assertCheckboxOFF();
+        this.value = value;
+        new Field(this).setCheckboxONInValue();
         return this;
     }
 
