@@ -27,6 +27,9 @@ public class Field extends ElementData {
     public void selectValue(String value) {
         String item = new XPath(this).getSearchedValueXPath(value);
         $x(item).click();
+        if ($x(new XPath(this).getCheckedCheckboxXPath()).isDisplayed()){
+            $x(new XPath(this).getFieldXPath() + "/following::input").sendKeys(Keys.ESCAPE);
+        }
     }
 
     public void setCheckboxON() {

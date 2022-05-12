@@ -27,6 +27,13 @@ public class XPath extends ElementData {
         return "";
     }
 
+    public String getValueXPath() {
+        if (isFieldDefined()) {
+            return "//*[text()='" + value + "']";
+        }
+        return "";
+    }
+
     public String getPlaceholderXPath() {
         if (isPlaceholderDefined()) {
             return "//input[@placeholder='" + placeholder + "']";
@@ -67,7 +74,11 @@ public class XPath extends ElementData {
     }
 
     public String getCheckboxXPath() {
-        return getContainerXPath() + getFieldXPath() + "/parent::label/span";
+        if (value.equals("")) {
+            return getContainerXPath() + getFieldXPath() + "/parent::label/span";
+        } else {
+            return getValueXPath() + "//parent::label/span";
+        }
     }
 
     public String getCheckedCheckboxXPath() {
