@@ -46,10 +46,10 @@ public class GUIFunctions extends ElementData {
      */
 
     public GUIFunctions authorization(String login, String password) {
-        $x("//input[@placeholder='E-mail']").setValue(login);
-        $x("//input[@placeholder='Пароль']").setValue(password);
+        this.inPlaceholder("E-mail").inputValue(login)
+                        .inPlaceholder("Пароль").inputValue(password);
         CommonFunctions.wait(1);
-        $x("//button[@type='button']").click();
+        this.clickByLocator("//button[@type='button']");
         return new GUIFunctions();
     }
 
@@ -112,8 +112,7 @@ public class GUIFunctions extends ElementData {
 
     public GUIFunctions setCheckboxON() {
         cbCondition = true;
-//        new Field(this).setCheckboxON();
-        $x(new XPath(this).getFieldXPath() + "/parent::label/span").click();
+        new Field(this).setCheckboxON();
         return this;
     }
 
@@ -122,6 +121,7 @@ public class GUIFunctions extends ElementData {
         $x(new XPath(this).getFieldXPath() + "/following::input").click();
         $x(new XPath(this).getFieldXPath() + "//following::*[text()='" + value + "']//child::span[@class=\"ant-checkbox\"]").click();
         $x(new XPath(this).getFieldXPath() + "/following::input").sendKeys(Keys.ESCAPE);
+//        new Field(this).setCheckboxONInValue();
         return this;
     }
 
@@ -130,11 +130,11 @@ public class GUIFunctions extends ElementData {
         return this;
     }
 
-    public GUIFunctions setCheckboxOFF() {
-        cbCondition = false;
-        new Field(this).setCheckboxOFF();
-        return this;
-    }
+//    public GUIFunctions setCheckboxOFF() {
+//        cbCondition = false;
+//        new Field(this).setCheckboxOFF();
+//        return this;
+//    }
 
     public GUIFunctions assertCheckboxOFF() {
         new Asserts(this).assertCheckboxOFF();

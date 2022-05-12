@@ -71,7 +71,7 @@ public class XPath extends ElementData {
     }
 
     public String getCheckedCheckboxXPath() {
-        return getCheckboxXPath() + "//div[contains(@class,'checked')]";
+        return getCheckboxXPath() + "[contains(@class,'ant-checkbox-checked')]";
     }
 
     public String getRadiobuttonByDescriptionXPath() {

@@ -1,6 +1,7 @@
 package functions.gui.fin.components;
 
 import functions.gui.fin.ElementData;
+import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Selenide.$x;
 
@@ -29,30 +30,29 @@ public class Field extends ElementData {
     }
 
     public void setCheckboxON() {
-//        if (!$x(new XPath(this).getCheckedCheckboxXPath()).exists()) {
-//            $x(new XPath(this).getCheckboxXPath()).click();
-//        }
-        $x(new XPath(this).getCheckboxXPath()).click();
+        if (!$x(new XPath(this).getCheckedCheckboxXPath()).exists()) {
+            $x(new XPath(this).getCheckboxXPath()).click();
+        }
         new Asserts(this).assertCheckboxON();
     }
 
-    public void setCheckboxOFF() {
-        if ($x(new XPath(this).getCheckedCheckboxXPath()).exists()) {
-            $x(new XPath(this).getCheckboxXPath()).click();
-        }
-        new Asserts(this).assertCheckboxOFF();
-    }
-
-//    public void setCheckboxONInValue() {
-//        if (!$x(new XPath(this).getCheckedCheckboxXPath()).exists()) {
+//    public void setCheckboxOFF() {
+//        if ($x(new XPath(this).getCheckedCheckboxXPath()).exists()) {
 //            $x(new XPath(this).getCheckboxXPath()).click();
 //        }
-//        new Asserts(this).assertCheckboxON();
+//        new Asserts(this).assertCheckboxOFF();
 //    }
 
-    public void setRadiobuttonByDescription() {
-        $x(new XPath(this).getRadiobuttonByDescriptionXPath()).click();
-        new Asserts(this).assertRadiobuttonONByDescription();
+    public void setCheckboxONInValue() {
+        $x(new XPath(this).getFieldXPath() + "/following::input").click();
+        $x(new XPath(this).getFieldXPath() + "//following::*[text()='" + value + "']//child::span[@class=\"ant-checkbox\"]").click();
+        $x(new XPath(this).getFieldXPath() + "/following::input").sendKeys(Keys.ESCAPE);
+        new Asserts(this).assertCheckboxON();
     }
+
+//    public void setRadiobuttonByDescription() {
+//        $x(new XPath(this).getRadiobuttonByDescriptionXPath()).click();
+//        new Asserts(this).assertRadiobuttonONByDescription();
+//    }
 
 }
