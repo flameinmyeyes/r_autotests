@@ -122,6 +122,7 @@ public class GUIFunctions extends ElementData {
         return this;
     }
 
+    @Deprecated
     public GUIFunctions setCheckboxONInValue(String value) {
         cbCondition = true;
         this.value = value;
