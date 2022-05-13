@@ -3,6 +3,9 @@ package functions.gui.fin.components;
 import functions.gui.fin.ElementData;
 import org.openqa.selenium.Keys;
 
+import java.awt.*;
+
+
 import static com.codeborne.selenide.Selenide.$x;
 
 public class Field extends ElementData {
