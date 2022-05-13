@@ -1,10 +1,9 @@
 package functions.gui.fin;
 
+import com.codeborne.selenide.WebDriverRunner;
 import functions.common.CommonFunctions;
-
 import functions.gui.fin.components.*;
-import org.openqa.selenium.Keys;
-
+import org.openqa.selenium.JavascriptExecutor;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.switchTo;
 
@@ -173,6 +172,16 @@ public class GUIFunctions extends ElementData {
 
     public GUIFunctions waitForElementDisappeared(String xPath) {
         new Wait(this).waitForElementDisappeared(xPath);
+        return this;
+    }
+
+    /**
+     * scroll
+     */
+
+    public GUIFunctions scrollToElement(String xPath) {
+        JavascriptExecutor je = (JavascriptExecutor) WebDriverRunner.getWebDriver();
+        je.executeScript("arguments[0].scrollIntoView(true);", $x(xPath));
         return this;
     }
 }
