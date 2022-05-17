@@ -2,11 +2,8 @@ package functions.gui.fin.components;
 
 import functions.gui.fin.ElementData;
 import org.openqa.selenium.Keys;
-
-import java.awt.*;
-
-
 import static com.codeborne.selenide.Selenide.$x;
+import static org.testng.Assert.*;
 
 public class Field extends ElementData {
 
@@ -15,16 +12,14 @@ public class Field extends ElementData {
     }
 
     public void inputValue(String value) {
-        if (isFieldDefined()) {
-            $x(new XPath(this).getInputValueXPath()).setValue(value);
-        }
-        if (isPlaceholderDefined()) {
-            $x(new XPath(this).getPlaceholderXPath()).setValue(value);
-        }
+        $x(new XPath(this).getInputValueXPath()).setValue(value);
     }
 
     public void inputText(String value) {
         $x(new XPath(this).getInputTextXPath()).setValue(value);
+        if (!$x(new XPath(this).getInputTextXPath()).getText().equals(value)){
+            fail("Текст после ввода в поле не соответствует первоначальному");
+        }
     }
 
     public void selectValue(String value) {

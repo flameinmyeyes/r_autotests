@@ -48,7 +48,12 @@ public class XPath extends ElementData {
      */
 
     public String getInputValueXPath() {
-        return getContainerXPath() + getFieldXPath() + "/following::input";
+        if (isFieldDefined()) {
+            return getContainerXPath() + getFieldXPath() + "/following::input";
+        } else if (isPlaceholderDefined()){
+            return getContainerXPath() + getPlaceholderXPath();
+        }
+        return "";
     }
 
     public String getInputTextXPath() {
@@ -61,6 +66,7 @@ public class XPath extends ElementData {
     }
 
     public String getSearchedValueXPath(String value) {
+        //Если placeholder уже заполнен значением
         if ($x(getContainerXPath() + getFieldXPath() + "/following::span[@class='ant-select-selection-item']").isDisplayed()){
             $x(getContainerXPath() + getFieldXPath() + "/following::span[@class='ant-select-selection-item']").click();
         } else {

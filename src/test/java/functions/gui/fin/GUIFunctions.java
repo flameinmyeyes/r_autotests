@@ -180,8 +180,7 @@ public class GUIFunctions extends ElementData {
      */
 
     public GUIFunctions scrollToElement(String xPath) {
-        JavascriptExecutor je = (JavascriptExecutor) WebDriverRunner.getWebDriver();
-        je.executeScript("arguments[0].scrollIntoView(true);", $x(xPath));
+        $x(xPath).scrollTo();
         return this;
     }
 }
