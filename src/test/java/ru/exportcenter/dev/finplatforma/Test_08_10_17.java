@@ -4,12 +4,11 @@ import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
-import functions.gui.GUIFunctions;
+import functions.gui.fin.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
-import org.openqa.selenium.Keys;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
@@ -47,7 +46,7 @@ public class Test_08_10_17 extends Hooks {
 
         //Ввести логин и пароль kromanovskaya+user2@roox.ru/Password1!
         new GUIFunctions()
-                .authorizationLib(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
+                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//*[text()='Отправить приглашение']");
     }
 
@@ -70,12 +69,12 @@ public class Test_08_10_17 extends Hooks {
         //В поле «Email» ввести  значение: «petralm@otr.ru».
         //В поле «Телефон» ввести  значение: «9999999999».
         //Нажать на кнопку «Отправить приглашение».
-        new GUIFunctions().setValueInField(PROPERTIES.getProperty("Фамилия"),"Фамилия")
-                .setValueInField(PROPERTIES.getProperty("Имя"),"Имя")
-                .setValueInField(PROPERTIES.getProperty("Отчество"),"Отчество")
-                .setCheckboxONValueInFieldFromSelect(PROPERTIES.getProperty("Роль"),"Роль")
-                .setValueInField(PROPERTIES.getProperty("Email"),"Email")
-                .setValueInField(PROPERTIES.getProperty("Мобильный телефон"),"Мобильный телефон")
+        new GUIFunctions().inField("Фамилия").inputValue(PROPERTIES.getProperty("Фамилия"))
+                .inField("Имя").inputValue(PROPERTIES.getProperty("Имя"))
+                .inField("Отчество").inputValue(PROPERTIES.getProperty("Отчество"))
+                .inField("Роль").selectValue(PROPERTIES.getProperty("Роль"))
+                .inField("Email").inputValue(PROPERTIES.getProperty("Email"))
+                .inField("Мобильный телефон").inputValue(PROPERTIES.getProperty("Мобильный телефон"))
                 .clickButton("Отправить приглашение");
     }
 }

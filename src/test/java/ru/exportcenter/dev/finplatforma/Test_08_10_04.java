@@ -4,7 +4,7 @@ import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
-import functions.gui.GUIFunctions;
+import functions.gui.fin.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -50,8 +50,6 @@ public class Test_08_10_04 extends Hooks {
         Test_08_10_02 test_08_10_02 = new Test_08_10_02();
         test_08_10_02.steps();
         newProductName = test_08_10_02.newProductName;
-        CommonFunctions.wait(1);
-//        closeWebDriver();
     }
 
     @Step("Авторизация")
@@ -62,7 +60,7 @@ public class Test_08_10_04 extends Hooks {
 
         //Ввести логин и пароль demo_exporter/password http://arm-lkb.arm-services-dev.d.exportcenter.ru/
         new GUIFunctions()
-                .authorizationLib(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
+                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//a[@href='/products']");
     }
 
@@ -77,11 +75,12 @@ public class Test_08_10_04 extends Hooks {
                 .clickButton("Черновики")
                 .waitForLoading()
                 .clickButton("Сбросить фильтры")
-                .setValueInPlaceholder(newProductName,"Наименование продукта")
+                .inPlaceholder("Наименование продукта").inputValue(newProductName)
                 .waitForLoading()
                 .clickButton(newProductName)
                 .waitForLoading()
-                .clickButton("Редактировать");
+                .clickButton("Редактировать")
+                .waitForLoading();
     }
 
     @Step("Заполнение полей обязательных атрибутов Блока 1 «Сведения о продукте»")
@@ -94,13 +93,12 @@ public class Test_08_10_04 extends Hooks {
         //В поле атрибута «Целевое назначение» ввести значение "Текущее финансирование российского банка"
         //В поле атрибута «Краткое описание продукта» ввести значение "Кредит на расчеты в случае если условия в стране нахождения менее привлекательны для заемщика"
         //Нажать на вкладку «Условия предоставления»
-        new GUIFunctions().waitForLoading()
-                .setValueInFieldFromSelect(PROPERTIES.getProperty("Сведения о продукте.Тип продукта"),"Тип продукта")
-                .setValueInFieldFromSelect(PROPERTIES.getProperty("Сведения о продукте.Категория продукта"),"Категория продукта")
-                .setTextInField(PROPERTIES.getProperty("Сведения о продукте.Целевое назначение"),"Целевое назначение")
-                .setTextInField(PROPERTIES.getProperty("Сведения о продукте.Краткое описание продукта"),"Краткое описание продукта")
+        new GUIFunctions().inField("Тип продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Тип продукта"))
+                .inField("Категория продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Категория продукта"))
+                .inField("Целевое назначение").inputText(PROPERTIES.getProperty("Сведения о продукте.Целевое назначение"))
+                .inField("Краткое описание продукта").inputText(PROPERTIES.getProperty("Сведения о продукте.Краткое описание продукта"))
                 .clickButton("Условия предоставления")
-                .waitForLoading();
+                .waitForElementDisplayed("//*[text()='Банк резидент']");
     }
 
     @Step("Заполнение полей обязательных атрибутов Блока 2  «Условия предоставления»")
@@ -111,9 +109,9 @@ public class Test_08_10_04 extends Hooks {
         //В поле атрибута «ОПФ российского получателя» выбрать значение "Любая ОПФ"
         //В поле атрибута "Срок регистрации российского получателя" выбрать значение "от 6 месяцев"
         //Нажать на вкладку «Финансовые параметры»
-        new GUIFunctions().setCheckboxOnInField("Банк резидент")
-                .setCheckboxONValueInFieldFromSelect(PROPERTIES.getProperty("Условия предоставления.ОПФ российского получателя"),"ОПФ российского получателя")
-                .setValueInFieldFromSelect(PROPERTIES.getProperty("Условия предоставления.Срок регистрации российского получателя"),"Срок регистрации российского получателя")
+        new GUIFunctions().inField("Банк резидент").setCheckboxON()
+                .inField("ОПФ российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.ОПФ российского получателя"))
+                .inField("Срок регистрации российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Срок регистрации российского получателя"))
                 .clickButton("Финансовые параметры")
                 .waitForLoading();
     }
@@ -129,9 +127,9 @@ public class Test_08_10_04 extends Hooks {
         //Нажать на вкладку "Особенности погашения"
         $x("//span[text()='Валюта']/following::input").setValue("Евро");
         $x("//*[text()='Валюта']//following::*[text()='Евро, EUR']").click();
-        new GUIFunctions().setValueInField(PROPERTIES.getProperty("Финансовые параметры.Минимальная сумма"), "Минимальная сумма")
-                .setValueInField(PROPERTIES.getProperty("Финансовые параметры.Максимальная сумма"), "Максимальная сумма")
-                .setRadioButtonInField("На стандартных условиях")
+        new GUIFunctions().inField("Минимальная сумма").inputValue(PROPERTIES.getProperty("Финансовые параметры.Минимальная сумма"))
+                .inField("Максимальная сумма").inputValue(PROPERTIES.getProperty("Финансовые параметры.Максимальная сумма"))
+                .inField("На стандартных условиях").setRadiobuttonON()
                 .clickButton("Особенности погашения");
     }
 
@@ -140,8 +138,9 @@ public class Test_08_10_04 extends Hooks {
         CommonFunctions.printStep();
 
         //Нажать на кнопку "Отправить на публикацию"
-        new GUIFunctions().clickButton("Отправить на публикацию")
-                .waitForLoading();
+        new GUIFunctions().clickByLocator("(//span[@aria-label='ellipsis'])[1]")
+                .clickButton("Отправить на публикацию")
+                .waitForElementDisplayed("//*[text()='Черновик отправлен на публикацию']");
     }
 
     @Step("Отображение созданной записи продукта в списке продуктов со статусом «На модерации»")

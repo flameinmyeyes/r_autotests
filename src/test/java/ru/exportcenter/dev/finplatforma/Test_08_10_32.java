@@ -66,7 +66,7 @@ public class Test_08_10_32 extends Hooks {
                 .inField("Целевое назначение").inputText("Целевое назначение")
                 .inField("Краткое описание продукта").inputText("Краткое описание продукта")
                 .clickButton("Продолжить")
-                .waitForLoading();
+                .waitForElementDisplayed("//*[text()='ЮЛ/ИП резидент']");
 
         new GUIFunctions().inField("ЮЛ/ИП резидент").setCheckboxON()
                 .inField("ОПФ российского получателя").selectValue("Любая ОПФ")
