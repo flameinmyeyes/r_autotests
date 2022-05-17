@@ -9,6 +9,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
 
@@ -32,6 +33,11 @@ public class Test_08_10_26 extends Hooks {
         step03();
     }
 
+    @AfterMethod
+    public void screenShot() {
+        CommonFunctions.screenShot(WAY_TEST + "screen.png");
+    }
+
     @Step("Авторизация")
     public void step01(){
         CommonFunctions.printStep();
@@ -49,8 +55,7 @@ public class Test_08_10_26 extends Hooks {
         CommonFunctions.printStep();
 
         //В поле "Наименование продукта" ввести значение "Аккредитив. Резервный аккредитив"
-        new GUIFunctions().inPlaceholder("Наименование продукта")
-                .inputValue("Аккредитив. Резервный аккредитив")
+        new GUIFunctions().inPlaceholder("Наименование продукта").inputValue(PROPERTIES.getProperty("Навигация.Наименование продукта"))
                 .waitForLoading();
     }
 
@@ -65,10 +70,10 @@ public class Test_08_10_26 extends Hooks {
         new GUIFunctions().clickButton("Аккредитив. Резервный аккредитив")
                 .waitForLoading()
                 .clickButton("Условия предоставления")
-                .waitForLoading()
+                .waitForElementDisplayed("//div[@class='ant-tabs-content ant-tabs-content-top']//following::*[contains(text(),'Условия предоставления')]")
                 .clickButton("Финансовые параметры")
-                .waitForLoading()
+                .waitForElementDisplayed("//div[@class='ant-tabs-content ant-tabs-content-top']//following::*[contains(text(),'Финансовые параметры')]")
                 .clickButton("Особенности погашения")
-                .waitForLoading();
+                .waitForElementDisplayed("//div[@class='ant-tabs-content ant-tabs-content-top']//following::*[contains(text(),'Особенности погашения')]");
     }
 }

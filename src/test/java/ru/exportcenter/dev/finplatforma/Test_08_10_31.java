@@ -98,7 +98,7 @@ public class Test_08_10_31 extends Hooks {
                 .inField("Целевое назначение").inputText(PROPERTIES.getProperty("Сведения о продукте.Целевое назначение"))
                 .inField("Краткое описание продукта").inputText(PROPERTIES.getProperty("Сведения о продукте.Краткое описание продукта"))
                 .clickButton("Условия предоставления")
-                .waitForLoading();
+                .waitForElementDisplayed("//*[text()='ЮЛ/ИП резидент']");
     }
 
     @Step("Условия предоставления")
