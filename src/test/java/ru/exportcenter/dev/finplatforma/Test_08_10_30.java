@@ -86,7 +86,6 @@ public class Test_08_10_30 extends Hooks {
         //Нажать на вкладку «Финансовые параметры»
         //Нажать на вкладку «Особенности погашения»
         new GUIFunctions().clickButton("Условия предоставления")
-                .waitForLoading()
                 .clickButton("Финансовые параметры")
                 .waitForLoading()
                 .clickButton("Особенности погашения")
