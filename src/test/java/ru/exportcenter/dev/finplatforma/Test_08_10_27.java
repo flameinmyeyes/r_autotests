@@ -57,7 +57,8 @@ public class Test_08_10_27  extends Hooks {
         CommonFunctions.printStep();
 
         //Нажать на кнопку «Создать новый продукт»
-        new GUIFunctions().clickButton("Создать новый продукт");
+        new GUIFunctions().clickButton("Создать новый продукт")
+                .waitForLoading();
     }
 
     @Step("Блок «Сведения о продукте»")
