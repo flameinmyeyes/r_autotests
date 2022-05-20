@@ -45,10 +45,14 @@ public class Test_08_10_15 extends Hooks {
 
         open(PROPERTIES.getProperty("start_URL"));
 
-        //Ввести логин и пароль
-        new GUIFunctions()
-                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
-                .waitForElementDisplayed("//*[text()='Продукты']");
+//        //Ввести логин и пароль
+//        new GUIFunctions()
+//                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
+//                .waitForElementDisplayed("//*[text()='Продукты']");
+
+        new functions.gui.GUIFunctions()
+                .authorizationLib(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
+                .waitForElementDisplayed("//a[@href='/products']");
     }
 
     @Step("Новигация")
