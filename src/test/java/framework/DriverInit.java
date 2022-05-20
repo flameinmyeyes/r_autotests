@@ -39,13 +39,18 @@ public class DriverInit {
                 browser = CHROME;
                 browserVersion = "91";
                 startMaximized = true;
-                downloadsFolder = DOWNLOADS_FOLDER;
                 headless = false;
                 screenshots = true;
                 proxyEnabled = true;
                 fileDownload = PROXY;
                 pageLoadTimeout = TIMEOUT;
                 timeout = TIMEOUT;
+                if (System.getProperty("os.name").contains("Windows")){
+                    downloadsFolder = Ways.DOWNLOADS.getWay();
+                }
+                if (System.getProperty("os.name").contains("Mac")){
+                    downloadsFolder = Ways.DOWNLOADS_MAC.getWay();
+                }
                 break;
 
             case ("remote"):

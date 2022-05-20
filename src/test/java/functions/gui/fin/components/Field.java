@@ -12,7 +12,7 @@ public class Field extends ElementData {
     }
 
     public void inputValue(String value) {
-        $x(new XPath(this).getInputValueXPath()).setValue(value).pressEnter();
+        $x(new XPath(this).getInputValueXPath()).setValue(value);
 //        String text = $x(new XPath(this).getInputValueXPath()).getValue();
 //        assertEquals(text, this.value);
     }
