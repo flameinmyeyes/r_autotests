@@ -12,10 +12,8 @@ import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
-
 import java.util.Properties;
 import java.util.Random;
-
 import static com.codeborne.selenide.Selenide.open;
 
 public class Test_08_10_32 extends Hooks {
@@ -48,12 +46,8 @@ public class Test_08_10_32 extends Hooks {
         open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль demo_exporter/password http://arm-lkb.arm-services-dev.d.exportcenter.ru/
-//        new GUIFunctions()
-//                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
-//                .waitForElementDisplayed("//a[@href='/products']");
-
-        new functions.gui.GUIFunctions()
-                .authorizationLib(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
+        new GUIFunctions()
+                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//a[@href='/products']");
 
         //В области навигации нажать на раздел «Продукты»
@@ -98,12 +92,8 @@ public class Test_08_10_32 extends Hooks {
         open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль
-//        new GUIFunctions()
-//                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
-//                .waitForElementDisplayed("//*[text()='Черновики']");
-
-        new functions.gui.GUIFunctions()
-                .authorizationLib(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
+        new GUIFunctions()
+                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//*[text()='Черновики']");
     }
 

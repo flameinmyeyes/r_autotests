@@ -3,10 +3,11 @@ package framework;
 public enum Ways {
     COMMON("files_for_tests"),
     DOWNLOADS("/share/files_for_tests/downloads"),
+    DOWNLOADS_MAC("*/rec_autotests/src/"),
     DEV("files_for_tests/dev"),
     TEST("files_for_tests/test"),
-
     ;
+
     private String way;
     Ways(String way) {
         this.way = way;
