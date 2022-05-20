@@ -97,14 +97,13 @@ public class Test_08_10_03 extends Hooks {
         //В поле атрибута «Категория продукта» выбрать значение "Текущее финансирование"
         //В поле атрибута «Целевое назначение» ввести значение "Текущее финансирование российского банка"
         //В поле атрибута «Краткое описание продукта» ввести значение "Кредит на расчеты в случае если условия в стране нахождения менее привлекательны для заемщика"
-        //Нажать на вкладку Блока 2 "Условия предоставления"
-        new GUIFunctions().waitForLoading()
-                .setValueInFieldFromSelect(PROPERTIES.getProperty("Сведения о продукте.Тип продукта"),"Тип продукта")
-                .setValueInFieldFromSelect(PROPERTIES.getProperty("Сведения о продукте.Категория продукта"),"Категория продукта")
-                .setTextInField(PROPERTIES.getProperty("Сведения о продукте.Целевое назначение"),"Целевое назначение")
-                .setTextInField(PROPERTIES.getProperty("Сведения о продукте.Краткое описание продукта"),"Краткое описание продукта")
+        //Нажать на вкладку «Условия предоставления»
+        new functions.gui.fin.GUIFunctions().inField("Тип продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Тип продукта"))
+                .inField("Категория продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Категория продукта"))
+                .inField("Целевое назначение").inputText(PROPERTIES.getProperty("Сведения о продукте.Целевое назначение"))
+                .inField("Краткое описание продукта").inputText(PROPERTIES.getProperty("Сведения о продукте.Краткое описание продукта"))
                 .clickButton("Условия предоставления")
-                .waitForLoading();
+                .waitForElementDisplayed("//*[text()='Банк резидент']");
     }
 
     @Step("Заполнение полей обязательных атрибутов Блока 2  «Условия предоставления»")
@@ -142,7 +141,7 @@ public class Test_08_10_03 extends Hooks {
         CommonFunctions.printStep();
 
         //Нажать на кнопку "Отправить на публикацию"
-        new GUIFunctions().clickButton("Отправить на публикацию")
-                .waitForLoading();
+        new functions.gui.fin.GUIFunctions().clickByLocator("(//span[@aria-label='ellipsis'])[1]")
+                .clickButton("Отправить на публикацию");
     }
 }
