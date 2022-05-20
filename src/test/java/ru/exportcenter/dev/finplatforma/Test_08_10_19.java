@@ -48,9 +48,14 @@ public class Test_08_10_19  extends Hooks {
         open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль kromanovskaya+user4@roox.ru/Password1!
-        new GUIFunctions()
-                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
+//        new GUIFunctions()
+//                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
+//                .waitForElementDisplayed("//tr[@class='ant-table-row ant-table-row-level-0']");
+
+        new functions.gui.GUIFunctions()
+                .authorizationLib(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//tr[@class='ant-table-row ant-table-row-level-0']");
+
     }
 
     @Step("Сортировка по полю «Статус»")

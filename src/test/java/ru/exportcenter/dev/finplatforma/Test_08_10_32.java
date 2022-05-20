@@ -48,8 +48,12 @@ public class Test_08_10_32 extends Hooks {
         open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль demo_exporter/password http://arm-lkb.arm-services-dev.d.exportcenter.ru/
-        new GUIFunctions()
-                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
+//        new GUIFunctions()
+//                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
+//                .waitForElementDisplayed("//a[@href='/products']");
+
+        new functions.gui.GUIFunctions()
+                .authorizationLib(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//a[@href='/products']");
 
         //В области навигации нажать на раздел «Продукты»
@@ -94,8 +98,12 @@ public class Test_08_10_32 extends Hooks {
         open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль
-        new GUIFunctions()
-                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
+//        new GUIFunctions()
+//                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
+//                .waitForElementDisplayed("//*[text()='Черновики']");
+
+        new functions.gui.GUIFunctions()
+                .authorizationLib(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//*[text()='Черновики']");
     }
 
@@ -106,7 +114,8 @@ public class Test_08_10_32 extends Hooks {
         //Нажать на переключатель «Черновики»
         //В поле фильтра к атрибуту "Наименование продукта" ввести значение "Кредитование. Прямой кредит российскому банку"
         //Нажать на кнопку "Редактировать"
-        new GUIFunctions().clickButton("Черновики")
+        new GUIFunctions().waitForElementDisplayed("//*[text()='Черновики']")
+                .clickButton("Черновики")
                 .waitForLoading()
                 .clickButton("Сбросить фильтры")
                 .inPlaceholder("Наименование продукта").inputValue(newProductName)
