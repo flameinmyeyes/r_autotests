@@ -1,8 +1,10 @@
 package framework;
 
+import static com.codeborne.selenide.Configuration.downloadsFolder;
+
 public enum Ways {
     COMMON("files_for_tests"),
-    DOWNLOADS("/share/files_for_tests/downloads"),
+    DOWNLOADS_WIN("/share/files_for_tests/downloads"),
     DOWNLOADS_MAC("*/rec_autotests/src/"),
     DEV("files_for_tests/dev"),
     TEST("files_for_tests/test"),
@@ -14,6 +16,15 @@ public enum Ways {
     }
     public String getWay() {
         return way;
+    }
+
+    public static String getOS(){
+        if (System.getProperty("os.name").contains("Windows")){
+            return DOWNLOADS_WIN.getWay();
+        } else if (System.getProperty("os.name").contains("Mac")){
+            return DOWNLOADS_MAC.getWay();
+        }
+        return null;
     }
 
     /**
