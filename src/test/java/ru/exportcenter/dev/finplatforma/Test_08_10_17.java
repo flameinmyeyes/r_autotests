@@ -45,12 +45,8 @@ public class Test_08_10_17 extends Hooks {
         open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль kromanovskaya+user2@roox.ru/Password1!
-//        new GUIFunctions()
-//                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
-//                .waitForElementDisplayed("//*[text()='Отправить приглашение']");
-
-        new functions.gui.GUIFunctions()
-                .authorizationLib(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
+        new GUIFunctions()
+                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//*[text()='Отправить приглашение']");
     }
 
