@@ -19,7 +19,7 @@ public class DriverInit {
 
     private RemoteWebDriver remoteWebDriver;
     private final int TIMEOUT = 60000;
-    private final String DOWNLOADS_FOLDER = Ways.DOWNLOADS.getWay();
+    private final String DOWNLOADS_FOLDER = Ways.getOS();
 
     public void driverConfiguration(String runMode, List<File> pluginsList, String testName) {
 
@@ -40,17 +40,12 @@ public class DriverInit {
                 browserVersion = "91";
                 startMaximized = true;
                 headless = false;
+                downloadsFolder = DOWNLOADS_FOLDER;
                 screenshots = true;
                 proxyEnabled = true;
                 fileDownload = PROXY;
                 pageLoadTimeout = TIMEOUT;
                 timeout = TIMEOUT;
-                if (System.getProperty("os.name").contains("Windows")){
-                    downloadsFolder = Ways.DOWNLOADS.getWay();
-                }
-                if (System.getProperty("os.name").contains("Mac")){
-                    downloadsFolder = Ways.DOWNLOADS_MAC.getWay();
-                }
                 break;
 
             case ("remote"):
