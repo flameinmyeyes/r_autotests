@@ -66,13 +66,19 @@ public class XPath extends ElementData {
     }
 
     public String getSearchedValueXPath(String value) {
-        //Если placeholder уже заполнен значением
-        if ($x(getContainerXPath() + getFieldXPath() + "/following::span[@class='ant-select-selection-item']").isDisplayed()){
-            $x(getContainerXPath() + getFieldXPath() + "/following::span[@class='ant-select-selection-item']").click();
-        } else {
-            $x(getContainerXPath() + getFieldXPath() + "/following::div[@class='ant-form-item-control-input-content']").click();
+        if (isFieldDefined()){
+            //Если placeholder уже заполнен значением
+            if ($x(getContainerXPath() + getFieldXPath() + "/following::span[@class='ant-select-selection-item']").isDisplayed()){
+                $x(getContainerXPath() + getFieldXPath() + "/following::span[@class='ant-select-selection-item']").click();
+            } else {
+                $x(getContainerXPath() + getFieldXPath() + "/following::div[@class='ant-form-item-control-input-content']").click();
+            }
+            return getContainerXPath() + getFieldXPath() + "//following::*[text()='" + value + "']";
+        } else if (isPlaceholderDefined()){
+            $x("//*[text()='" + placeholder + "']//parent::*/span/input").click();
+            return "//*[text()='" + placeholder + "']//following::*[text()='" + value + "']";
         }
-        return getContainerXPath() + getFieldXPath() + "//following::*[text()='" + value + "']";
+        return null;
     }
 
     public String getErrorXPath() {
