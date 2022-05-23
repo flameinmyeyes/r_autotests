@@ -76,7 +76,7 @@ public class XPath extends ElementData {
             return getContainerXPath() + getFieldXPath() + "//following::*[text()='" + value + "']";
         } else if (isPlaceholderDefined()){
             $x("//*[text()='" + placeholder + "']//parent::*/span/input").click();
-            return "//*[text()='" + placeholder + "']//following::*[text()='" + value + "']";
+            return "//*[text()='" + placeholder + "']//following::div[text()='" + value + "']";
         }
         return null;
     }
