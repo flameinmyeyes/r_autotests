@@ -15,7 +15,7 @@ import ru.exportcenter.Hooks;
 
 import java.util.Properties;
 
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class Test_03_07_01_1 extends Hooks {
 
@@ -34,8 +34,7 @@ public class Test_03_07_01_1 extends Hooks {
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
         step01();
-//        step02();
-//        step03();
+        step02();
     }
 
     @AfterMethod
@@ -46,54 +45,37 @@ public class Test_03_07_01_1 extends Hooks {
     @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
-//        open(P.getProperty("start_URL"));
 
         open("https://lk.t.exportcenter.ru/ru/promo-service?key=country_report&serviceId=7479918f-2830-47b8-a7f1-572d847ad24d&next_query=true");
 
         new GUIFunctions()
                 .authorization(P.getProperty("Логин"), P.getProperty("Пароль"))
-                .waitForURL("");
-//                .waitForURL("https://lk.t.exportcenter.ru/ru/main");
+                .waitForElementDisplayed("//*[text()='Формирование отчёта']");
     }
 
-    @Step("Навигация через Поиск")
+    @Step("")
     public void step02() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().selectTab("Сервисы")
-                .waitForURL("https://master-portal.t.exportcenter.ru/services/business")
-                .inputInSearchField("Поиск по разделу", "Логистика. Доставка продукции \"Агроэкспрессом\"");
-    }
+        new GUIFunctions().inContainer("Формирование отчёта")
+                .inField("Экспорт в страну").selectValue("Абхазия")
+                .waitForLoading()
+                .inField("Отчётный период, содержит данные до").selectValue("10.2021")
+                .waitForLoading();
 
-    @Step("Получение информации о сервисе")
-    public void step03() {
-        CommonFunctions.printStep();
+        $x("//*[text()='Получить отчёт']").scrollTo();
+        new GUIFunctions().clickButton("Получить отчёт");
 
-        new GUIFunctions().closeAllPopupWindows()
-                .openSearchResult("Логистика. Доставка продукции \"Агроэкспрессом\"", "Подробнее")
-                .waitForURL("https://master-portal.t.exportcenter.ru/services/business" +
-                        "/Prodvizhenie_na_vneshnie_rynki/Poisk_pokupatelya,_soprovozhdenie_peregovorov/" +
-                        "logistics_agroexpress")
-                .closeAllPopupWindows()
-                .waitForElementDisplayed("//h1[text()='Логистика. Доставка продукции \"Агроэкспрессом\"']")
-                .waitForElementDisplayed(byText("Что получает экспортер?"))
-                .waitForElementDisplayed("//h2[text()='Как получить']");
-
-        for (int step = 1; step <= 7; step++) { // Как получить
-            new GUIFunctions().waitForElementDisplayed(byText(P.getProperty("Шаг " + step)));
+        for (int i = 0; i < 600; i++) {
+            if (!$x("//*[text()='Вернуться в личный кабинет']").isDisplayed()){
+                CommonFunctions.wait(1);
+            }else {
+                break;
+            }
         }
 
-        for (int service = 1; service <= 5; service++) { // Что получает экспортер?
-            new GUIFunctions().waitForElementDisplayed(byText(P.getProperty("Услуга " + service)));
-        }
-
-        new GUIFunctions().clickButton("Оферта АО «РЖД Логистика» на оказание услуг транспортной экспедиции")
-                .switchPageTo(1)
-                .waitForURL(P.getProperty("Оферта.URL"));
-    }
-
-    private String byText(final String text) {
-        return "//*[contains(text(), '" + text + "')]";
+        new GUIFunctions().clickButton("Вернуться в личный кабинет")
+                .waitForElementDisplayed("//*[text()='Мои услуги']");
     }
 
 }
