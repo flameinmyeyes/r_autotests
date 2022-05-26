@@ -4,21 +4,15 @@ import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
-import functions.gui.GUIFunctions;
+import functions.gui.fin.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
-import org.openqa.selenium.Keys;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
-
-import java.awt.event.KeyEvent;
 import java.util.Properties;
-import java.util.Random;
-
-import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.open;
 
 public class Test_08_10_14 extends Hooks {
@@ -26,8 +20,6 @@ public class Test_08_10_14 extends Hooks {
     private String WAY_TEST = Ways.DEV.getWay() + "/finplatforma/Test_08_10_14/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_08_10_14_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
-
-    public String newProductName;
 
     @Owner(value="Теребков Андрей")
     @Description("08 10 14 Форма Продукты. Фильтрация")
@@ -39,25 +31,11 @@ public class Test_08_10_14 extends Hooks {
         step03();
         step04();
         step05();
-//        step06();
-//        step07();
-        step08();
     }
 
     @AfterMethod
     public void screenShot() {
         CommonFunctions.screenShot(WAY_TEST + "screen.png");
-    }
-
-    public void setValue(String field, String value){
-        System.out.println(field + " - " + value);
-        CommonFunctions.wait(2);
-        $x("//*[@id='rc_select_"+field+"']").click();
-        CommonFunctions.wait(2);
-        $x("//*[@id='rc_select_"+field+"']//following::*[text()='"+value+"']").click();
-        CommonFunctions.wait(2);
-        new GUIFunctions().clickButton("Сбросить фильтры");
-        CommonFunctions.wait(2);
     }
 
     @Step("Авторизация")
@@ -66,57 +44,58 @@ public class Test_08_10_14 extends Hooks {
 
         open(PROPERTIES.getProperty("start_URL"));
 
+        //Ввод логина и пароля
         new GUIFunctions()
-                .authorizationLib(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
+                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//a[@href='/products']");
     }
 
-    @Step("Новигация")
-    public void step02() {
-        CommonFunctions.printStep();
-        new GUIFunctions().clickButton("Продукты");
-        CommonFunctions.wait(2);
-        new GUIFunctions().clickButton("Черновики");
-        CommonFunctions.wait(2);
-        new GUIFunctions().clickButton("Сбросить фильтры");
-    }
 
     @Step("Наименование продукта")
-    public void step03() throws InterruptedException {
+    public void step02() throws InterruptedException {
         CommonFunctions.printStep();
-        CommonFunctions.wait(2);
-        new GUIFunctions().setValueInPlaceholder("Аккредитив. Резервный аккредитив","Наименование продукта");
-        CommonFunctions.wait(2);
-        new GUIFunctions().clickButton("Сбросить фильтры");
+
+        //В фильтр «Наименование продукта» ввести значение: «Аккредитив. Резервный аккредитив».
+        //Нажать на кнопку «Сброс фильтрации».
+        new GUIFunctions().inPlaceholder("Наименование продукта").inputValue(PROPERTIES.getProperty("Наименование продукта"))
+                .waitForLoading()
+                .clickButton("Сбросить фильтры")
+                .waitForLoading();
     }
 
     @Step("Тип категории")
-    public void step04() {
+    public void step03() {
         CommonFunctions.printStep();
-        setValue("6", "Аккредитив");
+
+        //В фильтре «Тип категории» выбрать из выпадающего списка  значение: «Аккредитив».
+        //Нажать на кнопку «Сброс фильтрации».
+        new GUIFunctions().inPlaceholder("Тип категории").selectValue(PROPERTIES.getProperty("Тип категории"))
+                .waitForLoading()
+                .clickButton("Сбросить фильтры")
+                .waitForLoading();
     }
 
     @Step("Категория продукта")
-    public void step05() {
+    public void step04() {
         CommonFunctions.printStep();
-        setValue("7", "Экспортный аккредитив");
-    }
 
-    @Step("Получатель")
-    public void step06() {
-        CommonFunctions.printStep();
-        setValue("8", "Банк резидент");
-    }
-
-    @Step("Валюта")
-    public void step07() {
-        CommonFunctions.printStep();
-        setValue("9", "Лоти, LST");
+        //В фильтре «Категория продукта» выбрать из выпадающего списка  значение: «Экспортный аккредитив».
+        //Нажать на кнопку «Сброс фильтрации».
+        new GUIFunctions().inPlaceholder("Категория продукта").selectValue(PROPERTIES.getProperty("Категория продукта"))
+                .waitForLoading()
+                .clickButton("Сбросить фильтры")
+                .waitForLoading();
     }
 
     @Step("Статус")
-    public void step08() {
+    public void step05() {
         CommonFunctions.printStep();
-        setValue("10", "Опубликован");
+
+        //В фильтре «Статус» выбрать из выпадающего списка  значение: «Опубликован».
+        //Нажать на кнопку «Сброс фильтрации».
+        new GUIFunctions().inPlaceholder("Статус").selectValue(PROPERTIES.getProperty("Статус"))
+                .waitForLoading()
+                .clickButton("Сбросить фильтры")
+                .waitForLoading();
     }
 }
