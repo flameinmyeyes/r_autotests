@@ -55,6 +55,7 @@ public class Test_08_10_27  extends Hooks {
         //Нажать на кнопку «Создать новый продукт»
         new GUIFunctions().clickButton("Создать новый продукт")
                 .waitForLoading();
+        CommonFunctions.wait(1);
     }
 
     @Step("Блок «Сведения о продукте»")
@@ -87,6 +88,7 @@ public class Test_08_10_27  extends Hooks {
         new GUIFunctions().inField("ЮЛ/ИП резидент").setCheckboxON()
                 .inField("ОПФ российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.ОПФ российского получателя"))
                 .inField("Срок регистрации российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Срок регистрации российского получателя"))
+                .inField("Страна регистрации иностранного покупателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Страна регистрации иностранного покупателя"))
                 .clickButton("Продолжить")
                 .waitForLoading();
     }

@@ -93,7 +93,9 @@ public class Test_08_10_04 extends Hooks {
         //В поле атрибута «Целевое назначение» ввести значение "Текущее финансирование российского банка"
         //В поле атрибута «Краткое описание продукта» ввести значение "Кредит на расчеты в случае если условия в стране нахождения менее привлекательны для заемщика"
         //Нажать на вкладку «Условия предоставления»
-        new GUIFunctions().inField("Тип продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Тип продукта"))
+        new GUIFunctions().inField("Тип продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Тип продукта"));
+        CommonFunctions.wait(1);
+        new GUIFunctions()
                 .inField("Категория продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Категория продукта"))
                 .inField("Целевое назначение").inputText(PROPERTIES.getProperty("Сведения о продукте.Целевое назначение"))
                 .inField("Краткое описание продукта").inputText(PROPERTIES.getProperty("Сведения о продукте.Краткое описание продукта"))
@@ -112,6 +114,7 @@ public class Test_08_10_04 extends Hooks {
         new GUIFunctions().inField("Банк резидент").setCheckboxON()
                 .inField("ОПФ российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.ОПФ российского получателя"))
                 .inField("Срок регистрации российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Срок регистрации российского получателя"))
+                .inField("Страна регистрации иностранного покупателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Страна регистрации иностранного покупателя"))
                 .clickButton("Финансовые параметры")
                 .waitForLoading();
     }
