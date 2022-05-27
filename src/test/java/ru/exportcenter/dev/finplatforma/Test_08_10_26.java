@@ -55,8 +55,9 @@ public class Test_08_10_26 extends Hooks {
         CommonFunctions.printStep();
 
         //В поле "Наименование продукта" ввести значение "Аккредитив. Резервный аккредитив"
-        new GUIFunctions().inPlaceholder("Наименование продукта").inputValue(PROPERTIES.getProperty("Навигация.Наименование продукта"))
-                .waitForLoading();
+//        new GUIFunctions().inPlaceholder("Наименование продукта").inputValue(PROPERTIES.getProperty("Навигация.Наименование продукта"))
+//                .waitForLoading();
+
     }
 
     @Step("Просмотр информации о Продукте")
@@ -67,9 +68,12 @@ public class Test_08_10_26 extends Hooks {
         //Нажать на вкладку «Условия предоставления»
         //Нажать на вкладку «Финансовые параметры»
         //Нажать на вкладку «Особенности погашения»
-        new GUIFunctions().clickButton("Аккредитив. Резервный аккредитив")
-                .waitForLoading()
-                .clickButton("Условия предоставления")
+        new GUIFunctions().clickByLocator("(//tr[contains(@class,'ant-table-row')])[1]")
+                .waitForLoading();
+
+//        new GUIFunctions().clickButton("Аккредитив. Резервный аккредитив")
+//                .waitForLoading()
+        new GUIFunctions().clickButton("Условия предоставления")
                 .waitForElementDisplayed("//div[@class='ant-tabs-content ant-tabs-content-top']//following::*[contains(text(),'Условия предоставления')]")
                 .clickButton("Финансовые параметры")
                 .waitForElementDisplayed("//div[@class='ant-tabs-content ant-tabs-content-top']//following::*[contains(text(),'Финансовые параметры')]")

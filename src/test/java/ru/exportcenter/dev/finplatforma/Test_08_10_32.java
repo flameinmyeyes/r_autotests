@@ -69,6 +69,8 @@ public class Test_08_10_32 extends Hooks {
         new GUIFunctions().inField("ЮЛ/ИП резидент").setCheckboxON()
                 .inField("ОПФ российского получателя").selectValue("Любая ОПФ")
                 .inField("Срок регистрации российского получателя").selectValue("от 2 лет")
+                .scrollToElement("//*[text()='Страна регистрации иностранного покупателя']")
+                .inField("Страна регистрации иностранного покупателя").selectValue("Республика Албания")
                 .clickButton("Продолжить")
                 .waitForLoading();
 
@@ -112,6 +114,7 @@ public class Test_08_10_32 extends Hooks {
                 .waitForLoading()
                 .clickButton(newProductName)
                 .waitForLoading();
+        CommonFunctions.wait(1);
     }
 
     @Step("Изменение статуса продукта")

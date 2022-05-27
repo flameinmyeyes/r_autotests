@@ -93,8 +93,9 @@ public class Test_08_10_31 extends Hooks {
         //В поле атрибута «Целевое назначение» ввести значение "Кредит на расчеты по экспортной сделке"
         //В поле атрибута «Краткое описание продукта» ввести значение "Кредитование. Прямой кредит российскому экспортеру"
         //Нажать вкладку Блока 2 "Условия предоставления"
-        new GUIFunctions().inField("Тип продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Тип продукта"))
-                .inField("Категория продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Категория продукта"))
+        new GUIFunctions().inField("Тип продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Тип продукта"));
+        CommonFunctions.wait(1);
+        new GUIFunctions().inField("Категория продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Категория продукта"))
                 .inField("Целевое назначение").inputText(PROPERTIES.getProperty("Сведения о продукте.Целевое назначение"))
                 .inField("Краткое описание продукта").inputText(PROPERTIES.getProperty("Сведения о продукте.Краткое описание продукта"))
                 .clickButton("Условия предоставления")
@@ -112,6 +113,8 @@ public class Test_08_10_31 extends Hooks {
         new GUIFunctions().inField("ЮЛ/ИП резидент").setCheckboxON()
                 .inField("ОПФ российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.ОПФ российского получателя"))
                 .inField("Срок регистрации российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Срок регистрации российского получателя"))
+                .scrollToElement("//*[text()='Страна регистрации иностранного покупателя']")
+                .inField("Страна регистрации иностранного покупателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Страна регистрации иностранного покупателя"))
                 .clickButton("Финансовые параметры")
                 .waitForLoading();
     }
