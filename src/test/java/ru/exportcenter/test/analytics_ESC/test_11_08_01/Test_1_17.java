@@ -16,15 +16,14 @@ public class Test_1_17 extends Hooks {
 
     @Owner(value="***")
     @Description("***")
-    @Link(name="Test_11_08_01", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=138814859")
+    @Link(name="Test_1_17", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=138814859")
     @Test(retryAnalyzer = RunTestAgain.class)
-    public void steps() throws InterruptedException {
+    public void steps() {
         step01();
     }
 
     @Step("Авторизация")
     public void step01(){
-        CommonFunctions.printStep();
 
         open("https://lk.t.exportcenter.ru/ru/promo-service?key=Process_test_search_prod&serviceId=faf15b0f-2346-4353-b417-fb695bc26aef&next_query=true");
 
