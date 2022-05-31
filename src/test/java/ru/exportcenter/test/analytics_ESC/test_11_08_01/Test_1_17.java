@@ -25,20 +25,20 @@ public class Test_1_17 extends Hooks {
     @Step("Авторизация")
     public void step01(){
 
+        System.out.println("Шаг 1,2");
         open("https://lk.t.exportcenter.ru/ru/promo-service?key=Process_test_search_prod&serviceId=faf15b0f-2346-4353-b417-fb695bc26aef&next_query=true");
-
-        //Ввести логин и пароль
         new GUIFunctions()
                 .authorization("demo_exporter", "password")
-                .waitForElementDisplayed("//*[text()='Продолжить']");
+                .waitForElementDisplayed("//*[text()='Поиск потенциальных иностранных покупателей']");
 
-        //3
+        System.out.println("Шаг 3");
         refreshTab("//*[text()='Продолжить']", 10);
+        new GUIFunctions().clickButton("Продолжить");
 
-        //4
+        System.out.println("Шаг 4");
         new GUIFunctions().clickButton("Далее");
 
-        //5
+        System.out.println("Шаг 5");
         new GUIFunctions().inField("Описание продукции, планируемой на экспорт").inputValue("1")
                 .inField("Классификация продукции – код ТНВЭД").selectValue("5512110000")
                 .inField("Сфера применения продукции").selectValue("Товары народного потребления")
@@ -46,10 +46,10 @@ public class Test_1_17 extends Hooks {
                 .inField("Осуществлялись ли меры по охране или защите интеллектуальной собственности на целевых рынках").selectValue("Нет, не требуется")
                 .inField("Портрет потенциальных покупателей продукции").inputValue("1");
 
-        //6
+        System.out.println("Шаг 6");
         new GUIFunctions().clickButton("Далее");
 
-        //7
+        System.out.println("Шаг 7");
         new GUIFunctions().clickButton("1. Экспортер")
                 .inContainer("1. Экспортер")
                 .inField("Опыт экспертной деятельности").selectValue("Нет")
@@ -57,7 +57,7 @@ public class Test_1_17 extends Hooks {
                 .inField("Наличие иностранной версии сайта").selectValue("Нет")
                 .inField("Наличие специализированного сотрудника ВЭД в компании").selectValue("Нет");
 
-        //8
+        System.out.println("Шаг 8");
         new GUIFunctions().clickButton("2. Готовность к экспорту")
                 .inContainer("2. Готовность к экспорту")
                 .inField("Международная сертификация продукции/производства").selectValue("Сертификаты отсутствуют / потребность в них неизвестна")
@@ -66,7 +66,7 @@ public class Test_1_17 extends Hooks {
                 .inField("Наличие информации о таможенных барьерах (пошлины, квоты, лицензии, запреты)").selectValue("Нет")
                 .inField("Необходимость адаптации экспортного продукта к поставке в целевую страну (маркировка, упаковка, наличие адаптированных сопровождающих)").selectValue("Уже адаптирован / Не требуется");
 
-        //9
+        System.out.println("Шаг 9");
         new GUIFunctions().clickButton("3. Перспектива")
                 .inContainer("3. Перспектива")
                 .inField("Наличие проявленного интереса со стороны потенциальных партнеров к продукции").selectValue("Нет")
@@ -74,17 +74,15 @@ public class Test_1_17 extends Hooks {
                 .inField("Уровень тарифных барьеров").selectValue("0-10%")
                 .inField("Наличие нетарифных барьеров (квоты, сертификации, лицензирование)").selectValue("Нет");
 
-        //10
+        System.out.println("Шаг 10");
         new GUIFunctions().clickButton("Далее");
 
-        //11
+        System.out.println("Шаг 11");
         new GUIFunctions().uploadFile("Презентация компании и продукции", "");
 
-        //12
+        System.out.println("Шаг 12");
         new GUIFunctions().clickButton("Далее");
     }
-
-
 
     private void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
