@@ -19,7 +19,7 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class Test_08_10_24 extends Hooks {
 
-    private String WAY_TEST = Ways.DEV.getWay() + "/finplatforma/Test_08_10_24/";
+    private String WAY_TEST = Ways.TEST.getWay() + "/finplatforma/Test_08_10_24/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_08_10_24_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
