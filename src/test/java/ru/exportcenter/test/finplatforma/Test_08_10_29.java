@@ -42,7 +42,8 @@ public class Test_08_10_29  extends Hooks {
         //Ввести логин и пароль
         new GUIFunctions()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
-                .waitForElementDisplayed("//*[text()='Черновики']");
+                .waitForElementDisplayed("//*[text()='Продукты']")
+                .clickButton("Продукты");
     }
 
     @Step("Просмотр списка продуктов")
