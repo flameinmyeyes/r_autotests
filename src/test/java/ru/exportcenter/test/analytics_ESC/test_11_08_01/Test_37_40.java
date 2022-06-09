@@ -27,11 +27,11 @@ public class Test_37_40 extends Hooks {
 
         System.out.println("Шаг 37");
         open("https://lk.t.exportcenter.ru/");
-        new GUIFunctions().authorization("demo_exporter", "password")
-                .waitForURL("https://lk.t.exportcenter.ru/ru/main");
+        new GUIFunctions().authorization("mosolov@exportcenter.ru", "password")
+                .waitForElementDisplayed("//*[@class='anticon anticon-number']");
 
         System.out.println("Шаг 38");
-        $x("").click();
+        $x("//*[@class='anticon anticon-number']").click();
 
         System.out.println("Шаг 39");
         new GUIFunctions().clickButton("Завершить");
