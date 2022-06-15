@@ -4,7 +4,7 @@ import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
-import functions.gui.fin.GUIFunctions;
+import functions.gui.lkb.GUIFunctionsLKB;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -43,7 +43,7 @@ public class Test_08_10_27  extends Hooks {
         open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль
-        new GUIFunctions()
+        new GUIFunctionsLKB()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//*[text()='Продукты']")
                 .clickButton("Продукты");
@@ -54,7 +54,7 @@ public class Test_08_10_27  extends Hooks {
         CommonFunctions.printStep();
 
         //Нажать на кнопку «Создать новый продукт»
-        new GUIFunctions().clickButton("Создать новый продукт")
+        new GUIFunctionsLKB().clickButton("Создать новый продукт")
                 .waitForLoading();
         CommonFunctions.wait(1);
     }
@@ -69,7 +69,7 @@ public class Test_08_10_27  extends Hooks {
         //В поле атрибута «Целевое назначение» ввести значение "Кредит на расчеты по экспортной сделке"
         //В поле атрибута «Краткое описание продукта» ввести значение "Кредитование. Прямой кредит российскому экспортеру"
         //В экранной форме заполнения атрибутов Продукта Блока 1 "Сведения о продукте" нажать кнопку "Продолжить"
-        new GUIFunctions().inField("Тип продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Тип продукта"))
+        new GUIFunctionsLKB().inField("Тип продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Тип продукта"))
                 .inField("Категория продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Категория продукта"))
                 .inField("Наименование продукта").inputText(PROPERTIES.getProperty("Сведения о продукте.Наименование продукта"))
                 .inField("Целевое назначение").inputText(PROPERTIES.getProperty("Сведения о продукте.Целевое назначение"))
@@ -86,7 +86,7 @@ public class Test_08_10_27  extends Hooks {
         //Выбрать значение "Любая ОПФ" в поле атрибута «ОПФ российского получателя»
         //Выбрать значение "от 2 лет" В поле атрибута "Срок регистрации российского получателя"
         //В экранной форме заполнения атрибутов Продукта Блока 2 «Условия предоставления» нажать на кнопку "Продолжить"
-        new GUIFunctions().inField("ЮЛ/ИП резидент").setCheckboxON()
+        new GUIFunctionsLKB().inField("ЮЛ/ИП резидент").setCheckboxON()
                 .inField("ОПФ российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.ОПФ российского получателя"))
                 .inField("Срок регистрации российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Срок регистрации российского получателя"))
                 .inField("Страна регистрации иностранного покупателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Страна регистрации иностранного покупателя"))
@@ -105,7 +105,7 @@ public class Test_08_10_27  extends Hooks {
         //В экранной форме заполнения атрибутов Продукта Блока 3 «Финансовые параметры» нажать на кнопку "Продолжить"
         $x("//span[text()='Валюта']/following::input").setValue("Доллар сша");
         $x("//*[text()='Валюта']//following::*[text()='Доллар сша, USD']").click();
-        new GUIFunctions().inField("Минимальная сумма").inputValue(PROPERTIES.getProperty("Финансовые параметры.Минимальная сумма"))
+        new GUIFunctionsLKB().inField("Минимальная сумма").inputValue(PROPERTIES.getProperty("Финансовые параметры.Минимальная сумма"))
                 .inField("Максимальная сумма").inputValue(PROPERTIES.getProperty("Финансовые параметры.Максимальная сумма"))
                 .inField("На стандартных условиях").setRadiobuttonON()
                 .clickButton("Продолжить")
@@ -117,7 +117,7 @@ public class Test_08_10_27  extends Hooks {
         CommonFunctions.printStep();
 
         //Нажать на кнопку "Отправить на публикацию"
-        new GUIFunctions().clickButton("Отправить на публикацию")
+        new GUIFunctionsLKB().clickButton("Отправить на публикацию")
                 .waitForLoading();
     }
 }

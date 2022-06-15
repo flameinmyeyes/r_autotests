@@ -4,7 +4,7 @@ import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
-import functions.gui.fin.GUIFunctions;
+import functions.gui.lkb.GUIFunctionsLKB;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -48,7 +48,7 @@ public class Test_08_10_19  extends Hooks {
         open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль kromanovskaya+user4@roox.ru/Password1!
-        new GUIFunctions()
+        new GUIFunctionsLKB()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//tr[@class='ant-table-row ant-table-row-level-0']");
     }
@@ -60,7 +60,7 @@ public class Test_08_10_19  extends Hooks {
         //Нажать на кнопку «Статус»
         //Нажать на кнопку «Статус»
         //Нажать на кнопку «Статус»
-        new GUIFunctions().clickByLocator("(//span[text()='Статус'])[2]")
+        new GUIFunctionsLKB().clickByLocator("(//span[text()='Статус'])[2]")
                 .waitForLoading()
                 .clickByLocator("(//span[text()='Статус'])[2]")
                 .waitForLoading()
@@ -75,7 +75,7 @@ public class Test_08_10_19  extends Hooks {
         //Нажать на кнопку «Получатель»
         //Нажать на кнопку «Получатель»
         //Нажать на кнопку «Получатель»
-        new GUIFunctions().clickByLocator("(//span[text()='Получатель'])[2]")
+        new GUIFunctionsLKB().clickByLocator("(//span[text()='Получатель'])[2]")
                 .waitForLoading()
                 .clickByLocator("(//span[text()='Получатель'])[2]")
                 .waitForLoading()
@@ -90,7 +90,7 @@ public class Test_08_10_19  extends Hooks {
         //Нажать на кнопку «Наименование продукта»
         //Нажать на кнопку «Наименование продукта»
         //Нажать на кнопку «Наименование продукта»
-        new GUIFunctions().clickByLocator("(//span[text()='Наименование продукта'])[2]")
+        new GUIFunctionsLKB().clickByLocator("(//span[text()='Наименование продукта'])[2]")
                 .waitForLoading()
                 .clickByLocator("(//span[text()='Наименование продукта'])[2]")
                 .waitForLoading()
@@ -105,7 +105,7 @@ public class Test_08_10_19  extends Hooks {
         //Нажать на кнопку «Дата получения»
         //Нажать на кнопку «Дата получения»
         //Нажать на кнопку «Дата получения»
-        new GUIFunctions().clickButton("Дата получения")
+        new GUIFunctionsLKB().clickButton("Дата получения")
                 .waitForLoading()
                 .clickButton("Дата получения")
                 .waitForLoading()
@@ -120,7 +120,7 @@ public class Test_08_10_19  extends Hooks {
         //Нажать на кнопку «Номер запроса»
         //Нажать на кнопку «Номер запроса»
         //Нажать на кнопку «Номер запроса»
-        new GUIFunctions().clickButton("Номер запроса")
+        new GUIFunctionsLKB().clickButton("Номер запроса")
                 .waitForLoading()
                 .clickButton("Номер запроса")
                 .waitForLoading()

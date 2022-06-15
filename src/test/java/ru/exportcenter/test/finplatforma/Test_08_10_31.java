@@ -4,7 +4,7 @@ import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
-import functions.gui.fin.GUIFunctions;
+import functions.gui.lkb.GUIFunctionsLKB;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -61,7 +61,7 @@ public class Test_08_10_31 extends Hooks {
         open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль
-        new GUIFunctions()
+        new GUIFunctionsLKB()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//*[text()='Черновики']");
     }
@@ -73,7 +73,7 @@ public class Test_08_10_31 extends Hooks {
         //Нажать на переключатель «Черновики»
         //В поле фильтра к атрибуту "Наименование продукта" ввести значение "Кредитование. Прямой кредит российскому банку"
         //Нажать на кнопку "Редактировать"
-        new GUIFunctions().clickButton("Черновики")
+        new GUIFunctionsLKB().clickButton("Черновики")
                 .waitForLoading()
                 .clickButton("Сбросить фильтры")
                 .inPlaceholder("Наименование продукта").inputValue(newProductName)
@@ -93,9 +93,9 @@ public class Test_08_10_31 extends Hooks {
         //В поле атрибута «Целевое назначение» ввести значение "Кредит на расчеты по экспортной сделке"
         //В поле атрибута «Краткое описание продукта» ввести значение "Кредитование. Прямой кредит российскому экспортеру"
         //Нажать вкладку Блока 2 "Условия предоставления"
-        new GUIFunctions().inField("Тип продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Тип продукта"));
+        new GUIFunctionsLKB().inField("Тип продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Тип продукта"));
         CommonFunctions.wait(1);
-        new GUIFunctions().inField("Категория продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Категория продукта"))
+        new GUIFunctionsLKB().inField("Категория продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Категория продукта"))
                 .inField("Целевое назначение").inputText(PROPERTIES.getProperty("Сведения о продукте.Целевое назначение"))
                 .inField("Краткое описание продукта").inputText(PROPERTIES.getProperty("Сведения о продукте.Краткое описание продукта"))
                 .clickButton("Условия предоставления")
@@ -110,7 +110,7 @@ public class Test_08_10_31 extends Hooks {
         //Выбрать значение "Любая ОПФ" в поле атрибута «ОПФ российского получателя»
         //Выбрать значение "от 2 лет" в поле атрибута "Срок регистрации российского получателя"
         //Нажать на вкладку "Финансовые параметры"
-        new GUIFunctions().inField("ЮЛ/ИП резидент").setCheckboxON()
+        new GUIFunctionsLKB().inField("ЮЛ/ИП резидент").setCheckboxON()
                 .inField("ОПФ российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.ОПФ российского получателя"))
                 .inField("Срок регистрации российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Срок регистрации российского получателя"))
                 .scrollToElement("//*[text()='Страна регистрации иностранного покупателя']")
@@ -130,7 +130,7 @@ public class Test_08_10_31 extends Hooks {
         //нажать на вкладку "Особенности погашения"
         $x("//span[text()='Валюта']/following::input").setValue("Доллар сша");
         $x("//*[text()='Валюта']//following::*[text()='Доллар сша, USD']").click();
-        new GUIFunctions().inField("Минимальная сумма").inputValue(PROPERTIES.getProperty("Финансовые параметры.Минимальная сумма"))
+        new GUIFunctionsLKB().inField("Минимальная сумма").inputValue(PROPERTIES.getProperty("Финансовые параметры.Минимальная сумма"))
                 .inField("Максимальная сумма").inputValue(PROPERTIES.getProperty("Финансовые параметры.Максимальная сумма"))
                 .inField("На стандартных условиях").setRadiobuttonON()
                 .clickButton("Особенности погашения")
@@ -143,7 +143,7 @@ public class Test_08_10_31 extends Hooks {
 
         ////Нажать кнопку «...» в карточке черновика
         //Нажать на кнопку "Отправить на публикацию"
-        new GUIFunctions().clickByLocator("(//span[@aria-label='ellipsis'])[1]")
+        new GUIFunctionsLKB().clickByLocator("(//span[@aria-label='ellipsis'])[1]")
                 .clickButton("Отправить на публикацию")
                 .waitForElementDisplayed("//*[text()='Черновик отправлен на публикацию']");
     }

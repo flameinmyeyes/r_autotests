@@ -1,8 +1,7 @@
 package ru.exportcenter.test.analytics_ESC.test_11_08_01;
 
 import framework.RunTestAgain;
-import functions.common.CommonFunctions;
-import functions.gui.fin.GUIFunctions;
+import functions.gui.lkb.GUIFunctionsLKB;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -29,19 +28,19 @@ public class Test_41_59 extends Hooks {
         open("https://tasks.t.exportcenter.ru/");
 
         System.out.println("Шаг 42");
-        new GUIFunctions().authorization("mosolov@exportcenter.ru", "password");
+        new GUIFunctionsLKB().authorization("mosolov@exportcenter.ru", "password");
 
         System.out.println("Шаг 43");
         $x("(//*[text()='Список задач']/following::*[contains(@class,'ant-radio-group')])[1]//following::input").click();
-        new GUIFunctions().inPlaceholder("Выберите номер заявки").inputValue("");
+        new GUIFunctionsLKB().inPlaceholder("Выберите номер заявки").inputValue("");
         //
-        new GUIFunctions().clickButton("К выполнению");
+        new GUIFunctionsLKB().clickButton("К выполнению");
 
         System.out.println("Шаг 44");
 
         System.out.println("Шаг 45");
         refresh();
-        new GUIFunctions().waitForElementDisplayed("");
+        new GUIFunctionsLKB().waitForElementDisplayed("");
 
 
 

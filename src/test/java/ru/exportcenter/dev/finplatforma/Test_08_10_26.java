@@ -4,7 +4,7 @@ import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
-import functions.gui.fin.GUIFunctions;
+import functions.gui.lkb.GUIFunctionsLKB;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -45,7 +45,7 @@ public class Test_08_10_26 extends Hooks {
         open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль
-        new GUIFunctions()
+        new GUIFunctionsLKB()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//*[text()='Наименование продукта']");
     }
@@ -68,12 +68,12 @@ public class Test_08_10_26 extends Hooks {
         //Нажать на вкладку «Условия предоставления»
         //Нажать на вкладку «Финансовые параметры»
         //Нажать на вкладку «Особенности погашения»
-        new GUIFunctions().clickByLocator("(//tr[contains(@class,'ant-table-row')])[1]")
+        new GUIFunctionsLKB().clickByLocator("(//tr[contains(@class,'ant-table-row')])[1]")
                 .waitForLoading();
 
 //        new GUIFunctions().clickButton("Аккредитив. Резервный аккредитив")
 //                .waitForLoading()
-        new GUIFunctions().clickButton("Условия предоставления")
+        new GUIFunctionsLKB().clickButton("Условия предоставления")
                 .waitForElementDisplayed("//div[@class='ant-tabs-content ant-tabs-content-top']//following::*[contains(text(),'Условия предоставления')]")
                 .clickButton("Финансовые параметры")
                 .waitForElementDisplayed("//div[@class='ant-tabs-content ant-tabs-content-top']//following::*[contains(text(),'Финансовые параметры')]")

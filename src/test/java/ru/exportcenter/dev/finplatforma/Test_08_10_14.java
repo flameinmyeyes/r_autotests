@@ -4,7 +4,7 @@ import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
-import functions.gui.fin.GUIFunctions;
+import functions.gui.lkb.GUIFunctionsLKB;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -45,7 +45,7 @@ public class Test_08_10_14 extends Hooks {
         open(PROPERTIES.getProperty("start_URL"));
 
         //Ввод логина и пароля
-        new GUIFunctions()
+        new GUIFunctionsLKB()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//a[@href='/products']");
     }
@@ -57,7 +57,7 @@ public class Test_08_10_14 extends Hooks {
 
         //В фильтр «Наименование продукта» ввести значение: «Аккредитив. Резервный аккредитив».
         //Нажать на кнопку «Сброс фильтрации».
-        new GUIFunctions().inPlaceholder("Наименование продукта").inputValue(PROPERTIES.getProperty("Наименование продукта"))
+        new GUIFunctionsLKB().inPlaceholder("Наименование продукта").inputValue(PROPERTIES.getProperty("Наименование продукта"))
                 .waitForLoading()
                 .clickButton("Сбросить фильтры")
                 .waitForLoading();
@@ -69,7 +69,7 @@ public class Test_08_10_14 extends Hooks {
 
         //В фильтре «Тип категории» выбрать из выпадающего списка  значение: «Аккредитив».
         //Нажать на кнопку «Сброс фильтрации».
-        new GUIFunctions().inPlaceholder("Тип категории").selectValue(PROPERTIES.getProperty("Тип категории"))
+        new GUIFunctionsLKB().inPlaceholder("Тип категории").selectValue(PROPERTIES.getProperty("Тип категории"))
                 .waitForLoading()
                 .clickButton("Сбросить фильтры")
                 .waitForLoading();
@@ -81,7 +81,7 @@ public class Test_08_10_14 extends Hooks {
 
         //В фильтре «Категория продукта» выбрать из выпадающего списка  значение: «Экспортный аккредитив».
         //Нажать на кнопку «Сброс фильтрации».
-        new GUIFunctions().inPlaceholder("Категория продукта").selectValue(PROPERTIES.getProperty("Категория продукта"))
+        new GUIFunctionsLKB().inPlaceholder("Категория продукта").selectValue(PROPERTIES.getProperty("Категория продукта"))
                 .waitForLoading()
                 .clickButton("Сбросить фильтры")
                 .waitForLoading();
@@ -93,7 +93,7 @@ public class Test_08_10_14 extends Hooks {
 
         //В фильтре «Статус» выбрать из выпадающего списка  значение: «Опубликован».
         //Нажать на кнопку «Сброс фильтрации».
-        new GUIFunctions().inPlaceholder("Статус").selectValue(PROPERTIES.getProperty("Статус"))
+        new GUIFunctionsLKB().inPlaceholder("Статус").selectValue(PROPERTIES.getProperty("Статус"))
                 .waitForLoading()
                 .clickButton("Сбросить фильтры")
                 .waitForLoading();

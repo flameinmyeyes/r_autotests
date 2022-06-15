@@ -4,7 +4,7 @@ import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
-import functions.gui.fin.GUIFunctions;
+import functions.gui.lkb.GUIFunctionsLKB;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -38,7 +38,7 @@ public class Test_08_10_29  extends Hooks {
         open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль
-        new GUIFunctions()
+        new GUIFunctionsLKB()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//*[text()='Черновики']");
     }
@@ -49,7 +49,7 @@ public class Test_08_10_29  extends Hooks {
 
         //Нажать на переключатель «Черновики»
         //Проскроллить вниз страницу
-        new GUIFunctions().clickButton("Черновики")
+        new GUIFunctionsLKB().clickButton("Черновики")
                 .waitForElementDisplayed("//tr[contains(@class, 'ant-table-row')]");
         $("body").sendKeys(Keys.PAGE_DOWN);
     }

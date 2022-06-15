@@ -13,6 +13,7 @@ import ru.exportcenter.Hooks;
 import ru.exportcenter.test.finplatforma.Test_08_10_02;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -24,7 +25,7 @@ public class Test_1_17 extends Hooks {
     @Description("***")
     @Link(name="Test_1_17", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=138814859")
     @Test(retryAnalyzer = RunTestAgain.class)
-    public void steps() throws InterruptedException {
+    public void steps() throws InterruptedException, AWTException {
         step01();
 //        step02();
     }
@@ -36,13 +37,21 @@ public class Test_1_17 extends Hooks {
     }
 
     @Step("Авторизация")
-    public void step01(){
+    public void step01() throws AWTException {
 
         System.out.println("Шаг 1,2");
         open("https://lk.t.exportcenter.ru/ru/promo-service?key=Process_test_search_prod&serviceId=faf15b0f-2346-4353-b417-fb695bc26aef&next_query=true");
         new GUIFunctions()
-                .authorization("demo_exporter", "password")
-                .waitForElementDisplayed("//*[text()='Поиск потенциальных иностранных покупателей']");
+                .authorization("demo_exporter", "password");
+
+        for (int i = 0; i < 180; i++) {
+            if (!$x("//*[text()='Поиск потенциальных иностранных покупателей']").isDisplayed()){
+                CommonFunctions.wait(1);
+            }else {
+                break;
+            }
+        }
+//                .waitForElementDisplayed("//*[text()='Поиск потенциальных иностранных покупателей']");
 
         System.out.println("Шаг 3");
         requestNumber = $x("//div[text()='Номер заявки']/following-sibling::div").getText();
@@ -57,23 +66,22 @@ public class Test_1_17 extends Hooks {
 
         System.out.println("Шаг 5");
 
+        Robot robot = new Robot();
+
+
         inputValueInField("Описание продукции, планируемой на экспорт", "1");
         $x("//*[text()='Классификация продукции - код ТНВЭД']//ancestor::div[contains(@class,'Dropdown')]//following::input").setValue("5512110000");
-//        CommonFunctions.wait(1);
-//        $x("//div[@class='KrDropdown_wrapper__338B1 KrDropdown_active__1Fofx']//input[1]").click();
-        CommonFunctions.wait(10);
-//        selectValueInField("Классификация продукции - код ТНВЭД","5512110000 Ткани неотбеленные или отбеленные, содержащие 85 мас.% или более полиэфирных волокон ", "5512110000");
-//        new GUIFunctions().inField("Классификация продукции - код ТНВЭД").selectValue("5512110000 Ткани неотбеленные или отбеленные, содержащие 85 мас.% или более полиэфирных волокон ");
+        CommonFunctions.wait(1);
+        robot.keyPress(KeyEvent.VK_DOWN);
+        robot.keyPress(KeyEvent.VK_UP);
+        robot.keyPress(KeyEvent.VK_ENTER);
+
         new GUIFunctions()
-//                .inField("Классификация продукции – код ТНВЭД").selectValue("5512110000 Ткани неотбеленные или отбеленные, содержащие 85 мас.% или более полиэфирных волокон ")
-                .inField("Сфера применения продукции").selectValue("Товары народного потребления")
-                .waitForLoading();
+                .inField("Сфера применения продукции").selectValue("Товары народного потребления");
         CommonFunctions.wait(1);
-        new GUIFunctions().inField("Целевая страна экспорта").selectValue("Республика Азербайджан")
-                .waitForLoading();
+        new GUIFunctions().inField("Целевая страна экспорта").selectValue("Республика Азербайджан");
         CommonFunctions.wait(1);
-        new GUIFunctions().inField("Осуществлялись ли меры по охране или защите интеллектуальной собственности на целевых рынках?").selectValue("Нет, не требуется")
-                .waitForLoading();
+        new GUIFunctions().inField("Осуществлялись ли меры по охране или защите интеллектуальной собственности на целевых рынках?").selectValue("Нет, не требуется");
         CommonFunctions.wait(1);
         inputValueInField("Портрет потенциальных покупателей продукции", "1");
 
@@ -133,6 +141,8 @@ public class Test_1_17 extends Hooks {
         System.out.println("Шаг 16");
         new GUIFunctions().clickButton("Завершить")
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main");
+
+        closeWebDriver();
     }
 
     private void refreshTab(String expectedXpath, int times) {
@@ -155,7 +165,5 @@ public class Test_1_17 extends Hooks {
         $x("//*[text()='" + field + "']//ancestor::div[contains(@class,'Dropdown')]//following::input").setValue(shortText);
         new GUIFunctions().waitForElementDisplayed("//*[contains(text(), '" + value + "')]");
         $x("//*[contains(text(), '" + value + "')]").click();
-//        new GUIFunctions().waitForLoading();
-//        $x("//*[text()='" + value + "']").click();
     }
 }
