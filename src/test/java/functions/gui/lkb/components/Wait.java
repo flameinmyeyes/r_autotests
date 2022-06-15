@@ -1,7 +1,7 @@
-package functions.gui.fin.components;
+package functions.gui.lkb.components;
 
 import com.codeborne.selenide.Condition;
-import functions.gui.fin.ElementData;
+import functions.gui.lkb.ElementData;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.webdriver;

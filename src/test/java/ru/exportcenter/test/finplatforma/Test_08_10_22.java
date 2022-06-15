@@ -4,7 +4,7 @@ import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
-import functions.gui.fin.GUIFunctions;
+import functions.gui.lkb.GUIFunctionsLKB;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -48,7 +48,7 @@ public class Test_08_10_22 extends Hooks {
         open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль kromanovskaya+user2@roox.ru/Password1!
-        new GUIFunctions()
+        new GUIFunctionsLKB()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//*[text()='Сотрудники']");
     }
@@ -58,7 +58,7 @@ public class Test_08_10_22 extends Hooks {
         CommonFunctions.printStep();
 
         //Нажать на раздел «Сотрудники»
-        new GUIFunctions().clickButton("Сотрудники");
+        new GUIFunctionsLKB().clickButton("Сотрудники");
     }
 
     @Step("Сортировка по полю «ФИО сотрудника»")
@@ -68,7 +68,7 @@ public class Test_08_10_22 extends Hooks {
         //Сортировать поле «ФИО сотрудника»
         //Сортировать поле «ФИО сотрудника»
         //Сортировать поле «ФИО сотрудника»
-        new GUIFunctions().clickButton("ФИО сотрудника")
+        new GUIFunctionsLKB().clickButton("ФИО сотрудника")
                 .waitForLoading()
                 .clickButton("ФИО сотрудника")
                 .waitForLoading()
@@ -83,7 +83,7 @@ public class Test_08_10_22 extends Hooks {
         //Сортировать поле «Должность»
         //Сортировать поле «Должность»
         //Сортировать поле «Должность»
-        new GUIFunctions().clickButton("Должность")
+        new GUIFunctionsLKB().clickButton("Должность")
                 .waitForLoading()
                 .clickButton("Должность")
                 .waitForLoading()
@@ -98,7 +98,7 @@ public class Test_08_10_22 extends Hooks {
         //Сортировать поле «Дата регистрации»
         //Сортировать поле «Дата регистрации»
         //Сортировать поле «Дата регистрации»
-        new GUIFunctions().clickButton("Дата регистрации")
+        new GUIFunctionsLKB().clickButton("Дата регистрации")
                 .waitForLoading()
                 .clickButton("Дата регистрации")
                 .waitForLoading()
@@ -113,7 +113,7 @@ public class Test_08_10_22 extends Hooks {
         //Сортировать поле «Статус»
         //Сортировать поле «Статус»
         //Сортировать поле «Статус»
-        new GUIFunctions().clickButton("Статус")
+        new GUIFunctionsLKB().clickButton("Статус")
                 .waitForLoading()
                 .clickButton("Статус")
                 .waitForLoading()

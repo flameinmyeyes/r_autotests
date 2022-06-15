@@ -1,4 +1,4 @@
-package functions.gui.fin;
+package functions.gui.lkb;
 
 public class ElementData {
 

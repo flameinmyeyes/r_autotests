@@ -1,6 +1,6 @@
-package functions.gui.fin.components;
+package functions.gui.lkb.components;
 
-import functions.gui.fin.ElementData;
+import functions.gui.lkb.ElementData;
 
 import static com.codeborne.selenide.Selenide.$x;
 

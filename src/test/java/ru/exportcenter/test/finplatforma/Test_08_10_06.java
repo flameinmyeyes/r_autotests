@@ -4,7 +4,7 @@ import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
-import functions.gui.fin.GUIFunctions;
+import functions.gui.lkb.GUIFunctionsLKB;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -58,7 +58,7 @@ public class Test_08_10_06 extends Hooks {
         open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль
-        new GUIFunctions()
+        new GUIFunctionsLKB()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//*[@class='anticon anticon-number']");
     }
@@ -69,7 +69,7 @@ public class Test_08_10_06 extends Hooks {
 
         new functions.gui.GUIFunctions().clickByLocator("//*[@class='anticon anticon-number']");
         $x("//input[@placeholder='Выберите номер заявки']").setValue(requestNumber).pressEnter();
-        new GUIFunctions().clickByLocator("//*[text()='" + requestNumber + " Отправка на Публикацию']")
+        new GUIFunctionsLKB().clickByLocator("//*[text()='" + requestNumber + " Отправка на Публикацию']")
                 .clickByLocator("//*[text()='К выполнению']/parent::button")
                 .clickByLocator("//*[text()='Завершить выполнение']/parent::button")
                 .clickByLocator("//*[text()='Назначить задачу на себя и завершить']/parent::button")

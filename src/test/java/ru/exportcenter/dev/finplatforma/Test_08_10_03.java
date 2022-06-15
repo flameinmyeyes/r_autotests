@@ -4,7 +4,7 @@ import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
-import functions.gui.fin.GUIFunctions;
+import functions.gui.lkb.GUIFunctionsLKB;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -60,7 +60,7 @@ public class Test_08_10_03 extends Hooks {
         open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль demo_exporter/password http://arm-lkb.arm-services-dev.d.exportcenter.ru/
-        new GUIFunctions()
+        new GUIFunctionsLKB()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//a[@href='/products']");
     }
@@ -71,7 +71,7 @@ public class Test_08_10_03 extends Hooks {
 
         //В области навигации нажать на раздел «Продукты»
         //Нажать на кнопку «Создать новый продукт»
-        new GUIFunctions().clickButton("Продукты")
+        new GUIFunctionsLKB().clickButton("Продукты")
                 .waitForElementDisplayed("//*[text()='Создать новый продукт']")
                 .clickButton("Черновики")
                 .waitForLoading()
@@ -94,9 +94,9 @@ public class Test_08_10_03 extends Hooks {
         //В поле атрибута «Целевое назначение» ввести значение "Текущее финансирование российского банка"
         //В поле атрибута «Краткое описание продукта» ввести значение "Кредит на расчеты в случае если условия в стране нахождения менее привлекательны для заемщика"
         //Нажать на вкладку «Условия предоставления»
-        new GUIFunctions().inField("Тип продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Тип продукта"));
+        new GUIFunctionsLKB().inField("Тип продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Тип продукта"));
         CommonFunctions.wait(1);
-        new GUIFunctions()
+        new GUIFunctionsLKB()
                 .inField("Категория продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Категория продукта"))
                 .inField("Целевое назначение").inputText(PROPERTIES.getProperty("Сведения о продукте.Целевое назначение"))
                 .inField("Краткое описание продукта").inputText(PROPERTIES.getProperty("Сведения о продукте.Краткое описание продукта"))
@@ -112,7 +112,7 @@ public class Test_08_10_03 extends Hooks {
         //В поле атрибута «ОПФ российского получателя» выбрать значение "Любая ОПФ"
         //В поле атрибута "Срок регистрации российского получателя" выбрать значение "от 6 месяцев"
         //Нажать на вкладку «Финансовые параметры»
-        new GUIFunctions().inField("Банк резидент").setCheckboxON()
+        new GUIFunctionsLKB().inField("Банк резидент").setCheckboxON()
                 .inField("ОПФ российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.ОПФ российского получателя"))
                 .inField("Срок регистрации российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Срок регистрации российского получателя"))
 //                .inField("Страна регистрации иностранного покупателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Страна регистрации иностранного покупателя"))
@@ -131,7 +131,7 @@ public class Test_08_10_03 extends Hooks {
         //Нажать на вкладку "Особенности погашения"
         $x("//span[text()='Валюта']/following::input").setValue("Евро");
         $x("//*[text()='Валюта']//following::*[text()='Евро, EUR']").click();
-        new GUIFunctions().inField("Минимальная сумма").inputValue(PROPERTIES.getProperty("Финансовые параметры.Минимальная сумма"))
+        new GUIFunctionsLKB().inField("Минимальная сумма").inputValue(PROPERTIES.getProperty("Финансовые параметры.Минимальная сумма"))
                 .inField("Максимальная сумма").inputValue(PROPERTIES.getProperty("Финансовые параметры.Максимальная сумма"))
                 .inField("На стандартных условиях").setRadiobuttonON()
                 .clickButton("Особенности погашения");
@@ -142,7 +142,7 @@ public class Test_08_10_03 extends Hooks {
         CommonFunctions.printStep();
 
         //Нажать на кнопку "Отправить на публикацию"
-        new GUIFunctions().clickByLocator("(//span[@aria-label='ellipsis'])[1]")
+        new GUIFunctionsLKB().clickByLocator("(//span[@aria-label='ellipsis'])[1]")
                 .clickButton("Отправить на публикацию")
                 .waitForElementDisplayed("//*[text()='Заполните обязательные поля']");
     }
@@ -152,6 +152,6 @@ public class Test_08_10_03 extends Hooks {
         CommonFunctions.printStep();
 
         //Нажать на кнопку «Назад»
-        new GUIFunctions().clickByLocator("//img[@alt='Назад']");
+        new GUIFunctionsLKB().clickByLocator("//img[@alt='Назад']");
     }
 }

@@ -4,7 +4,7 @@ import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
-import functions.gui.fin.GUIFunctions;
+import functions.gui.lkb.GUIFunctionsLKB;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -44,7 +44,7 @@ public class Test_08_10_15 extends Hooks {
         open(PROPERTIES.getProperty("start_URL"));
 
 //        //Ввести логин и пароль
-        new GUIFunctions()
+        new GUIFunctionsLKB()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//*[text()='Продукты']");
     }
@@ -54,7 +54,7 @@ public class Test_08_10_15 extends Hooks {
         CommonFunctions.printStep();
 
         //В области навигации нажать на раздел «Продукты»
-        new GUIFunctions().clickButton("Продукты")
+        new GUIFunctionsLKB().clickButton("Продукты")
                 .waitForLoading();
     }
 
@@ -65,7 +65,7 @@ public class Test_08_10_15 extends Hooks {
         //Нажать на кнопку «Наименование продукта»
         //Нажать на кнопку «Наименование продукта»
         //Нажать на кнопку «Наименование продукта»
-        new GUIFunctions().clickButton("Наименование продукта")
+        new GUIFunctionsLKB().clickButton("Наименование продукта")
                 .waitForLoading()
                 .clickButton("Наименование продукта")
                 .waitForLoading()
@@ -80,7 +80,7 @@ public class Test_08_10_15 extends Hooks {
         //Нажать на кнопку «Наименование продукта»
         //Нажать на кнопку «Наименование продукта»
         //Нажать на кнопку «Наименование продукта»
-        new GUIFunctions().clickByLocator("//div[@class='ant-table-column-sorters']//following::span[text()='Статус']")
+        new GUIFunctionsLKB().clickByLocator("//div[@class='ant-table-column-sorters']//following::span[text()='Статус']")
                 .waitForLoading()
                 .clickByLocator("//div[@class='ant-table-column-sorters']//following::span[text()='Статус']")
                 .waitForLoading()

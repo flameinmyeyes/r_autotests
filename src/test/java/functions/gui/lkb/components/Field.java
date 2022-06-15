@@ -1,9 +1,8 @@
-package functions.gui.fin.components;
+package functions.gui.lkb.components;
 
-import functions.gui.fin.ElementData;
+import functions.gui.lkb.ElementData;
 import org.openqa.selenium.Keys;
 import static com.codeborne.selenide.Selenide.$x;
-import static org.testng.Assert.*;
 
 public class Field extends ElementData {
 

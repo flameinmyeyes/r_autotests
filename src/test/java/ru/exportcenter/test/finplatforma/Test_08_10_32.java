@@ -4,7 +4,7 @@ import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
-import functions.gui.fin.GUIFunctions;
+import functions.gui.lkb.GUIFunctionsLKB;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -48,19 +48,19 @@ public class Test_08_10_32 extends Hooks {
         open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль demo_exporter/password http://arm-lkb.arm-services-dev.d.exportcenter.ru/
-        new GUIFunctions()
+        new GUIFunctionsLKB()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//a[@href='/products']");
 
         //В области навигации нажать на раздел «Продукты»
         //Нажать на кнопку «Создать новый продукт»
-        new GUIFunctions().clickButton("Создать новый продукт")
+        new GUIFunctionsLKB().clickButton("Создать новый продукт")
                 .waitForLoading();
 
         //Тип продукта - "Финансирование"
         CommonFunctions.wait(2);
         newProductName = "Кредитование. Прямой кредит российскому банку " + new Random().nextInt(999999999);
-        new GUIFunctions().inField("Тип продукта").selectValue("Финансирование")
+        new GUIFunctionsLKB().inField("Тип продукта").selectValue("Финансирование")
                 .inField("Категория продукта").selectValue("Текущее финансирование")
                 .inField("Наименование продукта").inputText(newProductName)
                 .inField("Целевое назначение").inputText("Целевое назначение")
@@ -68,7 +68,7 @@ public class Test_08_10_32 extends Hooks {
                 .clickButton("Продолжить")
                 .waitForElementDisplayed("//*[text()='ЮЛ/ИП резидент']");
 
-        new GUIFunctions().inField("ЮЛ/ИП резидент").setCheckboxON()
+        new GUIFunctionsLKB().inField("ЮЛ/ИП резидент").setCheckboxON()
                 .inField("ОПФ российского получателя").selectValue("Любая ОПФ")
                 .inField("Срок регистрации российского получателя").selectValue("от 2 лет")
                 .scrollToElement("//*[text()='Страна регистрации иностранного покупателя']")
@@ -76,7 +76,7 @@ public class Test_08_10_32 extends Hooks {
                 .clickButton("Продолжить")
                 .waitForLoading();
 
-        new GUIFunctions().inField("На стандартных условиях").setRadiobuttonON()
+        new GUIFunctionsLKB().inField("На стандартных условиях").setRadiobuttonON()
                 .clickButton("Продолжить")
                 .waitForLoading();
 
@@ -96,7 +96,7 @@ public class Test_08_10_32 extends Hooks {
         open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль
-        new GUIFunctions()
+        new GUIFunctionsLKB()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//*[text()='Черновики']");
     }
@@ -108,7 +108,7 @@ public class Test_08_10_32 extends Hooks {
         //Нажать на переключатель «Черновики»
         //В поле фильтра к атрибуту "Наименование продукта" ввести значение "Кредитование. Прямой кредит российскому банку"
         //Нажать на кнопку "Редактировать"
-        new GUIFunctions().waitForElementDisplayed("//*[text()='Черновики']")
+        new GUIFunctionsLKB().waitForElementDisplayed("//*[text()='Черновики']")
                 .clickButton("Черновики")
                 .waitForLoading()
                 .clickButton("Сбросить фильтры")
@@ -125,7 +125,7 @@ public class Test_08_10_32 extends Hooks {
 
         //Нажать кнопку «...» в карточке черновика
         //Нажать на кнопку "Отправить на публикацию"
-        new GUIFunctions().clickByLocator("(//span[@aria-label='ellipsis'])[1]")
+        new GUIFunctionsLKB().clickByLocator("(//span[@aria-label='ellipsis'])[1]")
                 .clickButton("Отправить на публикацию")
                 .waitForElementDisplayed("//*[text()='Черновик отправлен на публикацию']");
     }

@@ -4,7 +4,7 @@ import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
-import functions.gui.fin.GUIFunctions;
+import functions.gui.lkb.GUIFunctionsLKB;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -57,7 +57,7 @@ public class Test_08_10_30 extends Hooks {
         open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль
-        new GUIFunctions()
+        new GUIFunctionsLKB()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//*[text()='Черновики']");
     }
@@ -69,7 +69,7 @@ public class Test_08_10_30 extends Hooks {
         //нажать на переключатель «Черновики»
         //В поле фильтра к атрибуту "Наименование продукта" ввести значение "Кредитование. Прямой кредит российскому экспортеру "СтройСервис"
         //Кликнуть по записи продукта с наименованием  "Кредитование. Прямой кредит российскому банку"
-        new GUIFunctions().clickButton("Черновики")
+        new GUIFunctionsLKB().clickButton("Черновики")
                 .waitForLoading()
                 .clickButton("Сбросить фильтры")
                 .inPlaceholder("Наименование продукта").inputValue(newProductName)
@@ -85,7 +85,7 @@ public class Test_08_10_30 extends Hooks {
         //Нажать на вкладку «Условия предоставления»
         //Нажать на вкладку «Финансовые параметры»
         //Нажать на вкладку «Особенности погашения»
-        new GUIFunctions().clickButton("Условия предоставления")
+        new GUIFunctionsLKB().clickButton("Условия предоставления")
                 .clickButton("Финансовые параметры")
                 .waitForLoading()
                 .clickButton("Особенности погашения")
