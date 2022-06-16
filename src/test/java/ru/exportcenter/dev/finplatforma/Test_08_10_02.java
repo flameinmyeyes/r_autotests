@@ -54,7 +54,6 @@ public class Test_08_10_02 extends Hooks {
 
         open(PROPERTIES.getProperty("start_URL"));
 
-        //Ввести логин и пароль demo_exporter/password http://arm-lkb.arm-services-dev.d.exportcenter.ru/
         new GUIFunctions()
                 .authorizationLib(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//a[@href='/products']");
@@ -64,24 +63,21 @@ public class Test_08_10_02 extends Hooks {
     public void step02() {
         CommonFunctions.printStep();
 
-        //В области навигации нажать на раздел «Продукты»
-        //Нажать на кнопку «Создать новый продукт»
-        new GUIFunctions().clickButton("Продукты")
-                .waitForElementDisplayed("//*[text()='Создать новый продукт']");
-        new GUIFunctions().clickButton("Создать новый продукт");
+        new GUIFunctions()
+                .clickButton("Черновики")
+                .waitForElementDisplayed("//*[text()='Создать новый продукт']")
+                .clickButton("Создать новый продукт");
     }
 
     @Step("Сведения о продукте")
     public void step03(){
         CommonFunctions.printStep();
 
-        //Тип продукта - "Финансирование"
         CommonFunctions.wait(2);
-        newProductName = "Кредитование. Прямой кредит российскому банку " + new Random().nextInt(999999999);
-        new GUIFunctions().waitForLoading()
-                .setTextInField(newProductName, "Наименование продукта");
 
-        //Нажать на кнопку «Продолжить»
+        newProductName = "Кредитование. Прямой кредит российскому банку " + new Random().nextInt(999999999);
+        new GUIFunctions().waitForLoading().setTextInField(newProductName, "Наименование продукта");
+
         new GUIFunctions().clickButton("Продолжить");
     }
 
@@ -89,7 +85,6 @@ public class Test_08_10_02 extends Hooks {
     public void step04() {
         CommonFunctions.printStep();
 
-        //Нажать на кнопку «Продолжить»
         new GUIFunctions().clickButton("Продолжить");
     }
 
@@ -97,7 +92,6 @@ public class Test_08_10_02 extends Hooks {
     public void step05() {
         CommonFunctions.printStep();
 
-        //Нажать на кнопку «Продолжить»
         new GUIFunctions().clickButton("Продолжить");
     }
 
@@ -105,7 +99,6 @@ public class Test_08_10_02 extends Hooks {
     public void step06() {
         CommonFunctions.printStep();
 
-        //Нажать на кнопку «Сохранить как черновик»
         new GUIFunctions().clickButton("Сохранить как черновик");
     }
 
@@ -113,8 +106,8 @@ public class Test_08_10_02 extends Hooks {
     public void step07() {
         CommonFunctions.printStep();
 
-        //Нажать на кнопку «Назад» (стрелкой)
-        new GUIFunctions().clickByLocator("//img[@alt='Назад']")
+        new GUIFunctions()
+                .clickByLocator("//img[@alt='Назад']")
                 .waitForElementDisplayed("//*[text()='Создать новый продукт']");
     }
 }
