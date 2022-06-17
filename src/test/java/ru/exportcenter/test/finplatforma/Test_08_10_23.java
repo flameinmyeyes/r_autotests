@@ -9,12 +9,13 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
 
 import java.util.Properties;
 
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class Test_08_10_23 extends Hooks {
 
@@ -33,11 +34,10 @@ public class Test_08_10_23 extends Hooks {
         step04();
     }
 
-//    @AfterMethod
-//    public void screenShot() {
-//        System.out.println(WAY_TEST + "screen.png");
-//        CommonFunctions.screenShot(WAY_TEST + "screen.png");
-//    }
+    @AfterMethod
+    public void screenShot() {
+        CommonFunctions.screenShot(WAY_TEST + "screen.png");
+    }
 
     @Step("Авторизация")
     public void step01() {
@@ -62,10 +62,15 @@ public class Test_08_10_23 extends Hooks {
     public void step03() {
         CommonFunctions.printStep();
 
+        System.out.println(PROPERTIES.getProperty("AutoTest_Body.ФИО"));
+        System.out.println(PROPERTIES.getProperty("AutoTest_Body.Action1"));
+        System.out.println(PROPERTIES.getProperty("AutoTest_Body.Action2"));
+
         new GUIFunctions()
             .clickButton(PROPERTIES.getProperty("AutoTest_Body.ФИО"))
             .clickButton(PROPERTIES.getProperty("AutoTest_Body.Action1"))
             .clickButton(PROPERTIES.getProperty("AutoTest_Body.Action2"));
+
         CommonFunctions.wait(1);
     }
 
@@ -74,10 +79,22 @@ public class Test_08_10_23 extends Hooks {
         CommonFunctions.printStep();
 
         CommonFunctions.wait(1);
+        refreshTab();
+
+        System.out.println(PROPERTIES.getProperty("AutoTest_Body.ФИО"));
+        System.out.println(PROPERTIES.getProperty("AutoTest_Body.Action1"));
+        System.out.println(PROPERTIES.getProperty("AutoTest_Body.Action2"));
 
         new GUIFunctions()
             .clickButton(PROPERTIES.getProperty("AutoTest_Body.ФИО"))
             .clickButton(PROPERTIES.getProperty("AutoTest_Body.Action3"))
             .clickButton(PROPERTIES.getProperty("AutoTest_Body.Action4"));
+    }
+
+
+    private void refreshTab() {
+        System.out.println("Refreshing");
+        refresh();
+        CommonFunctions.wait(3);
     }
 }
