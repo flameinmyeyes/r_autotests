@@ -33,29 +33,30 @@
         </classes>
     </test -->
 
-    <test name="REC_all_dev_finplatforma" thread-count="1" preserve-order="true">
-        <classes>
-            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_02" />
-            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_03" />
-            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_04" />
-            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_14" />
-            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_15" />
-            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_17" />
-            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_19" />
-            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_22" />
-            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_23" />
-            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_24" />
-            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_25" />
-            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_26" />
-            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_27" />
-            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_29" />
-            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_30" />
-            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_31" />
-            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_32" />
-            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_33" />
-            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_34" />
-        </classes>
-    </test>
+<!--    <test name="REC_all_dev_finplatforma" thread-count="1" preserve-order="true">-->
+<!--        <classes>-->
+<!--            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_02" />-->
+<!--            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_03" />-->
+<!--            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_04" />-->
+<!--            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_14" />-->
+<!--            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_15" />-->
+<!--            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_17" />-->
+<!--            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_19" />-->
+<!--            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_22" />-->
+<!--            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_23" />-->
+<!--            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_24" />-->
+<!--            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_25" />-->
+<!--            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_26" />-->
+<!--            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_27" />-->
+<!--            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_29" />-->
+<!--            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_30" />-->
+<!--            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_31" />-->
+<!--            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_32" />-->
+<!--            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_33" />-->
+<!--            <class name="ru.exportcenter.dev.finplatforma.Test_08_10_34" />-->
+<!--        </classes>-->
+<!--    </test>-->
+
     <test name="REC_all_dev_finplatforma" thread-count="1" preserve-order="true">
         <classes>
             <class name="ru.exportcenter.test.finplatforma.Test_08_10_02" />
