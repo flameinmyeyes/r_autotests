@@ -57,11 +57,11 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-    <test name="REC_all_dev_finplatforma" thread-count="1" preserve-order="true">
+    <test name="REC_all_test_finplatforma" thread-count="1" preserve-order="true">
         <classes>
             <class name="ru.exportcenter.test.finplatforma.Test_08_10_02" />
-            <class name="ru.exportcenter.test.finplatforma.Test_08_10_06" />
-            <class name="ru.exportcenter.test.finplatforma.Test_08_10_14" />
+            <!-- class name="ru.exportcenter.test.finplatforma.Test_08_10_06" />
+            <class name="ru.exportcenter.test.finplatforma.Test_08_10_14" / -->
             <class name="ru.exportcenter.test.finplatforma.Test_08_10_23" />
             <class name="ru.exportcenter.test.finplatforma.Test_08_10_24" />
             <class name="ru.exportcenter.test.finplatforma.Test_08_10_25" />
