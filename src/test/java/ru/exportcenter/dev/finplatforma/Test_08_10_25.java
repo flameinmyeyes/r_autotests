@@ -62,10 +62,10 @@ public class Test_08_10_25 extends Hooks {
     public void step03() {
         CommonFunctions.printStep();
 
-        CommonFunctions.wait(5);
+        new GUIFunctions().waitForLoading();
 
-        new GUIFunctions()
-                .clickByLocator("//*[@id='root']/div[3]/ul/li[3]/span")
-                .clickButton("2");
+        $("body").sendKeys(Keys.PAGE_DOWN);
+
+        new GUIFunctions().clickButton("2");
     }
 }
