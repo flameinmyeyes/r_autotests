@@ -9,12 +9,14 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
+import org.openqa.selenium.Keys;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
 
 import java.util.Properties;
 
+import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.open;
 
 public class Test_08_10_30 extends Hooks {
@@ -73,7 +75,11 @@ public class Test_08_10_30 extends Hooks {
                 .waitForLoading()
                 .clickButton("Сбросить фильтры")
                 .inPlaceholder("Наименование продукта").inputValue(newProductName)
-                .waitForLoading()
+                .waitForLoading();
+
+        $x("//input[@placeholder='Наименование продукта']").sendKeys(Keys.BACK_SPACE);
+
+        new GUIFunctionsLKB().waitForLoading()
                 .clickButton(newProductName)
                 .waitForLoading();
     }
