@@ -75,6 +75,7 @@ public class Test_08_10_17 extends Hooks {
                 .inField("Роль").selectValue(PROPERTIES.getProperty("Роль"))
                 .inField("Email").inputValue(PROPERTIES.getProperty("Email"))
                 .inField("Мобильный телефон").inputValue(PROPERTIES.getProperty("Мобильный телефон"))
-                .clickButton("Отправить приглашение");
+                .clickButton("Отправить приглашение")
+                .waitForElementDisplayed("//*[text()='Приглашение успешно отправлено']");
     }
 }

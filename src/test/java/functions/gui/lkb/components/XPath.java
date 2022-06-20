@@ -72,10 +72,11 @@ public class XPath extends ElementData {
                 $x(getContainerXPath() + getFieldXPath() + "/following::span[@class='ant-select-selection-item']").click();
             } else {
                 $x(getContainerXPath() + getFieldXPath() + "/following::div[@class='ant-form-item-control-input-content']").click();
+                $x(getContainerXPath() + getFieldXPath() + "/following::input").setValue(value);
             }
-            return getContainerXPath() + getFieldXPath() + "//following::*[text()='" + value + "']";
+            return getContainerXPath() + getFieldXPath() + "/following::div[contains(@class,'ant-select-item')]/child::span[text()='" + value + "']";
         } else if (isPlaceholderDefined()){
-            $x("//*[text()='" + placeholder + "']//parent::*/span/input").click();
+            $x("//*[text()='" + placeholder + "']//parent::*/span/input").setValue(value);
             return "//*[text()='" + placeholder + "']//following::div/div[text()='" + value + "']";
         }
         return null;

@@ -59,7 +59,8 @@ public class Test_08_10_32 extends Hooks {
 
         //Тип продукта - "Финансирование"
         CommonFunctions.wait(2);
-        newProductName = "Кредитование. Прямой кредит российскому банку " + new Random().nextInt(999999999);
+//        newProductName = "Кредитование. Прямой кредит российскому банку " + new Random().nextInt(999999999);
+        newProductName = String.valueOf(new Random().nextInt(999999999));
         new GUIFunctionsLKB().inField("Тип продукта").selectValue("Финансирование")
                 .inField("Категория продукта").selectValue("Текущее финансирование")
                 .inField("Наименование продукта").inputText(newProductName)
@@ -69,8 +70,9 @@ public class Test_08_10_32 extends Hooks {
                 .waitForElementDisplayed("//*[text()='ЮЛ/ИП резидент']");
 
         new GUIFunctionsLKB().inField("ЮЛ/ИП резидент").setCheckboxON()
-                .inField("ОПФ российского получателя").selectValue("Любая ОПФ")
+                .inField("ОПФ российского получателя").selectValue("Общественные учреждения")
                 .inField("Срок регистрации российского получателя").selectValue("от 2 лет")
+                .inField("Регион регистрации российского получателя").selectValue("Г.Санкт-Петербург")
                 .scrollToElement("//*[text()='Страна регистрации иностранного покупателя']")
                 .inField("Страна регистрации иностранного покупателя").selectValue("Республика Албания")
                 .clickButton("Продолжить")

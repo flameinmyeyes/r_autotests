@@ -14,8 +14,7 @@ import ru.exportcenter.Hooks;
 
 import java.util.Properties;
 
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class Test_08_10_27  extends Hooks {
 
@@ -89,6 +88,7 @@ public class Test_08_10_27  extends Hooks {
         new GUIFunctionsLKB().inField("ЮЛ/ИП резидент").setCheckboxON()
                 .inField("ОПФ российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.ОПФ российского получателя"))
                 .inField("Срок регистрации российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Срок регистрации российского получателя"))
+                .inField("Регион регистрации российского получателя").selectValue("Г.Санкт-Петербург")
                 .inField("Страна регистрации иностранного покупателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Страна регистрации иностранного покупателя"))
                 .clickButton("Продолжить")
                 .waitForLoading();
@@ -104,7 +104,7 @@ public class Test_08_10_27  extends Hooks {
         //В радио-баттоне атрибута "Применение НПА" выбрать значение "На стандартных условиях"
         //В экранной форме заполнения атрибутов Продукта Блока 3 «Финансовые параметры» нажать на кнопку "Продолжить"
         $x("//span[text()='Валюта']/following::input").setValue("Доллар сша");
-        $x("//*[text()='Валюта']//following::*[text()='Доллар сша, USD']").click();
+        $x("//*[text()='Валюта']//following::*[text()='Доллар США, USD']").click();
         new GUIFunctionsLKB().inField("Минимальная сумма").inputValue(PROPERTIES.getProperty("Финансовые параметры.Минимальная сумма"))
                 .inField("Максимальная сумма").inputValue(PROPERTIES.getProperty("Финансовые параметры.Максимальная сумма"))
                 .inField("На стандартных условиях").setRadiobuttonON()
@@ -118,6 +118,6 @@ public class Test_08_10_27  extends Hooks {
 
         //Нажать на кнопку "Отправить на публикацию"
         new GUIFunctionsLKB().clickButton("Отправить на публикацию")
-                .waitForLoading();
+                .waitForElementDisplayed("//*[text()='Черновик отправлен на публикацию']");
     }
 }
