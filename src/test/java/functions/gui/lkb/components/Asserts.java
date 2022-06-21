@@ -12,24 +12,27 @@ public class Asserts extends ElementData {
     }
 
     public void assertValue() {
-        String actualValue = getValue();
-        assertEquals(actualValue, value);
-    }
-
-    private String getValue() {
-        String actualValue;
-        String inputXPath = new XPath(this).getInputValueXPath();
-        if ($x(inputXPath).exists()) {
-            actualValue = $x(new XPath(this).getInputValueXPath()).getValue();
-        } else {
-            actualValue = $x(new XPath(this).getUneditableInputXPath()).getText();
-        }
-        return actualValue;
+        assertEquals(getValue(), value);
     }
 
     public void assertValue(String expectedValue) {
-        String actualValue = getValue();
-        assertEquals(actualValue, expectedValue);
+        assertEquals(getValue(), expectedValue);
+    }
+
+    private String getValue() {
+        String actualValue = null;
+
+        if ($x(new XPath(this).getSelectCheckboxValueXPath()).exists()){
+            actualValue = $x(new XPath(this).getSelectCheckboxValueXPath()).getText();
+        }else if ($x(new XPath(this).getSelectValueXPath()).exists()) {
+            actualValue = $x(new XPath(this).getSelectValueXPath()).getText();
+        }else if ($x(new XPath(this).getInputTextXPath()).exists()){
+            actualValue = $x(new XPath(this).getInputTextXPath()).getText();
+        } else if ($x(new XPath(this).getInputValueXPath()).exists()){
+            actualValue = $x(new XPath(this).getInputValueXPath()).getValue();
+        }
+
+        return actualValue.replaceAll("\\u00a0", " ");
     }
 
     @Deprecated
@@ -67,5 +70,4 @@ public class Asserts extends ElementData {
                     "в рамках текущего объекта уже был применен один из методов setRadiobuttonByDescription()");
         }
     }
-
 }

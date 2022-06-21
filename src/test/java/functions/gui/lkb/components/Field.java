@@ -1,5 +1,6 @@
 package functions.gui.lkb.components;
 
+import functions.common.CommonFunctions;
 import functions.gui.lkb.ElementData;
 import org.openqa.selenium.Keys;
 import static com.codeborne.selenide.Selenide.$x;
@@ -16,13 +17,11 @@ public class Field extends ElementData {
 
     public void inputText(String value) {
         $x(new XPath(this).getInputTextXPath()).setValue(value);
-//        if (!$x(new XPath(this).getInputTextXPath()).getText().equals(value)){
-//            fail("Текст после ввода в поле не соответствует первоначальному");
-//        }
     }
 
     public void selectValue(String value) {
         String item = new XPath(this).getSearchedValueXPath(value);
+        CommonFunctions.wait(1);
         $x(item).click();
         if ($x(new XPath(this).getCheckedCheckboxXPath()).isDisplayed()){
             $x(new XPath(this).getFieldXPath() + "/following::input").sendKeys(Keys.ESCAPE);

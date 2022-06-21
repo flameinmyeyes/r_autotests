@@ -52,7 +52,7 @@ public class GUIFunctionsLKB extends ElementData {
     }
 
     /**
-     * input ext
+     * input lkb
      */
 
     public GUIFunctionsLKB inputValue(String value) {

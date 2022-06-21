@@ -42,8 +42,7 @@ public class Test_08_10_27  extends Hooks {
         open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль
-        new GUIFunctionsLKB()
-                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
+        new GUIFunctionsLKB().authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//*[text()='Продукты']")
                 .clickButton("Продукты");
     }
@@ -68,11 +67,11 @@ public class Test_08_10_27  extends Hooks {
         //В поле атрибута «Целевое назначение» ввести значение "Кредит на расчеты по экспортной сделке"
         //В поле атрибута «Краткое описание продукта» ввести значение "Кредитование. Прямой кредит российскому экспортеру"
         //В экранной форме заполнения атрибутов Продукта Блока 1 "Сведения о продукте" нажать кнопку "Продолжить"
-        new GUIFunctionsLKB().inField("Тип продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Тип продукта"))
-                .inField("Категория продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Категория продукта"))
-                .inField("Наименование продукта").inputText(PROPERTIES.getProperty("Сведения о продукте.Наименование продукта"))
-                .inField("Целевое назначение").inputText(PROPERTIES.getProperty("Сведения о продукте.Целевое назначение"))
-                .inField("Краткое описание продукта").inputText(PROPERTIES.getProperty("Сведения о продукте.Краткое описание продукта"))
+        new GUIFunctionsLKB().inField("Тип продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Тип продукта")).assertValue()
+                .inField("Категория продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Категория продукта")).assertValue()
+                .inField("Наименование продукта").inputText(PROPERTIES.getProperty("Сведения о продукте.Наименование продукта")).assertValue()
+                .inField("Целевое назначение").inputText(PROPERTIES.getProperty("Сведения о продукте.Целевое назначение")).assertValue()
+                .inField("Краткое описание продукта").inputText(PROPERTIES.getProperty("Сведения о продукте.Краткое описание продукта")).assertValue()
                 .clickButton("Продолжить")
                 .waitForElementDisplayed("//*[text()='ЮЛ/ИП резидент']");
     }
@@ -86,10 +85,10 @@ public class Test_08_10_27  extends Hooks {
         //Выбрать значение "от 2 лет" В поле атрибута "Срок регистрации российского получателя"
         //В экранной форме заполнения атрибутов Продукта Блока 2 «Условия предоставления» нажать на кнопку "Продолжить"
         new GUIFunctionsLKB().inField("ЮЛ/ИП резидент").setCheckboxON()
-                .inField("ОПФ российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.ОПФ российского получателя"))
-                .inField("Срок регистрации российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Срок регистрации российского получателя"))
-                .inField("Регион регистрации российского получателя").selectValue("Г.Санкт-Петербург")
-                .inField("Страна регистрации иностранного покупателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Страна регистрации иностранного покупателя"))
+                .inField("ОПФ российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.ОПФ российского получателя")).assertValue()
+                .inField("Срок регистрации российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Срок регистрации российского получателя")).assertValue()
+                .inField("Регион регистрации российского получателя").selectValue("Г.Санкт-Петербург").assertValue()
+                .inField("Страна регистрации иностранного покупателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Страна регистрации иностранного покупателя")).assertValue()
                 .clickButton("Продолжить")
                 .waitForLoading();
     }
@@ -104,9 +103,9 @@ public class Test_08_10_27  extends Hooks {
         //В радио-баттоне атрибута "Применение НПА" выбрать значение "На стандартных условиях"
         //В экранной форме заполнения атрибутов Продукта Блока 3 «Финансовые параметры» нажать на кнопку "Продолжить"
         $x("//span[text()='Валюта']/following::input").setValue("Доллар сша");
-        $x("//*[text()='Валюта']//following::*[text()='Доллар США, USD']").click();
-        new GUIFunctionsLKB().inField("Минимальная сумма").inputValue(PROPERTIES.getProperty("Финансовые параметры.Минимальная сумма"))
-                .inField("Максимальная сумма").inputValue(PROPERTIES.getProperty("Финансовые параметры.Максимальная сумма"))
+        $x("//*[text()='Валюта']//following::*[text()='ДОЛЛАР США, USD']").click();
+        new GUIFunctionsLKB().inField("Минимальная сумма").inputValue(PROPERTIES.getProperty("Финансовые параметры.Минимальная сумма")).assertValue()
+                .inField("Максимальная сумма").inputValue(PROPERTIES.getProperty("Финансовые параметры.Максимальная сумма")).assertValue()
                 .inField("На стандартных условиях").setRadiobuttonON()
                 .clickButton("Продолжить")
                 .waitForLoading();
