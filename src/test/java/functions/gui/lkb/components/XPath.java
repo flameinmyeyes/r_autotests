@@ -47,17 +47,25 @@ public class XPath extends ElementData {
      * input/checkbox ext
      */
 
+    public String getSelectCheckboxValueXPath(){
+        return getContainerXPath() + getFieldXPath() + "/parent::*/descendant::span[contains(@class,'ant-tag Select_tag')]/child::*[contains(text(),'" + value + "')]";
+    }
+
+    public String getSelectValueXPath(){
+        return getContainerXPath() + getFieldXPath() + "/parent::*/descendant::span[@class='ant-select-selection-item']";
+    }
+
+    public String getInputTextXPath() {
+        return getContainerXPath() + getFieldXPath() + "/parent::*/descendant::textarea";
+    }
+
     public String getInputValueXPath() {
         if (isFieldDefined()) {
-            return getContainerXPath() + getFieldXPath() + "/following::input";
+            return getContainerXPath() + getFieldXPath() + "/parent::*/descendant::input";
         } else if (isPlaceholderDefined()){
             return getContainerXPath() + getPlaceholderXPath();
         }
         return "";
-    }
-
-    public String getInputTextXPath() {
-        return getContainerXPath() + getFieldXPath() + "/following::textarea";
     }
 
     public String getUneditableInputXPath() {
