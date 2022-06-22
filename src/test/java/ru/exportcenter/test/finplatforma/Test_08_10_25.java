@@ -65,6 +65,7 @@ public class Test_08_10_25 extends Hooks {
 
         new GUIFunctions()
                 .clickByLocator("//*[@id='root']/div[3]/ul/li[3]/span")
-                .clickButton("2");
+                .clickButton("2")
+                .waitForElementDisplayed("//*[text()='10 / стр.']");
     }
 }

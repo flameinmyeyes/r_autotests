@@ -45,7 +45,7 @@ public class Test_08_10_23 extends Hooks {
 
         open(PROPERTIES.getProperty("start_URL"));
         new GUIFunctions()
-            .authorizationLib(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"));
+                .authorizationLib(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"));
 //            .waitForElementDisplayed("//a[@href='/products']");
     }
 
@@ -54,41 +54,40 @@ public class Test_08_10_23 extends Hooks {
         CommonFunctions.printStep();
 
         new GUIFunctions()
-            .clickByLocator("//a[@href='/employees']")
-            .clickButton("Сотрудники");
+                .clickByLocator("//a[@href='/employees']")
+                .clickButton("Сотрудники");
     }
 
     @Step("Блокировка")
     public void step03() {
         CommonFunctions.printStep();
 
-        System.out.println(PROPERTIES.getProperty("AutoTest_Body.ФИО"));
-        System.out.println(PROPERTIES.getProperty("AutoTest_Body.Action1"));
-        System.out.println(PROPERTIES.getProperty("AutoTest_Body.Action2"));
+//        System.out.println(PROPERTIES.getProperty("AutoTest_Body.ФИО"));
+//        System.out.println(PROPERTIES.getProperty("AutoTest_Body.Action1"));
+//        System.out.println(PROPERTIES.getProperty("AutoTest_Body.Action2"));
 
         new GUIFunctions()
-            .clickButton(PROPERTIES.getProperty("AutoTest_Body.ФИО"))
-            .clickButton(PROPERTIES.getProperty("AutoTest_Body.Action1"))
-            .clickButton(PROPERTIES.getProperty("AutoTest_Body.Action2"));
-
-        CommonFunctions.wait(1);
+                .waitForElementDisplayed("//*[text()='"+PROPERTIES.getProperty("AutoTest_Body.ФИО")+"']")
+                .clickButton(PROPERTIES.getProperty("AutoTest_Body.ФИО"))
+                .clickButton(PROPERTIES.getProperty("AutoTest_Body.Action1"))
+                .clickButton(PROPERTIES.getProperty("AutoTest_Body.Action2"));
     }
 
     @Step("Разблокировка")
     public void step04() {
         CommonFunctions.printStep();
-
-        CommonFunctions.wait(1);
+        CommonFunctions.wait(5);
         refreshTab();
 
-        System.out.println(PROPERTIES.getProperty("AutoTest_Body.ФИО"));
-        System.out.println(PROPERTIES.getProperty("AutoTest_Body.Action1"));
-        System.out.println(PROPERTIES.getProperty("AutoTest_Body.Action2"));
+//        System.out.println(PROPERTIES.getProperty("AutoTest_Body.ФИО"));
+//        System.out.println(PROPERTIES.getProperty("AutoTest_Body.Action3"));
+//        System.out.println(PROPERTIES.getProperty("AutoTest_Body.Action4"));
 
         new GUIFunctions()
-            .clickButton(PROPERTIES.getProperty("AutoTest_Body.ФИО"))
-            .clickButton(PROPERTIES.getProperty("AutoTest_Body.Action3"))
-            .clickButton(PROPERTIES.getProperty("AutoTest_Body.Action4"));
+                .waitForElementDisplayed("//*[text()='"+PROPERTIES.getProperty("AutoTest_Body.ФИО")+"']")
+                .clickButton(PROPERTIES.getProperty("AutoTest_Body.ФИО"))
+                .clickButton(PROPERTIES.getProperty("AutoTest_Body.Action3"))
+                .clickButton(PROPERTIES.getProperty("AutoTest_Body.Action4"));
     }
 
 

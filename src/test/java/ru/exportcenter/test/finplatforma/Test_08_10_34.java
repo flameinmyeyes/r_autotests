@@ -63,6 +63,7 @@ public class Test_08_10_34 extends Hooks {
         CommonFunctions.printStep();
 
         new GUIFunctions()
-                .clickButton("Романовская Ксения Борисовна");
+                .clickButton("Романовская Ксения Борисовна")
+                .waitForElementDisplayed("//*[text()='Информация о сотруднике']");;
     }
 }
