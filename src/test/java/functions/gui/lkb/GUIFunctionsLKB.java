@@ -83,6 +83,21 @@ public class GUIFunctionsLKB extends ElementData {
         return this;
     }
 
+    public GUIFunctionsLKB assertCheckboxON() {
+        new Asserts(this).assertCheckboxON();
+        return this;
+    }
+
+    public GUIFunctionsLKB assertCheckboxOFF() {
+        new Asserts(this).assertCheckboxOFF();
+        return this;
+    }
+
+    public GUIFunctionsLKB assertRadiobuttonON() {
+        new Asserts(this).assertRadiobuttonON();
+        return this;
+    }
+
     @Deprecated
     public GUIFunctionsLKB assertValueContains(String subValue) {
         new Asserts(this).assertValueContains(subValue);
@@ -105,7 +120,7 @@ public class GUIFunctionsLKB extends ElementData {
     }
 
     /**
-     * checkbox fin
+     * checkbox lkb
      */
 
     public GUIFunctionsLKB setCheckboxON() {

@@ -46,7 +46,7 @@ public class Test_08_10_15 extends Hooks {
         System.out.println(WAY_TO_PROPERTIES);
         open(PROPERTIES.getProperty("start_URL"));
 
-//        //Ввести логин и пароль
+        //Ввести логин и пароль
         new GUIFunctionsLKB()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForElementDisplayed("//*[text()='Продукты']");

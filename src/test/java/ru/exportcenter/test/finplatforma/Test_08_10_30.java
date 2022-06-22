@@ -49,7 +49,6 @@ public class Test_08_10_30 extends Hooks {
         Test_08_10_02 test_08_10_02 = new Test_08_10_02();
         test_08_10_02.steps();
         newProductName = test_08_10_02.newProductName;
-//        closeWebDriver();
     }
 
     @Step("Авторизация")

@@ -22,13 +22,13 @@ public class Asserts extends ElementData {
     private String getValue() {
         String actualValue = null;
 
-        if ($x(new XPath(this).getSelectCheckboxValueXPath()).exists()){
+        if ($x(new XPath(this).getSelectCheckboxValueXPath()).exists()) {
             actualValue = $x(new XPath(this).getSelectCheckboxValueXPath()).getText();
-        }else if ($x(new XPath(this).getSelectValueXPath()).exists()) {
+        } else if ($x(new XPath(this).getSelectValueXPath()).exists()) {
             actualValue = $x(new XPath(this).getSelectValueXPath()).getText();
-        }else if ($x(new XPath(this).getInputTextXPath()).exists()){
+        } else if ($x(new XPath(this).getInputTextXPath()).exists()) {
             actualValue = $x(new XPath(this).getInputTextXPath()).getText();
-        } else if ($x(new XPath(this).getInputValueXPath()).exists()){
+        } else if ($x(new XPath(this).getInputValueXPath()).exists()) {
             actualValue = $x(new XPath(this).getInputValueXPath()).getValue();
         }
 
@@ -61,13 +61,7 @@ public class Asserts extends ElementData {
         assertFalse($x(new XPath(this).getCheckedCheckboxXPath()).exists());
     }
 
-    public void assertRadiobuttonONByDescription() {
-        if (rbCondition) {
-            assertTrue($x(new XPath(this).getCheckedRadiobuttonByDescriptionXPath()).exists());
-        } else {
-            fail("Не установлено ожидаемое состояние радиокнопки для его проверки\n" +
-                    "Пожалуйста, перед использованием метода assertRadiobuttonONByDescription() убедитеть, что " +
-                    "в рамках текущего объекта уже был применен один из методов setRadiobuttonByDescription()");
-        }
+    public void assertRadiobuttonON() {
+        assertTrue($x(new XPath(this).getRadiobuttonXPath()).exists());
     }
 }

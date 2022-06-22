@@ -77,12 +77,12 @@ public class XPath extends ElementData {
         if (isFieldDefined()){
             //Если placeholder уже заполнен значением
             if ($x(getContainerXPath() + getFieldXPath() + "/following::span[@class='ant-select-selection-item']").isDisplayed()){
-                $x(getContainerXPath() + getFieldXPath() + "/following::span[@class='ant-select-selection-item']").click();
+                $x(getContainerXPath() + getFieldXPath() + "/parent::*/descendant::input").setValue(value);
             } else {
                 $x(getContainerXPath() + getFieldXPath() + "/following::div[@class='ant-form-item-control-input-content']").click();
-                $x(getContainerXPath() + getFieldXPath() + "/following::input").setValue(value);
+                $x(getContainerXPath() + getFieldXPath() + "/parent::*/descendant::input").setValue(value);
             }
-            return getContainerXPath() + getFieldXPath() + "/following::div[contains(@class,'ant-select-item')]/child::span[text()='" + value + "']";
+            return getContainerXPath() + getFieldXPath() + "/following::div[contains(@class,'ant-select-item')]/child::span[contains(text(),'" + value + "')]";
         } else if (isPlaceholderDefined()){
             $x("//*[text()='" + placeholder + "']//parent::*/span/input").setValue(value);
             return "//*[text()='" + placeholder + "']//following::div/div[text()='" + value + "']";
@@ -106,13 +106,8 @@ public class XPath extends ElementData {
         return getCheckboxXPath() + "[contains(@class,'ant-checkbox-checked')]";
     }
 
-    public String getRadiobuttonByDescriptionXPath() {
-        return getContainerXPath() + getFieldXPath() + "/descendant::*[contains(@class,'checkMark')]" +
-                "[following::*[contains(text(),'" + description + "')]][last()]";
-    }
-
-    public String getCheckedRadiobuttonByDescriptionXPath() {
-        return getRadiobuttonByDescriptionXPath() + "//div[contains(@class,'checked')]";
+    public String getRadiobuttonXPath() {
+        return "//*[text()='" + field + "']/parent::*[contains(@class,'ant-radio-wrapper-checked')]";
     }
 
     /**
@@ -141,5 +136,4 @@ public class XPath extends ElementData {
         return getContainerXPath() + "//*[text() = '" + upload + "']/ancestor::*[contains(@class, 'FileInput_labelWrapper')]" +
                 "/following-sibling::*[contains(@class, 'FileInput_container')]//*[contains(@class, 'FileInput_fileName')][text() = '" + fileName + "']";
     }
-
 }
