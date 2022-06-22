@@ -20,7 +20,7 @@ public class XPath extends ElementData {
 
     public String getFieldXPath() {
         if (isFieldDefined()) {
-            return "//*[text()='" + field + "']";
+            return "//*[contains(text(),'" + field + "')]";
         }
         Assert.fail("Не удалось создать xPath. Поле ввода не было задано\n" +
                 "Пожалуйста, ипользуте метод inField(String field), чтобы задать поле ввода");
@@ -61,7 +61,9 @@ public class XPath extends ElementData {
 
     public String getInputValueXPath() {
         if (isFieldDefined()) {
-            return getContainerXPath() + getFieldXPath() + "/parent::*/descendant::input";
+
+//            return getContainerXPath() + getFieldXPath() + "/parent::*/descendant::input";
+            return getContainerXPath() + getFieldXPath() + "//ancestor::*/following::input";
         } else if (isPlaceholderDefined()){
             return getContainerXPath() + getPlaceholderXPath();
         }

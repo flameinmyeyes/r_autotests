@@ -15,6 +15,7 @@ import ru.exportcenter.Hooks;
 
 import java.util.Properties;
 
+import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.open;
 
 public class Test_08_10_17 extends Hooks {
@@ -71,10 +72,14 @@ public class Test_08_10_17 extends Hooks {
         //Нажать на кнопку «Отправить приглашение».
         new GUIFunctionsLKB().inField("Фамилия").inputValue(PROPERTIES.getProperty("Фамилия")).assertValue()
                 .inField("Имя").inputValue(PROPERTIES.getProperty("Имя")).assertValue()
-                .inField("Отчество").inputValue(PROPERTIES.getProperty("Отчество")).assertValue()
-                .inField("Роль").selectValue(PROPERTIES.getProperty("Роль")).assertValue()
-                .inField("Email").inputValue(PROPERTIES.getProperty("Email")).assertValue()
-                .inField("Мобильный телефон").inputValue(PROPERTIES.getProperty("Мобильный телефон")).assertValue()
+                .inField("Отчество").inputValue(PROPERTIES.getProperty("Отчество")).assertValue();
+
+//                .inField("Роль").selectValue(PROPERTIES.getProperty("Роль")).assertValue()
+        $x("//*[contains(text(),'Роль')]/following::div[@class='ant-form-item-control-input-content']").click();
+        $x("//*[contains(text(),'Роль')]/following::div[contains(@class,'ant-select-item')]/child::span[contains(text(),'Продуктовый менеджер')]").click();
+
+        new GUIFunctionsLKB().inField("Email").inputValue(PROPERTIES.getProperty("Email")).assertValue()
+                .inField("Мобильный телефон").inputValue(PROPERTIES.getProperty("Мобильный телефон")).assertValue("+7 (999) 999-99-99")
                 .clickButton("Отправить приглашение")
                 .waitForElementDisplayed("//*[text()='Приглашение успешно отправлено']");
     }
