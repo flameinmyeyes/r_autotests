@@ -69,12 +69,12 @@ public class Test_08_10_17 extends Hooks {
         //В поле «Email» ввести  значение: «petralm@otr.ru».
         //В поле «Телефон» ввести  значение: «9999999999».
         //Нажать на кнопку «Отправить приглашение».
-        new GUIFunctionsLKB().inField("Фамилия").inputValue(PROPERTIES.getProperty("Фамилия"))
-                .inField("Имя").inputValue(PROPERTIES.getProperty("Имя"))
-                .inField("Отчество").inputValue(PROPERTIES.getProperty("Отчество"))
-                .inField("Роль").selectValue(PROPERTIES.getProperty("Роль"))
-                .inField("Email").inputValue(PROPERTIES.getProperty("Email"))
-                .inField("Мобильный телефон").inputValue(PROPERTIES.getProperty("Мобильный телефон"))
+        new GUIFunctionsLKB().inField("Фамилия").inputValue(PROPERTIES.getProperty("Фамилия")).assertValue()
+                .inField("Имя").inputValue(PROPERTIES.getProperty("Имя")).assertValue()
+                .inField("Отчество").inputValue(PROPERTIES.getProperty("Отчество")).assertValue()
+                .inField("Роль").selectValue(PROPERTIES.getProperty("Роль")).assertValue()
+                .inField("Email").inputValue(PROPERTIES.getProperty("Email")).assertValue()
+                .inField("Мобильный телефон").inputValue(PROPERTIES.getProperty("Мобильный телефон")).assertValue()
                 .clickButton("Отправить приглашение")
                 .waitForElementDisplayed("//*[text()='Приглашение успешно отправлено']");
     }

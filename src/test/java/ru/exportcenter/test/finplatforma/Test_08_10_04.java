@@ -114,10 +114,11 @@ public class Test_08_10_04 extends Hooks {
         //В поле атрибута «ОПФ российского получателя» выбрать значение "Любая ОПФ"
         //В поле атрибута "Срок регистрации российского получателя" выбрать значение "от 6 месяцев"
         //Нажать на вкладку «Финансовые параметры»
-        new GUIFunctionsLKB().inField("Банк резидент").setCheckboxON()
-                .inField("ОПФ российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.ОПФ российского получателя"))
-                .inField("Срок регистрации российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Срок регистрации российского получателя"))
-                .inField("Страна регистрации иностранного покупателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Страна регистрации иностранного покупателя"))
+        new GUIFunctionsLKB().inField("Банк резидент").setCheckboxON().assertCheckboxON()
+                .inField("ОПФ российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.ОПФ российского получателя")).assertValue()
+                .inField("Срок регистрации российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Срок регистрации российского получателя")).assertValue()
+                .inField("Регион регистрации российского получателя").selectValue("Г.Санкт-Петербург").assertValue()
+                .inField("Страна регистрации иностранного покупателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Страна регистрации иностранного покупателя")).assertValue()
                 .clickButton("Финансовые параметры")
                 .waitForLoading();
     }
@@ -131,11 +132,12 @@ public class Test_08_10_04 extends Hooks {
         //В поле атрибута "Максимальная сумма" ввести значение "1 000 000 000"
         //В радио-баттоне атрибута "Применение НПА" выбрать значение "На стандартных условиях"
         //Нажать на вкладку "Особенности погашения"
-        $x("//span[text()='Валюта']/following::input").setValue("Евро");
-        $x("//*[text()='Валюта']//following::*[text()='Евро, EUR']").click();
-        new GUIFunctionsLKB().inField("Минимальная сумма").inputValue(PROPERTIES.getProperty("Финансовые параметры.Минимальная сумма"))
-                .inField("Максимальная сумма").inputValue(PROPERTIES.getProperty("Финансовые параметры.Максимальная сумма"))
-                .inField("На стандартных условиях").setRadiobuttonON()
+//        $x("//span[text()='Валюта']/following::input").setValue("Евро");
+//        $x("//*[text()='Валюта']//following::*[text()='Евро, EUR']").click();
+        new GUIFunctionsLKB().inField("Валюта").selectValue("Доллар США");
+        new GUIFunctionsLKB().inField("Минимальная сумма").inputValue(PROPERTIES.getProperty("Финансовые параметры.Минимальная сумма")).assertValue()
+                .inField("Максимальная сумма").inputValue(PROPERTIES.getProperty("Финансовые параметры.Максимальная сумма")).assertValue()
+                .inField("На стандартных условиях").setRadiobuttonON().assertRadiobuttonON()
                 .clickButton("Особенности погашения");
     }
 
