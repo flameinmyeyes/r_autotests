@@ -54,6 +54,7 @@ public class Test_08_10_33 extends Hooks {
         new GUIFunctions()
                 .waitForElementDisplayed("//*[text()='Сотрудники']")
                 .clickButton("Сотрудники")
-                .clickButton("Все");
+                .clickButton("Все")
+                .waitForElementDisplayed("//*[text()='ФИО сотрудника']");;
     }
 }
