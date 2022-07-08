@@ -108,9 +108,8 @@ public class Test_08_10_03 extends Hooks {
         $x("(//span[contains(@class,'ant-select-selection-search')])[2]").click();
         $x("//*[text()='Текущее финансирование']").click();
 
-//.inField("Категория продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Категория продукта"))
         new GUIFunctionsLKB()
-
+//.inField("Категория продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Категория продукта"))
                 .inField("Целевое назначение").inputText(PROPERTIES.getProperty("Сведения о продукте.Целевое назначение"))
                 .inField("Краткое описание продукта").inputText(PROPERTIES.getProperty("Сведения о продукте.Краткое описание продукта"))
                 .clickButton("Условия предоставления")
