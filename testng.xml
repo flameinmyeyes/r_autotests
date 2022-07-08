@@ -60,7 +60,7 @@
     <test name="REC_all_test_finplatforma" thread-count="1" preserve-order="true">
         <classes>
             <class name="ru.exportcenter.test.finplatforma.Test_08_10_02" />
-<!--            <class name="ru.exportcenter.test.finplatforma.Test_08_10_03" />-->
+            <class name="ru.exportcenter.test.finplatforma.Test_08_10_03" />
 <!--            <class name="ru.exportcenter.test.finplatforma.Test_08_10_04" />-->
 <!--            <class name="ru.exportcenter.test.finplatforma.Test_08_10_06" />-->
 <!--            <class name="ru.exportcenter.test.finplatforma.Test_08_10_14" />-->

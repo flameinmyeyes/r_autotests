@@ -9,6 +9,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
+import org.openqa.selenium.Keys;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
@@ -80,7 +81,10 @@ public class Test_08_10_03 extends Hooks {
                 .waitForLoading()
                 .clickButton("Сбросить фильтры")
                 .inPlaceholder("Наименование продукта").inputValue(newProductName)
-                .waitForLoading()
+                .waitForLoading();
+
+        $x("//input[@placeholder='Наименование продукта']").sendKeys(Keys.BACK_SPACE);
+        new GUIFunctionsLKB()
                 .clickButton(newProductName)
                 .waitForLoading()
                 .clickButton("Редактировать")
@@ -99,8 +103,14 @@ public class Test_08_10_03 extends Hooks {
         //Нажать на вкладку «Условия предоставления»
         new GUIFunctionsLKB().inField("Тип продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Тип продукта"));
         CommonFunctions.wait(1);
+        $x("(//span[contains(@class,'ant-select-selection-search')])[2]").click();
+        CommonFunctions.wait(2);
+        $x("(//span[contains(@class,'ant-select-selection-search')])[2]").click();
+        $x("//*[text()='Текущее финансирование']").click();
+
+//.inField("Категория продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Категория продукта"))
         new GUIFunctionsLKB()
-                .inField("Категория продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Категория продукта"))
+
                 .inField("Целевое назначение").inputText(PROPERTIES.getProperty("Сведения о продукте.Целевое назначение"))
                 .inField("Краткое описание продукта").inputText(PROPERTIES.getProperty("Сведения о продукте.Краткое описание продукта"))
                 .clickButton("Условия предоставления")
