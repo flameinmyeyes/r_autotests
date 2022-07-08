@@ -63,8 +63,8 @@ public class Test_08_10_24 extends Hooks {
 
         CommonFunctions.wait(5);
 
-        new GUIFunctions()
-                .clickByLocator("//*[@id='root']/div[3]/ul/li[3]/span")
-                .waitForElementDisplayed("//*[text()='10 / стр.']");
-    }
+//        new GUIFunctions()
+//                .clickByLocator("//*[@id='root']/div[3]/ul/li[3]/span")
+//                .waitForElementDisplayed("//*[text()='10 / стр.']");
+        }
 }
