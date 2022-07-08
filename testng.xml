@@ -61,7 +61,7 @@
         <classes>
             <class name="ru.exportcenter.test.finplatforma.Test_08_10_02" />
             <class name="ru.exportcenter.test.finplatforma.Test_08_10_03" />
-<!--            <class name="ru.exportcenter.test.finplatforma.Test_08_10_04" />-->
+            <class name="ru.exportcenter.test.finplatforma.Test_08_10_04" />
 <!--            <class name="ru.exportcenter.test.finplatforma.Test_08_10_06" />-->
 <!--            <class name="ru.exportcenter.test.finplatforma.Test_08_10_14" />-->
             <class name="ru.exportcenter.test.finplatforma.Test_08_10_15" />
@@ -75,7 +75,7 @@
             <class name="ru.exportcenter.test.finplatforma.Test_08_10_27" />
             <class name="ru.exportcenter.test.finplatforma.Test_08_10_29" />
             <class name="ru.exportcenter.test.finplatforma.Test_08_10_30" />
-<!--            <class name="ru.exportcenter.test.finplatforma.Test_08_10_31" />-->
+            <class name="ru.exportcenter.test.finplatforma.Test_08_10_31" />
             <class name="ru.exportcenter.test.finplatforma.Test_08_10_32" />
             <class name="ru.exportcenter.test.finplatforma.Test_08_10_33" />
             <class name="ru.exportcenter.test.finplatforma.Test_08_10_34" />

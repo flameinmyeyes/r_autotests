@@ -98,8 +98,13 @@ public class Test_08_10_04 extends Hooks {
         //Нажать на вкладку «Условия предоставления»
         new GUIFunctionsLKB().inField("Тип продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Тип продукта"));
         CommonFunctions.wait(1);
+        $x("(//span[contains(@class,'ant-select-selection-search')])[2]").click();
+        CommonFunctions.wait(2);
+        $x("(//span[contains(@class,'ant-select-selection-search')])[2]").click();
+        $x("//*[text()='Текущее финансирование']").click();
+
         new GUIFunctionsLKB()
-                .inField("Категория продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Категория продукта"))
+//                .inField("Категория продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Категория продукта"))
                 .inField("Целевое назначение").inputText(PROPERTIES.getProperty("Сведения о продукте.Целевое назначение"))
                 .inField("Краткое описание продукта").inputText(PROPERTIES.getProperty("Сведения о продукте.Краткое описание продукта"))
                 .clickButton("Условия предоставления")
