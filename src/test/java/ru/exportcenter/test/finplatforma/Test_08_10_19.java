@@ -50,6 +50,7 @@ public class Test_08_10_19  extends Hooks {
         //Ввести логин и пароль kromanovskaya+user4@roox.ru/Password1!
         new GUIFunctionsLKB()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
+                .clickButton("Запросы")
                 .waitForElementDisplayed("//tr[@class='ant-table-row ant-table-row-level-0']");
     }
 
