@@ -148,7 +148,8 @@ public class Test_41_59 extends Hooks {
         new GUIFunctionsLKB().clickByLocator("//*[text()='Завершить выполнение']/parent::button");
 
         System.out.println("Шаг 58");
-        new GUIFunctionsLKB().clickByLocator("//*[text()='Перейти на следующий этап']/parent::button");
+        new GUIFunctionsLKB().clickByLocator("//*[text()='Перейти на следующий этап']/parent::button")
+                        .waitForElementDisappeared("//*[text()='Перейти на следующий этап']/parent::button");
 
         System.out.println("Шаг 59");
         closeWebDriver();
