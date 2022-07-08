@@ -65,7 +65,8 @@ public class Test_64_69 extends Hooks {
         new GUIFunctions().clickByLocator("//*[text()='Назначить задачу на себя и завершить']/parent::button");
 
         System.out.println("Шаг 69");
-        new GUIFunctions().clickByLocator("//*[text()='Поставить на учет']/parent::button");
+        new GUIFunctions().clickByLocator("//*[text()='Поставить на учет']/parent::button")
+                .waitForElementDisappeared("//*[text()='Поставить на учет']/parent::button");
         closeWebDriver();
 
     }

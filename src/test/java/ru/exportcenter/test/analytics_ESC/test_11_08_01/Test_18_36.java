@@ -120,7 +120,7 @@ public class Test_18_36 extends Hooks {
         new GUIFunctions().clickButton("Распределить");
 
         System.out.println("Шаг 28, 29");
-        for (int i = 0; i < 180; i++) {
+        for (int i = 0; i < 240; i++) {
             if (!$x("//*[text()='" + requestNumber + " Шаг 8: Сформировать список покупателей']").isDisplayed()){
                 CommonFunctions.wait(1);
             }else {
@@ -170,11 +170,14 @@ public class Test_18_36 extends Hooks {
         new GUIFunctionsLKB().clickByLocator("//*[text()='OK']/parent::button");
 
         System.out.println("Шаг 34");
-        new GUIFunctionsLKB().clickByLocator("//*[text()='Завершить выполнение']/parent::button");
+        new GUIFunctionsLKB().clickByLocator("//*[text()='Завершить выполнение']/parent::button")
+                .waitForElementDisplayed("//*[text()='Назначить задачу на себя и завершить']/parent::button");
 
         System.out.println("Шаг 35");
-        new GUIFunctionsLKB().clickByLocator("//*[text()='Далее']/parent::button");
-        new GUIFunctionsLKB().clickByLocator("//*[text()='Назначить задачу на себя и завершить']/parent::button");
+        new GUIFunctionsLKB().clickByLocator("//*[text()='Назначить задачу на себя и завершить']/parent::button")
+                .waitForElementDisplayed("//*[text()='Далее']/parent::button")
+                .clickByLocator("//*[text()='Далее']/parent::button");
+
 
         System.out.println("Шаг 36");
         closeWebDriver();
