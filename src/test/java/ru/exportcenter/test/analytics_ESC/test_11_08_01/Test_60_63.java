@@ -1,6 +1,7 @@
 package ru.exportcenter.test.analytics_ESC.test_11_08_01;
 
 import framework.RunTestAgain;
+import framework.integration.JupyterLabIntegration;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
@@ -9,12 +10,11 @@ import io.qameta.allure.Step;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
 
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class Test_60_63 extends Hooks {
 
-    public String requestNumber;
+    public String requestNumber = JupyterLabIntegration.getFileContent("/analytics_ESC/Test_03_07_01_1/requestNumber.txt");
 
     @Owner(value="***")
     @Description("***")
@@ -35,17 +35,16 @@ public class Test_60_63 extends Hooks {
                 .waitForElementDisplayed("//*[contains(text(),'Показать все')]")
                 .clickByLocator("//*[contains(text(),'Показать все')]");
 
-        requestNumber = new Test_1_17().requestNumber;
-        $x("//*[contains(text(),'" + requestNumber + "')]").scrollTo();
-
         System.out.println("Шаг 61");
-
-        new GUIFunctions().clickButton("Заявка №" + requestNumber + " отправлена")
-                .clickButton("Продолжить");
+        new GUIFunctions().clickByLocator("//*[contains(text(),'Показать все')]")
+                .clickByLocator("//*[contains(text(),'" + requestNumber + "')]/ancestor::div[contains(@class,'CardFooter_wrapperText')]//following::*[text()='Продолжить']")
+                .waitForElementDisplayed("//*[text()='Завершить']");
 
         System.out.println("Шаг 62");
+        new GUIFunctions().clickButton("Завершить")
+                .waitForURL("https://lk.t.exportcenter.ru/ru/main");
 
-        new GUIFunctions().clickButton("Завершить");
-
+        System.out.println("Шаг 62");
+        closeWebDriver();
     }
 }
