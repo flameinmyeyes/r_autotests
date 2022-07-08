@@ -54,7 +54,8 @@ public class Test_08_10_32 extends Hooks {
 
         //В области навигации нажать на раздел «Продукты»
         //Нажать на кнопку «Создать новый продукт»
-        new GUIFunctionsLKB().clickButton("Создать новый продукт")
+        new GUIFunctionsLKB().clickButton("Продукты")
+                .clickButton("Создать новый продукт")
                 .waitForLoading();
 
         //Тип продукта - "Финансирование"
