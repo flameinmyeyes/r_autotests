@@ -9,6 +9,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
+import org.openqa.selenium.Keys;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
@@ -76,8 +77,10 @@ public class Test_08_10_31 extends Hooks {
                 .waitForLoading()
                 .clickButton("Сбросить фильтры")
                 .inPlaceholder("Наименование продукта").inputValue(newProductName)
-                .waitForLoading()
-                .clickButton(newProductName)
+                .waitForLoading();
+
+        $x("//input[@placeholder='Наименование продукта']").sendKeys(Keys.BACK_SPACE);
+        new GUIFunctionsLKB().clickButton(newProductName)
                 .waitForLoading()
                 .clickButton("Редактировать")
                 .waitForLoading();
@@ -92,8 +95,15 @@ public class Test_08_10_31 extends Hooks {
         //В поле атрибута «Целевое назначение» ввести значение "Кредит на расчеты по экспортной сделке"
         //В поле атрибута «Краткое описание продукта» ввести значение "Кредитование. Прямой кредит российскому экспортеру"
         //Нажать вкладку Блока 2 "Условия предоставления"
-        new GUIFunctionsLKB().inField("Тип продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Тип продукта")).assertValue()
-                .inField("Категория продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Категория продукта")).assertValue()
+        new GUIFunctionsLKB().inField("Тип продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Тип продукта")).assertValue();
+        CommonFunctions.wait(1);
+        $x("(//span[contains(@class,'ant-select-selection-search')])[2]").click();
+        CommonFunctions.wait(2);
+        $x("(//span[contains(@class,'ant-select-selection-search')])[2]").click();
+        $x("//*[text()='Текущее финансирование']").click();
+
+        new GUIFunctionsLKB()
+//                .inField("Категория продукта").selectValue(PROPERTIES.getProperty("Сведения о продукте.Категория продукта")).assertValue()
                 .inField("Целевое назначение").inputText(PROPERTIES.getProperty("Сведения о продукте.Целевое назначение")).assertValue()
                 .inField("Краткое описание продукта").inputText(PROPERTIES.getProperty("Сведения о продукте.Краткое описание продукта")).assertValue()
                 .clickButton("Условия предоставления")
@@ -112,6 +122,7 @@ public class Test_08_10_31 extends Hooks {
                 .inField("ОПФ российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.ОПФ российского получателя")).assertValue()
                 .inField("Срок регистрации российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Срок регистрации российского получателя")).assertValue()
                 .scrollToElement("//*[text()='Страна регистрации иностранного покупателя']")
+                .inField("Регион регистрации российского получателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Регион регистрации российского получателя")).assertValue()
                 .inField("Страна регистрации иностранного покупателя").selectValue(PROPERTIES.getProperty("Условия предоставления.Страна регистрации иностранного покупателя")).assertValue()
                 .clickButton("Финансовые параметры")
                 .waitForLoading();
