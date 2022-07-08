@@ -1,6 +1,8 @@
 package ru.exportcenter.test.analytics_ESC.test_11_08_01;
 
 import framework.RunTestAgain;
+import framework.Ways;
+import framework.integration.JupyterLabIntegration;
 import functions.common.CommonFunctions;
 import functions.gui.GUIFunctions;
 import functions.gui.lkb.GUIFunctionsLKB;
@@ -18,10 +20,10 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class Test_18_36 extends Hooks {
 
-//    public String requestNumber = "S/2022/190919";
+    public String WAY_TEST = Ways.TEST.getWay() + "/analytics_ESC/Test_03_07_01_1/";
     public String requestNumber;
 
-    @Owner(value = "***")
+    @Owner(value="Петрищев Руслан")
     @Description("***")
     @Link(name = "Test_18_36", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=138814859")
     @Test(retryAnalyzer = RunTestAgain.class)
@@ -36,11 +38,13 @@ public class Test_18_36 extends Hooks {
 
         Test_1_17 test_1_17 = new Test_1_17();
         test_1_17.steps();
-        requestNumber = test_1_17.requestNumber;
     }
 
     @Step("Авторизация")
     public void step01() throws AWTException {
+
+        requestNumber = JupyterLabIntegration.getFileContent(WAY_TEST + "requestNumber.txt");
+        Robot robot = new Robot();
 
         System.out.println("Шаг 18, 19");
         open("https://tasks.t.exportcenter.ru/");
@@ -49,12 +53,12 @@ public class Test_18_36 extends Hooks {
                 .waitForElementDisplayed("//*[@class='anticon anticon-number']");
 
         System.out.println("Шаг 20");
-
+        System.out.println(requestNumber);
         new GUIFunctions().clickByLocator("//*[@class='anticon anticon-number']");
         $x("//input[@placeholder='Выберите номер заявки']").setValue(requestNumber).pressEnter();
         new GUIFunctions().clickButton("Исполняются");
 
-        for (int i = 0; i < 180; i++) {
+        for (int i = 0; i < 240; i++) {
             if (!$x("//*[@class='ant-collapse-header']").isDisplayed()){
                 CommonFunctions.wait(1);
             }else {
@@ -68,7 +72,7 @@ public class Test_18_36 extends Hooks {
 
         System.out.println("Шаг 21");
 
-        Robot robot = new Robot();
+
         robot.keyPress(KeyEvent.VK_PAGE_DOWN);
 
         switchTo().frame("formApp");
@@ -124,10 +128,6 @@ public class Test_18_36 extends Hooks {
             }
         }
 
-//        $x("//*[text()='" + requestNumber + " Шаг 8: Сформировать список покупателей']").dragAndDropTo($x("//*[text()='10']/parent::div//following::div[@class='DateCell_dropZone__2m5N4']"));
-//        CommonFunctions.wait(1);
-//        CommonFunctions.wait(1);
-
         System.out.println("Шаг 30");
         new GUIFunctions().clickByLocator("//*[text()='" + requestNumber + " Шаг 8: Сформировать список покупателей']")
                 .clickByLocator("//*[text()='К выполнению']/parent::button");
@@ -137,46 +137,47 @@ public class Test_18_36 extends Hooks {
         robot.keyPress(KeyEvent.VK_PAGE_DOWN);
         switchTo().frame("formApp");
         $x("//*[text()='Выбрать компанию']").scrollTo();
-        new GUIFunctionsLKB().inPlaceholder("Выбрать компанию").selectValue("4027064200 - -")
-                .clickByLocator("//*[text()='Добавить']/parent::button");
+        $x("//*[contains(text(),'Выбрать компанию')]/parent::*/descendant::input").setValue("4027064200");
+        $x("//*[contains(text(),'4027064200 - -')]").click();
+        new GUIFunctionsLKB().clickByLocator("//*[text()='Добавить']/parent::button");
+
+
+//        new GUIFunctionsLKB().inPlaceholder("Выбрать компанию").selectValue("4027064200")
+//                .clickByLocator("//*[text()='Добавить']/parent::button");
 
         System.out.println("Шаг 32");
         new GUIFunctionsLKB().clickByLocator("//*[@data-icon='edit']");
 
         System.out.println("Шаг 33");
 
-//        switchTo().frame("formApp");
         $x("//label[@title='Готовность компании предоставить свои контактные данные третьим лицам']").scrollTo();
 
         inputTextInField("Деятельность", "1");
         inputTextInField("Формат проведения переговоров", "2");
         inputTextInField("Рекомендации экспортеру по развитию дальнейших коммуникаций с контрагентом", "3");
-        $x("(//label[@title='Оценка интереса']/following::span[contains(@class,'ant-select-selection')])[1]").click();
+        $x("(//*[text()='Оценка интереса']/following::span[@class='ant-select-selection-item'])[1]").click();
         $x("//div[@label='Заинтересован']//div[1]").click();
         inputTextInField("Содержание переговоров", "4");
-        $x("(//label[@title='Готовность компании предоставить свои контактные данные третьим лицам']/following::span[contains(@class,'ant-select-selection')])[1]").click();
+//        selectValueInField("Готовность компании предоставить свои контактные данные третьим лицам", "Да");
+        $x("//label[text()='Готовность компании предоставить свои контактные данные третьим лицам']/following::input").click();
         $x("//div[@label='Да']//div[1]").click();
-        new GUIFunctionsLKB().clickByLocator("//*[text()='Обновить']/parent::button")
-                .clickByLocator("//*[text()='Завершить выполнение']/parent::button")
-                .clickByLocator("//*[text()='Назначить задачу на себя и завершить']/parent::button");
-
-//        new functions.gui.fin.GUIFunctions()
-//                .inField("Деятельность").inputText("1")
-//                .inField("Формат проведения переговоров").inputText("2")
-//                .inField("Рекомендации экспортеру по развитию дальнейших коммуникаций с контрагентом").inputText("3")
-//                .inField("Оценка интереса").selectValue("Заинтересован")
-//                .inField("Содержание переговоров").inputText("4")
-//                .inField("Готовность компании предоставить свои контактные данные третьим лицам").selectValue("Да")
-//                .clickByLocator("//*[text()='Добавить']/parent::button");
-
-        System.out.println("Шаг 34");
+        new GUIFunctionsLKB().clickByLocator("//*[text()='Обновить']/parent::button");
         switchTo().defaultContent();
         robot.keyPress(KeyEvent.VK_PAGE_UP);
+
+        new GUIFunctionsLKB().clickByLocator("//button[contains(@class,'ant-btn TaskTimeline_escalation')]");
+        $x("//form[@id='escalate_form']//textarea[1]").setValue("123");
+        new GUIFunctionsLKB().clickByLocator("//*[text()='OK']/parent::button");
+
+        System.out.println("Шаг 34");
         new GUIFunctionsLKB().clickByLocator("//*[text()='Завершить выполнение']/parent::button");
 
         System.out.println("Шаг 35");
         new GUIFunctionsLKB().clickByLocator("//*[text()='Далее']/parent::button");
+        new GUIFunctionsLKB().clickByLocator("//*[text()='Назначить задачу на себя и завершить']/parent::button");
 
+        System.out.println("Шаг 36");
+        closeWebDriver();
     }
 
     public void inputTextInField(String field, String text) {

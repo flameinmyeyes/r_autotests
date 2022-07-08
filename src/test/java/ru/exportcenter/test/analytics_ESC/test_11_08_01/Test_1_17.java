@@ -1,7 +1,10 @@
 package ru.exportcenter.test.analytics_ESC.test_11_08_01;
 
 import framework.RunTestAgain;
+import framework.Ways;
+import framework.integration.JupyterLabIntegration;
 import functions.common.CommonFunctions;
+import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
@@ -14,26 +17,22 @@ import ru.exportcenter.test.finplatforma.Test_08_10_02;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
 public class Test_1_17 extends Hooks {
 
+    public String WAY_TEST = Ways.TEST.getWay() + "/analytics_ESC/Test_03_07_01_1/";
+
     public String requestNumber;
 
-    @Owner(value="***")
+    @Owner(value="Петрищев Руслан")
     @Description("***")
     @Link(name="Test_1_17", url="https://confluence.exportcenter.ru/pages/viewpage.action?pageId=138814859")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws InterruptedException, AWTException {
         step01();
-//        step02();
-    }
-
-    public void step02() throws InterruptedException, AWTException {
-
-        Test_18_36 test_18_36 = new Test_18_36();
-        test_18_36.steps();
     }
 
     @Step("Авторизация")
@@ -55,6 +54,7 @@ public class Test_1_17 extends Hooks {
 
         System.out.println("Шаг 3");
         requestNumber = $x("//div[text()='Номер заявки']/following-sibling::div").getText();
+        JupyterLabIntegration.uploadTextContent(requestNumber, WAY_TEST, "requestNumber.txt");
         System.out.println(requestNumber);
         refreshTab("//*[text()='Продолжить']", 10);
         new GUIFunctions().clickButton("Продолжить");
@@ -70,8 +70,10 @@ public class Test_1_17 extends Hooks {
 
 
         inputValueInField("Описание продукции, планируемой на экспорт", "1");
+
+        $x("//span[text()='ТНВЭД']/ancestor::div[contains(@class,'Radio_container')]/div[contains(@class,'Radio_check')]").click();
         $x("//*[text()='Классификация продукции - код ТНВЭД']//ancestor::div[contains(@class,'Dropdown')]//following::input").setValue("5512110000");
-        CommonFunctions.wait(1);
+        CommonFunctions.wait(2);
         robot.keyPress(KeyEvent.VK_DOWN);
         robot.keyPress(KeyEvent.VK_UP);
         robot.keyPress(KeyEvent.VK_ENTER);
@@ -91,7 +93,7 @@ public class Test_1_17 extends Hooks {
                 .waitForElementDisplayed("//*[text()='1. Экспортер']");
 
         System.out.println("Шаг 7");
-        new GUIFunctions().clickButton("1. Экспортер")
+        new GUIFunctions()
                 .inContainer("1. Экспортер")
                 .inField("Опыт экспортной деятельности").selectValue("Нет")
                 .inField("Наличие сайта компании").selectValue("Нет")
