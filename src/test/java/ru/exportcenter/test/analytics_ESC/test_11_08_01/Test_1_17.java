@@ -50,7 +50,6 @@ public class Test_1_17 extends Hooks {
                 break;
             }
         }
-//                .waitForElementDisplayed("//*[text()='Поиск потенциальных иностранных покупателей']");
 
         System.out.println("Шаг 3");
         requestNumber = $x("//div[text()='Номер заявки']/following-sibling::div").getText();
@@ -68,12 +67,11 @@ public class Test_1_17 extends Hooks {
 
         Robot robot = new Robot();
 
-
         inputValueInField("Описание продукции, планируемой на экспорт", "1");
 
         $x("//span[text()='ТНВЭД']/ancestor::div[contains(@class,'Radio_container')]/div[contains(@class,'Radio_check')]").click();
         $x("//*[text()='Классификация продукции - код ТНВЭД']//ancestor::div[contains(@class,'Dropdown')]//following::input").setValue("5512110000");
-        CommonFunctions.wait(2);
+        new GUIFunctions().waitForElementDisplayed("//*[contains(text(),'М2-ткани неотбеленные или отбеленные')]");
         robot.keyPress(KeyEvent.VK_DOWN);
         robot.keyPress(KeyEvent.VK_UP);
         robot.keyPress(KeyEvent.VK_ENTER);

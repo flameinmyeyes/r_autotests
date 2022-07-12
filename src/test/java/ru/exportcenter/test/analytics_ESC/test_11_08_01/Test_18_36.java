@@ -48,7 +48,6 @@ public class Test_18_36 extends Hooks {
 
         System.out.println("Шаг 18, 19");
         open("https://tasks.t.exportcenter.ru/");
-//        new GUIFunctions().waitForURL("https://lk.t.exportcenter.ru/");
         new GUIFunctionsLKB().authorization("mosolov@exportcenter.ru", "password")
                 .waitForElementDisplayed("//*[@class='anticon anticon-number']");
 
@@ -82,11 +81,10 @@ public class Test_18_36 extends Hooks {
         selectValueInField("Наличие субсидиарных программ", "Нет");
 
         CommonFunctions.wait(1);
-        $x("(//*[text()='Наличие специальных программ поддержки']/following::span[@class='ant-select-selection-item'])[1]").click();
+        $x("//*[text()='Наличие специальных программ поддержки']/following::input").click();
         $x("(//*[text()='Наличие специальных программ поддержки']//following::div[text()='Нет'])[2]").click();
 
         switchTo().defaultContent();
-//        selectValueInField("Наличие специальных программ поддержки", "Нет");
 
         System.out.println("Шаг 22");
         robot.keyPress(KeyEvent.VK_PAGE_UP);
@@ -133,7 +131,6 @@ public class Test_18_36 extends Hooks {
                 .clickByLocator("//*[text()='К выполнению']/parent::button");
 
         System.out.println("Шаг 31");
-
         robot.keyPress(KeyEvent.VK_PAGE_DOWN);
         switchTo().frame("formApp");
         $x("//*[text()='Выбрать компанию']").scrollTo();
@@ -141,15 +138,10 @@ public class Test_18_36 extends Hooks {
         $x("//*[contains(text(),'4027064200 - -')]").click();
         new GUIFunctionsLKB().clickByLocator("//*[text()='Добавить']/parent::button");
 
-
-//        new GUIFunctionsLKB().inPlaceholder("Выбрать компанию").selectValue("4027064200")
-//                .clickByLocator("//*[text()='Добавить']/parent::button");
-
         System.out.println("Шаг 32");
         new GUIFunctionsLKB().clickByLocator("//*[@data-icon='edit']");
 
         System.out.println("Шаг 33");
-
         $x("//label[@title='Готовность компании предоставить свои контактные данные третьим лицам']").scrollTo();
 
         inputTextInField("Деятельность", "1");
@@ -158,7 +150,6 @@ public class Test_18_36 extends Hooks {
         $x("(//*[text()='Оценка интереса']/following::span[@class='ant-select-selection-item'])[1]").click();
         $x("//div[@label='Заинтересован']//div[1]").click();
         inputTextInField("Содержание переговоров", "4");
-//        selectValueInField("Готовность компании предоставить свои контактные данные третьим лицам", "Да");
         $x("//label[text()='Готовность компании предоставить свои контактные данные третьим лицам']/following::input").click();
         $x("//div[@label='Да']//div[1]").click();
         new GUIFunctionsLKB().clickByLocator("//*[text()='Обновить']/parent::button");
@@ -176,7 +167,8 @@ public class Test_18_36 extends Hooks {
         System.out.println("Шаг 35");
         new GUIFunctionsLKB().clickByLocator("//*[text()='Назначить задачу на себя и завершить']/parent::button")
                 .waitForElementDisplayed("//*[text()='Далее']/parent::button")
-                .clickByLocator("//*[text()='Далее']/parent::button");
+                .clickByLocator("//*[text()='Далее']/parent::button")
+                .waitForElementDisappeared("//*[text()='Далее']/parent::button");
 
 
         System.out.println("Шаг 36");
@@ -188,7 +180,12 @@ public class Test_18_36 extends Hooks {
     }
 
     public void selectValueInField(String field, String value) {
-        $x("(//*[text()='" + field + "']/following::span[@class='ant-select-selection-item'])[1]").click();
+        $x("//*[text()='" + field + "']/following::input").click();
         $x("(//*[text()='" + field + "']//following::div[text()='" + value + "'])[1]").click();
+    }
+
+    public void selectValueInField(String field, String value, Integer index) {
+        $x("//*[text()='" + field + "']/following::input").click();
+        $x("//div[@label='" + value + "']//div[" + index + "]").click();
     }
 }
