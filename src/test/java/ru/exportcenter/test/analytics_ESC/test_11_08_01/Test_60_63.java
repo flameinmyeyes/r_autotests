@@ -46,7 +46,7 @@ public class Test_60_63 extends Hooks {
         System.out.println("Шаг 60");
         open("https://lk.t.exportcenter.ru/");
 
-        new GUIFunctions().authorization("demo_exporter", "password")
+        new GUIFunctions().authorization("demo_exporter", "password", "1234")
                 .waitForElementDisplayed("//*[contains(text(),'Показать все')]");
 
         System.out.println("Шаг 61");
