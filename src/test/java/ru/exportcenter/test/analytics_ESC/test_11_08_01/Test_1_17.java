@@ -41,7 +41,7 @@ public class Test_1_17 extends Hooks {
         System.out.println("Шаг 1,2");
         open("https://lk.t.exportcenter.ru/ru/promo-service?key=Process_test_search_prod&serviceId=faf15b0f-2346-4353-b417-fb695bc26aef&next_query=true");
         new GUIFunctions()
-                .authorization("demo_exporter", "password");
+                .authorization("demo_exporter", "password", "1234");
 
         for (int i = 0; i < 180; i++) {
             if (!$x("//*[text()='Поиск потенциальных иностранных покупателей']").isDisplayed()){

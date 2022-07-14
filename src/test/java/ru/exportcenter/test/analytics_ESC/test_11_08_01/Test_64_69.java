@@ -70,5 +70,4 @@ public class Test_64_69 extends Hooks {
         closeWebDriver();
 
     }
-
 }
