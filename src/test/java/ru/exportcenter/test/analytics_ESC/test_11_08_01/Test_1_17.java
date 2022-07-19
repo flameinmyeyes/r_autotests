@@ -65,16 +65,12 @@ public class Test_1_17 extends Hooks {
 
         System.out.println("Шаг 5");
 
-        Robot robot = new Robot();
-
         inputValueInField("Описание продукции, планируемой на экспорт", "1");
 
         $x("//span[text()='ТНВЭД']/ancestor::div[contains(@class,'Radio_container')]/div[contains(@class,'Radio_check')]").click();
         $x("//*[text()='Классификация продукции - код ТНВЭД']//ancestor::div[contains(@class,'Dropdown')]//following::input").setValue("5512110000");
-        new GUIFunctions().waitForElementDisplayed("//*[contains(text(),'М2-ткани неотбеленные или отбеленные')]");
-        robot.keyPress(KeyEvent.VK_DOWN);
-        robot.keyPress(KeyEvent.VK_UP);
-        robot.keyPress(KeyEvent.VK_ENTER);
+        new GUIFunctions().waitForElementDisplayed("//*[contains(text(),'М2-ткани неотбеленные или отбеленные')]")
+                .clickByLocator("//*[contains(text(),'М2-ткани неотбеленные или отбеленные')]");
 
         new GUIFunctions()
                 .inField("Сфера применения продукции").selectValue("Товары народного потребления");
