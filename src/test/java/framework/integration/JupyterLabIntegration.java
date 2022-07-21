@@ -7,8 +7,8 @@ import org.testng.Assert;
 
 public class JupyterLabIntegration {
 
-// ~4-5 числа каждого месяца Токен "протухает" обращаться к  Михаилу @vostroknutovm
-    static String tokenNum = "d5b0cbc7a313a6ddbe260787f0830c3ed2a292f174788bb6";
+// ~4-5 числа каждого месяца Токен "протухает"
+    static String tokenNum = "7648f69cb716fd065bf18c06586918c9dd92bae9205e2692";
 
     public static String getFileContent(String filePath) {
         String content = RestAssured
