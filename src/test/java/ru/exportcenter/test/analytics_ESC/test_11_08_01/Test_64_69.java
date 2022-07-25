@@ -48,7 +48,7 @@ public class Test_64_69 extends Hooks {
 
         open("https://tasks.t.exportcenter.ru/");
 
-        new GUIFunctionsLKB().authorization("OPS", "password")
+        new GUIFunctionsLKB().authorization("OPS", "password", "1234")
                 .waitForElementDisplayed("//*[@class='anticon anticon-number']");
 
         System.out.println("Шаг 66");

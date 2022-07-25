@@ -51,6 +51,21 @@ public class GUIFunctionsLKB extends ElementData {
         return new GUIFunctionsLKB();
     }
 
+    public GUIFunctionsLKB authorization(String login, String password, String code) {
+        this.inPlaceholder("E-mail").inputValue(login)
+                .inPlaceholder("Пароль").inputValue(password);
+        CommonFunctions.wait(1);
+        this.clickByLocator("//button[@type='button']");
+
+        int n = 0;
+        while (n < code.length()) {
+            $x(new XPath(this).getContainerXPath() + "//input[@data-id=" + n + "]")
+                    .sendKeys(code.substring(n, n + 1));
+            n++;
+        }
+        return new GUIFunctionsLKB();
+    }
+
     /**
      * input lkb
      */
