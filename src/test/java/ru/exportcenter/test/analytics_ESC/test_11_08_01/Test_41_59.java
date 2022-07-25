@@ -49,7 +49,7 @@ public class Test_41_59 extends Hooks {
         open("https://tasks.t.exportcenter.ru/");
 
         System.out.println("Шаг 42");
-        new GUIFunctionsLKB().authorization("mosolov@exportcenter.ru", "password")
+        new GUIFunctionsLKB().authorization("mosolov@exportcenter.ru", "password", "1234")
                 .waitForElementDisplayed("//*[@class='anticon anticon-number']");
 
         System.out.println("Шаг 43");
@@ -111,8 +111,8 @@ public class Test_41_59 extends Hooks {
         $x("//label[text()='Доля от общего размера экспортного контракта']/following::input").setValue("100");
         new GUIFunctionsLKB().clickByLocator("(//span[text()='Добавить'])[3]");
 
-//        $x("//*[text()='Добавить']/ancestor::span[@class='ant-upload']/input").sendKeys("C:\\auto-tests\\Контракт.docx");
-        $x("//*[text()='Добавить']/ancestor::span[@class='ant-upload']/input").sendKeys("/share/" + WAY_TEST + "Контракт.docx");
+        $x("//*[text()='Добавить']/ancestor::span[@class='ant-upload']/input").sendKeys("C:\\auto-tests\\Контракт.docx");
+//        $x("//*[text()='Добавить']/ancestor::span[@class='ant-upload']/input").sendKeys("/share/" + WAY_TEST + "Контракт.docx");
         CommonFunctions.wait(2);
         new GUIFunctionsLKB().clickByLocator("//div[text()='Общая информация']");
 
