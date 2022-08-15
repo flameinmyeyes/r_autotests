@@ -3,6 +3,8 @@ package functions.gui.ext;
 import functions.gui.ElementData;
 import org.testng.Assert;
 
+import static com.codeborne.selenide.Selenide.$x;
+
 public class XPath extends ElementData {
 
     public XPath(ElementData data) {
@@ -33,8 +35,18 @@ public class XPath extends ElementData {
      * input/checkbox ext
      */
 
+
+//    public String getInputXPath() {
+//        return getContainerXPath() + getFieldXPath() + "//input";
+//    }
+
     public String getInputXPath() {
-        return getContainerXPath() + getFieldXPath() + "//input";
+        if ($x((getContainerXPath() + getFieldXPath() + "//input")).exists()){
+            return getContainerXPath() + getFieldXPath() + "//input";
+        } else if ($x((getContainerXPath() + getFieldXPath() + "//textarea")).exists()) {
+            return getContainerXPath() + getFieldXPath() + "//textarea";
+        }
+          return null;
     }
 
     public String getUneditableInputXPath() {
