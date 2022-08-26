@@ -49,7 +49,7 @@ public class Test_04_07_01 extends Hooks {
         //Ввести логин и пароль
         open("https://lk.t.exportcenter.ru/ru/promo-service?key=pavilion&serviceId=a546931c-0eb9-4545-853a-8a683c0924f7&next_query=true");
         new GUIFunctions()
-                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"));
+                .authorization("pavilion_exporter_top1@otr.ru", "Password1!", "1234");
 
         refreshTab("//*[text()='Продолжить']", 10);
         new GUIFunctions().clickButton("Продолжить")
