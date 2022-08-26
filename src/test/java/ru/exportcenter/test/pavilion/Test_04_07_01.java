@@ -21,9 +21,9 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class Test_04_07_01 extends Hooks {
 
-//    private String WAY_TEST = Ways.TEST.getWay() + "/pavilion/Test_04_07_01/";
-//    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_04_07_01_properties.xml";
-//    public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
+    private String WAY_TEST = Ways.TEST.getWay() + "/pavilion/Test_04_07_01/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_04_07_01_properties.xml";
+    public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     @Owner(value = "Петрищев Руслан")
     @Description("04 07 01 Заполнение Заявки на получение услуги, подписание Заявки УКЭП и автоматическая передача Заявки на верификацию")
@@ -33,19 +33,18 @@ public class Test_04_07_01 extends Hooks {
         step01();
         step02();
         step03();
-        step04();
+//        step04();
     }
 
-//    @AfterMethod
-//    public void screenShot() {
-//        CommonFunctions.screenShot(WAY_TEST + "screen.png");
-//    }
+    @AfterMethod
+    public void screenShot() {
+        CommonFunctions.screenShot(WAY_TEST + "screen.png");
+    }
 
-    @Step("Авторизация")
+    @Step("Блок «Сведения о демонстрационно-дегустационном павильоне»")
     public void step01() {
         CommonFunctions.printStep();
 
-//        open(PROPERTIES.getProperty("start_URL"));
 
         //Ввести логин и пароль
         open("https://lk.t.exportcenter.ru/ru/promo-service?key=pavilion&serviceId=a546931c-0eb9-4545-853a-8a683c0924f7&next_query=true");
@@ -56,7 +55,7 @@ public class Test_04_07_01 extends Hooks {
         new GUIFunctions().clickButton("Продолжить")
                 .waitForElementDisplayed("//*[text()='Страна нахождения павильона']")
                 .inContainer("Сведения о демонстрационно-дегустационном павильоне")
-                .inField("Страна нахождения павильона").selectValue("Китайская Народная Республика")
+                .inField("Страна нахождения павильона").selectValue(PROPERTIES.getProperty("Авторизация.Страна нахождения павильона")).assertValue()
                 .waitForLoading();
         new GUIFunctions().clickButton("Далее")
                 .waitForLoading();
@@ -70,10 +69,10 @@ public class Test_04_07_01 extends Hooks {
         robot.keyPress(KeyEvent.VK_HOME);
         $x("//*[text()='Дополнительные сведения']").scrollTo();
         new GUIFunctions().inContainer("Дополнительные сведения")
-                .inField("Комментарий").inputValue("Дополнительные сведения");
+                .inField("Комментарий").inputValue(PROPERTIES.getProperty("Заполнение заявки.Комментарий")).assertValue();
     }
 
-    @Step("Информация о продукции")
+    @Step("Блок «Информация о продукции»")
     public void step03() {
         CommonFunctions.printStep();
 
@@ -83,24 +82,24 @@ public class Test_04_07_01 extends Hooks {
                 .waitForElementDisplayed("//*[contains(text(), 'Белёвская пастила с чёрной смородиной')]")
                 .clickByLocator("//*[contains(text(), 'Белёвская пастила с чёрной смородиной')]");
 
-        new GUIFunctions().inField("Количество ед. продукции").inputValue("12")
-                .inField("Единица измерения").selectValue("мм")
-                .inField("Общая стоимость партии товара, включая затраты на транспортировку (китайский юань)").inputValue("25000")
-                .inField("Условия транспортировки и хранения продукции").inputValue("Условия хранения")
-                .inField("Розничная продажа").setCheckboxON()
-                .inField("Оптовая продажа").setCheckboxON()
-                .inField("Оценка спроса (в рублях)").inputValue("15000")
-                .inField("Готовность к адаптации").setCheckboxON()
-                .inField("Наличие сертификата страны размещения").setCheckboxON()
-                .inField("Номер сертификата").inputValue("12345")
-                .inField("Дата выдачи").inputValue("01.07.2022")
-                .inField("Наименование органа, выдавшего сертификат").inputValue("Наименование")
-                .inField("Наличие презентационных материалов на английском языке или на языке страны размещения").setCheckboxON()
-                .inField("Наличие товарного знака в стране размещения").setCheckboxON()
-                .inField("Наименование ЭТП размещения продукции").selectValue("Umico")
-                .inField("Данные дистрибьютора на рынке павильона").inputValue("Данные")
-                .inField("Номер декларации о соответствии").inputValue("11111")
-                .inField("Номер сертификата соответствия").inputValue("2222")
+        new GUIFunctions().inField("Количество ед. продукции").inputValue(PROPERTIES.getProperty("Информация о продукции.Количество ед. продукции")).assertValue()
+                .inField("Единица измерения").selectValue(PROPERTIES.getProperty("Информация о продукции.Единица измерения")).assertValue()
+                .inField("Общая стоимость партии товара, включая затраты на транспортировку (китайский юань)").inputValue(PROPERTIES.getProperty("Информация о продукции.Общая стоимость партии товара"))
+                .inField("Условия транспортировки и хранения продукции").inputValue(PROPERTIES.getProperty("Информация о продукции.Условия транспортировки и хранения продукции")).assertValue()
+                .inField("Розничная продажа").setCheckboxON().assertCheckboxON()
+                .inField("Оптовая продажа").setCheckboxON().assertCheckboxON()
+                .inField("Оценка спроса (в рублях)").inputValue(PROPERTIES.getProperty("Информация о продукции.Оценка спроса"))
+                .inField("Готовность к адаптации").setCheckboxON().assertCheckboxON()
+                .inField("Наличие сертификата страны размещения").setCheckboxON().assertCheckboxON()
+                .inField("Номер сертификата").inputValue(PROPERTIES.getProperty("Информация о продукции.Номер сертификата")).assertValue()
+                .inField("Дата выдачи").inputValue(PROPERTIES.getProperty("Информация о продукции.Дата выдачи")).assertValue()
+                .inField("Наименование органа, выдавшего сертификат").inputValue(PROPERTIES.getProperty("Информация о продукции.Наименование органа")).assertValue()
+                .inField("Наличие презентационных материалов на английском языке или на языке страны размещения").setCheckboxON().assertCheckboxON()
+                .inField("Наличие товарного знака в стране размещения").setCheckboxON().assertCheckboxON()
+                .inField("Наименование ЭТП размещения продукции").selectValue(PROPERTIES.getProperty("Информация о продукции.Наименование ЭТП размещения продукции"))
+                .inField("Данные дистрибьютора на рынке павильона").inputValue(PROPERTIES.getProperty("Информация о продукции.Данные дистрибьютора на рынке павильона")).assertValue()
+                .inField("Номер декларации о соответствии").inputValue(PROPERTIES.getProperty("Информация о продукции.Номер декларации о соответствии")).assertValue()
+                .inField("Номер сертификата соответствия").inputValue(PROPERTIES.getProperty("Информация о продукции.Номер сертификата соответствия")).assertValue()
                 .clickButton("Добавить")
                 .clickButton("Далее")
                 .waitForElementDisplayed("//*[text()='Подписать электронной подписью']");
@@ -112,7 +111,7 @@ public class Test_04_07_01 extends Hooks {
         CommonFunctions.printStep();
 
         new GUIFunctions().clickButton("Подписать электронной подписью")
-                .inField("Выберите сертификат").selectValue("Ермухамбетова Балсикер Бисеньевна от 18.01.2022")
+                .inField("Выберите сертификат").selectValue("Ермухамбетова Балсикер Бисеньевна от 18.01.2022").assertValue()
                 .clickButton("Подписать")
                 .clickButton("Далее");
     }
