@@ -2,6 +2,7 @@ package ru.exportcenter.test.pavilion;
 
 import framework.RunTestAgain;
 import framework.Ways;
+import framework.integration.JupyterLabIntegration;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
@@ -17,13 +18,14 @@ import ru.exportcenter.Hooks;
 import java.awt.*;
 import java.util.Properties;
 
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class Test_04_07_03  extends Hooks {
 
     private String WAY_TEST = Ways.TEST.getWay() + "/pavilion/Test_04_07_03/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_04_07_03_properties.xml";
-    public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
+//    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_04_07_03_properties.xml";
+//    public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
+    public String requestNumber;
 
     @Owner(value = "Петрищев Руслан")
     @Description("04 07 03 Подписание Акта")
@@ -36,18 +38,28 @@ public class Test_04_07_03  extends Hooks {
 //        step04();
     }
 
-    @AfterMethod
-    public void screenShot() {
-        CommonFunctions.screenShot(WAY_TEST + "screen.png");
-    }
+//    @AfterMethod
+//    public void screenShot() {
+//        CommonFunctions.screenShot(WAY_TEST + "screen.png");
+//    }
 
     @Step("«»")
     public void step01() {
         CommonFunctions.printStep();
 
+        requestNumber = JupyterLabIntegration.getFileContent(WAY_TEST + "requestNumber.txt");
+
         //Ввести логин и пароль
-        open("https://lk.t.exportcenter.ru/ru/promo-service?key=pavilion&serviceId=a546931c-0eb9-4545-853a-8a683c0924f7&next_query=true");
+        open("https://lk.t.exportcenter.ru/");
         new GUIFunctions().authorization("pavilion_exporter_top1@otr.ru", "Password1!", "1234");
+
+        new GUIFunctions().waitForElementDisplayed("//*[text()='Показать все (100)']")
+                .clickButton("Показать все (100)")
+                .clickByLocator("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div");
+
+        refreshTab("//*[text()='Продолжить']", 10);
+
+
 
     }
 
@@ -66,6 +78,18 @@ public class Test_04_07_03  extends Hooks {
         CommonFunctions.printStep();
 
 
+    }
+
+    private void refreshTab(String expectedXpath, int times) {
+        for (int i = 0; i < times; i++) {
+            new functions.gui.GUIFunctions().waitForLoading();
+            if($x(expectedXpath).isDisplayed()) {
+                break;
+            }
+            refresh();
+            System.out.println("refresh(" + expectedXpath + ")");
+            CommonFunctions.wait(1);
+        }
     }
 
 }

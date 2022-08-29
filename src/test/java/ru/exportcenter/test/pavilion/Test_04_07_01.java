@@ -2,6 +2,7 @@ package ru.exportcenter.test.pavilion;
 
 import framework.RunTestAgain;
 import framework.Ways;
+import framework.integration.JupyterLabIntegration;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
@@ -24,7 +25,7 @@ public class Test_04_07_01 extends Hooks {
     private String WAY_TEST = Ways.TEST.getWay() + "/pavilion/Test_04_07_01/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_04_07_01_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
-    public String newProductName;
+    public String requestNumber;
 
     @Owner(value = "Петрищев Руслан")
     @Description("04 07 01 Заполнение Заявки на получение услуги, подписание Заявки УКЭП и автоматическая передача Заявки на верификацию")
@@ -37,10 +38,10 @@ public class Test_04_07_01 extends Hooks {
         step04();
     }
 
-    @AfterMethod
-    public void screenShot() {
-        CommonFunctions.screenShot(WAY_TEST + "screen.png");
-    }
+//    @AfterMethod
+//    public void screenShot() {
+//        CommonFunctions.screenShot(WAY_TEST + "screen.png");
+//    }
 
     @Step("Блок «Сведения о демонстрационно-дегустационном павильоне»")
     public void step01() {
@@ -52,7 +53,8 @@ public class Test_04_07_01 extends Hooks {
         new GUIFunctions()
                 .authorization("pavilion_exporter_top1@otr.ru", "Password1!", "1234");
 
-        newProductName = $x("//div[text()='Номер заявки']/following-sibling::div").getText();
+        requestNumber = $x("//div[text()='Номер заявки']/following-sibling::div").getText();
+        JupyterLabIntegration.uploadTextContent(requestNumber, WAY_TEST, "requestNumber.txt");
         System.out.println($x("//div[text()='Номер заявки']/following-sibling::div").getText());
 
         refreshTab("//*[text()='Продолжить']", 10);
@@ -88,7 +90,7 @@ public class Test_04_07_01 extends Hooks {
 
         new GUIFunctions().inField("Количество ед. продукции").inputValue(PROPERTIES.getProperty("Информация о продукции.Количество ед. продукции")).assertValue()
                 .inField("Единица измерения").selectValue(PROPERTIES.getProperty("Информация о продукции.Единица измерения")).assertValue()
-                .inField("Общая стоимость партии товара, включая затраты на транспортировку (китайский юань)").inputValue(PROPERTIES.getProperty("Информация о продукции.Общая стоимость партии товара"))
+                .inField("Общая стоимость партии товара, включая затраты на транспортировку (вьетнамский донг)").inputValue(PROPERTIES.getProperty("Информация о продукции.Общая стоимость партии товара"))
                 .inField("Условия транспортировки и хранения продукции").inputValue(PROPERTIES.getProperty("Информация о продукции.Условия транспортировки и хранения продукции")).assertValue()
                 .inField("Розничная продажа").setCheckboxON().assertCheckboxON()
                 .inField("Оптовая продажа").setCheckboxON().assertCheckboxON()
