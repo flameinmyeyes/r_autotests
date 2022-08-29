@@ -53,13 +53,14 @@ public class Test_04_07_02 extends Hooks {
 
         Test_04_07_01 test_04_07_01 = new Test_04_07_01();
         test_04_07_01.steps();
+        requestNumber = test_04_07_01.requestNumber;
     }
 
     @Step("Номенклатура и объемы продукции")
     public void step01() {
         CommonFunctions.printStep();
 
-        requestNumber = JupyterLabIntegration.getFileContent(WAY_TEST + "requestNumber.txt");
+//        requestNumber = JupyterLabIntegration.getFileContent(WAY_TEST + "requestNumber.txt");
         System.out.println("Test_04_07_02.requestNumber = " + requestNumber);
         open("https://lk.t.exportcenter.ru/ru/main");
 
@@ -127,16 +128,16 @@ public class Test_04_07_02 extends Hooks {
                 .waitForElementDisplayed("//*[text()='Подписано']")
                 .clickButton("Далее")
                 .waitForLoading();
-        closeWebDriver();
     }
 
     @Step("Проверка изменений ")
     public void step05() {
         CommonFunctions.printStep();
 
-        $x("//*[text()='О компании']").scrollTo();
+//        $x("//*[text()='О компании']").scrollTo();
         new GUIFunctions().clickButton("О компании")
                 .clickButton("Далее");
+        closeWebDriver();
     }
 
 
