@@ -33,7 +33,7 @@ public class Test_04_07_01 extends Hooks {
         step01();
         step02();
         step03();
-//        step04();
+        step04();
     }
 
     @AfterMethod
@@ -51,6 +51,7 @@ public class Test_04_07_01 extends Hooks {
         new GUIFunctions()
                 .authorization("pavilion_exporter_top1@otr.ru", "Password1!", "1234");
 
+        System.out.println($x("//div[text()='Номер заявки']/following-sibling::div").getText());
         refreshTab("//*[text()='Продолжить']", 10);
         new GUIFunctions().clickButton("Продолжить")
                 .waitForElementDisplayed("//*[text()='Страна нахождения павильона']")
@@ -113,6 +114,7 @@ public class Test_04_07_01 extends Hooks {
         new GUIFunctions().clickButton("Подписать электронной подписью")
                 .inField("Выберите сертификат").selectValue("Ермухамбетова Балсикер Бисеньевна от 18.01.2022").assertValue()
                 .clickButton("Подписать")
+                .waitForElementDisplayed("//*[text()='Подписано']")
                 .clickButton("Далее");
     }
 
