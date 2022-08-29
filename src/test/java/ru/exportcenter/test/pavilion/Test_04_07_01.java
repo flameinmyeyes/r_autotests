@@ -54,7 +54,7 @@ public class Test_04_07_01 extends Hooks {
                 .authorization("pavilion_exporter_top1@otr.ru", "Password1!", "1234");
 
         requestNumber = $x("//div[text()='Номер заявки']/following-sibling::div").getText();
-        JupyterLabIntegration.uploadTextContent(requestNumber, WAY_TEST, "requestNumber.txt");
+//        JupyterLabIntegration.uploadTextContent(requestNumber, WAY_TEST, "requestNumber.txt");
         System.out.println($x("//div[text()='Номер заявки']/following-sibling::div").getText());
 
         refreshTab("//*[text()='Продолжить']", 10);
