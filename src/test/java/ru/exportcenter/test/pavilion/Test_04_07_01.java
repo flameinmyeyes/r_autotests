@@ -119,6 +119,7 @@ public class Test_04_07_01 extends Hooks {
                 .clickButton("Подписать")
                 .waitForElementDisplayed("//*[text()='Подписано']")
                 .clickButton("Далее");
+        closeWebDriver();
     }
 
     private void refreshTab(String expectedXpath, int times) {
