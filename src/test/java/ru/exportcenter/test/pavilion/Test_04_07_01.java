@@ -54,7 +54,6 @@ public class Test_04_07_01 extends Hooks {
 
         newProductName = $x("//div[text()='Номер заявки']/following-sibling::div").getText();
         System.out.println($x("//div[text()='Номер заявки']/following-sibling::div").getText());
-
         refreshTab("//*[text()='Продолжить']", 10);
         new GUIFunctions().clickButton("Продолжить")
                 .waitForElementDisplayed("//*[text()='Страна нахождения павильона']")
