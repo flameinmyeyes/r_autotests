@@ -24,6 +24,7 @@ public class Test_04_07_01 extends Hooks {
     private String WAY_TEST = Ways.TEST.getWay() + "/pavilion/Test_04_07_01/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_04_07_01_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
+    public String newProductName;
 
     @Owner(value = "Петрищев Руслан")
     @Description("04 07 01 Заполнение Заявки на получение услуги, подписание Заявки УКЭП и автоматическая передача Заявки на верификацию")
@@ -51,6 +52,7 @@ public class Test_04_07_01 extends Hooks {
         new GUIFunctions()
                 .authorization("pavilion_exporter_top1@otr.ru", "Password1!", "1234");
 
+        newProductName = $x("//div[text()='Номер заявки']/following-sibling::div").getText();
         System.out.println($x("//div[text()='Номер заявки']/following-sibling::div").getText());
         refreshTab("//*[text()='Продолжить']", 10);
         new GUIFunctions().clickButton("Продолжить")
