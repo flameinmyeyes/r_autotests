@@ -53,7 +53,7 @@ public class Test_04_07_01 extends Hooks {
                 .authorization("pavilion_exporter_top1@otr.ru", "Password1!", "1234");
 
         newProductName = $x("//div[text()='Номер заявки']/following-sibling::div").getText();
-//        System.out.println($x("//div[text()='Номер заявки']/following-sibling::div").getText());
+        System.out.println($x("//div[text()='Номер заявки']/following-sibling::div").getText());
         refreshTab("//*[text()='Продолжить']", 10);
         new GUIFunctions().clickButton("Продолжить")
                 .waitForElementDisplayed("//*[text()='Страна нахождения павильона']")
