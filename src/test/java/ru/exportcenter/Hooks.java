@@ -20,7 +20,15 @@ public class Hooks implements HooksInterface {
 
     @Parameters({"runMode"})
     @BeforeClass
-    public DriverInit setDriver(@Optional("local") String runModeFromSuite) {
+    public DriverInit setDriver(@Optional("remote") String runModeFromSuite) {
+
+
+        String tmp = "2 сентября 2022, 10:27:25";
+        tmp = tmp.substring(tmp.lastIndexOf(" "), tmp.length());
+        tmp = tmp.substring(0, tmp.lastIndexOf(":"));
+
+
+//      public DriverInit setDriver(@Optional("local") String runModeFromSuite) {
         //определяем режим запуска (по тест-сьюту)
         RUN_MODE = runModeFromSuite;
 
