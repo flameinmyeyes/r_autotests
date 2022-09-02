@@ -90,7 +90,7 @@
 
     <test name="pavilion" thread-count="1" preserve-order="true">
         <classes>
-            <class name="ru.exportcenter.test.pavilion.Test_04_07_03" />
+            <class name="ru.exportcenter.test.pavilion.Test_04_07_01" />
         </classes>
     </test>
 
