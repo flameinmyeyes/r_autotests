@@ -2,7 +2,6 @@ package ru.exportcenter.test.pavilion;
 
 import framework.RunTestAgain;
 import framework.Ways;
-import framework.integration.JupyterLabIntegration;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
@@ -13,11 +12,9 @@ import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Properties;
-
 import static com.codeborne.selenide.Selenide.*;
 
 public class Test_04_07_01 extends Hooks {
@@ -38,10 +35,10 @@ public class Test_04_07_01 extends Hooks {
         step04();
     }
 
-//    @AfterMethod
-//    public void screenShot() {
-//        CommonFunctions.screenShot(WAY_TEST + "screen.png");
-//    }
+    @AfterMethod
+    public void screenShot() {
+        CommonFunctions.screenShot(WAY_TEST + "screen.png");
+    }
 
     @Step("Блок «Сведения о демонстрационно-дегустационном павильоне»")
     public void step01() {

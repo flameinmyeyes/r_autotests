@@ -13,20 +13,15 @@ import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
-import ru.exportcenter.test.finplatforma.Test_08_10_02;
-
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.Properties;
-
 import static com.codeborne.selenide.Selenide.*;
 
-// test-commit 02
 public class Test_04_07_02 extends Hooks {
 
-    private String WAY_TEST = Ways.TEST.getWay() + "/pavilion/Test_04_07_01/";
-//    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_04_07_02_properties.xml";
-//    public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
+    private String WAY_TEST = Ways.TEST.getWay() + "/pavilion/Test_04_07_02/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_04_07_02_properties.xml";
+    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     public String requestNumber;
 
     @Owner(value = "Андрей Теребков")
@@ -34,7 +29,8 @@ public class Test_04_07_02 extends Hooks {
     @Link(name = "Test_04_07_02", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=163302518")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException, InterruptedException {
-        precondition();
+        requestNumber = "S/2022/270509";
+//        precondition();
         step01();
         step02();
         step03();
@@ -42,10 +38,10 @@ public class Test_04_07_02 extends Hooks {
         step05();
     }
 
-//    @AfterMethod
-//    public void screenShot() {
-//        CommonFunctions.screenShot(WAY_TEST + "screen.png");
-//    }
+    @AfterMethod
+    public void screenShot() {
+        CommonFunctions.screenShot(WAY_TEST + "screen.png");
+    }
 
     @Step("Предусловия")
     public void precondition() throws AWTException, InterruptedException  {
@@ -53,7 +49,7 @@ public class Test_04_07_02 extends Hooks {
 
         Test_04_07_01 test_04_07_01 = new Test_04_07_01();
         test_04_07_01.steps();
-        requestNumber = test_04_07_01.requestNumber;
+//        requestNumber = test_04_07_01.requestNumber;
     }
 
     @Step("Номенклатура и объемы продукции")
@@ -65,7 +61,7 @@ public class Test_04_07_02 extends Hooks {
         open("https://lk.t.exportcenter.ru/ru/main");
 
         new GUIFunctions()
-                .authorization("pavilion_exporter_top1@otr.ru", "Password1!", "1234");
+                .authorization(P.getProperty("Номенклатура.Email"), P.getProperty("Номенклатура.Пароль"), P.getProperty("Номенклатура.Код"));
 
         new GUIFunctions().waitForElementDisplayed("//*[text()='Показать все (100)']")
                 .clickButton("Показать все (100)")
@@ -77,10 +73,13 @@ public class Test_04_07_02 extends Hooks {
         new GUIFunctions()
                 .clickButton("Продолжить");
 
-        $x("//*[text()='Номенклатура и объемы продукции']").scrollTo();
+        $x("(//button[@class='dropdown-icon'])[2]").scrollTo();
         new GUIFunctions().clickByLocator("(//button[@class='dropdown-icon'])[2]")
-                .clickButton("Изменить")
-                .inField("Количество ед. продукции").inputValue("3")
+                .clickButton("Изменить");
+
+        new GUIFunctions().clickByLocator("//*[text()='Количество ед. продукции']/ancestor::div[@class='BigInputLabel_labelWrapper__30aum']//following::input")
+                .clickByLocator("//*[text()='Количество ед. продукции']/ancestor::div[@class='BigInputLabel_labelWrapper__30aum']//following::button[@name='close']")
+                .inField("Количество ед. продукции").inputValue(P.getProperty("Номенклатура.Количество ед. продукции")).assertValue()
                 .clickButton("Добавить");
     }
 
@@ -88,11 +87,9 @@ public class Test_04_07_02 extends Hooks {
     public void step02() throws AWTException {
         CommonFunctions.printStep();
 
-        //        $x("//*[text()='Контактное лицо']").scrollTo();
-
         new GUIFunctions()
                 .inField("Контактное лицо").setCheckboxON().assertCheckboxON()
-                .inField("ФИО").inputValue("Умеров")
+                .inField("ФИО").inputValue(P.getProperty("Контактное лицо.ФИО")).assertValue()
                 .waitForElementDisplayed("//*[contains(text(), 'Мансур')]")
                 .clickByLocator("//*[contains(text(), 'Мансур')]");
     }
@@ -101,19 +98,17 @@ public class Test_04_07_02 extends Hooks {
     public void step03() {
         CommonFunctions.printStep();
 
-//        $x("//*[text()='Фактический адрес']").scrollTo();
-
         new GUIFunctions()
                 .inField("Фактический адрес изменился").setCheckboxON().assertCheckboxON()
-                .inField("Индекс").inputValue("1234567")
-                .inField("Регион").inputValue("Регион")
-                .inField("Район").inputValue("Район")
-                .inField("Город").inputValue("Город")
-                .inField("Населенный пункт").inputValue("Населенный пункт")
-                .inField("Улица").inputValue("Улица")
-                .inField("Дом").inputValue("12")
-                .inField("Строение").inputValue("3")
-                .inField("Офис").inputValue("4")
+                .inField("Индекс").inputValue(P.getProperty("Фактический адрес.Индекс")).assertValue()
+                .inField("Регион").inputValue(P.getProperty("Фактический адрес.Регион")).assertValue()
+                .inField("Район").inputValue(P.getProperty("Фактический адрес.Район")).assertValue()
+                .inField("Город").inputValue(P.getProperty("Фактический адрес.Город")).assertValue()
+                .inField("Населенный пункт").inputValue(P.getProperty("Фактический адрес.Населенный пункт")).assertValue()
+                .inField("Улица").inputValue(P.getProperty("Фактический адрес.Улица")).assertValue()
+                .inField("Дом").inputValue(P.getProperty("Фактический адрес.Дом")).assertValue()
+                .inField("Строение").inputValue(P.getProperty("Фактический адрес.Строение")).assertValue()
+                .inField("Офис").inputValue(P.getProperty("Фактический адрес.Офис")).assertValue()
                 .clickButton("Далее")
                 .waitForElementDisplayed("//*[text()='Подписать электронной подписью']");
     }
@@ -123,23 +118,21 @@ public class Test_04_07_02 extends Hooks {
         CommonFunctions.printStep();
 
         new GUIFunctions().clickButton("Подписать электронной подписью")
-                .inField("Выберите сертификат").selectValue("Ермухамбетова Балсикер Бисеньевна от 18.01.2022").assertValue()
+                .inField("Выберите сертификат").selectValue(P.getProperty("Подписание.Выберите сертификат")).assertValue()
                 .clickButton("Подписать")
                 .waitForElementDisplayed("//*[text()='Подписано']")
                 .clickButton("Далее")
                 .waitForLoading();
     }
 
-    @Step("Проверка изменений ")
+    @Step("Проверка изменений")
     public void step05() {
         CommonFunctions.printStep();
 
-//        $x("//*[text()='О компании']").scrollTo();
         new GUIFunctions().clickButton("О компании")
                 .clickButton("Далее");
         closeWebDriver();
     }
-
 
     private void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
