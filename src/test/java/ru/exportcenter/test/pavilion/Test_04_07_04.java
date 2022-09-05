@@ -24,6 +24,7 @@ public class Test_04_07_04 extends Hooks {
 //    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_04_07_04_properties.xml";
 //    public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     public String requestNumber;
+    public String token;
 
     @Owner(value = "Теребков Андрей")
     @Description("04 07 04 Годовой отчет экспортера")
@@ -31,7 +32,7 @@ public class Test_04_07_04 extends Hooks {
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException {
         step01();
-//        step02();
+        step02();
 //        step03();
 //        step04();
     }
@@ -44,12 +45,16 @@ public class Test_04_07_04 extends Hooks {
     @Step("Блок «Сведения о демонстрационно-дегустационном павильоне»")
     public void step01() {
         CommonFunctions.printStep();
+        token = RESTFunctions.getAccessToken("bpmn_admin");
+        System.out.println(token);
+    }
+
+    @Step("Блок «Сведения о демонстрационно-дегустационном павильоне»")
+    public void step02() {
+        CommonFunctions.printStep();
 
         //Ввести логин и пароль
         open("https://lk.t.exportcenter.ru/bpmn/swagger-ui/");
-        String token = RESTFunctions.getAccessToken("bpmn_admin");
-
-        System.out.println(token);
 
         new GUIFunctions()
                 .clickByLocator("//span[text()='Authorize']");
@@ -60,6 +65,18 @@ public class Test_04_07_04 extends Hooks {
                 .clickByLocator("//*[@id='operations-tag-bpmn-process-rest-api']/a/span")
                 .clickByLocator("//span[text()='POST']")
                 .clickByLocator("//button[text()='Try it out ']");
+
+        $x("//button[text()='Try it out ']").scrollTo();
+
+        $x("//*[@id='operations-bpmn-instance-camunda-rest-api-addInstanceUsingPOST']/div[2]/div/div[1]/div[2]/div/table/tbody/tr/td[2]/div[2]/div/div/textarea").setValue(token);
+
+
+
+
+//        $x("//button[text()='Execute']").scrollTo();
+//
+//        new GUIFunctions()
+//                .clickByLocator("//button[text()='Execute']");
 
 
         new GUIFunctions().waitForURL("");
