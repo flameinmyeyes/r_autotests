@@ -49,21 +49,21 @@ public class Test_04_07_04 extends Hooks {
         open("https://lk.t.exportcenter.ru/bpmn/swagger-ui/");
         String token = RESTFunctions.getAccessToken("bpmn_admin");
 
-        new GUIFunctions().clickByLocator("//span[text()='Authorize']");
+        System.out.println(token);
+
+        new GUIFunctions()
+                .clickByLocator("//span[text()='Authorize']");
         $x("//span[text()='Authorize']/following::input").setValue(token);
-        new GUIFunctions().clickByLocator("//button[text()='Authorize']");
+        new GUIFunctions()
+                .clickByLocator("//button[text()='Authorize']")
+                .clickByLocator("//button[text()='Close']")
+                .clickByLocator("//*[@id='operations-tag-bpmn-process-rest-api']/a/span")
+                .clickByLocator("//span[text()='POST']")
+                .clickByLocator("//button[text()='Try it out ']");
 
-//        System.out.println(token);
-//
-//        $("//*[@id='swagger-ui']/section/div[2]/div[2]/div[2]/section/div/div/div[2]/div/div/div[2]/div/form/div[1]/div/div[4]/section/input").setValue("sss");
-//        $("//*[@id='swagger-ui']/section/div[2]/div[2]/div[2]/section/div/div/div[2]/div/div/div[2]/div/form/div[2]/button[1]").click();
-//
-//        new GUIFunctions()
-//                .waitForURL("");
 
+        new GUIFunctions().waitForURL("");
     }
-
-
 
     private void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
