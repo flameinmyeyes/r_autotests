@@ -45,21 +45,21 @@ public class Test_04_07_04 extends Hooks {
     public void step01() {
         CommonFunctions.printStep();
 
-
         //Ввести логин и пароль
         open("https://lk.t.exportcenter.ru/bpmn/swagger-ui/");
         String token = RESTFunctions.getAccessToken("bpmn_admin");
 
-        new GUIFunctions()
-                .clickButton("Authorize");
+        new GUIFunctions().clickByLocator("//span[text()='Authorize']");
+        $x("//span[text()='Authorize']/following::input").setValue(token);
+        new GUIFunctions().clickByLocator("//button[text()='Authorize']");
 
-        System.out.println(token);
-
-        $("//*[@id='swagger-ui']/section/div[2]/div[2]/div[2]/section/div/div/div[2]/div/div/div[2]/div/form/div[1]/div/div[4]/section/input").setValue("sss");
-        $("//*[@id='swagger-ui']/section/div[2]/div[2]/div[2]/section/div/div/div[2]/div/div/div[2]/div/form/div[2]/button[1]").click();
-
-        new GUIFunctions()
-                .waitForURL("");
+//        System.out.println(token);
+//
+//        $("//*[@id='swagger-ui']/section/div[2]/div[2]/div[2]/section/div/div/div[2]/div/div/div[2]/div/form/div[1]/div/div[4]/section/input").setValue("sss");
+//        $("//*[@id='swagger-ui']/section/div[2]/div[2]/div[2]/section/div/div/div[2]/div/div/div[2]/div/form/div[2]/button[1]").click();
+//
+//        new GUIFunctions()
+//                .waitForURL("");
 
     }
 
