@@ -44,7 +44,6 @@ public class Test_04_07_01 extends Hooks {
     public void step01() {
         CommonFunctions.printStep();
 
-
         //Ввести логин и пароль
         open("https://lk.t.exportcenter.ru/ru/promo-service?key=pavilion&serviceId=a546931c-0eb9-4545-853a-8a683c0924f7&next_query=true");
         new GUIFunctions()
@@ -87,7 +86,8 @@ public class Test_04_07_01 extends Hooks {
 
         new GUIFunctions().inField("Количество ед. продукции").inputValue(PROPERTIES.getProperty("Информация о продукции.Количество ед. продукции")).assertValue()
                 .inField("Единица измерения").selectValue(PROPERTIES.getProperty("Информация о продукции.Единица измерения")).assertValue()
-                .inField("Общая стоимость партии товара, включая затраты на транспортировку (вьетнамский донг)").inputValue(PROPERTIES.getProperty("Информация о продукции.Общая стоимость партии товара"))
+                .inField("Общая стоимость партии товара, включая затраты на транспортировку (китайский юань)").inputValue(PROPERTIES.getProperty("Информация о продукции.Общая стоимость партии товара"))
+//                .inField("Общая стоимость партии товара, включая затраты на транспортировку (вьетнамский донг)").inputValue(PROPERTIES.getProperty("Информация о продукции.Общая стоимость партии товара"))
                 .inField("Условия транспортировки и хранения продукции").inputValue(PROPERTIES.getProperty("Информация о продукции.Условия транспортировки и хранения продукции")).assertValue()
                 .inField("Розничная продажа").setCheckboxON().assertCheckboxON()
                 .inField("Оптовая продажа").setCheckboxON().assertCheckboxON()
@@ -101,8 +101,8 @@ public class Test_04_07_01 extends Hooks {
                 .inField("Наличие товарного знака в стране размещения").setCheckboxON().assertCheckboxON()
                 .inField("Наименование ЭТП размещения продукции").selectValue(PROPERTIES.getProperty("Информация о продукции.Наименование ЭТП размещения продукции"))
                 .inField("Данные дистрибьютора на рынке павильона").inputValue(PROPERTIES.getProperty("Информация о продукции.Данные дистрибьютора на рынке павильона")).assertValue()
-                .inField("Номер декларации о соответствии").inputValue(PROPERTIES.getProperty("Информация о продукции.Номер декларации о соответствии")).assertValue()
-                .inField("Номер сертификата соответствия").inputValue(PROPERTIES.getProperty("Информация о продукции.Номер сертификата соответствия")).assertValue()
+//                .inField("Номер декларации о соответствии").inputValue(PROPERTIES.getProperty("Информация о продукции.Номер декларации о соответствии")).assertValue()
+//                .inField("Номер сертификата соответствия").inputValue(PROPERTIES.getProperty("Информация о продукции.Номер сертификата соответствия")).assertValue()
                 .clickButton("Добавить")
                 .clickButton("Далее")
                 .waitForElementDisplayed("//*[text()='Подписать электронной подписью']");

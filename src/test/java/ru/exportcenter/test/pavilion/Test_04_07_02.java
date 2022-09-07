@@ -29,8 +29,8 @@ public class Test_04_07_02 extends Hooks {
     @Link(name = "Test_04_07_02", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=163302518")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException, InterruptedException {
-        requestNumber = "S/2022/270509";
-//        precondition();
+//        requestNumber = "S/2022/288998";
+        precondition();
         step01();
         step02();
         step03();
@@ -49,7 +49,7 @@ public class Test_04_07_02 extends Hooks {
 
         Test_04_07_01 test_04_07_01 = new Test_04_07_01();
         test_04_07_01.steps();
-//        requestNumber = test_04_07_01.requestNumber;
+        requestNumber = test_04_07_01.requestNumber;
     }
 
     @Step("Номенклатура и объемы продукции")
@@ -57,7 +57,7 @@ public class Test_04_07_02 extends Hooks {
         CommonFunctions.printStep();
 
 //        requestNumber = JupyterLabIntegration.getFileContent(WAY_TEST + "requestNumber.txt");
-        System.out.println("Test_04_07_02.requestNumber = " + requestNumber);
+//        System.out.println("Test_04_07_02.requestNumber = " + requestNumber);
         open("https://lk.t.exportcenter.ru/ru/main");
 
         new GUIFunctions()
@@ -73,9 +73,13 @@ public class Test_04_07_02 extends Hooks {
         new GUIFunctions()
                 .clickButton("Продолжить");
 
-        $x("(//button[@class='dropdown-icon'])[2]").scrollTo();
+        $x("//*[text()='Номенклатура и объемы продукции']").scrollTo();
         new GUIFunctions().clickByLocator("(//button[@class='dropdown-icon'])[2]")
                 .clickButton("Изменить");
+
+//        $x("(//button[@class='dropdown-icon'])[2]").scrollTo();
+//        new GUIFunctions().clickByLocator("(//button[@class='dropdown-icon'])[2]")
+//                .clickButton("Изменить");
 
         new GUIFunctions().clickByLocator("//*[text()='Количество ед. продукции']/ancestor::div[@class='BigInputLabel_labelWrapper__30aum']//following::input")
                 .clickByLocator("//*[text()='Количество ед. продукции']/ancestor::div[@class='BigInputLabel_labelWrapper__30aum']//following::button[@name='close']")
@@ -130,7 +134,8 @@ public class Test_04_07_02 extends Hooks {
         CommonFunctions.printStep();
 
         new GUIFunctions().clickButton("О компании")
-                .clickButton("Далее");
+                .clickButton("Далее")
+                .waitForElementDisplayed("//*[contains(text(),'Проект Акта приёмки продукции направлен оператору')]");
         closeWebDriver();
     }
 
@@ -141,7 +146,7 @@ public class Test_04_07_02 extends Hooks {
                 break;
             }
             refresh();
-            System.out.println("refresh(" + expectedXpath + ")");
+//            System.out.println("refresh(" + expectedXpath + ")");
             CommonFunctions.wait(1);
         }
     }
