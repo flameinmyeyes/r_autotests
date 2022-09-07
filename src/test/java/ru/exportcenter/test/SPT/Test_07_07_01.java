@@ -30,9 +30,9 @@ public class Test_07_07_01 extends Hooks {
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException {
         step01();
-        step02();
-        step03();
-        step04();
+//        step02();
+//        step03();
+//        step04();
     }
 
     @AfterMethod
