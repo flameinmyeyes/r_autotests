@@ -33,7 +33,7 @@ public class Test_04_07_03  extends Hooks {
     @Link(name = "Test_04_07_03", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=170242302")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException, InterruptedException {
-//        requestNumber = "S/2022/270410";
+//        requestNumber = "S/2022/289017";
         precondition();
         step01();
         step02();
@@ -72,11 +72,13 @@ public class Test_04_07_03  extends Hooks {
 //        String tmp = "2 сентября 2022, 10:27:25";
         requestData = requestData.substring(requestData.lastIndexOf(" "), requestData.length());
         requestData = requestData.substring(0, requestData.lastIndexOf(":"));
+        requestData = requestData.replaceAll(" ", "");
         System.out.println(requestData);
 
 
 
-        new GUIFunctions().clickButton("Продолжить");
+        new GUIFunctions().clickButton("Продолжить")
+                .waitForElementDisplayed("//*[contains(text(),'Проект Акта приёмки продукции направлен оператору')]");
         closeWebDriver();
     }
 
@@ -87,29 +89,43 @@ public class Test_04_07_03  extends Hooks {
         open("http://arm-pavilion.t.exportcenter.ru/");
         new GUIFunctionsLKB().authorization(P.getProperty("Блок2.Email"),P.getProperty("Блок2.Пароль"));
 
-        new GUIFunctionsLKB().clickByLocator("//span[@title='Все задачи']")
-                .clickByLocator("//div[@title='Проверить сведения о продукции']")
-                .clickByLocator("(//*[contains(text(), '"+requestData+"')]/ancestor::ol/li[text()='Проверить сведения о продукции'])[1]")
-                .waitForElementDisplayed("//span[text()='Согласовать']")
-                .clickByLocator("//span[text()='Согласовать']")
-                .waitForElementDisplayed("//*[text()='Сведения о продукции согласованы']")
-                .clickByLocator("//*[text()='OK']");
+//        new GUIFunctionsLKB().clickByLocator("//span[@title='Все задачи']")
+//                .clickByLocator("//div[@title='Проверить сведения о продукции']")
+//                .clickByLocator("(//*[contains(text(), '"+requestData+"')]/ancestor::ol/li[text()='Проверить сведения о продукции'])[1]")
+//                .waitForElementDisplayed("//span[text()='Согласовать']")
+//                .clickByLocator("//span[text()='Согласовать']")
+//                .waitForElementDisplayed("//*[text()='Сведения о продукции согласованы']")
+//                .clickByLocator("//*[text()='OK']");
 
         new GUIFunctionsLKB().clickByLocator("//span[@title='Все задачи']")
                 .clickByLocator("//div[@title='Подписать Акт приёмки продукции']")
                 .clickByLocator("(//*[contains(text(), '"+requestData+"')]/ancestor::ol/li[text()='Подписать Акт приёмки продукции'])[1]")
                 .clickByLocator("//span[text()='Редактировать']");
 
-        $x("(//input[@placeholder='Выберите дату'])[2]").sendKeys(P.getProperty("Блок2.Дата"));
-        $x("(//input[@placeholder='Выберите дату'])[2]").pressEnter();
+        $x("//input[@placeholder='Выберите дату']").sendKeys(P.getProperty("Блок2.Дата"));
+        $x("//input[@placeholder='Выберите дату']").pressEnter();
 
         new GUIFunctionsLKB().clickByLocator("//span[text()='Сохранить']");
         $x("//span[text()='Далее']").scrollTo();
 
         new GUIFunctionsLKB().clickByLocator("//span[text()='Далее']")
-                .waitForLoading();
+                .waitForLoading()
+                .clickByLocator("//span[text()='Редактировать']");
 
-        CommonFunctions.wait(10);
+        $x("//input[@placeholder='Выберите дату']").sendKeys(P.getProperty("Блок2.Дата"));
+        $x("//input[@placeholder='Выберите дату']").pressEnter();
+
+        new GUIFunctionsLKB().clickByLocator("//span[text()='Сохранить']");
+
+        new GUIFunctionsLKB().clickByLocator("//span[text()='Подписать']");
+        CommonFunctions.wait(3);
+        new GUIFunctionsLKB()
+                .clickByLocator("//span[text()='Сертификат']/following::input")
+                .clickByLocator("//div[@title='Ермухамбетова Балсикер Бисеньевна от 18.01.2022']")
+                .clickByLocator("//span[text()='Подписать и отправить']")
+                .waitForElementDisplayed("//*[text()='Вы успешно подписали Акт']")
+                .clickByLocator("//span[text()='Закрыть']");
+
         closeWebDriver();
     }
 
