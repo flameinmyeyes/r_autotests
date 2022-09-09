@@ -86,7 +86,7 @@ public class Test_04_07_01 extends Hooks {
 
         new GUIFunctions().inField("Количество ед. продукции").inputValue(PROPERTIES.getProperty("Информация о продукции.Количество ед. продукции")).assertValue()
                 .inField("Единица измерения").selectValue(PROPERTIES.getProperty("Информация о продукции.Единица измерения")).assertValue()
-                .inField("Общая стоимость партии товара, включая затраты на транспортировку (китайский юань)").inputValue(PROPERTIES.getProperty("Информация о продукции.Общая стоимость партии товара"))
+                .inField("Общая стоимость партии товара, включая затраты на транспортировку (юань)").inputValue(PROPERTIES.getProperty("Информация о продукции.Общая стоимость партии товара"))
 //                .inField("Общая стоимость партии товара, включая затраты на транспортировку (вьетнамский донг)").inputValue(PROPERTIES.getProperty("Информация о продукции.Общая стоимость партии товара"))
                 .inField("Условия транспортировки и хранения продукции").inputValue(PROPERTIES.getProperty("Информация о продукции.Условия транспортировки и хранения продукции")).assertValue()
                 .inField("Розничная продажа").setCheckboxON().assertCheckboxON()
@@ -101,7 +101,7 @@ public class Test_04_07_01 extends Hooks {
                 .inField("Наличие товарного знака в стране размещения").setCheckboxON().assertCheckboxON()
                 .inField("Наименование ЭТП размещения продукции").selectValue(PROPERTIES.getProperty("Информация о продукции.Наименование ЭТП размещения продукции"))
                 .inField("Данные дистрибьютора на рынке павильона").inputValue(PROPERTIES.getProperty("Информация о продукции.Данные дистрибьютора на рынке павильона")).assertValue()
-                .clickByLocator("//*[text()='Производитель']/preceding::div[@class='Radio_checkMark__18knp']")
+//                .clickByLocator("//*[text()='Производитель']/preceding::div[@class='Radio_checkMark__18knp']")
 //                .inField("Номер декларации о соответствии").inputValue(PROPERTIES.getProperty("Информация о продукции.Номер декларации о соответствии")).assertValue()
 //                .inField("Номер сертификата соответствия").inputValue(PROPERTIES.getProperty("Информация о продукции.Номер сертификата соответствия")).assertValue()
                 .clickButton("Добавить")
