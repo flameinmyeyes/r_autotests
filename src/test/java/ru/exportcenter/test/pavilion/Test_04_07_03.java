@@ -89,14 +89,6 @@ public class Test_04_07_03  extends Hooks {
         open("http://arm-pavilion.t.exportcenter.ru/");
         new GUIFunctionsLKB().authorization(P.getProperty("Блок2.Email"),P.getProperty("Блок2.Пароль"));
 
-//        new GUIFunctionsLKB().clickByLocator("//span[@title='Все задачи']")
-//                .clickByLocator("//div[@title='Проверить сведения о продукции']")
-//                .clickByLocator("(//*[contains(text(), '"+requestData+"')]/ancestor::ol/li[text()='Проверить сведения о продукции'])[1]")
-//                .waitForElementDisplayed("//span[text()='Согласовать']")
-//                .clickByLocator("//span[text()='Согласовать']")
-//                .waitForElementDisplayed("//*[text()='Сведения о продукции согласованы']")
-//                .clickByLocator("//*[text()='OK']");
-
         new GUIFunctionsLKB().clickByLocator("//span[@title='Все задачи']")
                 .clickByLocator("//div[@title='Подписать Акт приёмки продукции']")
                 .clickByLocator("(//*[contains(text(), '"+requestData+"')]/ancestor::ol/li[text()='Подписать Акт приёмки продукции'])[1]")

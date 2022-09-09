@@ -56,8 +56,6 @@ public class Test_04_07_02 extends Hooks {
     public void step01() {
         CommonFunctions.printStep();
 
-//        requestNumber = JupyterLabIntegration.getFileContent(WAY_TEST + "requestNumber.txt");
-//        System.out.println("Test_04_07_02.requestNumber = " + requestNumber);
         open("https://lk.t.exportcenter.ru/ru/main");
 
         new GUIFunctions()
@@ -75,11 +73,9 @@ public class Test_04_07_02 extends Hooks {
 
         $x("//*[text()='Номенклатура и объемы продукции']").scrollTo();
         new GUIFunctions().clickByLocator("(//button[@class='dropdown-icon'])[2]")
+                .waitForElementDisplayed("//*[text()='Изменить']")
+                .waitForElementDisplayed("//*[text()='Удалить']")
                 .clickButton("Изменить");
-
-//        $x("(//button[@class='dropdown-icon'])[2]").scrollTo();
-//        new GUIFunctions().clickByLocator("(//button[@class='dropdown-icon'])[2]")
-//                .clickButton("Изменить");
 
         new GUIFunctions().clickByLocator("//*[text()='Количество ед. продукции']/ancestor::div[@class='BigInputLabel_labelWrapper__30aum']//following::input")
                 .clickByLocator("//*[text()='Количество ед. продукции']/ancestor::div[@class='BigInputLabel_labelWrapper__30aum']//following::button[@name='close']")
