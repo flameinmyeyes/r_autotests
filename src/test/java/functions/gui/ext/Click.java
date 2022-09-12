@@ -25,6 +25,12 @@ public class Click extends ElementData {
     public void openSearchResult(String searchResultName, String buttonName) {
         String searchResultXpath = "//*[contains(text(), '" + searchResultName + "')]" +
                 "//following-sibling::div//descendant::*[contains(text(), '" + buttonName + "')]";
+
+        //новый локатор
+        if (!$x(searchResultXpath).isDisplayed()) {
+            searchResultXpath = "//div[@class='js-tabs__block open']//h2[text()='" + searchResultName + "']/ancestor::div[@class='services__item']//a[text()='" + buttonName + "']";
+        }
+
         $x(searchResultXpath).click();
         new Wait().waitForLoading();
     }

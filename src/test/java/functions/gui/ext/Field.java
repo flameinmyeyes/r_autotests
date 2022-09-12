@@ -27,6 +27,11 @@ public class Field extends ElementData {
         String searchFieldXpath = "//input[contains(@placeholder, '" + searchFieldPlaceholder + "')]" +
                 "[following-sibling::*[descendant::*[name()='use' and contains(@*, '#search')]]]";
 
+        //новый локатор
+        if (!$x(searchFieldXpath).isDisplayed()) {
+            searchFieldXpath = "//div[@class='js-tabs__block open']//input[@placeholder='" + searchFieldPlaceholder + "']";
+        }
+
         $x(searchFieldXpath).setValue(value);
         $x(searchFieldXpath).pressEnter();
     }
