@@ -8,6 +8,7 @@ import functions.common.CommonFunctions;
 import functions.common.DateFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
+import functions.gui.lkb.GUIFunctionsLKB;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -70,7 +71,6 @@ public class Test_3_07_01 extends Hooks {
         //Перейти во вкладку "Сервисы", выбрать "Государственные"
         new GUIFunctions()
                 .selectTab("Сервисы")
-//                .waitForElementDisplayed("//div[text()='Государственные']")
                 .clickByLocator("//div[@data-history-code='/services/state'][normalize-space(text()='Государственные')]")
                 .waitForURL("http://master-portal-dev.d.exportcenter.ru/services/state");
 
@@ -81,7 +81,10 @@ public class Test_3_07_01 extends Hooks {
                 .closeAllPopupWindows();
 
         //Выбрать сервис "Запрос заключения о карантинном фитосанитарном состоянии подкарантинной продукции", нажать "Оформить"
-        new GUIFunctions().openSearchResult("Запрос заключения о карантинном фитосанитарном состоянии", "Оформить");
+        new GUIFunctions()
+                .openSearchResult("Запрос заключения о карантинном фитосанитарном состоянии", "Оформить")
+                .switchPageTo(1)
+                .waitForLoading();
     }
 
     @Step("Начальный экран")
@@ -89,130 +92,99 @@ public class Test_3_07_01 extends Hooks {
         CommonFunctions.printStep();
 
         //На "Начальном экране" формирования запроса нажать "Продолжить"
-        refreshTab("//*[contains(text(), 'Продолжить')]", 20);
+        refreshTab("//*[contains(text(), 'Продолжить')]", 60);
 
         processID = CommonFunctions.getProcessIDFromURL();
-        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST,"processID.txt");
+//        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
+
+        new GUIFunctions().clickButton("Продолжить");
     }
 
     @Step("Блок \"Заявитель/Получатель\"")
     public void step04() {
         CommonFunctions.printStep();
-        new GUIFunctions()
-                .inContainer("Получатель")
-                .inField("Наименование получателя (на английском языке)").inputValue(P.getProperty("Получатель.Наименование получателя (на английском языке)")).assertNoControl().assertValue()
-                .inField("Страна").selectValue(P.getProperty("Получатель.Страна")).assertNoControl().assertValue()
-                .inField("Юридический адрес на английском языке в формате: номер дома, улица, город, индекс").inputValue(P.getProperty("Получатель.Юридический адрес на английском языке в формате: номер дома, улица, город, индекс")).assertNoControl().assertValue()
-                .clickButton("Продолжить");
 
-        //http://uidm.uidm-dev.d.exportcenter.ru/ru/services/camunda-exp-search/713374f0-327a-11ed-b249-a6926da449e9
+        new GUIFunctions()
+                .waitForElementDisplayed("//div[text()='Шаг 1 из 9']")
+
+                .inContainer("Получатель")
+                    .inField("Наименование получателя (на английском языке)").inputValue(P.getProperty("Получатель.Наименование получателя")).assertNoControl().assertValue()
+                    .inField("Страна").selectValue(P.getProperty("Получатель.Страна")).assertNoControl().assertValue()
+                    .inField("Юридический адрес на английском языке в формате: номер дома, улица, город, индекс").inputValue(P.getProperty("Получатель.Юридический адрес")).assertNoControl().assertValue()
+
+                .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
+                    .clickButton("Продолжить")
+                    .waitForLoading();
     }
 
     @Step("Блок  \"Условия поставки\"")
     public void step05() {
         CommonFunctions.printStep();
-        new GUIFunctions()
-                .inContainer("Условия поставки")
-                .inField("Вид транспорта").selectValue(P.getProperty("Условия поставки.Вид транспорта")).assertNoControl().assertValue()
-                .inField("Страна назначения").selectValue(P.getProperty("Условия поставки.Страна назначения")).assertNoControl().assertValue()
-                .inField("Пункт ввоза в стране назначения").inputValue(P.getProperty("Условия поставки.Пункт ввоза в стране назначения")).assertNoControl().assertValue()
 
-                .inField("Тип документа о происхождении груза. Если тип документа в списке отсутствует — выберите «другое»").selectValue(P.getProperty("Условия поставки.Тип документа о происхождении груза. Если тип документа в списке отсутствует — выберите «другое»")).assertNoControl().assertValue()
-                .inField("Номер документа на груз").inputValue(P.getProperty("Условия поставки.Номер документа на груз")).assertNoControl().assertValue()
-                .inField("Дата").inputValue(DateFunctions.dateToday("dd.MM.yyyy")).assertNoControl().assertValue()
-                .clickButton("Продолжить");
+        new GUIFunctions()
+                .waitForElementDisplayed("//div[text()='Шаг 2 из 9']")
+
+                .inContainer("Условия поставки")
+                    .inField("Вид транспорта").selectValue(P.getProperty("Условия поставки.Вид транспорта")).assertNoControl().assertValue()
+                    .inField("Страна назначения").selectValue(P.getProperty("Условия поставки.Страна назначения")).assertNoControl().assertValue()
+                    .inField("Пункт ввоза в стране назначения").inputValue(P.getProperty("Условия поставки.Пункт ввоза в стране назначения")).assertNoControl().assertValue()
+
+                    .inField("Тип документа о происхождении груза. Если тип документа в списке отсутствует — выберите «другое»").selectValue(P.getProperty("Условия поставки.Тип документа о происхождении груза. Если тип документа в списке отсутствует — выберите «другое»")).assertNoControl().assertValue()
+                    .inField("Номер документа на груз").inputValue(P.getProperty("Условия поставки.Номер документа на груз")).assertNoControl().assertValue()
+                    .inField("Дата").inputValue(DateFunctions.dateToday("dd.MM.yyyy")).assertNoControl().assertValue()
+
+                .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
+                    .clickButton("Продолжить")
+                    .waitForLoading();
     }
 
     @Step("Блок \"Добавление продукции\"")
     public void step06() {
         CommonFunctions.printStep();
         new GUIFunctions()
-                .inContainer("Информация о грузе")
-                .clickButton("Сборный груз")
-                .waitForElementDisplayed("//*[text()= 'Температурный режим на всю партию (от -30°C до 0°C или от 0°C до +30°C) ']")
-                .inField("Температурный режим на всю партию (от -30°C до 0°C или от 0°C до +30°C) ").setCheckboxON().assertNoControl()
-                .inField("От").inputValue(P.getProperty("Информация о грузе.От")).assertNoControl().assertValue()
-                .inField("До").inputValue(P.getProperty("Информация о грузе.До")).assertNoControl().assertValue()
-                .clickButton("Добавить +")
-                .inContainer("Сведения о продукции")
-                .inField("Наименование продукции").selectValue(P.getProperty("Информация о грузе.Наименование продукции")).assertNoControl().assertValue()
-                .inField("Код ТН ВЭД").assertValue(P.getProperty("Информация о грузе.Код ТН ВЭД")).assertNoControl().assertUneditable()
-                .inField("Вес продукции, кг").inputValue(P.getProperty("Информация о грузе.Вес продукции, кг")).assertNoControl().assertValue()
-                .inField("Упаковка").selectValue(P.getProperty("Информация о грузе.Упаковка")).assertNoControl().assertValue()
-                .inField("Длина, см").inputValue(P.getProperty("Информация о грузе.Длина, см")).assertValue().assertNoControl().assertValue()
-                .inField("Ширина, см").inputValue(P.getProperty("Информация о грузе.Ширина, см")).assertValue().assertNoControl().assertValue()
-                .inField("Высота, см").inputValue(P.getProperty("Информация о грузе.Высота, см")).assertValue().assertNoControl().assertValue()
-                .inField("Количество грузовых мест, шт").inputValue(P.getProperty("Информация о грузе.Количество грузовых мест, шт")).assertValue().assertNoControl().assertValue()
-                .clickButton("Сохранить")
-                .inContainer("Информация о грузе").waitForElementDisplayed("//td[text() = '1']" +
-                "/following-sibling::td[text() = '" + P.getProperty("Информация о грузе.Наименование продукции") + "']" +
-                "/following-sibling::td[text() = '" + P.getProperty("Информация о грузе.Количество грузовых мест, шт") + "']" +
-                "/following-sibling::td[text() = '" + P.getProperty("Информация о грузе.Вес продукции, кг").split(",")[0] + "']" +
-                "/following-sibling::td");
-        new GUIFunctions().inContainer("Информация о грузе").clickButton("Добавить +")
-                .inContainer("Сведения о продукции")
-                .clickButton("Добавить новую")
-                .inField("Наименование продукции").inputValue(P.getProperty("Информация о грузе.Наименование продукции.2")).assertNoControl().assertValue()
-                .inField("Код ТН ВЭД").selectValue(P.getProperty("Информация о грузе.Код ТН ВЭД.2")).assertNoControl().assertValue()
-                .inField("Вес продукции, кг").inputValue(P.getProperty("Информация о грузе.Вес продукции, кг.2")).assertNoControl().assertValue()
-                .inField("Упаковка").selectValue(P.getProperty("Информация о грузе.Упаковка.2")).assertNoControl().assertValue()
-                .inField("Длина, см").inputValue(P.getProperty("Информация о грузе.Длина, см.2")).assertValue().assertNoControl()
-                .inField("Ширина, см").inputValue(P.getProperty("Информация о грузе.Ширина, см.2")).assertValue().assertNoControl()
-                .inField("Высота, см").inputValue(P.getProperty("Информация о грузе.Высота, см.2")).assertValue().assertNoControl()
-                .inField("Количество грузовых мест, шт").inputValue(P.getProperty("Информация о грузе.Количество грузовых мест, шт.2"))
-                .assertValue().assertNoControl()
-                .clickButton("Сохранить")
-                .inContainer("Информация о грузе").waitForElementDisplayed("//td[text() = '2']" +
-                "/following-sibling::td[text() = '" + P.getProperty("Информация о грузе.Наименование продукции.2") + "']" +
-                "/following-sibling::td[text() = '" + P.getProperty("Информация о грузе.Количество грузовых мест, шт.2") + "']" +
-                "/following-sibling::td[text() = '" + P.getProperty("Информация о грузе.Вес продукции, кг.2").split(",")[0] + "']" +
-                "/following-sibling::td");
-        new GUIFunctions().inContainer("Информация о грузе").clickByLocator("//td[text() = '2']/following-sibling::td//button[@class = 'dropdown-icon']");
-        new GUIFunctions().clickByLocator("//td[text() = '2']/following-sibling::td//*[text() = ' Удалить' ]")
-                //.clickButton("")
-                .waitForElementDisappeared("//td[text() = '2']" +
-                        "/following-sibling::td[text() = '" + P.getProperty("Информация о грузе.Наименование продукции.2") + "']" +
-                        "/following-sibling::td[text() = '" + P.getProperty("Информация о грузе.Количество грузовых мест, ш.2") + "']" +
-                        "/following-sibling::td[text() = '" + P.getProperty("Информация о грузе.Вес продукции, кг.2") + "']" +
-                        "/following-sibling::td");
+                .waitForElementDisplayed("//div[text()='Шаг 3 из 9']")
+
+                .inContainer("Добавление продукции")
+//                    .inField("Каталог продукции").selectValue(" --- кофе").assertNoControl().assertValue()
+                    .inField("Каталог продукции").clickByLocator("//input[@placeholder='Введите наименование продукции или код ТН ВЭД']").inputValue("кофе").clickByLocator("//*[contains(text(), ' --- кофе')]")
+                    .inField("Тип продукции").selectValue(P.getProperty("Добавление продукции.Тип продукции")).assertNoControl().assertValue()
+                    .inField("Дополнительная информация о продукции. Например, страна производства (произрастания) продукции, сорт продукции и т.д.").inputValue(P.getProperty("Добавление продукции.Дополнительная информация о продукции")).assertNoControl().assertValue()
+                    .inField("Вес груза (нетто), кг").inputValue(P.getProperty("Добавление продукции.Вес груза (нетто)")).assertNoControl().assertValue()
+                    .inField("Особые единицы измерения").selectValue(P.getProperty("Добавление продукции.Особые единицы измерения")).assertNoControl().assertValue()
+                    .inField("Количество в особых единицах измерения").inputValue(P.getProperty("Добавление продукции.Количество в особых единицах измерения")).assertNoControl().assertValue()
+                    .inField("Описание упаковки").selectValue(P.getProperty("Добавление продукции.Описание упаковки")).assertNoControl().assertValue()
+                    .inField("Размещение продукции").clickByLocator("//ancestor::div//span[contains(text(),'Навалом (наливом)')][last()]")
+                    .inField("Наличие отличительных знаков (маркировки). Например, номера партий, серийные номера или названия торговых марок. ").setCheckboxON().assertCheckboxON()
+
+                    .inField("Страна").selectValue(P.getProperty("Добавление продукции.Страна")).assertNoControl().assertValue()
+                    .inField("Регион").selectValue(P.getProperty("Добавление продукции.Регион")).assertNoControl().assertValue()
+
+                .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
+                    .clickButton("Продолжить")
+                    .waitForLoading();
     }
 
     @Step("Блок \"Договор на установление карантинного фитосанитарного состояния\"")
     public void step07() {
         CommonFunctions.printStep();
         new GUIFunctions()
-                .inContainer("Информация о грузополучателе")
-                .inField("Наименование грузополучателя").inputValue(P.getProperty("Информация о грузополучателе.Наименование грузополучателя")).assertNoControl()
-                .inField("Страна").inputValue(P.getProperty("Информация о грузополучателе.Страна")).assertNoControl().assertValue()
-                .inField("Город").inputValue(P.getProperty("Информация о грузополучателе.Город")).assertNoControl().assertValue()
-                .inField("Дом").inputValue(P.getProperty("Информация о грузополучателе.Дом")).assertNoControl().assertValue()
-                .inField("Регион").inputValue(P.getProperty("Информация о грузополучателе.Регион")).assertNoControl().assertValue()
-                .inField("Район").inputValue(P.getProperty("Информация о грузополучателе.Район")).assertNoControl().assertValue()
-                .inField("Улица").inputValue(P.getProperty("Информация о грузополучателе.Улица")).assertNoControl().assertValue()
-                .inField("Регистрационный номер грузополучателя").inputValue(P.getProperty("Информация о грузополучателе.Регистрационный номер грузополучателя")).assertNoControl().assertValue()
-                .inField("Телефон").inputValue(P.getProperty("Информация о грузополучателе.Телефон")).assertNoControl().assertValue()
-                .inField("Представитель грузополучателя").inputValue(P.getProperty("Информация о грузополучателе.Представитель грузополучателя")).assertNoControl().assertValue()
-                .inField("Email").inputValue(P.getProperty("Информация о грузополучателе.Email")).assertNoControl().assertValue();
+                .waitForElementDisplayed("//div[text()='Шаг 4 из 9']");
     }
 
     @Step("Блок \"Запрос отбора проб\"")
     public void step08() {
         CommonFunctions.printStep();
         new GUIFunctions()
-                .inContainer("Дополнительные услуги")
-                .inField("Вывоз груза с адреса («Первая миля»)").setCheckboxON().assertNoControl()
-                .inField("Таможенное оформление").setCheckboxON().assertNoControl()
-                .inField("РЖД Логистика").setRadiobuttonByDescription("Комплексная услуга таможенного оформления")
-                .inField("Оформление ветеринарного сертификата").setCheckboxON().assertNoControl()
-                .inField("РЖД Логистика").setRadiobuttonByDescription("Содействие в получении ветеринарных сертификатов")
-                .inField("Оформление фитосанитарного сертификата").setCheckboxON().assertNoControl()
-                .inField("РЖД Логистика").setRadiobuttonByDescription("Содействие в получении фитосанитарных сертификатов");
+                .waitForElementDisplayed("//div[text()='Шаг 5 из 9']");
+
     }
 
     @Step("Экран ознакомления с результатом проверки. Блок \"Форма заключения\"")
     public void step09() {
         CommonFunctions.printStep();
-        new GUIFunctions().clickButton("Далее").waitForLoading();
+        new GUIFunctions()
+                .waitForElementDisplayed("//div[text()='Шаг 4 из 9']");
+
         docNum = $x("//div[contains (@class, 'FormHeader_title' )]//span[contains (@class, 'Typography_body' )]").getText().split("№")[1];
         JupyterLabIntegration.uploadTextContent(docNum, WAY_TEST, "docNum.txt");
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
