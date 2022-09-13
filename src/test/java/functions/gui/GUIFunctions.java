@@ -1,12 +1,10 @@
 package functions.gui;
 
-import framework.HooksInterface;
 import functions.common.CommonFunctions;
 import functions.gui.ext.*;
 import org.openqa.selenium.Keys;
 
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.switchTo;
+import static com.codeborne.selenide.Selenide.*;
 
 public class GUIFunctions extends ElementData {
 
@@ -234,6 +232,22 @@ public class GUIFunctions extends ElementData {
 
     public GUIFunctions waitForElementDisappeared(String xPath) {
         new Wait(this).waitForElementDisappeared(xPath);
+        return this;
+    }
+
+    /**
+     * refresh
+     */
+
+    public GUIFunctions refreshTab(String expectedXpath, int times) {
+        for (int i = 0; i < times; i++) {
+            new functions.gui.GUIFunctions().waitForLoading();
+            if($x(expectedXpath).isDisplayed()) {
+                break;
+            }
+            refresh();
+            CommonFunctions.wait(1);
+        }
         return this;
     }
 

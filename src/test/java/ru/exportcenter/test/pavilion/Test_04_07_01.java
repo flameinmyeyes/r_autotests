@@ -2,6 +2,7 @@ package ru.exportcenter.test.pavilion;
 
 import framework.RunTestAgain;
 import framework.Ways;
+import framework.integration.JupyterLabIntegration;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
@@ -23,6 +24,7 @@ public class Test_04_07_01 extends Hooks {
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_04_07_01_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     public String requestNumber;
+    private String processID;
 
     @Owner(value = "Петрищев Руслан")
     @Description("04 07 01 Заполнение Заявки на получение услуги, подписание Заявки УКЭП и автоматическая передача Заявки на верификацию")
@@ -47,13 +49,16 @@ public class Test_04_07_01 extends Hooks {
         //Ввести логин и пароль
         open("https://lk.t.exportcenter.ru/ru/promo-service?key=pavilion&serviceId=a546931c-0eb9-4545-853a-8a683c0924f7&next_query=true");
         new GUIFunctions()
-                .authorization("pavilion_exporter_top1@otr.ru", "Password1!", "1234");
+                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"));
 
         requestNumber = $x("//div[text()='Номер заявки']/following-sibling::div").getText();
-//        JupyterLabIntegration.uploadTextContent(requestNumber, WAY_TEST, "requestNumber.txt");
         System.out.println($x("//div[text()='Номер заявки']/following-sibling::div").getText());
 
         refreshTab("//*[text()='Продолжить']", 10);
+
+        processID = CommonFunctions.getProcessIDFromURL();
+        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
+
         new GUIFunctions().clickButton("Продолжить")
                 .waitForElementDisplayed("//*[text()='Страна нахождения павильона']")
                 .inContainer("Сведения о демонстрационно-дегустационном павильоне")
@@ -100,11 +105,9 @@ public class Test_04_07_01 extends Hooks {
                 .inField("Наличие товарного знака в стране размещения").setCheckboxON().assertCheckboxON()
                 .inField("Наименование ЭТП размещения продукции").selectValue(PROPERTIES.getProperty("Информация о продукции.Наименование ЭТП размещения продукции"))
                 .inField("Данные дистрибьютора на рынке павильона").inputValue(PROPERTIES.getProperty("Информация о продукции.Данные дистрибьютора на рынке павильона")).assertValue()
-//                .clickByLocator("//*[text()='Производитель']/preceding::div[@class='Radio_checkMark__18knp']")
                 .clickButton("Добавить")
                 .clickButton("Далее")
                 .waitForElementDisplayed("//*[text()='Подписать электронной подписью']");
-
     }
 
     @Step("Подписание заявки")
@@ -126,7 +129,6 @@ public class Test_04_07_01 extends Hooks {
                 break;
             }
             refresh();
-            System.out.println("refresh()");
             CommonFunctions.wait(1);
         }
     }
