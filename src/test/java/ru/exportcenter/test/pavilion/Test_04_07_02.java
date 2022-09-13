@@ -2,7 +2,6 @@ package ru.exportcenter.test.pavilion;
 
 import framework.RunTestAgain;
 import framework.Ways;
-import framework.integration.JupyterLabIntegration;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
@@ -19,7 +18,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class Test_04_07_02 extends Hooks {
 
-    private String WAY_TEST = Ways.TEST.getWay() + "/pavilion/Test_04_07_02/";
+    public String WAY_TEST = Ways.TEST.getWay() + "/pavilion/Test_04_07_02/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_04_07_02_properties.xml";
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     public String requestNumber;
@@ -142,7 +141,6 @@ public class Test_04_07_02 extends Hooks {
                 break;
             }
             refresh();
-//            System.out.println("refresh(" + expectedXpath + ")");
             CommonFunctions.wait(1);
         }
     }
