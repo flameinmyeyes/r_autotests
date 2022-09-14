@@ -74,8 +74,6 @@ public class Test_04_07_03  extends Hooks {
         requestData = requestData.replaceAll(" ", "");
         System.out.println(requestData);
 
-
-
         new GUIFunctions().clickButton("Продолжить")
                 .waitForElementDisplayed("//*[contains(text(),'Проект Акта приёмки продукции направлен оператору')]");
         closeWebDriver();
@@ -144,15 +142,4 @@ public class Test_04_07_03  extends Hooks {
         System.out.println(url);
     }
 
-    private void refreshTab(String expectedXpath, int times) {
-        for (int i = 0; i < times; i++) {
-            new functions.gui.GUIFunctions().waitForLoading();
-            if($x(expectedXpath).isDisplayed()) {
-                break;
-            }
-            refresh();
-            System.out.println("refresh(" + expectedXpath + ")");
-            CommonFunctions.wait(1);
-        }
-    }
 }

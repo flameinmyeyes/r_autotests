@@ -58,25 +58,21 @@ public class Test_04_07_02 extends Hooks {
         open("https://lk.t.exportcenter.ru/ru/main");
 
         new GUIFunctions()
-                .authorization(P.getProperty("Номенклатура.Email"), P.getProperty("Номенклатура.Пароль"), P.getProperty("Номенклатура.Код"));
+                .authorization(P.getProperty("Номенклатура.Email"), P.getProperty("Номенклатура.Пароль"), P.getProperty("Номенклатура.Код"))
+                .waitForElementDisplayed("//*[text()='Показать все (100)']");
 
-        new GUIFunctions().waitForElementDisplayed("//*[text()='Показать все (100)']")
-                .clickButton("Показать все (100)")
-                .clickByLocator("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div");
-
-        refreshTab("//*[text()='Подписание Соглашения']", 10);
-        refreshTab("//*[text()='Продолжить']", 10);
-
-        new GUIFunctions()
+        new GUIFunctions().clickButton("Показать все (100)")
+                .clickByLocator("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div")
+                .refreshTab("//*[text()='Подписание Соглашения']", 10)
+                .refreshTab("//*[text()='Продолжить']", 10)
                 .clickButton("Продолжить");
 
         $x("//*[text()='Номенклатура и объемы продукции']").scrollTo();
         new GUIFunctions().clickByLocator("(//button[@class='dropdown-icon'])[2]")
                 .waitForElementDisplayed("//*[text()='Изменить']")
                 .waitForElementDisplayed("//*[text()='Удалить']")
-                .clickButton("Изменить");
-
-        new GUIFunctions().clickByLocator("//*[text()='Количество ед. продукции']/ancestor::div[@class='BigInputLabel_labelWrapper__30aum']//following::input")
+                .clickButton("Изменить")
+                .clickByLocator("//*[text()='Количество ед. продукции']/ancestor::div[@class='BigInputLabel_labelWrapper__30aum']//following::input")
                 .clickByLocator("//*[text()='Количество ед. продукции']/ancestor::div[@class='BigInputLabel_labelWrapper__30aum']//following::button[@name='close']")
                 .inField("Количество ед. продукции").inputValue(P.getProperty("Номенклатура.Количество ед. продукции")).assertValue()
                 .clickButton("Добавить");
@@ -134,14 +130,4 @@ public class Test_04_07_02 extends Hooks {
         closeWebDriver();
     }
 
-    private void refreshTab(String expectedXpath, int times) {
-        for (int i = 0; i < times; i++) {
-            new functions.gui.GUIFunctions().waitForLoading();
-            if($x(expectedXpath).isDisplayed()) {
-                break;
-            }
-            refresh();
-            CommonFunctions.wait(1);
-        }
-    }
 }
