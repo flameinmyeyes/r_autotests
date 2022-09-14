@@ -155,7 +155,6 @@ public class Test_3_07_01 extends Hooks {
                     .inField("Описание упаковки").selectValue(P.getProperty("Добавление продукции.Описание упаковки")).assertNoControl().assertValue()
                     .inField("Размещение продукции").clickByLocator("//ancestor::div//span[contains(text(),'Навалом (наливом)')][last()]")
                     .inField("Наличие отличительных знаков (маркировки). Например, номера партий, серийные номера или названия торговых марок. ").setCheckboxON().assertCheckboxON()
-
                     .inField("Страна").selectValue(P.getProperty("Добавление продукции.Страна")).assertNoControl().assertValue()
                     .inField("Регион").selectValue(P.getProperty("Добавление продукции.Регион")).assertNoControl().assertValue()
 
@@ -168,35 +167,85 @@ public class Test_3_07_01 extends Hooks {
     public void step07() {
         CommonFunctions.printStep();
         new GUIFunctions()
-                .waitForElementDisplayed("//div[text()='Шаг 4 из 9']");
+                .waitForElementDisplayed("//div[text()='Шаг 4 из 9']")
+
+                .inContainer("Добавление продукции")
+                    .inField("Договор").selectValue(P.getProperty("Договор.Договор")).assertNoControl().assertValue()
+                    .inField("Орган инспекции").assertNoControl().assertValue(P.getProperty("Договор.Орган инспекции"))
+                    .inField("Номер").assertNoControl().assertValue(P.getProperty("Договор.Номер"))
+                    .inField("Дата").assertNoControl().assertValue(P.getProperty("Договор.Дата"))
+                    .inField("Срок действия").assertNoControl().assertValue(P.getProperty("Договор.Срок действия"))
+
+                .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
+                    .clickButton("Продолжить")
+                    .waitForLoading();
     }
 
     @Step("Блок \"Запрос отбора проб\"")
     public void step08() {
         CommonFunctions.printStep();
         new GUIFunctions()
-                .waitForElementDisplayed("//div[text()='Шаг 5 из 9']");
+                .waitForElementDisplayed("//div[text()='Шаг 5 из 9']")
 
+                .inContainer("Запрос отбора проб")
+                    .inField("Территориальное управление Россельхознадзора").selectValue(P.getProperty("Запрос отбора проб.Территориальное управление Россельхознадзора")).assertNoControl().assertValue()
+                    .inField("Планируемая дата отбора проб").inputValue(DateFunctions.dateToday("dd.MM.yyyy")).assertNoControl().assertValue()
+                    .inField("Планируемое время отбора проб").inputValue(P.getProperty("Запрос отбора проб.Планируемое время отбора проб")).assertNoControl().assertValue()
+                    .inField("Адрес места отбора проб").inputValue(P.getProperty("Запрос отбора проб.Адрес места отбора проб")).assertNoControl().assertValue()
+                    .inField("Дополнительные требования к исследованиям").inputValue(P.getProperty("Запрос отбора проб.Дополнительные требования к исследованиям")).assertNoControl().assertValue()
+
+                .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
+                    .clickButton("Направить на проверку")
+                    .waitForLoading();
     }
 
     @Step("Экран ознакомления с результатом проверки. Блок \"Форма заключения\"")
     public void step09() {
         CommonFunctions.printStep();
         new GUIFunctions()
-                .waitForElementDisplayed("//div[text()='Шаг 4 из 9']");
+                .waitForElementDisplayed("//div[text()='Шаг 7 из 9']")
 
-        docNum = $x("//div[contains (@class, 'FormHeader_title' )]//span[contains (@class, 'Typography_body' )]").getText().split("№")[1];
-        JupyterLabIntegration.uploadTextContent(docNum, WAY_TEST, "docNum.txt");
-        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
+                .inContainer("Форма заключения")
+                    .inField("Выберите требуемую форму заключения о карантинном фитосанитарном состоянии:").clickByLocator("//ancestor::div//span[contains(text(),'В электронной форме')][last()]");
     }
 
     @Step("Экран ознакомления с результатом проверки. Блок \"Уполномоченное лицо для получения заключения\"")
     public void step10() {
         CommonFunctions.printStep();
-        CommonFunctions.wait(20);
-        String status = RESTFunctions.getOrderStatus(processID);
-        System.out.println(status);
-        Assert.assertEquals(status, "Проводится проверка");
+        new GUIFunctions()
+                .waitForElementDisplayed("//div[text()='Шаг 7 из 9']")
+
+                .inContainer("Уполномоченное лицо для получения заключения")
+                    .inField("ФИО").selectValue(P.getProperty("Форма заключения.ФИО"))
+                    .inField("Телефон").assertNoControl().assertValue(P.getProperty("Форма заключения.Телефон"))
+                    .inField("Email").assertNoControl().assertValue(P.getProperty("Форма заключения.Email"))
+
+                .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
+                    .clickButton("Продолжить")
+                    .waitForLoading();
+    }
+
+    @Step("Экран ознакомления с результатом проверки. Блок \"Уполномоченное лицо для получения заключения\"")
+    public void step11() {
+        CommonFunctions.printStep();
+        new GUIFunctions()
+                .waitForElementDisplayed("//div[text()='Шаг 8 из 9']")
+
+                .inContainer("Договор с органом инспекции")
+                   .inField("Я ознакомлен и согласен с условиями проекта договора").setCheckboxON().assertCheckboxON()
+
+                .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
+                    .clickButton("Подписать и отправить")
+                    .waitForLoading();
+
+//        docNum = $x("//div[contains (@class, 'FormHeader_title' )]//span[contains (@class, 'Typography_body' )]").getText().split("№")[1];
+//        JupyterLabIntegration.uploadTextContent(docNum, WAY_TEST, "docNum.txt");
+//        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
+//
+//        CommonFunctions.wait(20);
+//        String status = RESTFunctions.getOrderStatus(processID);
+//        System.out.println(status);
+//        Assert.assertEquals(status, "Проводится проверка");
     }
 
     public void refreshTab(String expectedXpath, int times) {
