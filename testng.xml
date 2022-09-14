@@ -94,12 +94,11 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-
     <test name="SPT" thread-count="1" preserve-order="true">
         <classes>
             <class name="ru.exportcenter.test.SPT.Test_07_07_01" />
+            <class name="ru.exportcenter.test.SPT.Test_07_07_02" />
         </classes>
     </test>
-
 
 </suite>
