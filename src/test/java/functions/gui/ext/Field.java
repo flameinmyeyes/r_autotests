@@ -13,6 +13,8 @@ public class Field extends ElementData {
     public void inputValue(String value) {
         $x(new XPath(this).getInputXPath()).setValue(value);
         $x(new XPath(this).getInputXPath()).click();
+
+        new Wait().waitForLoading();
     }
 
     public void selectValue(String value) {
@@ -21,6 +23,8 @@ public class Field extends ElementData {
         $x(inputField).click();
         $x(inputField).setValue(value);
         $x(item).click();
+
+        new Wait().waitForLoading();
     }
 
     public void inputInSearchField(String searchFieldPlaceholder, String value) {
