@@ -98,6 +98,7 @@
         <classes>
             <class name="ru.exportcenter.test.SPT.Test_07_07_01" />
             <class name="ru.exportcenter.test.SPT.Test_07_07_02" />
+            <class name="ru.exportcenter.test.SPT.Test_07_07_03" />
         </classes>
     </test>
 
