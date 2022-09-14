@@ -54,7 +54,7 @@ public class Test_04_07_01 extends Hooks {
         requestNumber = $x("//div[text()='Номер заявки']/following-sibling::div").getText();
         System.out.println($x("//div[text()='Номер заявки']/following-sibling::div").getText());
 
-        refreshTab("//*[text()='Продолжить']", 10);
+        new GUIFunctions().refreshTab("//*[text()='Продолжить']", 10);
 
         processID = CommonFunctions.getProcessIDFromURL();
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
@@ -84,6 +84,7 @@ public class Test_04_07_01 extends Hooks {
         CommonFunctions.printStep();
 
         new GUIFunctions().clickButton("Добавить +");
+        new CommonFunctions().wait(2);
         new GUIFunctions().inContainer("Сведения о продукции")
                 .inField("Каталог продукции").inputValue("1704")
                 .waitForElementDisplayed("//*[contains(text(), 'Белёвская пастила с чёрной смородиной')]")
@@ -122,14 +123,4 @@ public class Test_04_07_01 extends Hooks {
         closeWebDriver();
     }
 
-    private void refreshTab(String expectedXpath, int times) {
-        for (int i = 0; i < times; i++) {
-            new functions.gui.GUIFunctions().waitForLoading();
-            if($x(expectedXpath).isDisplayed()) {
-                break;
-            }
-            refresh();
-            CommonFunctions.wait(1);
-        }
-    }
 }
