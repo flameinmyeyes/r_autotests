@@ -13,15 +13,14 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.Properties;
 import static com.codeborne.selenide.Selenide.*;
 
 public class Test_07_07_01 extends Hooks {
 
-    //    private String WAY_TEST = Ways.TEST.getWay() + "/SPT/Test_07_07_01/";
-//    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_07_07_01_properties.xml";
-//    public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
+    private String WAY_TEST = Ways.TEST.getWay() + "/SPT/Test_07_07_01/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_07_07_01_properties.xml";
+    public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     public String requestNumber;
 
     @Owner(value = "Теребков Андрей")
@@ -31,12 +30,13 @@ public class Test_07_07_01 extends Hooks {
     public void steps() throws AWTException {
         step01();
         step02();
+        step03();
     }
 
-//    @AfterMethod
-//    public void screenShot() {
-//        CommonFunctions.screenShot(WAY_TEST + "screen.png");
-//    }
+    @AfterMethod
+    public void screenShot() {
+        CommonFunctions.screenShot(WAY_TEST + "screen.png");
+    }
 
     @Step("Авторизация")
     public void step01() {
@@ -45,11 +45,12 @@ public class Test_07_07_01 extends Hooks {
         String url = "http://uidm.uidm-dev.d.exportcenter.ru/promo-service?key=service-spt&serviceId=27ddd0b2-5ed9-4100-9c93-2b0e07a2d599&next_query=true";
         open(url);
         new GUIFunctions()
-                .authorization("demo_exporter", "password")
+                .waitForLoading()
+                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForLoading();
 
         requestNumber = $x("//div[text()='Номер заявки']/following-sibling::div").getText();
-//        JupyterLabIntegration.uploadTextContent(requestNumber, WAY_TEST, "requestNumber.txt");
+//      JupyterLabIntegration.uploadTextContent(requestNumber, WAY_TEST, "requestNumber.txt");
         System.out.println("requestNumber = " + requestNumber);
     }
 
@@ -62,17 +63,17 @@ public class Test_07_07_01 extends Hooks {
         new GUIFunctions()
                 .clickButton("Продолжить")
                 .waitForLoading();
+    }
 
-        CommonFunctions.wait(10);
-
-
-        $("//*[@id='form-open-panel']/div[1]/span/div/div[2]/div[1]/div[2]/button").click();
-
-//      $("//*[@id=эform-open-panelэ]/div[1]/span/div/div[2]/div[1]/div[2]/ul/li").click();
+    @Step("Закрытие заявки")
+    public void step03() {
+        CommonFunctions.printStep();
 
         new GUIFunctions()
-                .waitForURL("");
-   }
+                .clickByLocator("//div[@class='KrDropdownMenu_container__3c8fs']//button[1]")
+                .clickButton("Отменить заявку")
+                .waitForLoading();
+    }
 
     private void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
