@@ -1,19 +1,16 @@
-package ru.exportcenter.test.fito;
+package ru.exportcenter.dev.fito;
 
 import framework.RunTestAgain;
 import framework.Ways;
 import framework.integration.JupyterLabIntegration;
-import functions.api.RESTFunctions;
 import functions.common.CommonFunctions;
 import functions.common.DateFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
-import functions.gui.lkb.GUIFunctionsLKB;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
@@ -27,7 +24,6 @@ public class Test_3_07_01 extends Hooks {
     public String WAY_TEST = Ways.TEST.getWay() + "/fito/Test_3_07_01/";
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_3_07_01_properties.xml";
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
-    private String docNum;
     private String processID;
 
     @Owner(value = "Балашов Илья")
@@ -91,12 +87,13 @@ public class Test_3_07_01 extends Hooks {
     public void step03() {
         CommonFunctions.printStep();
 
+        //сохраним processID в файл
+        processID = CommonFunctions.getProcessIDFromURL();
+        System.out.println("processID: " + processID);
+        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
+
         //На "Начальном экране" формирования запроса нажать "Продолжить"
         refreshTab("//*[contains(text(), 'Продолжить')]", 60);
-
-        processID = CommonFunctions.getProcessIDFromURL();
-//        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
-
         new GUIFunctions().clickButton("Продолжить");
     }
 
@@ -169,12 +166,12 @@ public class Test_3_07_01 extends Hooks {
         new GUIFunctions()
                 .waitForElementDisplayed("//div[text()='Шаг 4 из 9']")
 
-                .inContainer("Добавление продукции")
+                .inContainer("Договор на установление карантинного  фитосанитарного состояния")
                     .inField("Договор").selectValue(P.getProperty("Договор.Договор")).assertNoControl().assertValue()
-                    .inField("Орган инспекции").assertNoControl().assertValue(P.getProperty("Договор.Орган инспекции"))
-                    .inField("Номер").assertNoControl().assertValue(P.getProperty("Договор.Номер"))
-                    .inField("Дата").assertNoControl().assertValue(P.getProperty("Договор.Дата"))
-                    .inField("Срок действия").assertNoControl().assertValue(P.getProperty("Договор.Срок действия"))
+                    .inField("Орган инспекции").assertValue(P.getProperty("Договор.Орган инспекции")).assertNoControl()
+                    .inField("Номер").assertValue(P.getProperty("Договор.Номер")).assertNoControl()
+                    .inField("Дата").assertValue(P.getProperty("Договор.Дата")).assertNoControl()
+                    .inField("Срок действия").assertValue(P.getProperty("Договор.Срок действия")).assertNoControl()
 
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
                     .clickButton("Продолжить")
@@ -192,7 +189,7 @@ public class Test_3_07_01 extends Hooks {
                     .inField("Планируемая дата отбора проб").inputValue(DateFunctions.dateToday("dd.MM.yyyy")).assertNoControl().assertValue()
                     .inField("Планируемое время отбора проб").inputValue(P.getProperty("Запрос отбора проб.Планируемое время отбора проб")).assertNoControl().assertValue()
                     .inField("Адрес места отбора проб").inputValue(P.getProperty("Запрос отбора проб.Адрес места отбора проб")).assertNoControl().assertValue()
-                    .inField("Дополнительные требования к исследованиям").inputValue(P.getProperty("Запрос отбора проб.Дополнительные требования к исследованиям")).assertNoControl().assertValue()
+                    .inField("Дополнительные требования к исследованиям ").inputValue(P.getProperty("Запрос отбора проб.Дополнительные требования к исследованиям")).assertNoControl().assertValue()
 
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
                     .clickButton("Направить на проверку")
@@ -215,10 +212,12 @@ public class Test_3_07_01 extends Hooks {
         new GUIFunctions()
                 .waitForElementDisplayed("//div[text()='Шаг 7 из 9']")
 
-                .inContainer("Уполномоченное лицо для получения заключения")
-                    .inField("ФИО").selectValue(P.getProperty("Форма заключения.ФИО"))
-                    .inField("Телефон").assertNoControl().assertValue(P.getProperty("Форма заключения.Телефон"))
-                    .inField("Email").assertNoControl().assertValue(P.getProperty("Форма заключения.Email"))
+//                .inContainer("Уполномоченное лицо для получения заключения")
+                .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
+//                    .inField("ФИО").selectValue(P.getProperty("Форма заключения.ФИО"))
+                    .inField("ФИО").selectValue("Фамилия Дополнительного контакта").assertNoControl().assertValue()
+                    .inField("Телефон").assertValue(P.getProperty("Форма заключения.Телефон")).assertNoControl()
+                    .inField("Email").assertValue(P.getProperty("Форма заключения.Email")).assertNoControl()
 
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
                     .clickButton("Продолжить")

@@ -19,7 +19,17 @@ public class Asserts extends ElementData {
     private String getValue() {
         String actualValue;
         String inputXPath = new XPath(this).getInputXPath();
-        if ($x(inputXPath).exists()) {
+
+        //старая версия
+//        if ($x(inputXPath).exists()) {
+//            actualValue = $x(new XPath(this).getInputXPath()).getValue();
+//            System.out.println("inputXPath exists");
+//        } else {
+//            actualValue = $x(new XPath(this).getUneditableInputXPath()).getText();
+//            System.out.println("inputXPath !exists");
+//        }
+
+        if (inputXPath != null && $x(inputXPath).exists()) {
             actualValue = $x(new XPath(this).getInputXPath()).getValue();
         } else {
             actualValue = $x(new XPath(this).getUneditableInputXPath()).getText();
