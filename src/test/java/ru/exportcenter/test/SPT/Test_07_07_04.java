@@ -1,8 +1,8 @@
 package ru.exportcenter.test.SPT;
 
 import framework.RunTestAgain;
-import framework.Ways;
 import framework.integration.JupyterLabIntegration;
+import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
@@ -17,16 +17,16 @@ import java.awt.*;
 import java.util.Properties;
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_07_07_01 extends Hooks {
+public class Test_07_07_04 extends Hooks {
 
-    private String WAY_TEST = Ways.TEST.getWay() + "/SPT/Test_07_07_01/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_07_07_01_properties.xml";
+    private String WAY_TEST = Ways.TEST.getWay() + "/SPT/Test_07_07_04/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_07_07_04_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     public String requestNumber;
 
     @Owner(value = "Теребков Андрей")
-    @Description("07.07.01 Авторизация, создание заявки, отмена заявки клиентом")
-    @Link(name = "Test_07_07_01", url = " https://confluence.exportcenter.ru/pages/viewpage.action?pageId=175264454")
+    @Description("07.07.04 Выдача сертификата о происхождении товара сертификат СТ-1")
+    @Link(name = "Test_07_07_04", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=175264516")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException {
         step01();
@@ -67,13 +67,12 @@ public class Test_07_07_01 extends Hooks {
                 .waitForLoading();
     }
 
-    @Step("Закрытие заявки")
+    @Step("Нажатие кнопки «К перечню заявлений»")
     public void step03() {
         CommonFunctions.printStep();
 
         new GUIFunctions()
-                .clickByLocator("//div[@class='KrDropdownMenu_container__3c8fs']//button[1]")
-                .clickButton("Отменить заявку")
+                .clickButton("К перечню заявлений")
                 .waitForLoading();
     }
 
