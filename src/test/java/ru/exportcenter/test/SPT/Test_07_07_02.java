@@ -2,6 +2,7 @@ package ru.exportcenter.test.SPT;
 
 import framework.RunTestAgain;
 import framework.Ways;
+import framework.integration.JupyterLabIntegration;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
@@ -50,7 +51,8 @@ public class Test_07_07_02 extends Hooks {
                 .waitForLoading();
 
         requestNumber = $x("//div[text()='Номер заявки']/following-sibling::div").getText();
-//      JupyterLabIntegration.uploadTextContent(requestNumber, WAY_TEST, "requestNumber.txt");
+        JupyterLabIntegration.uploadTextContent(requestNumber, WAY_TEST, "requestNumber.txt");
+//      requestNumber = JupyterLabIntegration.getFileContent(WAY_TEST + "requestNumber.txt");
         System.out.println("requestNumber = " + requestNumber);
     }
 

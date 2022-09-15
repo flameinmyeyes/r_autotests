@@ -1,6 +1,7 @@
 package ru.exportcenter.test.SPT;
 
 import framework.RunTestAgain;
+import framework.integration.JupyterLabIntegration;
 import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
@@ -25,7 +26,7 @@ public class Test_07_07_03 extends Hooks {
 
     @Owner(value = "Теребков Андрей")
     @Description("07.07.03 Нажатие кнопки «К перечню заявлений»")
-    @Link(name = "Test_07_07_03", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=175264493")
+    @Link(name = "Test_07_07_03", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=175264808")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException {
         step01();
@@ -50,7 +51,8 @@ public class Test_07_07_03 extends Hooks {
                 .waitForLoading();
 
         requestNumber = $x("//div[text()='Номер заявки']/following-sibling::div").getText();
-//      JupyterLabIntegration.uploadTextContent(requestNumber, WAY_TEST, "requestNumber.txt");
+        JupyterLabIntegration.uploadTextContent(requestNumber, WAY_TEST, "requestNumber.txt");
+//      requestNumber = JupyterLabIntegration.getFileContent(WAY_TEST + "requestNumber.txt");
         System.out.println("requestNumber = " + requestNumber);
     }
 
