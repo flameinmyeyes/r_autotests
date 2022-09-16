@@ -1,6 +1,7 @@
 package ru.exportcenter.test.apk;
 
 import framework.RunTestAgain;
+import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
@@ -16,7 +17,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class Test_01_07_05_1 extends Hooks {
 
-//    private String WAY_TEST = Ways.TEST.getWay() + "/apk/Test_04_07_01/";
+    private String WAY_TEST = Ways.TEST.getWay() + "/apk/Test_04_07_01/";
 //    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_04_07_01_properties.xml";
 //    public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 

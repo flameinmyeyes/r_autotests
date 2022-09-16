@@ -17,14 +17,13 @@ import ru.exportcenter.Hooks;
 import java.awt.*;
 import java.util.Properties;
 
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class Test_01_07_11_1 extends Hooks {
 
     private String WAY_TEST = Ways.TEST.getWay() + "/apk/Test_01_07_11_1/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_01_07_11_1_properties.xml";
-    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
+//    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_01_07_11_1_properties.xml";
+//    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     @Owner(value = "Петрищев Руслан")
     @Description("01 07 11.1 Заполнение Заявки на получение услуги, подписание Заявки УКЭП и автоматическая передача Заявки на верификацию")
@@ -33,6 +32,10 @@ public class Test_01_07_11_1 extends Hooks {
     public void steps() throws AWTException, InterruptedException {
         precondition();
         step01();
+        step02();
+        step03();
+        step04();
+        step05();
     }
 
     @AfterMethod
@@ -40,12 +43,22 @@ public class Test_01_07_11_1 extends Hooks {
         CommonFunctions.screenShot(WAY_TEST + "screen.png");
     }
 
+//    @Step("Предусловия")
+//    public void precondition() throws AWTException, InterruptedException  {
+//        CommonFunctions.printStep();
+//
+//        Test_01_07_05_2 test_01_07_05_2 = new Test_01_07_05_2();
+//        test_01_07_05_2.steps();
+//    }
+
     @Step("Предусловия")
     public void precondition() throws AWTException, InterruptedException  {
         CommonFunctions.printStep();
 
-        Test_01_07_05_2 test_01_07_05_2 = new Test_01_07_05_2();
-        test_01_07_05_2.steps();
+        open("https://lk.t.exportcenter.ru/ru/promo-service?key=apkNaVr&serviceId=b4ac4be3-224e-4277-8178-7eafd954725f&next_query=true");
+        new GUIFunctions()
+                .authorization("exporter_su_apk@otr.ru", "Password1!", "1234")
+                .waitForLoading();
     }
 
     @Step("Переход к заявке")
@@ -54,9 +67,9 @@ public class Test_01_07_11_1 extends Hooks {
 
         //Перезагрузить страницу
         //Нажать кнопку «Продолжить»
-        new GUIFunctions().refreshTab("//*[text()='Продолжить']", 10)
-                .clickButton("Продолжить")
-                .waitForLoading();
+//        new GUIFunctions().refreshTab("//*[text()='Продолжить']", 10)
+//                .clickButton("Продолжить")
+//                .waitForLoading();
     }
 
     @Step("Заполнение блока \"Информация о Заявителе\"")
@@ -82,7 +95,7 @@ public class Test_01_07_11_1 extends Hooks {
         //Из выпадающего списка "Основание понесенных затрат" выбрать значение "Требование контракта"
         //Выбрать приложенный файл с устройства формата xlsx и нажать кнопку «Открыть»
         new GUIFunctions().inContainer("Затрата")
-                .inField("Вид затраты, связанной с сертификацией продукции").selectValue("1 Услуги компетентного органа или уполномоченной организации в стране экспорта по осуществлению процедур оценки соответствия продукции (регистрации, подтверждения соответствия, испытаний, сертификации и других форм оценки соответствия, установленных законодательством иностранного государства или являющихся условием внешнеэкономического контракта) ")
+                .inField("Вид затраты, связанной с сертификацией продукции").selectValue("1\u00a0Услуги компетентного органа или уполномоченной организации в стране экспорта по осуществлению процедур оценки соответствия продукции (регистрации, подтверждения соответствия, испытаний, сертификации и других форм оценки соответствия, установленных законодательством иностранного государства или являющихся условием внешнеэкономического контракта)\u00a0")
                 .inField("Основание понесенных затрат").selectValue("Требование контракта")
                 .uploadFile("Загрузить шаблон","C:\\auto-tests\\Шаблон 1 - фаст (1).xlsm")
                 .waitForElementDisplayed("//*[text()='Шаблон 1 - фаст (1).xlsm']/ancestor::a[contains(@class,'FileInput')]/following-sibling::button[contains(@class,'delete')]");
@@ -94,13 +107,15 @@ public class Test_01_07_11_1 extends Hooks {
 
         //Выбрать приложенный файл с устройства формата zip и нажать кнопку «Открыть»
         //Выбрать приложенный файл с устройства формата zip и нажать кнопку «Открыть»
-        //Нажать на кнопку «Далее»
         new GUIFunctions().inContainer("Загрузка подтверждающих документов")
                 .uploadFile("Подтверждающие документы", "C:\\auto-tests\\rec.zip")
                 .waitForElementDisplayed("//*[text()='rec.zip']/ancestor::a[contains(@class,'FileInput')]/following-sibling::button[contains(@class,'delete')]")
                 .uploadFile("Платежное поручение", "C:\\auto-tests\\payment 228.zip")
                 .waitForElementDisplayed("//*[text()='payment 228.zip']/ancestor::a[contains(@class,'FileInput')]/following-sibling::button[contains(@class,'delete')]")
-                .clickButton("Далее")
+                .scrollTo("Далее");
+
+        //Нажать на кнопку «Далее»
+        new GUIFunctions().clickButton("Далее")
                 .waitForElementDisplayed("//*[text()='Сведения о затратах']");
     }
 

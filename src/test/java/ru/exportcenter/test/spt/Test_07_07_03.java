@@ -1,8 +1,8 @@
-package ru.exportcenter.test.SPT;
+package ru.exportcenter.test.spt;
 
 import framework.RunTestAgain;
-import framework.Ways;
 import framework.integration.JupyterLabIntegration;
+import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
@@ -17,16 +17,16 @@ import java.awt.*;
 import java.util.Properties;
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_07_07_02 extends Hooks {
+public class Test_07_07_03 extends Hooks {
 
-    private String WAY_TEST = Ways.TEST.getWay() + "/SPT/Test_07_07_02/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_07_07_02_properties.xml";
+    private String WAY_TEST = Ways.TEST.getWay() + "/SPT/Test_07_07_03/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_07_07_03_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     public String requestNumber;
 
     @Owner(value = "Теребков Андрей")
-    @Description("07.07.02 Авторизация, создание заявки, нажатие кнопки 'Продолжить' без выбора вида сертификата.")
-    @Link(name = "Test_07_07_02", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=175264493")
+    @Description("07.07.03 Нажатие кнопки «К перечню заявлений»")
+    @Link(name = "Test_07_07_03", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=175264808")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException {
         step01();
@@ -67,14 +67,13 @@ public class Test_07_07_02 extends Hooks {
                 .waitForLoading();
     }
 
-    @Step("нажатие кнопки 'Продолжить' без выбора вида сертификата")
+    @Step("Нажатие кнопки «К перечню заявлений»")
     public void step03() {
         CommonFunctions.printStep();
 
         new GUIFunctions()
-                .clickButton("Продолжить")
-                .waitForLoading()
-                .clickByLocator("//div[text()='Заполните поле']");
+                .clickButton("К перечню заявлений")
+                .waitForLoading();
     }
 
     private void refreshTab(String expectedXpath, int times) {

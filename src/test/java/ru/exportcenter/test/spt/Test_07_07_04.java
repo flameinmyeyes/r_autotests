@@ -1,4 +1,4 @@
-package ru.exportcenter.test.SPT;
+package ru.exportcenter.test.spt;
 
 import framework.RunTestAgain;
 import framework.integration.JupyterLabIntegration;
