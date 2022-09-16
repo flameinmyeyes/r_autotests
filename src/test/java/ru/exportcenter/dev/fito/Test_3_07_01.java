@@ -29,7 +29,6 @@ public class Test_3_07_01 extends Hooks {
     @Owner(value = "Балашов Илья")
     @Description("3.07.01 (Р) Сценарий получения услуги по ЗКФС (положительный результат)")
     @Link(name = "Test_3_07_01", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=163308618")
-
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
         step01();
@@ -94,16 +93,15 @@ public class Test_3_07_01 extends Hooks {
 
         //На "Начальном экране" формирования запроса нажать "Продолжить"
         refreshTab("//*[contains(text(), 'Продолжить')]", 60);
-        new GUIFunctions().clickButton("Продолжить");
+        new GUIFunctions()
+                .clickButton("Продолжить")
+                .waitForElementDisplayed("//div[text()='Шаг 1 из 9']");
     }
 
     @Step("Блок \"Заявитель/Получатель\"")
     public void step04() {
         CommonFunctions.printStep();
-
         new GUIFunctions()
-                .waitForElementDisplayed("//div[text()='Шаг 1 из 9']")
-
                 .inContainer("Получатель")
                     .inField("Наименование получателя (на английском языке)").inputValue(P.getProperty("Получатель.Наименование получателя")).assertNoControl().assertValue()
                     .inField("Страна").selectValue(P.getProperty("Получатель.Страна")).assertNoControl().assertValue()
@@ -111,40 +109,38 @@ public class Test_3_07_01 extends Hooks {
 
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
                     .clickButton("Продолжить")
-                    .waitForLoading();
+                    .waitForLoading()
+                    .waitForElementDisplayed("//div[text()='Шаг 2 из 9']");
     }
 
     @Step("Блок  \"Условия поставки\"")
     public void step05() {
         CommonFunctions.printStep();
-
         new GUIFunctions()
-                .waitForElementDisplayed("//div[text()='Шаг 2 из 9']")
-
                 .inContainer("Условия поставки")
                     .inField("Вид транспорта").selectValue(P.getProperty("Условия поставки.Вид транспорта")).assertNoControl().assertValue()
                     .inField("Страна назначения").selectValue(P.getProperty("Условия поставки.Страна назначения")).assertNoControl().assertValue()
                     .inField("Пункт ввоза в стране назначения").inputValue(P.getProperty("Условия поставки.Пункт ввоза в стране назначения")).assertNoControl().assertValue()
-
+                    //Документы на груз
                     .inField("Тип документа о происхождении груза. Если тип документа в списке отсутствует — выберите «другое»").selectValue(P.getProperty("Условия поставки.Тип документа о происхождении груза. Если тип документа в списке отсутствует — выберите «другое»")).assertNoControl().assertValue()
                     .inField("Номер документа на груз").inputValue(P.getProperty("Условия поставки.Номер документа на груз")).assertNoControl().assertValue()
                     .inField("Дата").inputValue(DateFunctions.dateToday("dd.MM.yyyy")).assertNoControl().assertValue()
 
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
                     .clickButton("Продолжить")
-                    .waitForLoading();
+                    .waitForLoading()
+                    .waitForElementDisplayed("//div[text()='Шаг 3 из 9']");
     }
 
     @Step("Блок \"Добавление продукции\"")
     public void step06() {
         CommonFunctions.printStep();
         new GUIFunctions()
-                .waitForElementDisplayed("//div[text()='Шаг 3 из 9']")
-
                 .inContainer("Добавление продукции")
 //                    .inField("Каталог продукции").selectValue(" --- кофе").assertNoControl().assertValue()
                     .inField("Каталог продукции").clickByLocator("//input[@placeholder='Введите наименование продукции или код ТН ВЭД']").inputValue("кофе").clickByLocator("//*[contains(text(), ' --- кофе')]")
                     .inField("Тип продукции").selectValue(P.getProperty("Добавление продукции.Тип продукции")).assertNoControl().assertValue()
+                    .inField("Ботаническое наименование продукции").assertValue(P.getProperty("Добавление продукции.Ботаническое наименование продукции")).assertNoControl()
                     .inField("Дополнительная информация о продукции. Например, страна производства (произрастания) продукции, сорт продукции и т.д.").inputValue(P.getProperty("Добавление продукции.Дополнительная информация о продукции")).assertNoControl().assertValue()
                     .inField("Вес груза (нетто), кг").inputValue(P.getProperty("Добавление продукции.Вес груза (нетто)")).assertNoControl().assertValue()
                     .inField("Особые единицы измерения").selectValue(P.getProperty("Добавление продукции.Особые единицы измерения")).assertNoControl().assertValue()
@@ -152,20 +148,20 @@ public class Test_3_07_01 extends Hooks {
                     .inField("Описание упаковки").selectValue(P.getProperty("Добавление продукции.Описание упаковки")).assertNoControl().assertValue()
                     .inField("Размещение продукции").clickByLocator("//ancestor::div//span[contains(text(),'Навалом (наливом)')][last()]")
                     .inField("Наличие отличительных знаков (маркировки). Например, номера партий, серийные номера или названия торговых марок. ").setCheckboxON().assertCheckboxON()
+                    //Место происхождения( произрастания) продукции
                     .inField("Страна").selectValue(P.getProperty("Добавление продукции.Страна")).assertNoControl().assertValue()
                     .inField("Регион").selectValue(P.getProperty("Добавление продукции.Регион")).assertNoControl().assertValue()
 
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
                     .clickButton("Продолжить")
-                    .waitForLoading();
+                    .waitForLoading()
+                    .waitForElementDisplayed("//div[text()='Шаг 4 из 9']");
     }
 
     @Step("Блок \"Договор на установление карантинного фитосанитарного состояния\"")
     public void step07() {
         CommonFunctions.printStep();
         new GUIFunctions()
-                .waitForElementDisplayed("//div[text()='Шаг 4 из 9']")
-
                 .inContainer("Договор на установление карантинного  фитосанитарного состояния")
                     .inField("Договор").selectValue(P.getProperty("Договор.Договор")).assertNoControl().assertValue()
                     .inField("Орган инспекции").assertValue(P.getProperty("Договор.Орган инспекции")).assertNoControl()
@@ -175,15 +171,14 @@ public class Test_3_07_01 extends Hooks {
 
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
                     .clickButton("Продолжить")
-                    .waitForLoading();
+                    .waitForLoading()
+                    .waitForElementDisplayed("//div[text()='Шаг 5 из 9']");
     }
 
     @Step("Блок \"Запрос отбора проб\"")
     public void step08() {
         CommonFunctions.printStep();
         new GUIFunctions()
-                .waitForElementDisplayed("//div[text()='Шаг 5 из 9']")
-
                 .inContainer("Запрос отбора проб")
                     .inField("Территориальное управление Россельхознадзора").selectValue(P.getProperty("Запрос отбора проб.Территориальное управление Россельхознадзора")).assertNoControl().assertValue()
                     .inField("Планируемая дата отбора проб").inputValue(DateFunctions.dateToday("dd.MM.yyyy")).assertNoControl().assertValue()
@@ -193,15 +188,14 @@ public class Test_3_07_01 extends Hooks {
 
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
                     .clickButton("Направить на проверку")
-                    .waitForLoading();
+                    .waitForLoading()
+                    .waitForElementDisplayed("//div[text()='Шаг 7 из 9']");
     }
 
     @Step("Экран ознакомления с результатом проверки. Блок \"Форма заключения\"")
     public void step09() {
         CommonFunctions.printStep();
         new GUIFunctions()
-                .waitForElementDisplayed("//div[text()='Шаг 7 из 9']")
-
                 .inContainer("Форма заключения")
                     .inField("Выберите требуемую форму заключения о карантинном фитосанитарном состоянии:").clickByLocator("//ancestor::div//span[contains(text(),'В электронной форме')][last()]");
     }
@@ -210,8 +204,6 @@ public class Test_3_07_01 extends Hooks {
     public void step10() {
         CommonFunctions.printStep();
         new GUIFunctions()
-                .waitForElementDisplayed("//div[text()='Шаг 7 из 9']")
-
 //                .inContainer("Уполномоченное лицо для получения заключения")
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
 //                    .inField("ФИО").selectValue(P.getProperty("Форма заключения.ФИО"))
@@ -221,15 +213,14 @@ public class Test_3_07_01 extends Hooks {
 
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
                     .clickButton("Продолжить")
-                    .waitForLoading();
+                    .waitForLoading()
+                    .waitForElementDisplayed("//div[text()='Шаг 8 из 9']");
     }
 
     @Step("Экран ознакомления с результатом проверки. Блок \"Уполномоченное лицо для получения заключения\"")
     public void step11() {
         CommonFunctions.printStep();
         new GUIFunctions()
-                .waitForElementDisplayed("//div[text()='Шаг 8 из 9']")
-
                 .inContainer("Договор с органом инспекции")
                    .inField("Я ознакомлен и согласен с условиями проекта договора").setCheckboxON().assertCheckboxON()
 
