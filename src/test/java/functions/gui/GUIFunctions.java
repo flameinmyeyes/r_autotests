@@ -1,5 +1,6 @@
 package functions.gui;
 
+import com.codeborne.selenide.SelenideElement;
 import functions.common.CommonFunctions;
 import functions.gui.ext.*;
 import org.openqa.selenium.Keys;
@@ -34,6 +35,19 @@ public class GUIFunctions extends ElementData {
         return this;
     }
 
+    /**
+     * scroll page
+     */
+
+    public GUIFunctions scrollTo(SelenideElement element) {
+        element.scrollTo();
+        return this;
+    }
+
+    public GUIFunctions scrollTo(String button) {
+        $x("//*[text() = '" + button + "']").scrollTo();
+        return this;
+    }
 
     /**
      * authorization

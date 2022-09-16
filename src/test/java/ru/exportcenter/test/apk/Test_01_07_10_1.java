@@ -13,6 +13,8 @@ import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
 import java.awt.*;
 
+import static com.codeborne.selenide.Selenide.open;
+
 public class Test_01_07_10_1 extends Hooks {
 
     private String WAY_TEST = Ways.TEST.getWay() + "/apk/Test_01_07_10_1/";
@@ -45,6 +47,7 @@ public class Test_01_07_10_1 extends Hooks {
     public void step01() {
         CommonFunctions.printStep();
 
+        open("https://lk.t.exportcenter.ru/ru/main");
         new GUIFunctions().clickButton("Показать все (100)")
                 .clickByLocator("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div")
                 .waitForElementDisplayed("//*[text()='" + requestNumber + "']");

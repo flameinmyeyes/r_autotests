@@ -12,11 +12,8 @@ import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
-
 import java.awt.*;
 import java.util.Properties;
-
-import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static com.codeborne.selenide.Selenide.open;
 
 public class Test_01_07_01_1 extends Hooks {
@@ -42,7 +39,7 @@ public class Test_01_07_01_1 extends Hooks {
     public void step01() {
         CommonFunctions.printStep();
 
-        //Ввести логин и пароль
+        //Ввести логин и пароль, нажать «Войти»
         open("https://lk.t.exportcenter.ru/ru/login");
         new GUIFunctions()
                 .authorization(P.getProperty("Авторизация.Email"), P.getProperty("Авторизация.Пароль"), P.getProperty("Авторизация.Код"))
