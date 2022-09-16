@@ -45,7 +45,7 @@ public class GUIFunctions extends ElementData {
     }
 
     public GUIFunctions scrollTo(String button) {
-        $x(new XPath(this).getContainerXPath() + "//*[text() = '" + button + "']").scrollTo();
+        $x("//*[text() = '" + button + "']").scrollTo();
         return this;
     }
 
