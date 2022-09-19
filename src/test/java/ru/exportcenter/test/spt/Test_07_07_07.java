@@ -17,23 +17,21 @@ import java.awt.*;
 import java.util.Properties;
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_07_07_04 extends Hooks {
+public class Test_07_07_07 extends Hooks {
 
-    private String WAY_TEST = Ways.TEST.getWay() + "/SPT/Test_07_07_04/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_07_07_04_properties.xml";
+    private String WAY_TEST = Ways.TEST.getWay() + "/SPT/Test_07_07_07/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_07_07_07_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     public String requestNumber;
 
     @Owner(value = "Теребков Андрей")
     @Description("07.07.04 Выдача сертификата о происхождении товара сертификат СТ-1")
-    @Link(name = "Test_07_07_04", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=175264516")
+    @Link(name = "Test_07_07_07", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=175265976")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException {
         step01();
         step02();
-        step03();
-        step04();
-        step05();
+        //      step03();
     }
 
     @AfterMethod
@@ -69,57 +67,13 @@ public class Test_07_07_04 extends Hooks {
                 .waitForLoading();
     }
 
-    @Step("Выбор «Формы СТ-1»")
+    @Step("Нажатие кнопки «К перечню заявлений»")
     public void step03() {
         CommonFunctions.printStep();
 
-        $x("//div[@class='Radio_checkMark__18knp']").click();
-
         new GUIFunctions()
-                .clickButton("Продолжить")
+                .clickButton("К перечню заявлений")
                 .waitForLoading();
-    }
-
-    @Step("Выбор «Формы СТ-1»")
-    public void step04() {
-        CommonFunctions.printStep();
-
-        new GUIFunctions()
-                .waitForElementDisplayed("//span[text()='Наименование организации']/following-sibling::span");
-/*
-ООО "АЛСЕЗА"
-392526, ТАМБОВСКАЯ ОБЛАСТЬ, ПОСЕЛОК СТРОИТЕЛЬ, УЛИЦА ПРОМЫШЛЕННАЯ, 84
-7743300600
-287545403
-1157746363994
-exp_test@mail.ru
-+7(123)112-34-56
-true
-*/
-        System.out.println($x("//span[text()='Наименование организации']/following-sibling::span").getText());
-        System.out.println($x("//span[text()='Юридический адрес']/following-sibling::span").getText());
-        System.out.println($x("//span[text()='ИНН']/following-sibling::span").getText());
-        System.out.println($x("//span[text()='КПП']/following-sibling::span").getText());
-        System.out.println($x("//span[text()='ОГРН']/following-sibling::span").getText());
-        System.out.println($x("//input[contains(@class,'KrInput_input__xg4vc undefined')]").getValue());
-        System.out.println($x("(//input[contains(@class,'KrInput_input__xg4vc undefined')])[2]").getValue());
-
-        System.out.println($x("//*[@id='form-open-panel']/div[2]/div/form/div[2]/div/div[2]/div/div/div[3]/div/div[2]/div/label/div/input").isSelected());
-
-
-        new GUIFunctions()
-                .inField("Страна").selectValue("Австрия")
-                .inField("Адрес по контракту (договору) на русском или английском языке").inputValue("Вена, улица Стефана, 1")
-                .clickButton("Продолжить")
-                .waitForLoading();
-    }
-
-    @Step("Ввод Информации об условиях поставки")
-    public void step05() {
-        CommonFunctions.printStep();
-
-        new GUIFunctions()
-                .waitForURL("");
     }
 
     private void refreshTab(String expectedXpath, int times) {
