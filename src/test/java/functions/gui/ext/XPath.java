@@ -45,6 +45,8 @@ public class XPath extends ElementData {
             return getContainerXPath() + getFieldXPath() + "//input";
         } else if ($x((getContainerXPath() + getFieldXPath() + "//textarea")).exists()) {
             return getContainerXPath() + getFieldXPath() + "//textarea";
+        } else if ($x((getContainerXPath() + getFieldXPath() + "//span[contains(@class,'Typography')]")).exists()){
+            return getContainerXPath() + getFieldXPath() + "//span[contains(@class,'Typography')]";
         }
           return null;
     }

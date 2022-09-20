@@ -18,6 +18,7 @@ public class Upload extends ElementData {
 //        File file = new File(wayToFile);
 //        String fileName = file.getName();
         $x(new XPath(this).getUploadXPath(upload)).sendKeys(wayToFile);
+        new GUIFunctions().waitForElementDisplayed("//*[text()='"+upload+"']/ancestor::*[contains(@class,'FileInput')]/following::button[contains(@class,'delete')]");
 //        new GUIFunctions().waitForElementDisplayed(new XPath(this).getUploadedFileNameXPath(upload, fileName));
     }
 }

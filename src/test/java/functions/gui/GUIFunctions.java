@@ -253,10 +253,22 @@ public class GUIFunctions extends ElementData {
      * refresh
      */
 
-    public GUIFunctions refreshTab(String expectedXpath, int times) {
+    public GUIFunctions refreshTab(SelenideElement element, int times) {
         for (int i = 0; i < times; i++) {
             new functions.gui.GUIFunctions().waitForLoading();
-            if($x(expectedXpath).isDisplayed()) {
+            if(element.isDisplayed()) {
+                break;
+            }
+            refresh();
+            CommonFunctions.wait(1);
+        }
+        return this;
+    }
+
+    public GUIFunctions refreshTab(String button, int times) {
+        for (int i = 0; i < times; i++) {
+            new functions.gui.GUIFunctions().waitForLoading();
+            if($x("//*[text() = '" + button + "']").isDisplayed()) {
                 break;
             }
             refresh();
