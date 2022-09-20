@@ -3,20 +3,15 @@ package ru.exportcenter.test.apk;
 import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
-import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
-import org.junit.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
-
 import java.awt.*;
-import java.util.Properties;
-
 import static com.codeborne.selenide.Selenide.*;
 
 public class Test_01_07_11_1 extends Hooks {
@@ -31,7 +26,7 @@ public class Test_01_07_11_1 extends Hooks {
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException, InterruptedException {
         precondition();
-        step01();
+//        step01();
         step02();
         step03();
         step04();
@@ -59,6 +54,10 @@ public class Test_01_07_11_1 extends Hooks {
         new GUIFunctions()
                 .authorization("exporter_su_apk@otr.ru", "Password1!", "1234")
                 .waitForLoading();
+
+        if ($x("//div[text()='Номер заявки']/following-sibling::div").isDisplayed()){
+            new GUIFunctions().refreshTab("Продолжить", 10);
+        }
     }
 
     @Step("Переход к заявке")
@@ -67,9 +66,9 @@ public class Test_01_07_11_1 extends Hooks {
 
         //Перезагрузить страницу
         //Нажать кнопку «Продолжить»
-//        new GUIFunctions().refreshTab("//*[text()='Продолжить']", 10)
-//                .clickButton("Продолжить")
-//                .waitForLoading();
+        new GUIFunctions().refreshTab("//*[text()='Продолжить']", 10)
+                .clickButton("Продолжить")
+                .waitForLoading();
     }
 
     @Step("Заполнение блока \"Информация о Заявителе\"")
@@ -77,8 +76,10 @@ public class Test_01_07_11_1 extends Hooks {
         CommonFunctions.printStep();
 
         //Нажать на кнопку «Далее»
-        new GUIFunctions().clickButton("Далее")
+        new GUIFunctions().closeAllPopupWindows()
+                .clickButton("Далее")
                 .waitForElementDisplayed("//*[text()='Сведения о затратах']");
+
     }
 
     @Step("Заполнение блока \"Сведения о затратах\"")
@@ -95,7 +96,8 @@ public class Test_01_07_11_1 extends Hooks {
         //Из выпадающего списка "Основание понесенных затрат" выбрать значение "Требование контракта"
         //Выбрать приложенный файл с устройства формата xlsx и нажать кнопку «Открыть»
         new GUIFunctions().inContainer("Затрата")
-                .inField("Вид затраты, связанной с сертификацией продукции").selectValue("1\u00a0Услуги компетентного органа или уполномоченной организации в стране экспорта по осуществлению процедур оценки соответствия продукции (регистрации, подтверждения соответствия, испытаний, сертификации и других форм оценки соответствия, установленных законодательством иностранного государства или являющихся условием внешнеэкономического контракта)\u00a0")
+                .inField("Вид затраты, связанной с сертификацией продукции").selectValue("1\u00a0Услуги компетентного органа или уполномоченной организации в стране экспорта по осуществлению процедур оценки соответствия продукции (регистрации, подтверждения соответствия, испытаний, сертификации и других форм оценки соответствия, установленных законодательством иностранного государства или являющихся условием внешнеэкономического контракта)\u00a0").assertValue()
+                .waitForElementDisplayed("//*[text()='Шаблон к Затрате 1.xlsm']")
                 .inField("Основание понесенных затрат").selectValue("Требование контракта")
                 .uploadFile("Загрузить шаблон","C:\\auto-tests\\Шаблон 1 - фаст (1).xlsm")
                 .waitForElementDisplayed("//*[text()='Шаблон 1 - фаст (1).xlsm']/ancestor::a[contains(@class,'FileInput')]/following-sibling::button[contains(@class,'delete')]");
@@ -124,46 +126,44 @@ public class Test_01_07_11_1 extends Hooks {
         CommonFunctions.printStep();
 
         new GUIFunctions().clickByLocator("(//*[text()='Добавить +'])[1]")
-                .inField("ОКВЭД2").selectValue("01.11\u00a0Выращивание зерновых (кроме риса), зернобобовых культур и семян масличных культур\u00a0")
-                .inField("Код типа вида деятельности").inputValue("1221");
+                .inField("ОКВЭД2").selectValue("01.11\u00a0Выращивание зерновых (кроме риса), зернобобовых культур и семян масличных культур\u00a0").assertValue()
+                .inField("Признак вида деятельности").assertValue("Основно")
+                .inField("Код типа вида деятельности").inputValue("1221").assertValue();
 
-//        Assert.assertEquals("Дополнительный", $x("//*[text()='Признак вида деятельности']/ancestor::div[contains(@class,'TextInput')]//following::textarea").getText());
+//        Assert.assertEquals("Основной", $x("//*[text()='Признак вида деятельности']/ancestor::div[contains(@class,'TextInput')]//following::textarea").getText());
 
         new GUIFunctions().clickButton("Сохранить");
 
         new GUIFunctions()
-                .inField("Код по ОКОПФ").inputValue("12247")
-                .inField("Наименование по ОКОПФ").inputValue("Частные учреждения")
-                .inField("Код по ОКПО").inputValue("12345678")
-                .inField("Код по ОКТМО").inputValue("12345678901")
-                .inField("Почтовый индекс").inputValue("123456")
-                .inField("Дата постановки на налоговый учёт").inputValue("01.08.2022")
-                .inField("Наименование субъекта Российской Федерации").selectValue("Новгородская область")
-                .inField("Тип населенного пункта").inputValue("город")
-                .inField("Наименование населенного пункта").selectValue("Населенный пункт")
-                .inField("Тип элемента планировочной структуры").inputValue("улица")
-                .inField("Наименование элемента планировочной структуры").inputValue("Волкова")
-                .inField("Тип элемента улично-дорожной сети").inputValue("дом")
-                .inField("Наименование элемента улично-дорожной сети").selectValue("Улица")
-                .inField("Тип объекта адресации").inputValue("Телевизионная")
-                .inField("Тип помещения").inputValue("поле")
-                .inField("Номер помещения, расположенного в здании или сооружении").inputValue("10")
-                .inField("Цифровое или буквенно-цифровое обозначение объекта адресации").inputValue("108")
-                .inField("Номер банковского счета").inputValue("40702810000000000046")
-                .inField("БИК банка").selectValue("004525659")
-                .inField("Корреспондентский счет").inputValue("30101810100000000722");
+                .inField("Код по ОКОПФ").inputValue("12247").assertValue()
+                .inField("Наименование по ОКОПФ").inputValue("Частные учреждения").assertValue()
+                .inField("Код по ОКПО").inputValue("12345678").assertValue()
+                .inField("Код по ОКТМО").inputValue("12345678901").assertValue()
+                .inField("Почтовый индекс").inputValue("123456").assertValue()
+                .inField("Дата постановки на налоговый учёт").inputValue("01.08.2022").assertValue()
+                .inField("Наименование субъекта Российской Федерации").selectValue("Новгородская область").assertValue()
+                .inField("Тип населенного пункта").inputValue("город").assertValue()
+                .inField("Наименование населенного пункта").selectValue("Населенный пункт").assertValue()
+                .inField("Тип элемента планировочной структуры").inputValue("улица").assertValue()
+                .inField("Наименование элемента планировочной структуры").inputValue("Волкова").assertValue()
+                .inField("Тип элемента улично-дорожной сети").inputValue("дом").assertValue()
+                .inField("Наименование элемента улично-дорожной сети").selectValue("Улица").assertValue()
+                .inField("Тип объекта адресации").inputValue("Телевизионная").assertValue()
+                .inField("Тип помещения").inputValue("поле").assertValue()
+                .inField("Номер помещения, расположенного в здании или сооружении").inputValue("10").assertValue()
+                .inField("Цифровое или буквенно-цифровое обозначение объекта адресации").inputValue("108").assertValue()
+                .inField("Номер банковского счета").inputValue("40702810000000000046").assertValue()
+                .inField("БИК банка").selectValue("004525659").assertValue()
+                .inField("Корреспондентский счет").inputValue("30101810100000000722").assertValue();
 
         new GUIFunctions().inContainer("Данные о руководителе / уполномоченном лице компании")
-//                .inField("Номер доверенности").inputValue("3434")
-//                .inField("Дата выдачи").inputValue("01.09.2022")
-//                .inField("Срок действия").inputValue("01.09.2022")
-                .inField("ИНН").inputValue("123456789012")
-                .inField("СНИЛС").inputValue("12345678901")
-                .inField("Телефон").inputValue("+71234567890")
+                .inField("ИНН").inputValue("123456789012").assertValue()
+                .inField("СНИЛС").inputValue("12345678901").assertValue()
+                .inField("Телефон").inputValue("71234567890").assertValue("+7(712)345-67-89")
                 .inField("Добавочный номер").inputValue("20");
 
         new GUIFunctions().inContainer("Контактные данные лица, ответственного за работу в ГИИС \"Электронный бюджет\"")
-                .inField("ФИО").selectValue("фва ыва ва ");
+                .inField("ФИО").selectValue("фва ыва ва ").assertValue();
 
         new GUIFunctions().inContainer("Подтверждение сведений Заявителем")
                 .inField("ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"ОРГАНИЗАЦИОННО-ТЕХНОЛОГИЧЕСКИЕ РЕШЕНИЯ 2000\" подтверждает, что на 15.09.2022 не находится в статусе реорганизации").setCheckboxON()
