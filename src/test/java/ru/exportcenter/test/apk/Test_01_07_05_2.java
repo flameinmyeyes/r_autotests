@@ -3,21 +3,15 @@ package ru.exportcenter.test.apk;
 import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
-import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
-import functions.gui.lkb.components.XPath;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
-import org.openqa.selenium.Keys;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.util.Properties;
-
 import static com.codeborne.selenide.Selenide.*;
 
 public class Test_01_07_05_2 extends Hooks {
@@ -61,19 +55,12 @@ public class Test_01_07_05_2 extends Hooks {
                 .closeAllPopupWindows();
 
         if ($x("//button[contains(text(),'Сервис «Господдержка. Сертификация продукции АПК»')]").isDisplayed()){
-            closeWebDriver();
-            x = x + 1;
-            if (x == 10){
-                closeWebDriver();
-            } else {
-                precondition();
-                step01();
-            }
-            System.out.println(x);
+
+            new GUIFunctions().clickByLocator("//button[contains(text(),'Сервис «Господдержка. Сертификация продукции АПК»')]");
+            webdriver().driver().switchTo().alert().accept();
         }
 
         new GUIFunctions().waitForElementDisplayed("//div[text()='Номер заявки']/following-sibling::div");
         requestNumber = $x("//div[text()='Номер заявки']/following-sibling::div").getText();
-        System.out.println(requestNumber);
     }
 }
