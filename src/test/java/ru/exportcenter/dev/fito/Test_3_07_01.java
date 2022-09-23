@@ -41,6 +41,8 @@ public class Test_3_07_01 extends Hooks {
         step08();
         step09();
         step10();
+        step11();
+        step12();
     }
 
     @AfterMethod
@@ -51,6 +53,7 @@ public class Test_3_07_01 extends Hooks {
     @Step("Авторизация")
     public void step01() {
         CommonFunctions.printStep();
+        //В браузере перейти по ссылке
         open(P.getProperty("start_URL"));
 
         //Ввести логин и пароль demo_exporter/password
@@ -63,30 +66,26 @@ public class Test_3_07_01 extends Hooks {
     public void step02() {
         CommonFunctions.printStep();
 
-        //Перейти во вкладку "Сервисы", выбрать "Государственные"
         new GUIFunctions()
-                .selectTab("Сервисы")
+//                .selectTab("Сервисы")
+                .clickButton("Заказать услугу")
+                .switchPageTo(1)
                 .clickByLocator("//div[@data-history-code='/services/state'][normalize-space(text()='Государственные')]")
-                .waitForURL("http://master-portal-dev.d.exportcenter.ru/services/state");
+                .waitForURL("http://master-portal-dev.d.exportcenter.ru/services/state")
 
-        //В строке "Поиск по разделу" ввести "ФИТО"
-        new GUIFunctions()
                 .waitForElementDisplayed("//div[@class='js-tabs__block open']//input[@placeholder='Поиск по разделу']")
                 .inputInSearchField("Поиск по разделу", "ФИТО")
-                .closeAllPopupWindows();
+                .closeAllPopupWindows()
 
-        //Выбрать сервис "Запрос заключения о карантинном фитосанитарном состоянии подкарантинной продукции", нажать "Оформить"
-        new GUIFunctions()
                 .openSearchResult("Запрос заключения о карантинном фитосанитарном состоянии", "Оформить")
-                .switchPageTo(1)
+                .switchPageTo(2)
                 .waitForLoading();
     }
 
     @Step("Начальный экран")
     public void step03() {
         CommonFunctions.printStep();
-
-        //сохраним processID в файл
+        //сохранить processID в файл
         processID = CommonFunctions.getProcessIDFromURL();
         System.out.println("processID: " + processID);
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
@@ -107,6 +106,7 @@ public class Test_3_07_01 extends Hooks {
                     .inField("Страна").selectValue(P.getProperty("Получатель.Страна")).assertNoControl().assertValue()
                     .inField("Юридический адрес на английском языке в формате: номер дома, улица, город, индекс").inputValue(P.getProperty("Получатель.Юридический адрес")).assertNoControl().assertValue()
 
+                //нажать "Продолжить"
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
                     .clickButton("Продолжить")
                     .waitForLoading()
@@ -118,14 +118,16 @@ public class Test_3_07_01 extends Hooks {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Условия поставки")
+                //Условия транспортировки
                     .inField("Вид транспорта").selectValue(P.getProperty("Условия поставки.Вид транспорта")).assertNoControl().assertValue()
                     .inField("Страна назначения").selectValue(P.getProperty("Условия поставки.Страна назначения")).assertNoControl().assertValue()
                     .inField("Пункт ввоза в стране назначения").inputValue(P.getProperty("Условия поставки.Пункт ввоза в стране назначения")).assertNoControl().assertValue()
-                    //Документы на груз
+                //Документы на груз
                     .inField("Тип документа о происхождении груза. Если тип документа в списке отсутствует — выберите «другое»").selectValue(P.getProperty("Условия поставки.Тип документа о происхождении груза. Если тип документа в списке отсутствует — выберите «другое»")).assertNoControl().assertValue()
                     .inField("Номер документа на груз").inputValue(P.getProperty("Условия поставки.Номер документа на груз")).assertNoControl().assertValue()
                     .inField("Дата").inputValue(DateFunctions.dateToday("dd.MM.yyyy")).assertNoControl().assertValue()
 
+                //нажать "Продолжить"
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
                     .clickButton("Продолжить")
                     .waitForLoading()
@@ -139,8 +141,12 @@ public class Test_3_07_01 extends Hooks {
                 .inContainer("Добавление продукции")
 //                    .inField("Каталог продукции").selectValue(" --- кофе").assertNoControl().assertValue()
                     .inField("Каталог продукции").clickByLocator("//input[@placeholder='Введите наименование продукции или код ТН ВЭД']").inputValue("кофе").clickByLocator("//*[contains(text(), ' --- кофе')]")
+//                    .inField("Код ТН ВЭД").assertValue(P.getProperty("Каталог продукции.Код ТН ВЭД"))
+                    .inField("Код ТН ВЭД").assertValue(" ---")
+
                     .inField("Тип продукции").selectValue(P.getProperty("Добавление продукции.Тип продукции")).assertNoControl().assertValue()
                     .inField("Ботаническое наименование продукции").assertValue(P.getProperty("Добавление продукции.Ботаническое наименование продукции")).assertNoControl()
+
                     .inField("Дополнительная информация о продукции. Например, страна производства (произрастания) продукции, сорт продукции и т.д.").inputValue(P.getProperty("Добавление продукции.Дополнительная информация о продукции")).assertNoControl().assertValue()
                     .inField("Вес груза (нетто), кг").inputValue(P.getProperty("Добавление продукции.Вес груза (нетто)")).assertNoControl().assertValue()
                     .inField("Особые единицы измерения").selectValue(P.getProperty("Добавление продукции.Особые единицы измерения")).assertNoControl().assertValue()
@@ -148,10 +154,11 @@ public class Test_3_07_01 extends Hooks {
                     .inField("Описание упаковки").selectValue(P.getProperty("Добавление продукции.Описание упаковки")).assertNoControl().assertValue()
                     .inField("Размещение продукции").clickByLocator("//ancestor::div//span[contains(text(),'Навалом (наливом)')][last()]")
                     .inField("Наличие отличительных знаков (маркировки). Например, номера партий, серийные номера или названия торговых марок. ").setCheckboxON().assertCheckboxON()
-                    //Место происхождения( произрастания) продукции
+                //Место происхождения( произрастания) продукции
                     .inField("Страна").selectValue(P.getProperty("Добавление продукции.Страна")).assertNoControl().assertValue()
                     .inField("Регион").selectValue(P.getProperty("Добавление продукции.Регион")).assertNoControl().assertValue()
 
+                //нажать "Продолжить"
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
                     .clickButton("Продолжить")
                     .waitForLoading()
@@ -169,6 +176,7 @@ public class Test_3_07_01 extends Hooks {
                     .inField("Дата").assertValue(P.getProperty("Договор.Дата")).assertNoControl()
                     .inField("Срок действия").assertValue(P.getProperty("Договор.Срок действия")).assertNoControl()
 
+                //нажать "Продолжить"
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
                     .clickButton("Продолжить")
                     .waitForLoading()
@@ -186,6 +194,7 @@ public class Test_3_07_01 extends Hooks {
                     .inField("Адрес места отбора проб").inputValue(P.getProperty("Запрос отбора проб.Адрес места отбора проб")).assertNoControl().assertValue()
                     .inField("Дополнительные требования к исследованиям ").inputValue(P.getProperty("Запрос отбора проб.Дополнительные требования к исследованиям")).assertNoControl().assertValue()
 
+                //нажать "Продолжить"
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
                     .clickButton("Направить на проверку")
                     .waitForLoading()
@@ -206,18 +215,18 @@ public class Test_3_07_01 extends Hooks {
         new GUIFunctions()
 //                .inContainer("Уполномоченное лицо для получения заключения")
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
-//                    .inField("ФИО").selectValue(P.getProperty("Форма заключения.ФИО"))
                     .inField("ФИО").selectValue("Фамилия Дополнительного контакта").assertNoControl().assertValue()
                     .inField("Телефон").assertValue(P.getProperty("Форма заключения.Телефон")).assertNoControl()
                     .inField("Email").assertValue(P.getProperty("Форма заключения.Email")).assertNoControl()
 
+                //нажать "Продолжить"
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
                     .clickButton("Продолжить")
                     .waitForLoading()
                     .waitForElementDisplayed("//div[text()='Шаг 8 из 9']");
     }
 
-    @Step("Экран ознакомления с результатом проверки. Блок \"Уполномоченное лицо для получения заключения\"")
+    @Step("Шаг 11. Экран \"Шаг 8 из 9\"")
     public void step11() {
         CommonFunctions.printStep();
         new GUIFunctions()
@@ -230,12 +239,23 @@ public class Test_3_07_01 extends Hooks {
 
 //        docNum = $x("//div[contains (@class, 'FormHeader_title' )]//span[contains (@class, 'Typography_body' )]").getText().split("№")[1];
 //        JupyterLabIntegration.uploadTextContent(docNum, WAY_TEST, "docNum.txt");
-//        JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
 //
 //        CommonFunctions.wait(20);
 //        String status = RESTFunctions.getOrderStatus(processID);
 //        System.out.println(status);
 //        Assert.assertEquals(status, "Проводится проверка");
+    }
+
+    @Step("Шаг 12. Экран \"Результат предоставления услуги\"")
+    public void step12() {
+        CommonFunctions.printStep();
+//        new GUIFunctions()
+//                .inContainer("Договор с органом инспекции")
+//                .inField("Я ознакомлен и согласен с условиями проекта договора").setCheckboxON().assertCheckboxON()
+//
+//                .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
+//                .clickButton("Подписать и отправить")
+//                .waitForLoading();
     }
 
     public void refreshTab(String expectedXpath, int times) {
