@@ -41,6 +41,11 @@ public class Click extends ElementData {
             $x(AcceptCookies).click();
         }
 
+        String closeStateSupportCertification = "//button[contains(@class,'closeBtn')]";
+        if ($x(closeStateSupportCertification).isDisplayed()) {
+            $x(closeStateSupportCertification).click();
+        }
+
         String closeOfferToUseSupportService = "//div[@class='info-line__close-btn']";
         if ($x(closeOfferToUseSupportService).isDisplayed()) {
             $x(closeOfferToUseSupportService).click();

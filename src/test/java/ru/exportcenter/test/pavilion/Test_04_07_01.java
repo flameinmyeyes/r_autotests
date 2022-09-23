@@ -54,7 +54,7 @@ public class Test_04_07_01 extends Hooks {
         requestNumber = $x("//div[text()='Номер заявки']/following-sibling::div").getText();
         System.out.println($x("//div[text()='Номер заявки']/following-sibling::div").getText());
 
-        new GUIFunctions().refreshTab("//*[text()='Продолжить']", 10);
+        new GUIFunctions().refreshTab("Продолжить", 10);
 
         processID = CommonFunctions.getProcessIDFromURL();
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
@@ -122,5 +122,4 @@ public class Test_04_07_01 extends Hooks {
                 .clickButton("Далее");
         closeWebDriver();
     }
-
 }

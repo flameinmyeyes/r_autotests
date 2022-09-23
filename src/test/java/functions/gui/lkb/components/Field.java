@@ -12,6 +12,8 @@ public class Field extends ElementData {
     }
 
     public void inputValue(String value) {
+        $x(new XPath(this).getInputValueXPath()).click();
+        CommonFunctions.wait(0.5);
         $x(new XPath(this).getInputValueXPath()).sendKeys(Keys.LEFT_CONTROL + "a");
         $x(new XPath(this).getInputValueXPath()).sendKeys(Keys.BACK_SPACE);
         $x(new XPath(this).getInputValueXPath()).setValue(value);

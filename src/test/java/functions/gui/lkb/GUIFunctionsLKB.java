@@ -212,4 +212,13 @@ public class GUIFunctionsLKB extends ElementData {
         $x(xPath).scrollTo();
         return this;
     }
+
+    /**
+     * pressButton
+     */
+
+    public GUIFunctionsLKB pressEnter() {
+        $x(new XPath(this).getInputValueXPath()).pressEnter();
+        return this;
+    }
 }

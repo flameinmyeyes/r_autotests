@@ -56,7 +56,7 @@ public class XPath extends ElementData {
     }
 
     public String getInputTextXPath() {
-        return getContainerXPath() + getFieldXPath() + "/parent::*/descendant::textarea";
+        return getContainerXPath() + getFieldXPath() + "/ancestor::*/descendant::textarea";
     }
 
     public String getInputValueXPath() {
@@ -105,7 +105,7 @@ public class XPath extends ElementData {
     }
 
     public String getCheckedCheckboxXPath() {
-        return getCheckboxXPath() + "[contains(@class,'ant-checkbox-checked')]";
+        return getCheckboxXPath() + "[contains(@class,'ant-checkbox')]";
     }
 
     public String getRadiobuttonXPath() {
