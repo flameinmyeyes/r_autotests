@@ -121,10 +121,7 @@ public class Test_04_07_01 extends Hooks {
                 .inField("Выберите сертификат").selectValue("Ермухамбетова Балсикер Бисеньевна от 18.01.2022").assertValue()
                 .clickButton("Подписать")
                 .waitForElementDisplayed("//*[text()='Подписано']")
-                .clickButton("Далее")
-                .waitForURL("");
-
-
+                .clickButton("Далее");
         closeWebDriver();
     }
 }
