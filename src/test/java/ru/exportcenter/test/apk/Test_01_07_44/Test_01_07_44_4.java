@@ -29,6 +29,7 @@ public class Test_01_07_44_4 extends Hooks {
         step01();
         step02();
         step03();
+        step04();
     }
 
     @AfterMethod
@@ -58,6 +59,9 @@ public class Test_01_07_44_4 extends Hooks {
         CommonFunctions.printStep();
 
         new GUIFunctions().clickButton("Далее")
+                .waitForLoading()
+                .waitForLoading()
+                .closeAllPopupWindows()
                 .waitForElementDisplayed("//*[text()='Добавить +']");
     }
 

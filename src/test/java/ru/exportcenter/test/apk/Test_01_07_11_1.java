@@ -3,6 +3,7 @@ package ru.exportcenter.test.apk;
 import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
+import functions.common.DateFunctions;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
@@ -19,6 +20,7 @@ public class Test_01_07_11_1 extends Hooks {
     private String WAY_TEST = Ways.TEST.getWay() + "/apk/Test_01_07_11_1/";
 //    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_01_07_11_1_properties.xml";
 //    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
+    private String requestNumber;
 
     @Owner(value = "Петрищев Руслан")
     @Description("01 07 11.1 Заполнение Заявки на получение услуги, подписание Заявки УКЭП и автоматическая передача Заявки на верификацию")
@@ -26,11 +28,12 @@ public class Test_01_07_11_1 extends Hooks {
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException, InterruptedException {
         precondition();
-//        step01();
+        step01();
         step02();
         step03();
         step04();
         step05();
+        step06();
     }
 
     @AfterMethod
@@ -38,26 +41,13 @@ public class Test_01_07_11_1 extends Hooks {
         CommonFunctions.screenShot(WAY_TEST + "screen.png");
     }
 
-//    @Step("Предусловия")
-//    public void precondition() throws AWTException, InterruptedException  {
-//        CommonFunctions.printStep();
-//
-//        Test_01_07_05_2 test_01_07_05_2 = new Test_01_07_05_2();
-//        test_01_07_05_2.steps();
-//    }
-
     @Step("Предусловия")
     public void precondition() throws AWTException, InterruptedException  {
         CommonFunctions.printStep();
 
-        open("https://lk.t.exportcenter.ru/ru/promo-service?key=apkNaVr&serviceId=b4ac4be3-224e-4277-8178-7eafd954725f&next_query=true");
-        new GUIFunctions()
-                .authorization("exporter_su_apk@otr.ru", "Password1!", "1234")
-                .waitForLoading();
-
-        if ($x("//div[text()='Номер заявки']/following-sibling::div").isDisplayed()){
-            new GUIFunctions().refreshTab("Продолжить", 10);
-        }
+        Test_01_07_05_2 test_01_07_05_2 = new Test_01_07_05_2();
+        test_01_07_05_2.steps();
+        requestNumber = test_01_07_05_2.requestNumber;
     }
 
     @Step("Переход к заявке")
@@ -66,7 +56,7 @@ public class Test_01_07_11_1 extends Hooks {
 
         //Перезагрузить страницу
         //Нажать кнопку «Продолжить»
-        new GUIFunctions().refreshTab("//*[text()='Продолжить']", 10)
+        new GUIFunctions().refreshTab("Продолжить", 10)
                 .clickButton("Продолжить")
                 .waitForLoading();
     }
@@ -127,7 +117,7 @@ public class Test_01_07_11_1 extends Hooks {
 
         new GUIFunctions().clickByLocator("(//*[text()='Добавить +'])[1]")
                 .inField("ОКВЭД2").selectValue("01.11\u00a0Выращивание зерновых (кроме риса), зернобобовых культур и семян масличных культур\u00a0").assertValue()
-                .inField("Признак вида деятельности").assertValue("Основно")
+                .inField("Признак вида деятельности").assertValue("Основной")
                 .inField("Код типа вида деятельности").inputValue("1221").assertValue();
 
 //        Assert.assertEquals("Основной", $x("//*[text()='Признак вида деятельности']/ancestor::div[contains(@class,'TextInput')]//following::textarea").getText());
@@ -160,16 +150,31 @@ public class Test_01_07_11_1 extends Hooks {
                 .inField("ИНН").inputValue("123456789012").assertValue()
                 .inField("СНИЛС").inputValue("12345678901").assertValue()
                 .inField("Телефон").inputValue("71234567890").assertValue("+7(712)345-67-89")
-                .inField("Добавочный номер").inputValue("20");
+                .inField("Добавочный номер ").inputValue("20").assertValue();
 
         new GUIFunctions().inContainer("Контактные данные лица, ответственного за работу в ГИИС \"Электронный бюджет\"")
-                .inField("ФИО").selectValue("фва ыва ва ").assertValue();
+                .inField("ФИО").selectValue("фва\u00a0ыва\u00a0ва\u00a0").assertValue();
+
+        String currentTime = DateFunctions.dateToday("dd.MM.yyyy");
 
         new GUIFunctions().inContainer("Подтверждение сведений Заявителем")
-                .inField("ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"ОРГАНИЗАЦИОННО-ТЕХНОЛОГИЧЕСКИЕ РЕШЕНИЯ 2000\" подтверждает, что на 15.09.2022 не находится в статусе реорганизации").setCheckboxON()
-                .inField("ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"ОРГАНИЗАЦИОННО-ТЕХНОЛОГИЧЕСКИЕ РЕШЕНИЯ 2000\" подтверждает, что на 15.09.2022 не имеет задолженности перед Бюджетом в рамках субсидии").setCheckboxON()
-                .inField("ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"ОРГАНИЗАЦИОННО-ТЕХНОЛОГИЧЕСКИЕ РЕШЕНИЯ 2000\" подтверждает, что на  15.09.2022 заявленные затраты осуществлены на получение необходимых документов о сертификации продукции агропромышленного комплекса на внешних рынках на соответствие требованиям, предъявляемым на внешних рынках, которые могут включать требования заказчика, содержащиеся в контракте").setCheckboxON()
-                .clickButton("Далее");
+                .inField("ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"ОРГАНИЗАЦИОННО-ТЕХНОЛОГИЧЕСКИЕ РЕШЕНИЯ 2000\" подтверждает, что на "+currentTime+" не находится в статусе реорганизации").setCheckboxON()
+                .inField("ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"ОРГАНИЗАЦИОННО-ТЕХНОЛОГИЧЕСКИЕ РЕШЕНИЯ 2000\" подтверждает, что на "+currentTime+" не имеет задолженности перед Бюджетом в рамках субсидии").setCheckboxON()
+                .inField("ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ \"ОРГАНИЗАЦИОННО-ТЕХНОЛОГИЧЕСКИЕ РЕШЕНИЯ 2000\" подтверждает, что на  "+currentTime+" заявленные затраты осуществлены на получение необходимых документов о сертификации продукции агропромышленного комплекса на внешних рынках на соответствие требованиям, предъявляемым на внешних рынках, которые могут включать требования заказчика, содержащиеся в контракте").setCheckboxON()
+                .clickButton("Далее")
+                .waitForElementDisplayed("//*[text()='Подписать электронной подписью']");;
     }
 
+    @Step("Блок \"Подписание Заявки электронной подписью\"")
+    public void step06() {
+        CommonFunctions.printStep();
+
+        new GUIFunctions().clickButton("Подписать электронной подписью")
+                .inField("Выберите сертификат").selectValue("Ермухамбетова Балсикер Бисеньевна от 18.01.2022").assertValue()
+                .clickButton("Подписать")
+                .waitForElementDisplayed("//*[text()='Подписано']")
+                .clickButton("Далее")
+                .waitForElementDisplayed("//*[text()='Ваша заявка №"+requestNumber+" принята и находится на проверке']")
+                .clickButton("//*[text()='В реестр заявок']");
+    }
 }

@@ -90,6 +90,8 @@ public class Test_04_07_01 extends Hooks {
                 .waitForElementDisplayed("//*[contains(text(), 'Белёвская пастила с чёрной смородиной')]")
                 .clickByLocator("//*[contains(text(), 'Белёвская пастила с чёрной смородиной')]");
 
+//        new GUIFunctions().inField("Каталог продукции").selectValue("1704909900\u00a0Белёвская пастила с чёрной смородиной");
+
         new GUIFunctions().inField("Количество ед. продукции").inputValue(PROPERTIES.getProperty("Информация о продукции.Количество ед. продукции")).assertValue()
                 .inField("Единица измерения").selectValue(PROPERTIES.getProperty("Информация о продукции.Единица измерения")).assertValue()
                 .inField("Общая стоимость партии товара, включая затраты на транспортировку (юань)").inputValue(PROPERTIES.getProperty("Информация о продукции.Общая стоимость партии товара"))

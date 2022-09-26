@@ -8,6 +8,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
 
@@ -30,10 +31,10 @@ public class Test_01_07_05_1 extends Hooks {
         step01();
     }
 
-    //    @AfterMethod
-//    public void screenShot() {
-//        CommonFunctions.screenShot(WAY_TEST + "screen.png");
-//    }
+    @AfterMethod
+    public void screenShot() {
+        CommonFunctions.screenShot(WAY_TEST + "screen.png");
+    }
 
     @Step("Предусловия")
     public void precondition() throws AWTException, InterruptedException  {

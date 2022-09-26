@@ -80,7 +80,7 @@ public class Test_07_07_04 extends Hooks {
                 .waitForLoading();
     }
 
-    @Step("Выбор «Формы СТ-1»")
+    @Step("Предзаполненные данные в карточке «Информация о заявителе» и в карточке «Информация об импортере»")
     public void step04() {
         CommonFunctions.printStep();
 
@@ -107,16 +107,18 @@ true
         System.out.println($x("//*[@id='form-open-panel']/div[2]/div/form/div[2]/div/div[2]/div/div/div[3]/div/div[2]/div/label/div/input").isSelected());
 
 
+
+    }
+
+    @Step("Ввод данных в карточку «Информация о заявителе»  и в карточку «Информация об импортере»")
+    public void step05() {
+        CommonFunctions.printStep();
+
         new GUIFunctions()
                 .inField("Страна").selectValue("Австрия")
                 .inField("Адрес по контракту (договору) на русском или английском языке").inputValue("Вена, улица Стефана, 1")
                 .clickButton("Продолжить")
                 .waitForLoading();
-    }
-
-    @Step("Ввод Информации об условиях поставки")
-    public void step05() {
-        CommonFunctions.printStep();
 
         new GUIFunctions()
                 .waitForURL("");
