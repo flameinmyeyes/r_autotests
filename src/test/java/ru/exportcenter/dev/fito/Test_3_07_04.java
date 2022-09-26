@@ -21,9 +21,8 @@ import static com.codeborne.selenide.Selenide.refresh;
 public class Test_3_07_04 extends Hooks {
 
     public String WAY_TEST = Ways.DEV.getWay() + "/fito/Test_3_07_04/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_3_07_04_properties.xml";
+    public String WAY_TO_PROPERTIES = Ways.DEV.getWay() + "/fito/Test_3_07_04/" + "Test_3_07_04_properties.xml";
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
-    private String processID;
 
     @Owner(value = "Балашов Илья")
     @Description("3.07.04 (Р) Сценарий с заключением нового договора на установление КФС")
@@ -32,6 +31,7 @@ public class Test_3_07_04 extends Hooks {
     public void steps() {
         precondition();
         step07();
+        postcondition();
     }
 
     @AfterMethod
@@ -40,12 +40,9 @@ public class Test_3_07_04 extends Hooks {
     }
 
     public void precondition() {
-        //Предусловие выполнить шаги 1-6 из
-        //https://confluence.exportcenter.ru/pages/resumedraft.action?draftId=163308622&draftShareId=786c5e3a-edfc-4a1d-8fb1-ae287b286103&
+        //Предусловие: выполнить шаги 1-6 из ТК https://confluence.exportcenter.ru/pages/viewpage.action?pageId=163308618
         Test_3_07_01 test_3_07_01 = new Test_3_07_01();
-        test_3_07_01.WAY_TEST = WAY_TEST;
-        test_3_07_01.WAY_TO_PROPERTIES = WAY_TO_PROPERTIES;
-        test_3_07_01.P = P;
+        test_3_07_01.WAY_TEST = this.WAY_TEST;
         test_3_07_01.step01();
         test_3_07_01.step02();
         test_3_07_01.step03();
@@ -57,18 +54,30 @@ public class Test_3_07_04 extends Hooks {
     @Step("Шаг 7. Блок \"Договор на установление карантинного фитосанитарного состояния\"\n")
     public void step07() {
         CommonFunctions.printStep();
+        new GUIFunctions()
+                .inContainer("Договор на установление карантинного  фитосанитарного состояния")
+                .inField("Договор").selectValue(P.getProperty("Договор.Договор")).assertNoControl().assertValue()
+                .inField("Орган инспекции").assertValue(P.getProperty("Договор.Орган инспекции")).assertNoControl()
+                .inField("Номер").assertValue(P.getProperty("Договор.Номер")).assertNoControl()
+                .inField("Дата").assertValue(P.getProperty("Договор.Дата")).assertNoControl()
+                .inField("Срок действия").assertValue(P.getProperty("Договор.Срок действия")).assertNoControl()
 
+                //нажать "Продолжить"
+                .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
+                .clickButton("Продолжить")
+                .waitForLoading()
+                .waitForElementDisplayed("//div[text()='Шаг 5 из 9']");
     }
 
-    public void refreshTab(String expectedXpath, int times) {
-        for (int i = 0; i < times; i++) {
-            if ($x(expectedXpath).isDisplayed()) {
-                break;
-            }
-            System.out.println("Refreshing");
-            refresh();
-            CommonFunctions.wait(1);
-        }
+    public void postcondition() {
+        //Выполнить шаги 8-12 из ТК https://confluence.exportcenter.ru/pages/viewpage.action?pageId=163308618
+        Test_3_07_01 test_3_07_01 = new Test_3_07_01();
+        test_3_07_01.WAY_TEST = this.WAY_TEST;
+        test_3_07_01.step08();
+        test_3_07_01.step09();
+        test_3_07_01.step10();
+        test_3_07_01.step11();
+        test_3_07_01.step12();
     }
 
 }
