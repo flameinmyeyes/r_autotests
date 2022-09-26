@@ -22,12 +22,12 @@ import static com.codeborne.selenide.Selenide.*;
 public class Test_3_07_01 extends Hooks {
 
     public String WAY_TEST = Ways.DEV.getWay() + "/fito/Test_3_07_01/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_3_07_01_properties.xml";
+    public String WAY_TO_PROPERTIES = Ways.DEV.getWay() + "/fito/Test_3_07_01/" + "Test_3_07_01_properties.xml";
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
 
     @Owner(value = "Балашов Илья")
-    @Description("3.07.01 (Р) Сценарий получения услуги по ЗКФС (положительный результат)")
+    @Description("3.07.01 Сценарий получения услуги по ЗКФС (положительный результат)")
     @Link(name = "Test_3_07_01", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=163308618")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
@@ -67,7 +67,6 @@ public class Test_3_07_01 extends Hooks {
         CommonFunctions.printStep();
 
         new GUIFunctions()
-//                .selectTab("Сервисы")
                 .clickButton("Заказать услугу")
                 .switchPageTo(1)
                 .clickByLocator("//div[@data-history-code='/services/state'][normalize-space(text()='Государственные')]")
@@ -118,11 +117,11 @@ public class Test_3_07_01 extends Hooks {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Условия поставки")
-                //Условия транспортировки
+                    //Условия транспортировки
                     .inField("Вид транспорта").selectValue(P.getProperty("Условия поставки.Вид транспорта")).assertNoControl().assertValue()
                     .inField("Страна назначения").selectValue(P.getProperty("Условия поставки.Страна назначения")).assertNoControl().assertValue()
                     .inField("Пункт ввоза в стране назначения").inputValue(P.getProperty("Условия поставки.Пункт ввоза в стране назначения")).assertNoControl().assertValue()
-                //Документы на груз
+                    //Документы на груз
                     .inField("Тип документа о происхождении груза. Если тип документа в списке отсутствует — выберите «другое»").selectValue(P.getProperty("Условия поставки.Тип документа о происхождении груза. Если тип документа в списке отсутствует — выберите «другое»")).assertNoControl().assertValue()
                     .inField("Номер документа на груз").inputValue(P.getProperty("Условия поставки.Номер документа на груз")).assertNoControl().assertValue()
                     .inField("Дата").inputValue(DateFunctions.dateToday("dd.MM.yyyy")).assertNoControl().assertValue()
@@ -139,14 +138,9 @@ public class Test_3_07_01 extends Hooks {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Добавление продукции")
-//                    .inField("Каталог продукции").selectValue(" --- кофе").assertNoControl().assertValue()
                     .inField("Каталог продукции").clickByLocator("//input[@placeholder='Введите наименование продукции или код ТН ВЭД']").inputValue("кофе").clickByLocator("//*[contains(text(), ' --- кофе')]")
-//                    .inField("Код ТН ВЭД").assertValue(P.getProperty("Каталог продукции.Код ТН ВЭД"))
                     .inField("Код ТН ВЭД").assertValue(" ---")
-
                     .inField("Тип продукции").selectValue(P.getProperty("Добавление продукции.Тип продукции")).assertNoControl().assertValue()
-                    .inField("Ботаническое наименование продукции").assertValue(P.getProperty("Добавление продукции.Ботаническое наименование продукции")).assertNoControl()
-
                     .inField("Дополнительная информация о продукции. Например, страна производства (произрастания) продукции, сорт продукции и т.д.").inputValue(P.getProperty("Добавление продукции.Дополнительная информация о продукции")).assertNoControl().assertValue()
                     .inField("Вес груза (нетто), кг").inputValue(P.getProperty("Добавление продукции.Вес груза (нетто)")).assertNoControl().assertValue()
                     .inField("Особые единицы измерения").selectValue(P.getProperty("Добавление продукции.Особые единицы измерения")).assertNoControl().assertValue()
@@ -154,7 +148,7 @@ public class Test_3_07_01 extends Hooks {
                     .inField("Описание упаковки").selectValue(P.getProperty("Добавление продукции.Описание упаковки")).assertNoControl().assertValue()
                     .inField("Размещение продукции").clickByLocator("//ancestor::div//span[contains(text(),'Навалом (наливом)')][last()]")
                     .inField("Наличие отличительных знаков (маркировки). Например, номера партий, серийные номера или названия торговых марок. ").setCheckboxON().assertCheckboxON()
-                //Место происхождения( произрастания) продукции
+                    //Место происхождения( произрастания) продукции
                     .inField("Страна").selectValue(P.getProperty("Добавление продукции.Страна")).assertNoControl().assertValue()
                     .inField("Регион").selectValue(P.getProperty("Добавление продукции.Регион")).assertNoControl().assertValue()
 
@@ -215,7 +209,8 @@ public class Test_3_07_01 extends Hooks {
         new GUIFunctions()
 //                .inContainer("Уполномоченное лицо для получения заключения")
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
-                    .inField("ФИО").selectValue("Фамилия Дополнительного контакта").assertNoControl().assertValue()
+//                    .inField("ФИО").selectValue("Грибоедов Гриб Грибович").assertNoControl().assertValue()
+                    .inField("ФИО").clickByLocator("//input[@name='authorizedPersonFullName']").inputValue("Грибоедов").clickByLocator("//*[contains(@value, 'Грибоедов Гриб Грибович')]")
                     .inField("Телефон").assertValue(P.getProperty("Форма заключения.Телефон")).assertNoControl()
                     .inField("Email").assertValue(P.getProperty("Форма заключения.Email")).assertNoControl()
 
@@ -236,6 +231,16 @@ public class Test_3_07_01 extends Hooks {
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
                     .clickButton("Подписать и отправить")
                     .waitForLoading();
+
+        //
+//        new GUIFunctions()
+//                .waitForElementDisplayed("//*[text()='Подписать электронной подписью']");
+//        new GUIFunctions().clickButton("Подписать электронной подписью")
+//                .inField("Выберите сертификат").selectValue("Ермухамбетова Балсикер Бисеньевна от 18.01.2022").assertValue()
+//                .clickButton("Подписать")
+//                .waitForElementDisplayed("//*[text()='Подписано']")
+//                .clickButton("Далее");
+//        closeWebDriver();
 
 //        docNum = $x("//div[contains (@class, 'FormHeader_title' )]//span[contains (@class, 'Typography_body' )]").getText().split("№")[1];
 //        JupyterLabIntegration.uploadTextContent(docNum, WAY_TEST, "docNum.txt");

@@ -19,6 +19,7 @@ public class Asserts extends ElementData {
     private String getValue() {
         String actualValue;
         String inputXPath = new XPath(this).getInputXPath();
+//        System.out.println("inputXPath: " + inputXPath);
 
         //старая версия
 //        if ($x(inputXPath).exists()) {
@@ -30,8 +31,15 @@ public class Asserts extends ElementData {
 //        }
 
         if (inputXPath != null && $x(inputXPath).exists()) {
+//            System.out.println("getInputXPath");
             actualValue = $x(new XPath(this).getInputXPath()).getValue();
+
+            //костыль
+            if (actualValue == null && $x(new XPath(this).getUneditableInputXPath()).getText() != null) {
+                actualValue = $x(new XPath(this).getUneditableInputXPath()).getText();
+            }
         } else {
+//            System.out.println("getUneditableInputXPath");
             actualValue = $x(new XPath(this).getUneditableInputXPath()).getText();
         }
         return actualValue;

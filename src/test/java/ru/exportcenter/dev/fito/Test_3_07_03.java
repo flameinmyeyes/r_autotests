@@ -22,17 +22,17 @@ import static com.codeborne.selenide.Selenide.*;
 public class Test_3_07_03 extends Hooks {
 
     public String WAY_TEST = Ways.DEV.getWay() + "/fito/Test_3_07_03/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_3_07_03_properties.xml";
+    public String WAY_TO_PROPERTIES = Ways.DEV.getWay() + "/fito/Test_3_07_03/" + "Test_3_07_03_properties.xml";
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
-    private String processID;
 
     @Owner(value = "Балашов Илья")
-    @Description("3.07.03 (Р) Сценарий с добавлением новой продукции")
+    @Description("3.07.03 Сценарий с добавлением новой продукции")
     @Link(name = "Test_3_07_03", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=175253524")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
         precondition();
         step06();
+        postcondition();
     }
 
     @AfterMethod
@@ -41,12 +41,9 @@ public class Test_3_07_03 extends Hooks {
     }
 
     public void precondition() {
-        //Предусловие выполнить шаги 1-5 из
-        //https://confluence.exportcenter.ru/pages/resumedraft.action?draftId=163308622&draftShareId=786c5e3a-edfc-4a1d-8fb1-ae287b286103&
+        //Предусловие: выполнить шаги 1-5 из ТК https://confluence.exportcenter.ru/pages/viewpage.action?pageId=163308618
         Test_3_07_01 test_3_07_01 = new Test_3_07_01();
-        test_3_07_01.WAY_TEST = WAY_TEST;
-        test_3_07_01.WAY_TO_PROPERTIES = WAY_TO_PROPERTIES;
-        test_3_07_01.P = P;
+        test_3_07_01.WAY_TEST = this.WAY_TEST;
         test_3_07_01.step01();
         test_3_07_01.step02();
         test_3_07_01.step03();
@@ -61,10 +58,10 @@ public class Test_3_07_03 extends Hooks {
                 .inContainer("Добавление продукции")
                     .clickButton("Добавить новый")
 //                    .clickByLocator("//div[text()='Добавить новый']")
-//                    .inField("Каталог продукции").selectValue(" --- Кофе").assertNoControl().assertValue()
                     .inField("Код ТН ВЭД").clickByLocator("//input[@placeholder='Введите или выберите из списка ' and @name='tnvedCode']").inputValue("кофе").clickByLocator("//*[contains(text(), ' --- Кофе')]")
                     .inField("Тип продукции").selectValue(P.getProperty("Добавление продукции.Тип продукции")).assertNoControl().assertValue()
-                    .inField("Ботаническое наименование продукции").assertValue(P.getProperty("Добавление продукции.Ботаническое наименование продукции")).assertNoControl()
+
+//                    .inField("Ботаническое наименование продукции").assertValue(P.getProperty("Добавление продукции.Ботаническое наименование продукции")).assertNoControl()
                     .inField("Наименование продукции").inputValue(P.getProperty("Добавление продукции.Наименование продукции")).assertNoControl().assertValue()
                     .inField("Производитель").clickByLocator("//ancestor::div//span[contains(text(),'Российский')][last()]")
                     .inField("Наименование производителя").selectValue(P.getProperty("Добавление продукции.Наименование производителя")).assertNoControl().assertValue()
@@ -84,15 +81,16 @@ public class Test_3_07_03 extends Hooks {
                     .waitForLoading();
     }
 
-    public void refreshTab(String expectedXpath, int times) {
-        for (int i = 0; i < times; i++) {
-            if ($x(expectedXpath).isDisplayed()) {
-                break;
-            }
-            System.out.println("Refreshing");
-            refresh();
-            CommonFunctions.wait(1);
-        }
+    public void postcondition() {
+        //Выполнить шаги 7-12 из ТК https://confluence.exportcenter.ru/pages/viewpage.action?pageId=163308618
+        Test_3_07_01 test_3_07_01 = new Test_3_07_01();
+        test_3_07_01.WAY_TEST = this.WAY_TEST;
+        test_3_07_01.step07();
+        test_3_07_01.step08();
+        test_3_07_01.step09();
+        test_3_07_01.step10();
+        test_3_07_01.step11();
+        test_3_07_01.step12();
     }
 
 }
