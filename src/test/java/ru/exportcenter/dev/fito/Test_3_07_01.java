@@ -28,7 +28,7 @@ public class Test_3_07_01 extends Hooks {
 
     @Owner(value = "Балашов Илья")
     @Description("3.07.01 Сценарий получения услуги по ЗКФС (положительный результат)")
-    @Link(name = "Test_3_07_01", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=163308618")
+    @Link(name = "Test_3_07_01", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=183183514")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
         step01();
@@ -65,7 +65,6 @@ public class Test_3_07_01 extends Hooks {
     @Step("Выбор сервиса")
     public void step02() {
         CommonFunctions.printStep();
-
         new GUIFunctions()
                 .clickButton("Заказать услугу")
                 .switchPageTo(1)
@@ -138,7 +137,7 @@ public class Test_3_07_01 extends Hooks {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Добавление продукции")
-                    .inField("Каталог продукции").clickByLocator("//input[@placeholder='Введите наименование продукции или код ТН ВЭД']").inputValue("кофе").clickByLocator("//*[contains(text(), ' --- кофе')]")
+                    .inField("Каталог продукции").clickByLocator("//input[@placeholder='Введите наименование продукции или код ТН ВЭД']").inputValue("кофе").waitForLoading().clickByLocator("//*[contains(text(), ' --- кофе')]")
                     .inField("Код ТН ВЭД").assertValue(" ---")
                     .inField("Тип продукции").selectValue(P.getProperty("Добавление продукции.Тип продукции")).assertNoControl().assertValue()
                     .inField("Дополнительная информация о продукции. Например, страна производства (произрастания) продукции, сорт продукции и т.д.").inputValue(P.getProperty("Добавление продукции.Дополнительная информация о продукции")).assertNoControl().assertValue()
@@ -207,10 +206,8 @@ public class Test_3_07_01 extends Hooks {
     public void step10() {
         CommonFunctions.printStep();
         new GUIFunctions()
-//                .inContainer("Уполномоченное лицо для получения заключения")
-                .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
-//                    .inField("ФИО").selectValue("Грибоедов Гриб Грибович").assertNoControl().assertValue()
-                    .inField("ФИО").clickByLocator("//input[@name='authorizedPersonFullName']").inputValue("Грибоедов").clickByLocator("//*[contains(@value, 'Грибоедов Гриб Грибович')]")
+                .inContainer("Уполномоченное лицо для получения заключения")
+                    .inField("ФИО").clickByLocator("//input[@name='authorizedPersonFullName'][@placeholder='Не выбрано']").inputValue("Грибоедов").waitForLoading().clickByLocator("//*[contains(text(), 'Грибоедов Гриб Грибович')]")
                     .inField("Телефон").assertValue(P.getProperty("Форма заключения.Телефон")).assertNoControl()
                     .inField("Email").assertValue(P.getProperty("Форма заключения.Email")).assertNoControl()
 
@@ -225,42 +222,20 @@ public class Test_3_07_01 extends Hooks {
     public void step11() {
         CommonFunctions.printStep();
         new GUIFunctions()
-                .inContainer("Договор с органом инспекции")
-                   .inField("Я ознакомлен и согласен с условиями проекта договора").setCheckboxON().assertCheckboxON()
-
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
                     .clickButton("Подписать и отправить")
-                    .waitForLoading();
-
-        //
-//        new GUIFunctions()
-//                .waitForElementDisplayed("//*[text()='Подписать электронной подписью']");
-//        new GUIFunctions().clickButton("Подписать электронной подписью")
-//                .inField("Выберите сертификат").selectValue("Ермухамбетова Балсикер Бисеньевна от 18.01.2022").assertValue()
-//                .clickButton("Подписать")
-//                .waitForElementDisplayed("//*[text()='Подписано']")
-//                .clickButton("Далее");
-//        closeWebDriver();
-
-//        docNum = $x("//div[contains (@class, 'FormHeader_title' )]//span[contains (@class, 'Typography_body' )]").getText().split("№")[1];
-//        JupyterLabIntegration.uploadTextContent(docNum, WAY_TEST, "docNum.txt");
-//
-//        CommonFunctions.wait(20);
-//        String status = RESTFunctions.getOrderStatus(processID);
-//        System.out.println(status);
-//        Assert.assertEquals(status, "Проводится проверка");
+                    .inField("Выберите сертификат").selectValue("Ермухамбетова Балсикер Бисеньевна от 18.01.2022").assertValue()
+                    .clickButton("Подписать")
+                    .waitForLoading()
+                    .waitForElementDisplayed("//div[text()='Шаг 9 из 9']");
     }
 
     @Step("Шаг 12. Экран \"Результат предоставления услуги\"")
     public void step12() {
         CommonFunctions.printStep();
-//        new GUIFunctions()
-//                .inContainer("Договор с органом инспекции")
-//                .inField("Я ознакомлен и согласен с условиями проекта договора").setCheckboxON().assertCheckboxON()
-//
-//                .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
-//                .clickButton("Подписать и отправить")
-//                .waitForLoading();
+        new GUIFunctions()
+                .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
+                    .clickButton("Оформить сертификат");
     }
 
     public void refreshTab(String expectedXpath, int times) {

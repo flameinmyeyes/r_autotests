@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="REC_fito_Balashov" parallel="tests" verbose="1" thread-count="1" preserve-order="true">
+	<parameter name="runMode" value="remote"/>
+
+	<test name="REC_fito_Balashov" thread-count="1" preserve-order="true">
+		<classes>
+			<!--фито-->
+			<class name="ru.exportcenter.dev.fito.Test_3_07_01"/>
+<!--			<class name="ru.exportcenter.dev.fito.Test_3_07_02"/>-->
+<!--			<class name="ru.exportcenter.dev.fito.Test_3_07_03"/>-->
+<!--			<class name="ru.exportcenter.dev.fito.Test_3_07_04"/>-->
+<!--			<class name="ru.exportcenter.dev.fito.Test_3_07_05"/>-->
+		</classes>
+	</test>
+
+</suite>

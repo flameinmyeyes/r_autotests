@@ -57,11 +57,8 @@ public class Test_3_07_03 extends Hooks {
         new GUIFunctions()
                 .inContainer("Добавление продукции")
                     .clickButton("Добавить новый")
-//                    .clickByLocator("//div[text()='Добавить новый']")
-                    .inField("Код ТН ВЭД").clickByLocator("//input[@placeholder='Введите или выберите из списка ' and @name='tnvedCode']").inputValue("кофе").clickByLocator("//*[contains(text(), ' --- Кофе')]")
+                    .inField("Код ТН ВЭД").clickByLocator("//input[@placeholder='Введите или выберите из списка ' and @name='tnvedCode']").inputValue("кофе").waitForLoading().clickByLocator("//*[contains(text(), ' --- Кофе')]")
                     .inField("Тип продукции").selectValue(P.getProperty("Добавление продукции.Тип продукции")).assertNoControl().assertValue()
-
-//                    .inField("Ботаническое наименование продукции").assertValue(P.getProperty("Добавление продукции.Ботаническое наименование продукции")).assertNoControl()
                     .inField("Наименование продукции").inputValue(P.getProperty("Добавление продукции.Наименование продукции")).assertNoControl().assertValue()
                     .inField("Производитель").clickByLocator("//ancestor::div//span[contains(text(),'Российский')][last()]")
                     .inField("Наименование производителя").selectValue(P.getProperty("Добавление продукции.Наименование производителя")).assertNoControl().assertValue()
@@ -76,6 +73,7 @@ public class Test_3_07_03 extends Hooks {
                     .inField("Страна").selectValue(P.getProperty("Добавление продукции.Страна")).assertNoControl().assertValue()
                     .inField("Регион").selectValue(P.getProperty("Добавление продукции.Регион")).assertNoControl().assertValue()
 
+                //нажать "Продолжить"
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
                     .clickButton("Продолжить")
                     .waitForLoading();
