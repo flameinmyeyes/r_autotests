@@ -25,7 +25,7 @@ public class Test_3_07_04 extends Hooks {
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     @Owner(value = "Балашов Илья")
-    @Description("3.07.04 (Р) Сценарий с заключением нового договора на установление КФС")
+    @Description("3.07.04 Сценарий с заключением нового договора на установление КФС")
     @Link(name = "Test_3_07_04", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=175255752")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {

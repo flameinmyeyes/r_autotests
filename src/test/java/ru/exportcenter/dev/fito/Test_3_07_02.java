@@ -56,6 +56,7 @@ public class Test_3_07_02 extends Hooks {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Условия поставки")
+                    //Условия транспортировки
                     .inField("Вид транспорта").selectValue(P.getProperty("Условия поставки.Вид транспорта")).assertNoControl().assertValue()
                     .inField("Страна назначения").selectValue(P.getProperty("Условия поставки.Страна назначения")).assertNoControl().assertValue()
                     .inField("Пункт ввоза в стране назначения").inputValue(P.getProperty("Условия поставки.Пункт ввоза в стране назначения")).assertNoControl().assertValue()
@@ -65,6 +66,7 @@ public class Test_3_07_02 extends Hooks {
                     .inField("Номер документа на груз").inputValue(P.getProperty("Условия поставки.Номер документа на груз")).assertNoControl().assertValue()
                     .inField("Дата").inputValue(DateFunctions.dateToday("dd.MM.yyyy")).assertNoControl().assertValue()
 
+                //нажать "Продолжить"
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
                     .clickButton("Продолжить")
                     .waitForLoading();
