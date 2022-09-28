@@ -51,14 +51,15 @@ public class Test_01_07_44_4 extends Hooks {
 
         new GUIFunctions().refreshTab("Продолжить", 10)
                 .clickButton("Продолжить")
-                .waitForElementDisplayed("//*[text()='Далее']");
+                .waitForElementDisplayed("//*[contains(text(),'Господдержка. Сертификация продукции')]");
     }
 
     @Step("Заполнение блока \"Информация о Заявителе\"")
     public void step02() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().clickButton("Далее")
+        new GUIFunctions().closeAllPopupWindows()
+                .clickButton("Далее")
                 .waitForLoading()
                 .waitForLoading()
                 .closeAllPopupWindows()
@@ -70,7 +71,7 @@ public class Test_01_07_44_4 extends Hooks {
         CommonFunctions.printStep();
 
         new GUIFunctions().clickButton("//*[text()='Добавить +']")
-                .inField("Вид затраты, связанной с сертификацией продукции").selectValue("11\u00a0Услуги по хранению образцов\u00a0").assertValue()
+                .inField("Вид затраты, связанной с сертификацией продукции").selectValue("11\u00a0Услуги по хранению образцов").assertValue()
                 .inField("Основание понесенных затрат").selectValue("Требование контракта")
                 .uploadFile("Загрузить шаблон", "C:\\auto-tests\\Документ к Затрате 11.xlsx");
     }

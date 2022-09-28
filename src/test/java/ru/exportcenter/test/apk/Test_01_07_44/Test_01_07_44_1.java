@@ -60,7 +60,7 @@ public class Test_01_07_44_1 extends Hooks {
 
         new GUIFunctions().closeAllPopupWindows()
                 .inField("Доверенное лицо").setCheckboxON().assertCheckboxON()
-                .inField("ФИО").selectValue("Антонов\u00a0Антон\u00a0Антонович\u00a0").assertValue();
+                .inField("ФИО").selectValue("Антонов\u00a0Антон\u00a0Антонович").assertValue();
 
         $x("//*[text()='ФИО']/following::input").click();
         $x("//*[text()='ФИО']/following::input").sendKeys(Keys.LEFT_CONTROL + "a");

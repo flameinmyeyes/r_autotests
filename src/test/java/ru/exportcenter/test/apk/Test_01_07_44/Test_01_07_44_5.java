@@ -67,7 +67,7 @@ public class Test_01_07_44_5 extends Hooks {
         CommonFunctions.printStep();
 
         new GUIFunctions().clickButton("//*[text()='Добавить +']")
-                .inField("Вид затраты, связанной с сертификацией продукции").selectValue("11\u00a0Услуги по хранению образцов\u00a0").assertValue()
+                .inField("Вид затраты, связанной с сертификацией продукции").selectValue("11\u00a0Услуги по хранению образцов").assertValue()
                 .waitForElementDisplayed("//*[text()='Шаблон к Затрате 11.xlsm']")
                 .inField("Основание понесенных затрат").selectValue("Требование контракта")
                 .uploadFile("Загрузить шаблон", "C:\\auto-tests\\Документ к Затрате 11.xlsx")
