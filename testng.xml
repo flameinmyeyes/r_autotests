@@ -106,7 +106,8 @@
 
     <test name="pavilion" thread-count="1" preserve-order="true">
         <classes>
-            <class name="ru.exportcenter.test.pavilion.Test_04_07_01" />
+<!--            <class name="ru.exportcenter.test.pavilion.Test_04_07_01" />-->
+            <class name="ru.exportcenter.dev.fito.Test_3_07_02"/>
         </classes>
     </test>
 
