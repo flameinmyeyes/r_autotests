@@ -63,7 +63,7 @@ public class DriverInit {
                 //настройки браузера
                 desiredCapabilities.merge(chromeOptions);
                 desiredCapabilities.setCapability("browserName", "chrome");
-                desiredCapabilities.setCapability("browserVersion", "85_cryptopro_csp_new");
+                desiredCapabilities.setCapability("browserVersion", "85_cryptopro_csp_new_v2");
                 desiredCapabilities.setCapability("enableVNC",true);
 //                desiredCapabilities.setCapability("enableVideo",true);
                 desiredCapabilities.setCapability("name", testName); //передача имени теста в селеноид
