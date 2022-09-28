@@ -29,6 +29,7 @@ public class Test_01_07_02_1 extends Hooks {
     public void steps() throws AWTException, InterruptedException {
         precondition();
         step01();
+        step02();
     }
 
     @AfterMethod
@@ -51,15 +52,14 @@ public class Test_01_07_02_1 extends Hooks {
         //Перейти на https://master-portal.t.exportcenter.ru/services/
         //В строке поиска ввести «Господдержка. Сертификация продукции АПК» и нажать на икноку "Лупа"
         open("https://master-portal.t.exportcenter.ru/services/");
-        new GUIFunctions().inputInSearchField("Поиск по разделу", "Господдержка. Сертификация продукции АПК")
-                .waitForElementDisplayed("//*[text()='По вашему запросу ']");
+        new GUIFunctions().inputInSearchField("Поиск по разделу", "Господдержка. Сертификация продукции АПК");
 
-        String infoText = $x("//div[@class='col-12 pb-2']").getText();
-        System.out.println(infoText);
+//        String infoText = $x("//div[@class='col-12 pb-2']").getText();
+//        System.out.println(infoText);
 
         //Выбрать вкладку «Государственные»
-        new GUIFunctions().clickButton("Государственные")
-                .waitForElementDisplayed("//div[text()='Господдержка. Сертификация продукции АПК']");
+        new GUIFunctions().clickByLocator("//div[@data-history-code-translit='Государственные']")
+                .inputInSearchField("Поиск по разделу", "Господдержка. Сертификация продукции АПК");
     }
 
     @Step("Получение информации о сервисе")
@@ -67,6 +67,9 @@ public class Test_01_07_02_1 extends Hooks {
         CommonFunctions.printStep();
 
         //Нажать на кнопку «Подробнее»
-        new GUIFunctions().clickButton("Подробнее");
+        new GUIFunctions().openSearchResult("Господдержка. Сертификация продукции АПК", "Подробнее")
+                .waitForLoading()
+                .clickButton("Как получить")
+                .clickButton("Описание");
     }
 }
