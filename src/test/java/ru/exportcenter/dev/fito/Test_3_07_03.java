@@ -32,7 +32,7 @@ public class Test_3_07_03 extends Hooks {
     public void steps() {
         precondition();
         step06();
-        postcondition();
+        step07();
     }
 
     @AfterMethod
@@ -71,24 +71,35 @@ public class Test_3_07_03 extends Hooks {
                     .inField("Наличие отличительных знаков (маркировки). Например, номера партий, серийные номера или названия торговых марок. ").setCheckboxON().assertCheckboxON()
                     //Место происхождения( произрастания) продукции
                     .inField("Страна").selectValue(P.getProperty("Добавление продукции.Страна")).assertNoControl().assertValue()
-                    .inField("Регион").selectValue(P.getProperty("Добавление продукции.Регион")).assertNoControl().assertValue()
-
-                //нажать "Продолжить"
-                .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
-                    .clickButton("Продолжить")
-                    .waitForLoading();
+                    .inField("Регион").selectValue(P.getProperty("Добавление продукции.Регион")).assertNoControl().assertValue();
     }
 
-    public void postcondition() {
-        //Выполнить шаги 7-12 из ТК https://confluence.exportcenter.ru/pages/viewpage.action?pageId=163308618
-        Test_3_07_01 test_3_07_01 = new Test_3_07_01();
-        test_3_07_01.WAY_TEST = this.WAY_TEST;
-        test_3_07_01.step07();
-        test_3_07_01.step08();
-        test_3_07_01.step09();
-        test_3_07_01.step10();
-        test_3_07_01.step11();
-        test_3_07_01.step12();
+    @Step("Шаг 7. Отмена заявки пользователем")
+    public void step07() {
+        CommonFunctions.printStep();
+
+        //костыль: нужно проскроллить и кликать, пока не появится нужное всплывающее меню:
+        new GUIFunctions().scrollTo("Запрос заключения о карантинном фитосанитарном состоянии");
+        for(int i = 0; i < 10; i++) {
+            if(!$x("//span[text()='Запрос заключения о карантинном фитосанитарном состоянии']/parent::div/following-sibling::div//li[text()='Отменить заявку']").isDisplayed()) {
+                new GUIFunctions()
+                        .clickByLocator("//span[text()='Запрос заключения о карантинном фитосанитарном состоянии']/parent::div/following-sibling::div/button[@class='dropdown-icon']")
+                        .waitForLoading();
+                CommonFunctions.wait(1);
+            }
+        }
+
+        new GUIFunctions()
+                .clickByLocator("//span[text()='Запрос заключения о карантинном фитосанитарном состоянии']/parent::div/following-sibling::div//li[text()='Отменить заявку']")
+                .waitForLoading();
+
+        //pop-up уведомление о подтверждении удаления
+        if($x("//div//button[@title='Да']").isDisplayed()) {
+            new GUIFunctions().clickByLocator("//div//button[@title='Да']");
+            CommonFunctions.wait(1);
+        }
+
+        new GUIFunctions().waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
     }
 
 }

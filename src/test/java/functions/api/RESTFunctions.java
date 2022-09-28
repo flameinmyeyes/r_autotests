@@ -488,6 +488,51 @@ public class RESTFunctions {
         return token;
     }
 
+    public static String getAccessToken(String baseUri, String login) {
+
+        String execution = RestAssured
+                .given()
+                .baseUri(baseUri)
+                .basePath("/sso/oauth2/access_token")
+                .header("Accept", "application/json")
+                .contentType("application/x-www-form-urlencoded; charset=utf-8")
+                .formParam("client_id", "rec_elk_m2m")
+                .formParam("client_secret", "password")
+                .formParam("realm", "/customer")
+                .formParam("grant_type", "urn:roox:params:oauth:grant-type:m2m")
+                .formParam("service", "dispatcher")
+                .when()
+                .post()
+                .then()
+                .assertThat().statusCode(200)
+                .extract().response().jsonPath().getString("execution");
+
+        String response = RestAssured
+                .given()
+                .baseUri(baseUri)
+                .basePath("/sso/oauth2/access_token")
+                .header("Accept", "application/json")
+                .contentType("application/x-www-form-urlencoded; charset=utf-8")
+                .formParam("client_id", "rec_elk_m2m")
+                .formParam("client_secret", "password")
+                .formParam("realm", "/customer")
+                .formParam("grant_type", "urn:roox:params:oauth:grant-type:m2m")
+                .formParam("service", "dispatcher")
+                .formParam("_eventId", "next")
+                .formParam("username", login)
+                .formParam("password", "password")
+                .formParam("execution", execution)
+                .when()
+                .post()
+                .then()
+                .assertThat().statusCode(200)
+                .extract().response().jsonPath().getString("access_token");
+
+        String token = "Bearer sso_1.0_" + response;
+
+        return token;
+    }
+
     public static String getOrderID(String processID) {
 
         String token = getAccessToken("bpmn_admin");
