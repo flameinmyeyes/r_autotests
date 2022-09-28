@@ -49,27 +49,34 @@ public class Test_01_07_05_1 extends Hooks {
         CommonFunctions.printStep();
 
         //Перейти на https://master-portal.t.exportcenter.ru/services/
-        open("https://master-portal.t.exportcenter.ru/services/");
-
         //В строке поиска ввести «Господдержка. Сертификация продукции АПК» и нажать на икноку "Лупа"
-        $x("//input[@placeholder='Поиск по разделу']").setValue("Господдержка. Сертификация продукции АПК").pressEnter();
-        new GUIFunctions().waitForElementDisplayed("//*[text()='По вашему запросу ']");
+        open("https://master-portal.t.exportcenter.ru/services/");
+        new GUIFunctions().inputInSearchField("Поиск по разделу", "Господдержка. Сертификация продукции АПК");
 
-
-//        new GUIFunctions().inputInSearchField("Поиск по разделу", "Господдержка. Сертификация продукции АПК")
-//                .waitForElementDisplayed("//*[text()='По вашему запросу ']");
-
-        String infoText = $x("//div[@class='col-12 pb-2']").getText();
-        System.out.println(infoText);
+//        String infoText = $x("//div[@class='col-12 pb-2']").getText();
+//        System.out.println(infoText);
 
         //Выбрать вкладку «Государственные»
-        new GUIFunctions().clickButton("Государственные")
-                .waitForElementDisplayed("//div[text()='Господдержка. Сертификация продукции АПК']");
+        new GUIFunctions().clickByLocator("//div[@data-history-code-translit='Государственные']")
+                .inputInSearchField("Поиск по разделу", "Господдержка. Сертификация продукции АПК");
+
+//        String infoText = $x("//div[@class='col-12 pb-2']").getText();
+//        System.out.println(infoText);
 
         //Нажать кнопу "Оформить"
-        new GUIFunctions().clickButton("Оформить");
+        new GUIFunctions().openSearchResult("Господдержка. Сертификация продукции АПК", "Оформить");
         switchTo().window(1);
-        new GUIFunctions().waitForElementDisplayed("//*[text()='Господдержка. Сертификация продукции АПК']//following::div[text()='Черновик']");
+        new GUIFunctions().waitForLoading()
+                .waitForElementDisplayed("//*[contains(text(),'Сертификация продукции АПК')]")
+                .closeAllPopupWindows();
+
+        if ($x("//button[contains(text(),'Сервис «Господдержка. Сертификация продукции АПК»')]").isDisplayed()){
+
+            new GUIFunctions().clickByLocator("//button[contains(text(),'Сервис «Господдержка. Сертификация продукции АПК»')]");
+            webdriver().driver().switchTo().alert().accept();
+        }
+
+        new GUIFunctions().waitForElementDisplayed("//*[text()='Номер заявки']");
 
     }
 

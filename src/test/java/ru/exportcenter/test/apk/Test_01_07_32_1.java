@@ -58,7 +58,6 @@ public class Test_01_07_32_1 extends Hooks {
         CommonFunctions.printStep();
 
         new GUIFunctionsLKB()
-//                .waitForElementDisplayed("//*[text()='Максимальная продолжительность периода ожидания подписания Заявки в статусе \"Черновик\"']")
                 .inField("Максимальная продолжительность периода ожидания подписания Заявки в статусе \"Черновик\"").inputValue("1").assertValue()
                 .inField("Максимальная продолжительность отображения Заявки после завершении услуги").inputValue("1").assertValue()
                 .inField("Период ожидания выплаты компенсации").inputValue("1").assertValue()
@@ -68,12 +67,9 @@ public class Test_01_07_32_1 extends Hooks {
                 .inField("Срок выполнения задачи на подписание итогового отчета о выполненных показателях уполномоченным лицом").inputValue("1").assertValue()
                 .inField("Срок выполнения задачи на подписание заключения по отчету о выполненных показателях").inputValue("1").assertValue()
                 .inField("Срок выполнения задачи на подписание Соглашения уполномоченным лицом").inputValue("1").assertValue()
-//                .inField("Включение/отключение риск-ориентированной модели").setCheckboxON().assertCheckboxON()
                 .clickByLocator("//*[text()='Включение/отключение риск-ориентированной модели']/parent::*//input")
                 .clickButton("Сохранить")
-//                .clickByLocator("//span[text()='Сохранить']")
                 .clickButton("OK");
-//                .clickByLocator("//span[text()='OK']");
     }
 
     @Step("")
@@ -84,13 +80,11 @@ public class Test_01_07_32_1 extends Hooks {
                 .clickButton("Создать новую запись")
                 .inField("Год отбора").inputValue("2024").pressEnter()
                 .inField("Номер отбора").inputValue("1").pressEnter();
+
         $x("//input[@placeholder='Начальная дата']").click();
         $x("//input[@placeholder='Начальная дата']").setValue("2024-01-01 16:58:27").pressEnter();
         $x("//input[@placeholder='Конечная дата']").setValue("2024-03-31 16:58:27").pressEnter();
-//                .inPlaceholder("Начальная дата").inputValue("2024-01-01 16:58:27")
-//                .clickButton("ОК")
-//                .inPlaceholder("Конечная дата").inputValue("2024-03-31 16:58:27")
-//                .clickButton("ОК")
+
         new GUIFunctionsLKB()
                 .inField("Информация об отборе").inputText("тест")
                 .clickButton("Сохранить")
@@ -102,7 +96,6 @@ public class Test_01_07_32_1 extends Hooks {
         CommonFunctions.printStep();
 
         new GUIFunctionsLKB().clickButton("Настройки")
-//                .waitForElementDisplayed("//*[text()='Максимальная продолжительность периода ожидания подписания Заявки в статусе \"Черновик\"']")
                 .inField("Максимальная продолжительность периода ожидания подписания Заявки в статусе \"Черновик\"").inputValue("7").assertValue()
                 .inField("Максимальная продолжительность отображения Заявки после завершении услуги").inputValue("30").assertValue()
                 .inField("Период ожидания выплаты компенсации").inputValue("10").assertValue()
@@ -112,20 +105,14 @@ public class Test_01_07_32_1 extends Hooks {
                 .inField("Срок выполнения задачи на подписание итогового отчета о выполненных показателях уполномоченным лицом").inputValue("5").assertValue()
                 .inField("Срок выполнения задачи на подписание заключения по отчету о выполненных показателях").inputValue("5").assertValue()
                 .inField("Срок выполнения задачи на подписание Соглашения уполномоченным лицом").inputValue("2").assertValue()
-//                .inField("Включение/отключение риск-ориентированной модели").setCheckboxOFF().assertCheckboxOFF()
                 .clickByLocator("//*[text()='Включение/отключение риск-ориентированной модели']/parent::*//input")
                 .clickButton("Сохранить")
-//                .clickByLocator("//span[text()='Сохранить']")
                 .clickButton("OK")
-//                .clickByLocator("//span[text()='OK']")
                 .clickButton("Параметры отбора")
                 .clickByLocator("//td[text()='01.01.2024 - 31.03.2024']/following-sibling::*//*[text()='Просмотреть']")
                 .clickButton("Удалить")
                 .clickButton("OK")
                 .waitForElementDisplayed("//*[text()='Запись удалена.']")
                 .clickButton("OK");
-
-
-
     }
 }
