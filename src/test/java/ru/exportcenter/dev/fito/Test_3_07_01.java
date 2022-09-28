@@ -3,6 +3,7 @@ package ru.exportcenter.dev.fito;
 import framework.RunTestAgain;
 import framework.Ways;
 import framework.integration.JupyterLabIntegration;
+import functions.api.RESTFunctions;
 import functions.common.CommonFunctions;
 import functions.common.DateFunctions;
 import functions.file.PropertiesHandler;
@@ -87,6 +88,16 @@ public class Test_3_07_01 extends Hooks {
         processID = CommonFunctions.getProcessIDFromURL();
         System.out.println("processID: " + processID);
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
+
+        new GUIFunctions().waitForLoading()
+                .waitForElementDisplayed("//*[contains(text(),'Запрос заключения о карантинном фитосанитарном состоянии')]")
+                .closeAllPopupWindows();
+
+        //костыль
+        if ($x("//button[contains(text(),'Запрос заключения о карантинном фитосанитарном состоянии')]").isDisplayed()){
+            new GUIFunctions().clickByLocator("//button[contains(text(),'Запрос заключения о карантинном фитосанитарном состоянии')]");
+            webdriver().driver().switchTo().alert().accept();
+        }
 
         //На "Начальном экране" формирования запроса нажать "Продолжить"
         refreshTab("//*[contains(text(), 'Продолжить')]", 60);

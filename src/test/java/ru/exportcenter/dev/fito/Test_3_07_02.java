@@ -2,6 +2,7 @@ package ru.exportcenter.dev.fito;
 
 import framework.RunTestAgain;
 import framework.Ways;
+import functions.api.RESTFunctions;
 import functions.api.SQLFunctions;
 import functions.common.CommonFunctions;
 import functions.common.DateFunctions;
@@ -33,7 +34,7 @@ public class Test_3_07_02 extends Hooks {
     public void steps() {
         precondition();
         step05();
-        postcondition();
+        step06();
     }
 
     @AfterMethod
@@ -64,25 +65,34 @@ public class Test_3_07_02 extends Hooks {
                     .inField("Тип документа о происхождении груза. Если тип документа в списке отсутствует — выберите «другое»").selectValue(P.getProperty("Условия поставки.Тип документа о происхождении груза. Если тип документа в списке отсутствует — выберите «другое»")).assertNoControl().assertValue()
                     .inField("Наименование документа о происхождении груза").inputValue(P.getProperty("Условия поставки.Наименование документа о происхождении груза")).assertNoControl().assertValue()
                     .inField("Номер документа на груз").inputValue(P.getProperty("Условия поставки.Номер документа на груз")).assertNoControl().assertValue()
-                    .inField("Дата").inputValue(DateFunctions.dateToday("dd.MM.yyyy")).assertNoControl().assertValue()
-
-                //нажать "Продолжить"
-                .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
-                    .clickButton("Продолжить")
-                    .waitForLoading();
+                    .inField("Дата").inputValue(DateFunctions.dateToday("dd.MM.yyyy")).assertNoControl().assertValue();
     }
 
-    public void postcondition() {
-        //Выполнить шаги 6-12 из ТК https://confluence.exportcenter.ru/pages/viewpage.action?pageId=163308618
-        Test_3_07_01 test_3_07_01 = new Test_3_07_01();
-        test_3_07_01.WAY_TEST = this.WAY_TEST;
-        test_3_07_01.step06();
-        test_3_07_01.step07();
-        test_3_07_01.step08();
-        test_3_07_01.step09();
-        test_3_07_01.step10();
-        test_3_07_01.step11();
-        test_3_07_01.step12();
+    @Step("Шаг 6. Отмена заявки пользователем")
+    public void step06() {
+        CommonFunctions.printStep();
+
+        //костыль: нужно проскроллить и кликать, пока не появится нужное всплывающее меню:
+        new GUIFunctions().scrollTo("Запрос заключения о карантинном фитосанитарном состоянии");
+        for(int i = 0; i < 10; i++) {
+            if(!$x("//span[text()='Запрос заключения о карантинном фитосанитарном состоянии']/parent::div/following-sibling::div//li[text()='Отменить заявку']").isDisplayed()) {
+                new GUIFunctions()
+                        .clickByLocator("//span[text()='Запрос заключения о карантинном фитосанитарном состоянии']/parent::div/following-sibling::div/button[@class='dropdown-icon']")
+                        .waitForLoading();
+                CommonFunctions.wait(1);
+            }
+        }
+
+        new GUIFunctions()
+                .clickByLocator("//span[text()='Запрос заключения о карантинном фитосанитарном состоянии']/parent::div/following-sibling::div//li[text()='Отменить заявку']")
+                .waitForLoading();
+
+        //pop-up уведомление о подтверждении удаления
+        if($x("//div//button[@title='Да']").isDisplayed()) {
+            new GUIFunctions().clickByLocator("//div//button[@title='Да']");
+        }
+
+        new GUIFunctions().waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
     }
 
 }

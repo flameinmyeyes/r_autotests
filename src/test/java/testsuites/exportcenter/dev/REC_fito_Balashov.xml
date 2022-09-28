@@ -7,9 +7,9 @@
 	<test name="REC_fito_Balashov" thread-count="1" preserve-order="true">
 		<classes>
 			<!--фито-->
-			<class name="ru.exportcenter.dev.fito.Test_3_07_01"/>
-<!--			<class name="ru.exportcenter.dev.fito.Test_3_07_02"/>-->
-<!--			<class name="ru.exportcenter.dev.fito.Test_3_07_03"/>-->
+<!--			<class name="ru.exportcenter.dev.fito.Test_3_07_01"/>-->
+			<class name="ru.exportcenter.dev.fito.Test_3_07_02"/>
+			<class name="ru.exportcenter.dev.fito.Test_3_07_03"/>
 <!--			<class name="ru.exportcenter.dev.fito.Test_3_07_04"/>-->
 <!--			<class name="ru.exportcenter.dev.fito.Test_3_07_05"/>-->
 		</classes>
