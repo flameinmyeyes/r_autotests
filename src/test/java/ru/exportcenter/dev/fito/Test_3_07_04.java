@@ -51,22 +51,22 @@ public class Test_3_07_04 extends Hooks {
         test_3_07_01.step06();
     }
 
-    @Step("Шаг 7. Блок \"Договор на установление карантинного фитосанитарного состояния\"\n")
+    @Step("Шаг 7. Блок \"Договор на установление карантинного фитосанитарного состояния\"")
     public void step07() {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Договор на установление карантинного  фитосанитарного состояния")
-                .inField("Договор").selectValue(P.getProperty("Договор.Договор")).assertNoControl().assertValue()
-                .inField("Орган инспекции").assertValue(P.getProperty("Договор.Орган инспекции")).assertNoControl()
-                .inField("Номер").assertValue(P.getProperty("Договор.Номер")).assertNoControl()
-                .inField("Дата").assertValue(P.getProperty("Договор.Дата")).assertNoControl()
-                .inField("Срок действия").assertValue(P.getProperty("Договор.Срок действия")).assertNoControl()
+                    .inField("Договор").selectValue("Заключить новый договор").assertNoControl().assertValue()
+
+                    .inField("Орган инспекции для заключения договора").selectValue(P.getProperty("Договор.Орган инспекции для заключения договора")).assertNoControl()
+                    .inField("ФИО подписанта договора").assertValue(P.getProperty("Договор.ФИО подписанта договора")).assertNoControl()
+                    .inField("Должность").assertValue(P.getProperty("Договор.Должность")).assertNoControl()
 
                 //нажать "Продолжить"
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
-                .clickButton("Продолжить")
-                .waitForLoading()
-                .waitForElementDisplayed("//div[text()='Шаг 5 из 9']");
+                    .clickButton("Продолжить")
+                    .waitForLoading()
+                    .waitForElementDisplayed("//div[text()='Шаг 5 из 9']");
     }
 
     public void postcondition() {
