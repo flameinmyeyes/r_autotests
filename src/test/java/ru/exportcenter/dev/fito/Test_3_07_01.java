@@ -25,6 +25,7 @@ public class Test_3_07_01 extends Hooks {
     public String WAY_TO_PROPERTIES = Ways.DEV.getWay() + "/fito/Test_3_07_01/" + "Test_3_07_01_properties.xml";
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
+    private String docNum;
 
     @Owner(value = "Балашов Илья")
     @Description("3.07.01 Сценарий получения услуги по ЗКФС (положительный результат)")
@@ -88,7 +89,8 @@ public class Test_3_07_01 extends Hooks {
         System.out.println("processID: " + processID);
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
 
-        new GUIFunctions().waitForLoading()
+        new GUIFunctions()
+                .waitForLoading()
                 .waitForElementDisplayed("//*[contains(text(),'Запрос заключения о карантинном фитосанитарном состоянии')]")
                 .closeAllPopupWindows();
 
@@ -97,6 +99,11 @@ public class Test_3_07_01 extends Hooks {
             new GUIFunctions().clickByLocator("//button[contains(text(),'Запрос заключения о карантинном фитосанитарном состоянии')]");
             webdriver().driver().switchTo().alert().accept();
         }
+
+        //сохранить номер документа в файл
+        docNum = $x("//div[text()='Номер заявки']/parent::div/div[contains(@class, 'description')]").getText();
+        System.out.println("docNum: " + docNum);
+        JupyterLabIntegration.uploadTextContent(docNum, WAY_TEST, "docNum.txt");
 
         //На "Начальном экране" формирования запроса нажать "Продолжить"
         refreshTab("//*[contains(text(), 'Продолжить')]", 60);
