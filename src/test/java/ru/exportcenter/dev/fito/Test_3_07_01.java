@@ -3,7 +3,6 @@ package ru.exportcenter.dev.fito;
 import framework.RunTestAgain;
 import framework.Ways;
 import framework.integration.JupyterLabIntegration;
-import functions.api.RESTFunctions;
 import functions.common.CommonFunctions;
 import functions.common.DateFunctions;
 import functions.file.PropertiesHandler;
