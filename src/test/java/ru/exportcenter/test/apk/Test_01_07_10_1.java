@@ -52,6 +52,5 @@ public class Test_01_07_10_1 extends Hooks {
         new GUIFunctions().clickButton("Показать все (100)")
                 .clickByLocator("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div")
                 .waitForElementDisplayed("//*[text()='" + requestNumber + "']");
-
     }
 }
