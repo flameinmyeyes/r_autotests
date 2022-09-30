@@ -28,8 +28,8 @@ public class Test_01_07_44_5 extends Hooks {
     public void steps() throws AWTException, InterruptedException {
         precondition();
         step01();
-//        step02();
-//        step03();
+        step02();
+        step03();
     }
 
     @AfterMethod

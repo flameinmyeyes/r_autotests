@@ -32,7 +32,7 @@ public class Test_04_07_03  extends Hooks {
     @Link(name = "Test_04_07_03", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=170242302")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException, InterruptedException {
-//        requestNumber = "S/2022/289017";
+//        requestNumber = "S/2022/302173";
         precondition();
         step01();
         step02();
@@ -75,7 +75,8 @@ public class Test_04_07_03  extends Hooks {
         System.out.println(requestData);
 
         new GUIFunctions().clickButton("Продолжить")
-                .waitForElementDisplayed("//*[contains(text(),'Проект Акта приёмки продукции направлен оператору')]");
+                .waitForLoading();
+//                .waitForElementDisplayed("//*[contains(text(),'Проект Акта приёмки продукции направлен оператору')]");
         closeWebDriver();
     }
 
@@ -88,7 +89,7 @@ public class Test_04_07_03  extends Hooks {
 
         new GUIFunctionsLKB().clickByLocator("//span[@title='Все задачи']")
                 .clickByLocator("//div[@title='Подписать Акт приёмки продукции']")
-                .clickByLocator("(//*[contains(text(), '"+requestData+"')]/ancestor::ol/li[text()='Подписать Акт приёмки продукции'])[1]")
+                .clickByLocator("(//li[text()='Подписать Акт приёмки продукции'])[1]")
                 .clickByLocator("//span[text()='Редактировать']");
 
         $x("//input[@placeholder='Выберите дату']").sendKeys(P.getProperty("Блок2.Дата"));
@@ -98,23 +99,15 @@ public class Test_04_07_03  extends Hooks {
         $x("//span[text()='Далее']").scrollTo();
 
         new GUIFunctionsLKB().clickByLocator("//span[text()='Далее']")
-                .waitForLoading()
-                .clickByLocator("//span[text()='Редактировать']");
+                .waitForLoading();
 
-        $x("//input[@placeholder='Выберите дату']").sendKeys(P.getProperty("Блок2.Дата"));
-        $x("//input[@placeholder='Выберите дату']").pressEnter();
-
-        new GUIFunctionsLKB().clickByLocator("//span[text()='Сохранить']");
-
-        new GUIFunctionsLKB().clickByLocator("//span[text()='Подписать']");
-        CommonFunctions.wait(3);
-        new GUIFunctionsLKB()
+        new GUIFunctionsLKB().clickByLocator("//span[text()='Подписать']")
+//                .waitForElementDisplayed("//span[text()='Сертификат']/following::input")
                 .clickByLocator("//span[text()='Сертификат']/following::input")
                 .clickByLocator("//div[@title='Ермухамбетова Балсикер Бисеньевна от 18.01.2022']")
                 .clickByLocator("//span[text()='Подписать и отправить']")
                 .waitForElementDisplayed("//*[text()='Вы успешно подписали Акт']")
                 .clickByLocator("//span[text()='Закрыть']");
-
         closeWebDriver();
     }
 
@@ -128,7 +121,7 @@ public class Test_04_07_03  extends Hooks {
         new GUIFunctions().waitForElementDisplayed("//*[text()='Показать все (100)']")
                 .clickButton("Показать все (100)")
                 .clickByLocator("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div")
-                .waitForElementDisplayed("//*[text()='Продолжить']")
+                .refreshTab("Продолжить", 30)
                 .clickButton("Продолжить");
 
         new GUIFunctions().clickButton("Подписать электронной подписью")
@@ -141,5 +134,4 @@ public class Test_04_07_03  extends Hooks {
         String url = webdriver().driver().getWebDriver().getCurrentUrl();
         System.out.println(url);
     }
-
 }

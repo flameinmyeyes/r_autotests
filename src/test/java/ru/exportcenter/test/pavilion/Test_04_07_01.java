@@ -6,6 +6,7 @@ import framework.integration.JupyterLabIntegration;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
+import functions.gui.lkb.GUIFunctionsLKB;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -31,6 +32,7 @@ public class Test_04_07_01 extends Hooks {
     @Link(name = "Test_04_07_01", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=163302431")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException {
+//        requestNumber = "S/2022/302123";
         step01();
         step02();
         step03();
@@ -54,7 +56,7 @@ public class Test_04_07_01 extends Hooks {
         requestNumber = $x("//div[text()='Номер заявки']/following-sibling::div").getText();
         System.out.println($x("//div[text()='Номер заявки']/following-sibling::div").getText());
 
-        new GUIFunctions().refreshTab("Продолжить", 10);
+        new GUIFunctions().refreshTab("Продолжить", 20);
 
         processID = CommonFunctions.getProcessIDFromURL();
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
@@ -65,23 +67,88 @@ public class Test_04_07_01 extends Hooks {
                 .inField("Страна нахождения павильона").selectValue(PROPERTIES.getProperty("Авторизация.Страна нахождения павильона")).assertValue()
                 .waitForLoading();
         new GUIFunctions().clickButton("Далее")
-                .waitForLoading();
+                .waitForURL("https://lk.t.exportcenter.ru/ru/main");
+
+        String spinnerLocator = "//*[contains(@class, 'preloader') or contains(@class,'spinner') or contains(@class,'Loader_item') or contains(@class,'animate-spin')]";
+
+        for (int i = 0; i < 180; i++) {
+            if ($x(spinnerLocator).isDisplayed()){
+                CommonFunctions.wait(1);
+            }
+        }
+
+        CommonFunctions.wait(15);
+
+        //Костыль
+        new GUIFunctions()
+                .waitForURL("https://lk.t.exportcenter.ru/ru/main")
+                .clickButton("Показать все (100)")
+                .clickByLocator("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div")
+                .waitForElementDisplayed("//*[text()='" + requestNumber + "']")
+                .refreshTab("Продолжить", 15)
+                .clickButton("Продолжить");
+        closeWebDriver();
     }
 
     @Step("Заполнение заявки")
     public void step02() throws AWTException {
         CommonFunctions.printStep();
 
-        Robot robot = new Robot();
-        robot.keyPress(KeyEvent.VK_HOME);
-        $x("//*[text()='Дополнительные сведения']").scrollTo();
-        new GUIFunctions().inContainer("Дополнительные сведения")
-                .inField("Комментарий").inputValue(PROPERTIES.getProperty("Заполнение заявки.Комментарий")).assertValue();
+        open("https://bpms.t.exportcenter.ru/");
+
+        new GUIFunctionsLKB()
+                .authorization("bpmn_admin", "password");
+
+        $x("//div[text()='camunda-exp-search']").click();
+        $x("//div[text()='Cockpit']").click();
+//        CommonFunctions.wait(5);
+        switchTo().frame($x("//iframe[@src='/camunda/camunda-exp-search/app/cockpit/default/#']"));
+        new GUIFunctions().waitForElementDisplayed("//a[text()='Процессы']");
+        $x("//a[text()='Процессы']").click();
+
+        new GUIFunctions().waitForLoading();
+//        switchTo().frame($x("//div[@class='ctn-view cockpit-section-dashboard processes-dashboard ng-scope']"));
+
+        new GUIFunctions().scrollTo($x("//*[contains(text(),'Павильоны. Господдержка. Демонстрационно-дегустационные павильоны АПК')]"))
+                .clickByLocator("//*[contains(text(),'Павильоны. Господдержка. Демонстрационно-дегустационные павильоны АПК')]")
+                .waitForElementDisplayed("//input[@placeholder='Добавить критерии']");
+
+        $x("//input[@placeholder='Добавить критерии']").setValue(requestNumber).pressEnter();
+        new GUIFunctions().waitForElementDisplayed("//td[@class='instance-id ng-isolate-scope']/span/a");
+        $x("//td[@class='instance-id ng-isolate-scope']/span/a").click();
+        new GUIFunctions().waitForElementDisplayed("//input[@placeholder='Добавить критерии']");
+        $x("//input[@placeholder='Добавить критерии']").setValue("passSmevFnsRequest").pressEnter();
+        new GUIFunctions().waitForElementDisplayed("//button[@tooltip='Редактировать переменную']")
+                .clickByLocator("//button[@tooltip='Редактировать переменную']")
+                .waitForElementDisplayed("//select[@ng-model='variable.type']")
+                .clickByLocator("//select[@ng-model='variable.type']")
+                .clickByLocator("//*[text()='String']")
+                .clickByLocator("//span[text()='<null>']");
+
+        $x("//input[@placeholder='Значение переменной']").setValue("1");
+        $x("//*[text()='Значение']").click();
+        $x("//button[@tooltip='Сохранить переменную']").click();
+        switchTo().defaultContent();
+//        new GUIFunctions().waitForElementDisplayed("//*[text()='Переменная 'passSmevFnsRequest' изменена.']");
+        closeWebDriver();
     }
 
     @Step("Блок «Информация о продукции»")
-    public void step03() {
+    public void step03() throws AWTException {
         CommonFunctions.printStep();
+
+        open("https://lk.t.exportcenter.ru/ru/login");
+        new GUIFunctions()
+                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"));
+
+        new GUIFunctions()
+                .waitForURL("https://lk.t.exportcenter.ru/ru/main")
+                .clickButton("Показать все (100)")
+                .clickByLocator("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div")
+                .waitForElementDisplayed("//*[text()='" + requestNumber + "']")
+                .refreshTab("Продолжить", 15)
+                .clickButton("Продолжить")
+                .waitForElementDisplayed("//*[text()='Добавить +']");
 
         new GUIFunctions().clickButton("Добавить +");
         new CommonFunctions().wait(2);
