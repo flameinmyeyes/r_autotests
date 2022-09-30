@@ -15,7 +15,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.Properties;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -68,14 +67,6 @@ public class Test_04_07_01 extends Hooks {
                 .waitForLoading();
         new GUIFunctions().clickButton("Далее")
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main");
-
-        String spinnerLocator = "//*[contains(@class, 'preloader') or contains(@class,'spinner') or contains(@class,'Loader_item') or contains(@class,'animate-spin')]";
-
-        for (int i = 0; i < 180; i++) {
-            if ($x(spinnerLocator).isDisplayed()){
-                CommonFunctions.wait(1);
-            }
-        }
 
         CommonFunctions.wait(15);
 
