@@ -68,12 +68,13 @@ public class Test_04_07_01 extends Hooks {
         new GUIFunctions().clickButton("Далее")
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main");
 
-        CommonFunctions.wait(15);
+        CommonFunctions.wait(20);
 
         //Костыль
         new GUIFunctions()
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main")
                 .clickButton("Показать все (100)")
+                .scrollTo($x("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div"))
                 .clickByLocator("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div")
                 .waitForElementDisplayed("//*[text()='" + requestNumber + "']")
                 .refreshTab("Продолжить", 15)
