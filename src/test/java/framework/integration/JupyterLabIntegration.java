@@ -7,6 +7,9 @@ import org.testng.Assert;
 
 public class JupyterLabIntegration {
 
+    //REST API юпитерлаба:
+    //https://jupyter-server.readthedocs.io/en/latest/developers/rest-api.html
+
 // ~4-5 числа каждого месяца Токен "протухает"
     static String tokenNum = "7648f69cb716fd065bf18c06586918c9dd92bae9205e2692";
 
