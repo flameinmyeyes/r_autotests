@@ -101,7 +101,9 @@ public class Test_04_07_03  extends Hooks {
         new GUIFunctionsLKB().clickByLocator("//span[text()='Далее']")
                 .waitForLoading();
 
-        new GUIFunctionsLKB().clickByLocator("//span[text()='Подписать']")
+        new GUIFunctionsLKB().clickByLocator("//span[text()='Подписать']");
+        CommonFunctions.wait(2);
+        new GUIFunctionsLKB()
 //                .waitForElementDisplayed("//span[text()='Сертификат']/following::input")
                 .clickByLocator("//span[text()='Сертификат']/following::input")
                 .clickByLocator("//div[@title='Ермухамбетова Балсикер Бисеньевна от 18.01.2022']")
