@@ -78,7 +78,7 @@ public class Test_04_07_01 extends Hooks {
                 .waitForElementDisplayed("//*[text()='" + requestNumber + "']")
                 .refreshTab("Продолжить", 15)
                 .clickButton("Продолжить");
-        closeWebDriver();
+//        closeWebDriver();
     }
 
     @Step("Заполнение заявки")
@@ -121,7 +121,7 @@ public class Test_04_07_01 extends Hooks {
         $x("//button[@tooltip='Сохранить переменную']").click();
         switchTo().defaultContent();
 //        new GUIFunctions().waitForElementDisplayed("//*[text()='Переменная 'passSmevFnsRequest' изменена.']");
-        closeWebDriver();
+//        closeWebDriver();
     }
 
     @Step("Блок «Информация о продукции»")
@@ -180,6 +180,6 @@ public class Test_04_07_01 extends Hooks {
                 .clickButton("Подписать")
                 .waitForElementDisplayed("//*[text()='Подписано']")
                 .clickButton("Далее");
-        closeWebDriver();
+//        closeWebDriver();
     }
 }

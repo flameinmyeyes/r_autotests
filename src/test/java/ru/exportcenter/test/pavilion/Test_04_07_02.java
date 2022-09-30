@@ -128,7 +128,7 @@ public class Test_04_07_02 extends Hooks {
                 .scrollTo("Далее")
                 .clickButton("Далее")
                 .waitForElementDisplayed("//*[contains(text(),'Проект Акта приёмки продукции направлен оператору')]");
-        closeWebDriver();
+//        closeWebDriver();
     }
 
 }
