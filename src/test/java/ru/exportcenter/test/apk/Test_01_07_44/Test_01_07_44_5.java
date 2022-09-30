@@ -15,6 +15,8 @@ import ru.exportcenter.test.apk.Test_01_07_05_2;
 
 import java.awt.*;
 
+import static com.codeborne.selenide.Selenide.$x;
+
 public class Test_01_07_44_5 extends Hooks {
 
     private String WAY_TEST = Ways.TEST.getWay() + "/apk/Test_01_07_44/Test_01_07_44_5/";
@@ -30,6 +32,8 @@ public class Test_01_07_44_5 extends Hooks {
         step01();
         step02();
         step03();
+        step04();
+        step05();
     }
 
     @AfterMethod
@@ -51,44 +55,55 @@ public class Test_01_07_44_5 extends Hooks {
 
         new GUIFunctions().refreshTab("Продолжить", 10)
                 .clickButton("Продолжить")
-                .waitForElementDisplayed("//*[text()='Далее']");
+                .waitForElementDisplayed("//*[contains(text(),'Господдержка. Сертификация продукции')]");
     }
 
     @Step("Заполнение блока \"Информация о Заявителе\"")
     public void step02() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().clickButton("Далее")
-                .waitForElementDisplayed("//*[text()='Сведения о затратах']");
+        new GUIFunctions().closeAllPopupWindows()
+                .clickButton("Далее")
+                .waitForLoading()
+                .waitForLoading()
+                .closeAllPopupWindows()
+                .waitForElementDisplayed("//*[text()='Добавить +']");
     }
 
     @Step("Заполнение блока \"Сведения о затратах\"")
     public void step03() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().clickButton("//*[text()='Добавить +']")
-                .inField("Вид затраты, связанной с сертификацией продукции").selectValue("11\u00a0Услуги по хранению образцов").assertValue()
-                .waitForElementDisplayed("//*[text()='Шаблон к Затрате 11.xlsm']")
+        new GUIFunctions().clickButton("Добавить +")
+                .inField("Вид затраты, связанной с сертификацией продукции").selectValue("1\u00a0Услуги компетентного органа или уполномоченной организации в стране экспорта по осуществлению процедур оценки соответствия продукции (регистрации, подтверждения соответствия, испытаний, сертификации и других форм оценки соответствия, установленных законодательством иностранного государства или являющихся условием внешнеэкономического контракта)").assertValue()
                 .inField("Основание понесенных затрат").selectValue("Требование контракта")
-                .uploadFile("Загрузить шаблон", "C:\\auto-tests\\Документ к Затрате 11.xlsx")
-                .waitForElementDisplayed("//*[text()='Документ к Затрате 11.xlsm']");
+                .uploadFile("Загрузить шаблон", "C:\\auto-tests\\Шаблон 1 - фаст (1).xlsm");
     }
 
     @Step("Заполнение блока \"Загрузка подтверждающих документов\"")
     public void step04() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().uploadFile("Подтверждающие документы", "C:\\auto-tests\\capsule_616x353.zip")
-                .uploadFile("Платежное поручение", "C:\\auto-tests\\capsule_616x353.zip")
-                .clickButton("Далее");
+        new GUIFunctions().inContainer("Загрузка подтверждающих документов")
+                .scrollTo("Подтверждающие документы")
+                .uploadFile("Подтверждающие документы", "C:\\auto-tests\\rec.zip")
+                .uploadFile("Платежное поручение", "C:\\auto-tests\\payment 228.zip");
+
+        new GUIFunctions().scrollTo("Далее")
+                .clickButton("Далее")
+                .waitForElementDisplayed("//span[contains(text(),'Господдержка. Сертификация продукции')]");
     }
 
     @Step("Заполнение блока \"Подтверждение сведений заявителем\"")
     public void step05() {
         CommonFunctions.printStep();
 
+        new GUIFunctions().scrollTo($x("//*[text()='Контактные данные лица, ответственного за работу в ГИИС \"Электронный бюджет\"']"));
 
-
+        new GUIFunctions().inContainer("Контактные данные лица, ответственного за работу в ГИИС \"Электронный бюджет\"")
+                .inField("E-mail").inputValue("wor_ld@mai-l.ru").assertValue()
+                .clickByLocator("//*[text()='E-mail']/following::button[@name='close']")
+                .inField("E-mail").inputValue("1").assertValue()
+                .waitForElementDisplayed("//*[text()='E-mail']/following::*[text()='Укажите e-mail']");
     }
-
 }
