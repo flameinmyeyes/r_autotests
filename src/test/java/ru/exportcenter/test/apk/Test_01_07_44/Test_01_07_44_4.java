@@ -14,6 +14,8 @@ import ru.exportcenter.Hooks;
 import ru.exportcenter.test.apk.Test_01_07_05_2;
 import java.awt.*;
 
+import static com.codeborne.selenide.Selenide.$x;
+
 public class Test_01_07_44_4 extends Hooks {
 
     private String WAY_TEST = Ways.TEST.getWay() + "/apk/Test_01_07_44/Test_01_07_44_4/";
@@ -70,10 +72,10 @@ public class Test_01_07_44_4 extends Hooks {
     public void step03() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().clickButton("//*[text()='Добавить +']")
-                .inField("Вид затраты, связанной с сертификацией продукции").selectValue("11\u00a0Услуги по хранению образцов").assertValue()
+        new GUIFunctions().clickButton("Добавить +")
+                .inField("Вид затраты, связанной с сертификацией продукции").selectValue("1\u00a0Услуги компетентного органа или уполномоченной организации в стране экспорта по осуществлению процедур оценки соответствия продукции (регистрации, подтверждения соответствия, испытаний, сертификации и других форм оценки соответствия, установленных законодательством иностранного государства или являющихся условием внешнеэкономического контракта)").assertValue()
                 .inField("Основание понесенных затрат").selectValue("Требование контракта")
-                .uploadFile("Загрузить шаблон", "C:\\auto-tests\\Документ к Затрате 11.xlsx");
+                .uploadFile("Загрузить шаблон", "C:\\auto-tests\\Шаблон 1 - фаст (1).xlsm");
     }
 
     @Step("Заполнение блока \"Загрузка подтверждающих документов\"")
@@ -81,16 +83,21 @@ public class Test_01_07_44_4 extends Hooks {
         CommonFunctions.printStep();
 
         new GUIFunctions().inContainer("Загрузка подтверждающих документов")
-                .uploadFile("Подтверждающие документы", "C:\\auto-tests\\capsule_616x353.zip")
-                .uploadFile("Платежное поручение", "C:\\auto-tests\\capsule_616x353.zip")
-                .clickButton("Далее");
+                .scrollTo("Подтверждающие документы")
+                .uploadFile("Подтверждающие документы", "C:\\auto-tests\\rec.zip")
+                .uploadFile("Платежное поручение", "C:\\auto-tests\\payment 228.zip");
+
+        new GUIFunctions().scrollTo("Далее")
+                .clickButton("Далее")
+                .waitForElementDisplayed("//*[text()='Дата постановки на налоговый учёт']/following::button[contains(@class,'DateInput')]");
     }
 
     @Step("Заполнение блока \"Подтверждение сведений заявителем\"")
     public void step05() {
         CommonFunctions.printStep();
 
-
+        new GUIFunctions().scrollTo($x("//*[text()='Дата постановки на налоговый учёт']/following::button[contains(@class,'DateInput')]"))
+                .clickByLocator("//*[text()='Дата постановки на налоговый учёт']/following::button[contains(@class,'DateInput')]");
 
     }
 }

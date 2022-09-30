@@ -22,7 +22,7 @@ public class Wait extends ElementData {
     }
 
     public void waitForLoading() {
-        String spinnerLocator = "//*[contains(@class, 'preloader') or contains(@class,'spinner') or contains(@class,'Loader_item')]";
+        String spinnerLocator = "//*[contains(@class, 'preloader') or contains(@class,'spinner') or contains(@class,'Loader_item') or contains(@class,'animate-spin')]";
         if ($x(spinnerLocator).isDisplayed()) {
             waitForElementDisappeared(spinnerLocator);
         }

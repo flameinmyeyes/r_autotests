@@ -28,7 +28,7 @@ public class Test_04_07_02 extends Hooks {
     @Link(name = "Test_04_07_02", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=163302518")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException, InterruptedException {
-//        requestNumber = "S/2022/288998";
+//        requestNumber = "S/2022/302172";
         precondition();
         step01();
         step02();
@@ -63,8 +63,8 @@ public class Test_04_07_02 extends Hooks {
 
         new GUIFunctions().clickButton("Показать все (100)")
                 .clickByLocator("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div")
-                .refreshTab("//*[text()='Подписание Соглашения']", 10)
-                .refreshTab("//*[text()='Продолжить']", 10)
+                .refreshTab("Подписание Соглашения", 120)
+                .refreshTab("Продолжить", 15)
                 .clickButton("Продолжить");
 
         $x("//*[text()='Номенклатура и объемы продукции']").scrollTo();
@@ -84,11 +84,11 @@ public class Test_04_07_02 extends Hooks {
 
         new GUIFunctions()
                 .inField("Контактное лицо").setCheckboxON().assertCheckboxON()
-                .inField("ФИО").inputValue(P.getProperty("Контактное лицо.ФИО")).assertValue()
-                .waitForElementDisplayed("//*[contains(text(), 'Мансур')]")
-                .clickByLocator("//*[contains(text(), 'Мансур')]");
+//                .inField("ФИО").selectValue("Антонов\u00a0Антон\u00a0Антонович").assertValue();
+                .inField("ФИО").inputValue("Антонов")
+                .waitForElementDisplayed("//*[contains(text(), 'Антонович')]")
+                .clickByLocator("//*[contains(text(), 'Антонович')]");
     }
-
     @Step("Фактический адрес")
     public void step03() {
         CommonFunctions.printStep();
@@ -125,6 +125,7 @@ public class Test_04_07_02 extends Hooks {
         CommonFunctions.printStep();
 
         new GUIFunctions().clickButton("О компании")
+                .scrollTo("Далее")
                 .clickButton("Далее")
                 .waitForElementDisplayed("//*[contains(text(),'Проект Акта приёмки продукции направлен оператору')]");
         closeWebDriver();
