@@ -77,7 +77,7 @@ public class Test_04_07_03  extends Hooks {
         new GUIFunctions().clickButton("Продолжить")
                 .waitForLoading();
 //                .waitForElementDisplayed("//*[contains(text(),'Проект Акта приёмки продукции направлен оператору')]");
-        closeWebDriver();
+//        closeWebDriver();
     }
 
     @Step("Блок2")
@@ -110,7 +110,7 @@ public class Test_04_07_03  extends Hooks {
                 .clickByLocator("//span[text()='Подписать и отправить']")
                 .waitForElementDisplayed("//*[text()='Вы успешно подписали Акт']")
                 .clickByLocator("//span[text()='Закрыть']");
-        closeWebDriver();
+//        closeWebDriver();
     }
 
     @Step("Блок3")
