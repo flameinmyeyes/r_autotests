@@ -91,9 +91,8 @@ public class Test_01_07_11_1 extends Hooks {
                 .waitForElementDisplayed("//*[text()='Шаблон к Затрате 1.xlsm']")
                 .inField("Основание понесенных затрат").selectValue("Требование контракта")
                 .scrollTo("Загрузить шаблон")
-                .uploadFile("Загрузить шаблон", "/share/" + WAY_TEST + "Шаблон 1 - фаст (1).xlsm")
-//                .uploadFile("Загрузить шаблон","C:\\auto-tests\\Шаблон 1 - фаст (1).xlsm")
-                .waitForElementDisplayed("//*[text()='Шаблон 1 - фаст (1).xlsm']/ancestor::a[contains(@class,'FileInput')]/following-sibling::button[contains(@class,'delete')]");
+                .uploadFile("Загрузить шаблон", "/share/" + WAY_TEST + "Шаблон 1 - фаст (1).xlsm");
+//                .uploadFile("Загрузить шаблон","C:\\auto-tests\\Шаблон 1 - фаст (1).xlsm");
     }
 
     @Step("Заполнение блока \"Загрузка подтверждающих документов\"")
@@ -104,12 +103,10 @@ public class Test_01_07_11_1 extends Hooks {
         //Выбрать приложенный файл с устройства формата zip и нажать кнопку «Открыть»
         new GUIFunctions().inContainer("Загрузка подтверждающих документов")
                 .scrollTo("Подтверждающие документы")
-                .uploadFile("Загрузить шаблон", "/share/" + WAY_TEST + "rec.zip")
+                .uploadFile("Подтверждающие документы", "/share/" + WAY_TEST + "rec.zip")
 //                .uploadFile("Подтверждающие документы", "C:\\auto-tests\\rec.zip")
-                .waitForElementDisplayed("//*[text()='rec.zip']/ancestor::a[contains(@class,'FileInput')]/following-sibling::button[contains(@class,'delete')]")
-                .uploadFile("Загрузить шаблон", "/share/" + WAY_TEST + "payment 228.zip")
+                .uploadFile("Платежное поручение", "/share/" + WAY_TEST + "payment 228.zip")
 //                .uploadFile("Платежное поручение", "C:\\auto-tests\\payment 228.zip")
-                .waitForElementDisplayed("//*[text()='payment 228.zip']/ancestor::a[contains(@class,'FileInput')]/following-sibling::button[contains(@class,'delete')]")
                 .scrollTo("Далее");
 
         //Нажать на кнопку «Далее»
