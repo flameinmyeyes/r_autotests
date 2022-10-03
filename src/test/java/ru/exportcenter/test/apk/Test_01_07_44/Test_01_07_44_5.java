@@ -77,7 +77,8 @@ public class Test_01_07_44_5 extends Hooks {
         new GUIFunctions().clickButton("Добавить +")
                 .inField("Вид затраты, связанной с сертификацией продукции").selectValue("1\u00a0Услуги компетентного органа или уполномоченной организации в стране экспорта по осуществлению процедур оценки соответствия продукции (регистрации, подтверждения соответствия, испытаний, сертификации и других форм оценки соответствия, установленных законодательством иностранного государства или являющихся условием внешнеэкономического контракта)").assertValue()
                 .inField("Основание понесенных затрат").selectValue("Требование контракта")
-                .uploadFile("Загрузить шаблон", "C:\\auto-tests\\Шаблон 1 - фаст (1).xlsm");
+                .uploadFile("Загрузить шаблон", "/share/" + WAY_TEST + "Шаблон 1 - фаст (1).xlsm");
+//                .uploadFile("Загрузить шаблон", "C:\\auto-tests\\Шаблон 1 - фаст (1).xlsm");
     }
 
     @Step("Заполнение блока \"Загрузка подтверждающих документов\"")
@@ -86,8 +87,10 @@ public class Test_01_07_44_5 extends Hooks {
 
         new GUIFunctions().inContainer("Загрузка подтверждающих документов")
                 .scrollTo("Подтверждающие документы")
-                .uploadFile("Подтверждающие документы", "C:\\auto-tests\\rec.zip")
-                .uploadFile("Платежное поручение", "C:\\auto-tests\\payment 228.zip");
+                .uploadFile("Загрузить шаблон", "/share/" + WAY_TEST + "rec.zip")
+//                .uploadFile("Подтверждающие документы", "C:\\auto-tests\\rec.zip")
+                .uploadFile("Загрузить шаблон", "/share/" + WAY_TEST + "payment 228.zip");
+//                .uploadFile("Платежное поручение", "C:\\auto-tests\\payment 228.zip");
 
         new GUIFunctions().scrollTo("Далее")
                 .clickButton("Далее")
