@@ -87,9 +87,9 @@ public class Test_01_07_44_5 extends Hooks {
 
         new GUIFunctions().inContainer("Загрузка подтверждающих документов")
                 .scrollTo("Подтверждающие документы")
-                .uploadFile("Загрузить шаблон", "/share/" + WAY_TEST + "rec.zip")
+                .uploadFile("Подтверждающие документы", "/share/" + WAY_TEST + "rec.zip")
 //                .uploadFile("Подтверждающие документы", "C:\\auto-tests\\rec.zip")
-                .uploadFile("Загрузить шаблон", "/share/" + WAY_TEST + "payment 228.zip");
+                .uploadFile("Платежное поручение", "/share/" + WAY_TEST + "payment 228.zip");
 //                .uploadFile("Платежное поручение", "C:\\auto-tests\\payment 228.zip");
 
         new GUIFunctions().scrollTo("Далее")
