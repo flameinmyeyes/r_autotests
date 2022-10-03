@@ -71,13 +71,14 @@
 <!--            <class name="ru.exportcenter.test.apk.Test_01_07_05_1"/>-->
 <!--            <class name="ru.exportcenter.test.apk.Test_01_07_05_2"/>-->
 <!--            <class name="ru.exportcenter.test.apk.Test_01_07_10_1"/>-->
-            <class name="ru.exportcenter.test.apk.Test_01_07_11_1"/>
+<!--            <class name="ru.exportcenter.test.apk.Test_01_07_11_1"/>-->
+            <class name="ru.exportcenter.dev.vet.Test_08_07_03"/>
 <!--            <class name="ru.exportcenter.test.apk.Test_01_07_32_1"/>-->
 <!--            <class name="ru.exportcenter.test.apk.Test_01_07_44.Test_01_07_44_1"/>-->
 <!--            <class name="ru.exportcenter.test.apk.Test_01_07_44.Test_01_07_44_2"/>-->
 <!--            <class name="ru.exportcenter.test.apk.Test_01_07_44.Test_01_07_44_3"/>-->
-            <class name="ru.exportcenter.test.apk.Test_01_07_44.Test_01_07_44_4"/>
-            <class name="ru.exportcenter.test.apk.Test_01_07_44.Test_01_07_44_5"/>
+<!--            <class name="ru.exportcenter.test.apk.Test_01_07_44.Test_01_07_44_4"/>
+            <class name="ru.exportcenter.test.apk.Test_01_07_44.Test_01_07_44_5"/>-->
 <!--            <class name="ru.exportcenter.test.apk.Test_02_07_00.Test_02_07_00_1"/>-->
 <!--            <class name="ru.exportcenter.test.apk.Test_02_07_00.Test_02_07_00_2"/>-->
         </classes>

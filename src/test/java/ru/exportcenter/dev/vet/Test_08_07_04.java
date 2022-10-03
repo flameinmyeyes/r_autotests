@@ -1,11 +1,8 @@
 package ru.exportcenter.dev.vet;
 
-import com.codeborne.selenide.Condition;
 import framework.RunTestAgain;
 import framework.Ways;
-import framework.integration.JupyterLabIntegration;
 import functions.common.CommonFunctions;
-import functions.common.DateFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
@@ -15,18 +12,18 @@ import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
-import ru.exportcenter.dev.fito.Test_3_07_01;
 
 import java.util.Properties;
 
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.refresh;
 
-public class Test_08_07_03 extends Hooks {
+public class Test_08_07_04 extends Hooks {
 
-    public String WAY_TEST = Ways.TEST.getWay() + "/vet/Test_08_07_03/";
-    public String WAY_TO_PROPERTIES = Ways.TEST.getWay() + "/vet/Test_08_07_03/" + "Test_08_07_03_properties.xml";
+    public String WAY_TEST = Ways.TEST.getWay() + "/vet/Test_08_07_04/";
+    public String WAY_TO_PROPERTIES = Ways.TEST.getWay() + "/vet/Test_08_07_04/" + "Test_08_07_04_properties.xml";
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
 
@@ -68,11 +65,11 @@ public class Test_08_07_03 extends Hooks {
         //В поле Выберите тип услуги выбрать Оформить новое разрешение  Нажать "Продолжить"
         new GUIFunctions()
                 .inContainer("Тип услуги")
-                  .inField("Выберите тип услуги").clickByLocator("//span[text()='Оформить новое разрешение']")
+                .inField("Выберите тип услуги").clickByLocator("//span[text()='Оформить новое разрешение']")
                 .inContainer("Запрос разрешения на вывоз подконтрольной продукции")
-                    .clickButton("Продолжить")
-                    .waitForLoading()
-                    .waitForElementDisplayed("//div[text()='Шаг 2 из 9']");
+                .clickButton("Продолжить")
+                .waitForLoading()
+                .waitForElementDisplayed("//div[text()='Шаг 2 из 9']");
 
     }
 
@@ -83,7 +80,7 @@ public class Test_08_07_03 extends Hooks {
         //В поле Тип продукции выбрать Живые животные
         new GUIFunctions()
                 .inContainer("Информация о продукции")
-                    .inField("Тип продукции").selectValue("Живые животные").assertNoControl().assertValue()
+                .inField("Тип продукции").selectValue("Живые животные").assertNoControl().assertValue()
                 .inContainer("Запрос разрешения на вывоз подконтрольной продукции")
                 .clickButton("Продолжить")
                 .waitForLoading()
@@ -94,14 +91,14 @@ public class Test_08_07_03 extends Hooks {
         new GUIFunctions()
                 .clickButton("Добавить +")
                 .inContainer("Добавление продукции")
-                    .inField("Продукция").selectValue(P.getProperty("Продукция")).assertNoControl().assertValue()
-                    .inField("Вид продукции").selectValue(P.getProperty("Вид продукции")).assertNoControl().assertValue()
-                    .inField("Номер документа СИТЕС").inputValue(P.getProperty("Номер документа СИТЕС")).assertNoControl().assertValue()
-                    .inField("Единица измерения").selectValue(P.getProperty("Единица измерения")).assertNoControl().assertValue()
-                    .inField("Количество в выбранных единицах").inputValue(P.getProperty("Количество в выбранных единицах")).assertNoControl().assertValue()
-                    .inField("Выберите одного или несколько производителей").selectValue("RU-033/VH03882 123 Российская Федерация, Владимирская обл., г. Владимир")
-                    .inField("Укажите информацию о продукции, которую считаете необходимо сообщить дополнительно").inputValue(P.getProperty("Укажите информацию о продукции, которую считаете необходимо сообщить дополнительно")).assertNoControl().assertValue()
-                    .clickButton("Сохранить");
+                .inField("Продукция").selectValue(P.getProperty("Продукция")).assertNoControl().assertValue()
+                .inField("Вид продукции").selectValue(P.getProperty("Вид продукции")).assertNoControl().assertValue()
+                .inField("Номер документа СИТЕС").inputValue(P.getProperty("Номер документа СИТЕС")).assertNoControl().assertValue()
+                .inField("Единица измерения").selectValue(P.getProperty("Единица измерения")).assertNoControl().assertValue()
+                .inField("Количество в выбранных единицах").inputValue(P.getProperty("Количество в выбранных единицах")).assertNoControl().assertValue()
+                .inField("Выберите одного или несколько производителей").selectValue("RU-033/VH03882 123 Российская Федерация, Владимирская обл., г. Владимир")
+                .inField("Укажите информацию о продукции, которую считаете необходимо сообщить дополнительно").inputValue(P.getProperty("Укажите информацию о продукции, которую считаете необходимо сообщить дополнительно")).assertNoControl().assertValue()
+                .clickButton("Сохранить");
         //Нажать кнопку "продолжить"
         new GUIFunctions()
                 .inContainer("Запрос разрешения на вывоз подконтрольной продукции")
@@ -150,9 +147,9 @@ public class Test_08_07_03 extends Hooks {
                 .inField("Маршрут следования").inputValue("Россия - Вена")
                 .inField("Регион проведения таможенного оформления").selectValue(P.getProperty("Регион проведения таможенного оформления"))
                 .inField("Таможенный пункт").selectValue(P.getProperty("Таможенный пункт"));
-                $x("//*[text() = 'Информация о транспортировке']/ancestor::div[contains(@class, 'container')][1]//textarea[text()='410086 М.О.\"Г.САРАТОВ\",Г.САРАТОВ,ЛЕНИНСКИЙ Р-OН,ТАМОЖЕННЫЙ ПРОЕЗД,№6']").shouldBe(exist);
+        $x("//*[text() = 'Информация о транспортировке']/ancestor::div[contains(@class, 'container')][1]//textarea[text()='410086 М.О.\"Г.САРАТОВ\",Г.САРАТОВ,ЛЕНИНСКИЙ Р-OН,ТАМОЖЕННЫЙ ПРОЕЗД,№6']").shouldBe(exist);
 
-                //Нажать кнопку "продолжить"
+        //Нажать кнопку "продолжить"
         new GUIFunctions()
                 .inContainer("Запрос разрешения на вывоз подконтрольной продукции")
                 .clickButton("Продолжить")
@@ -180,7 +177,7 @@ public class Test_08_07_03 extends Hooks {
     @Step("Ввод Информации в карточке \"Информация о поставке\"")
     public void step07() {
         CommonFunctions.printStep();
-       $x("//textarea[@name='$.createItem.additionInfo']").setValue("Договор поставки от 10 мая №10997");
+        $x("//textarea[@name='$.createItem.additionInfo']").setValue("Договор поставки от 10 мая №10997");
         //Нажать кнопку "продолжить"
         new GUIFunctions()
                 .inContainer("Запрос разрешения на вывоз подконтрольной продукции")
