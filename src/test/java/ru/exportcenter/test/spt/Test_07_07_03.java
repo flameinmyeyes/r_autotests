@@ -30,7 +30,7 @@ public class Test_07_07_03 extends Hooks {
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException {
         step01();
-        step02();
+//        step02();
         step03();
     }
 
@@ -49,8 +49,10 @@ public class Test_07_07_03 extends Hooks {
                 .waitForLoading()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
                 .waitForLoading();
-
-        requestNumber = $x("//div[text()='Номер заявки']/following-sibling::div").getText();
+        CommonFunctions.wait(15);
+//      requestNumber = $x("//div[text()='Номер заявки']/following-sibling::div").getText();
+        System.out.println("class = " + $x("//*[@id='form-open-panel']/div[1]/span/div/div[2]/div[2]/div").getAttribute("class"));
+        requestNumber = $x("//body").getAttribute("id");
         JupyterLabIntegration.uploadTextContent(requestNumber, WAY_TEST, "requestNumber.txt");
 //      requestNumber = JupyterLabIntegration.getFileContent(WAY_TEST + "requestNumber.txt");
         System.out.println("requestNumber = " + requestNumber);
