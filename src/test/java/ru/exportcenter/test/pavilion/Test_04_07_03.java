@@ -117,7 +117,6 @@ public class Test_04_07_03  extends Hooks {
         CommonFunctions.printStep();
 
         open("https://lk.t.exportcenter.ru/");
-        switchTo().alert().accept();
 
         new GUIFunctions().waitForElementDisplayed("//*[text()='Показать все (100)']")
 //                .clickButton("Показать все (100)")
