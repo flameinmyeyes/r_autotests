@@ -13,6 +13,9 @@ import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
+import ru.exportcenter.test.pavilion.Test_07_07_00;
+
+
 import java.awt.*;
 import java.util.Properties;
 import static com.codeborne.selenide.Selenide.*;
@@ -30,11 +33,9 @@ public class Test_07_07_05 extends Hooks {
     @Link(name = "Test_07_07_05", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=175264547")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException {
+        precondition();
         step01();
-  //      step02();
-        step03();
-        step04();
-        step05();
+        step02();
     }
 
     @AfterMethod
@@ -42,86 +43,9 @@ public class Test_07_07_05 extends Hooks {
         CommonFunctions.screenShot(WAY_TEST + "screen.png");
     }
 
-    @Step("Авторизация")
-    public void step01() {
-        CommonFunctions.printStep();
-        String url = "http://uidm.uidm-dev.d.exportcenter.ru/promo-service?key=service-spt&serviceId=27ddd0b2-5ed9-4100-9c93-2b0e07a2d599&next_query=true";
-        open(url);
-        new GUIFunctions()
-                .waitForLoading()
-                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
-                .waitForLoading();
-        CommonFunctions.wait(15);
-
-        System.out.println("class = " + $x("//*[@id='form-open-panel']/div[1]/span/div/div[2]/div[2]/div").getAttribute("class"));
-        requestNumber = $x("//body").getAttribute("id");
-        JupyterLabIntegration.uploadTextContent(requestNumber, WAY_TEST, "requestNumber.txt");
-        System.out.println("requestNumber = " + requestNumber);
-    }
-
-    @Step("Новигация")
-    public void step02() {
-        CommonFunctions.printStep();
-
-        refreshTab("//*[text()='Продолжить']", 10);
-
-        new GUIFunctions().waitForURL("")
-                .clickButton("Продолжить")
-                .waitForLoading();
-    }
-
-    @Step("Нажатие кнопки «К перечню заявлений»")
-    public void step03() {
-        CommonFunctions.printStep();
-
-        $x("(//div[@class='Radio_checkMark__18knp'])[3]").click();
-
-        new GUIFunctions()
-                .clickButton("Продолжить")
-                .waitForLoading();
-    }
-
-    @Step("Предзаполненные данные в карточке «Информация о заявителе» и в карточке «Информация об импортере»")
-    public void step04() {
-        CommonFunctions.printStep();
-
-        new GUIFunctions()
-                .waitForElementDisplayed("//span[text()='Наименование организации']/following-sibling::span");
-
-        assertEquals(
-                $x("//span[text()='Наименование организации']/following-sibling::span").getText()
-                ,PROPERTIES.getProperty("Наименование организации")
-        );
-        assertEquals(
-                $x("//span[text()='Юридический адрес']/following-sibling::span").getText()
-                ,PROPERTIES.getProperty("Юридический адрес")
-        );
-        assertEquals(
-                $x("//span[text()='ИНН']/following-sibling::span").getText(),
-                PROPERTIES.getProperty("ИНН")
-        );
-        assertEquals(
-                $x("//span[text()='КПП']/following-sibling::span").getText(),
-                PROPERTIES.getProperty("КПП")
-        );
-        assertEquals(
-                $x("//span[text()='ОГРН']/following-sibling::span").getText()
-                ,PROPERTIES.getProperty("ОГРН"));
-        assertEquals(
-                $x("//input[contains(@class,'KrInput_input__xg4vc undefined')]").getValue()
-                ,PROPERTIES.getProperty("Email"));
-        assertEquals(
-                $x("(//input[contains(@class,'KrInput_input__xg4vc undefined')])[2]").getValue()
-                ,PROPERTIES.getProperty("Телефон")
-        );
-        assertEquals(
-                "" + $x("//*[@id='form-open-panel']/div[2]/div/form/div[2]/div/div[2]/div/div/div[3]/div/div[2]/div/label/div/input").isSelected()
-                , "true"
-        );
-    }
 
     @Step("Ввод данных в карточку «Информация о заявителе»  и в карточку «Информация об импортере»")
-    public void step05() {
+    public void step01() {
         CommonFunctions.printStep();
 
         new GUIFunctions()
@@ -129,14 +53,19 @@ public class Test_07_07_05 extends Hooks {
                 .inField("Страна").selectValue(PROPERTIES.getProperty("Страна"))
                 .inField("Адрес по контракту (договору) на русском или английском языке").inputValue(PROPERTIES.getProperty("Адрес по контракту"));
 
-//        $x("(//button[contains(@class,'KrButton_container__3O7c1 KrButton_fitContent__2fm5o')])[2]").click();
+//      $x("(//button[contains(@class,'KrButton_container__3O7c1 KrButton_fitContent__2fm5o')])[2]").click();
+
         $x("//*[@id='form-open-panel']/div[2]/div/form/div[3]/div[2]/div/div[3]/div/button").click();
+
+        if(!$x("//*[@id='form-open-panel']/div[2]/div/form/div[1]/div/div[2]/div/div/div[3]/div/div[1]/div/label/div[1]/div").exists())
+            $x("//*[@id='form-open-panel']/div[2]/div/form/div[3]/div[2]/div/div[3]/div/button").click();
+
         new GUIFunctions()//.clickButton("Продолжить")
                 .waitForLoading();
     }
 
     @Step("Ввод данных в карточку «Информация о заявителе»  и в карточку «Информация об импортере»")
-    public void step06() {
+    public void step02() {
         CommonFunctions.printStep();
 
         new GUIFunctions()
@@ -145,7 +74,7 @@ public class Test_07_07_05 extends Hooks {
                 .inField("Адрес по контракту (договору) на русском или английском языке").inputValue(PROPERTIES.getProperty("Адрес по контракту"))
                 .clickButton("Продолжить")
                 .waitForLoading()
-//              .waitForURL("")
+                .waitForURL("")
         ;
 
         assertEquals(
@@ -154,6 +83,20 @@ public class Test_07_07_05 extends Hooks {
         );
 
     }
+
+
+    @Step("Предусловия")
+    public void precondition() throws AWTException {
+        CommonFunctions.printStep();
+        Test_07_07_00 test_07_07_00 = new Test_07_07_00();
+        test_07_07_00.url = "http://uidm.uidm-dev.d.exportcenter.ru/promo-service?key=service-spt&serviceId=27ddd0b2-5ed9-4100-9c93-2b0e07a2d599&next_query=true";
+        test_07_07_00.login = PROPERTIES.getProperty("Авторизация.Email");
+        test_07_07_00.password = PROPERTIES.getProperty("Авторизация.Пароль");
+        test_07_07_00.forma = "Формы СТ-2 (выдать на русском языке)";
+        test_07_07_00.steps();
+        requestNumber = test_07_07_00.requestNumber;
+    }
+
 
     private void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
