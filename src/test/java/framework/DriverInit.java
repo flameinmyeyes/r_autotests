@@ -19,7 +19,7 @@ public class DriverInit {
 
     private RemoteWebDriver remoteWebDriver;
     private final int TIMEOUT = 60000;
-    private final String DOWNLOADS_FOLDER = Ways.getOS();
+    private final String DOWNLOADS_FOLDER = Ways.DOWNLOADS.getWay();
 
     public void driverConfiguration(String runMode, List<File> pluginsList, String testName) {
 

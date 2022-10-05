@@ -51,12 +51,16 @@ public class Test_01_07_05_2 extends Hooks {
         //Перейти на https://lk.t.exportcenter.ru/ru/promo-service?key=apkNaVr&serviceId=b4ac4be3-224e-4277-8178-7eafd954725f&next_query=true
         open("https://lk.t.exportcenter.ru/ru/promo-service?key=apkNaVr&serviceId=6c3b2323-423a-4428-a152-50b0298b6055&next_query=true");
         new GUIFunctions().waitForLoading()
-                .waitForElementDisplayed("//*[contains(text(),'Сертификация продукции АПК')]")
-                .closeAllPopupWindows();
+                .waitForElementDisplayed("//*[contains(text(),'Сертификация продукции АПК')]");
+
+//        if ($x("//*[text()='Господдержка. Сертификация продукции АПК']").isDisplayed()){
+//            new GUIFunctions().clickButton("Позже");
+//        }
 
         if ($x("//button[contains(text(),'Сервис «Господдержка. Сертификация продукции АПК»')]").isDisplayed()){
 
-            new GUIFunctions().clickByLocator("//button[contains(text(),'Сервис «Господдержка. Сертификация продукции АПК»')]");
+            new GUIFunctions().clickButton("Позже")
+                    .clickByLocator("//button[contains(text(),'Сервис «Господдержка. Сертификация продукции АПК»')]");
             webdriver().driver().switchTo().alert().accept();
         }
 
