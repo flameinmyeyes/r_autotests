@@ -31,7 +31,7 @@ public class Test_04_07_01 extends Hooks {
     @Link(name = "Test_04_07_01", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=163302431")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException {
-//        requestNumber = "S/2022/302123";
+//        requestNumber = "S/2022/302927";
         step01();
         step02();
         step03();
@@ -61,25 +61,13 @@ public class Test_04_07_01 extends Hooks {
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
 
         new GUIFunctions().clickButton("Продолжить")
-                .waitForElementDisplayed("//*[text()='Страна нахождения павильона']")
-                .inContainer("Сведения о демонстрационно-дегустационном павильоне")
-                .inField("Страна нахождения павильона").selectValue(PROPERTIES.getProperty("Авторизация.Страна нахождения павильона")).assertValue()
-                .waitForLoading();
+                .waitForElementDisplayed("//*[text()='Страна нахождения павильона']");
+
+        new GUIFunctions().inContainer("Сведения о демонстрационно-дегустационном павильоне")
+                .inField("Страна нахождения павильона").selectValue(PROPERTIES.getProperty("Авторизация.Страна нахождения павильона")).assertValue();
+
         new GUIFunctions().clickButton("Далее")
-                .waitForURL("https://lk.t.exportcenter.ru/ru/main");
-
-        CommonFunctions.wait(20);
-
-        //Костыль
-        new GUIFunctions()
-                .waitForURL("https://lk.t.exportcenter.ru/ru/main")
-                .clickButton("Показать все (100)")
-                .scrollTo($x("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div"))
-                .clickByLocator("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div")
-                .waitForElementDisplayed("//*[text()='" + requestNumber + "']")
-                .refreshTab("Продолжить", 15)
-                .clickButton("Продолжить");
-//        closeWebDriver();
+                .waitForElementDisplayed("//*[text()='Сведения о демонстрационно-дегустационном павильоне']");
     }
 
     @Step("Заполнение заявки")
@@ -87,6 +75,7 @@ public class Test_04_07_01 extends Hooks {
         CommonFunctions.printStep();
 
         open("https://bpms.t.exportcenter.ru/");
+        switchTo().alert().accept();
 
         new GUIFunctionsLKB()
                 .authorization("bpmn_admin", "password");
@@ -109,7 +98,9 @@ public class Test_04_07_01 extends Hooks {
         new GUIFunctions().waitForElementDisplayed("//td[@class='instance-id ng-isolate-scope']/span/a");
         $x("//td[@class='instance-id ng-isolate-scope']/span/a").click();
         new GUIFunctions().waitForElementDisplayed("//input[@placeholder='Добавить критерии']");
+        CommonFunctions.wait(1);
         $x("//input[@placeholder='Добавить критерии']").setValue("passSmevFnsRequest").pressEnter();
+        CommonFunctions.wait(1);
         new GUIFunctions().waitForElementDisplayed("//button[@tooltip='Редактировать переменную']")
                 .clickByLocator("//button[@tooltip='Редактировать переменную']")
                 .waitForElementDisplayed("//select[@ng-model='variable.type']")
@@ -121,21 +112,22 @@ public class Test_04_07_01 extends Hooks {
         $x("//*[text()='Значение']").click();
         $x("//button[@tooltip='Сохранить переменную']").click();
         switchTo().defaultContent();
+        new GUIFunctions().clickByLocator("//button[text()='Выйти']");
 //        new GUIFunctions().waitForElementDisplayed("//*[text()='Переменная 'passSmevFnsRequest' изменена.']");
-//        closeWebDriver();
     }
 
     @Step("Блок «Информация о продукции»")
     public void step03() throws AWTException {
         CommonFunctions.printStep();
 
-        open("https://lk.t.exportcenter.ru/ru/login");
+        open("https://lk.t.exportcenter.ru/ru/main");
         new GUIFunctions()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"));
 
         new GUIFunctions()
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main")
-                .clickButton("Показать все (100)")
+//                .clickButton("Показать все (100)")
+//                .scrollTo($x("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div"))
                 .clickByLocator("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div")
                 .waitForElementDisplayed("//*[text()='" + requestNumber + "']")
                 .refreshTab("Продолжить", 15)
@@ -180,7 +172,7 @@ public class Test_04_07_01 extends Hooks {
                 .inField("Выберите сертификат").selectValue("Ермухамбетова Балсикер Бисеньевна от 18.01.2022").assertValue()
                 .clickButton("Подписать")
                 .waitForElementDisplayed("//*[text()='Подписано']")
-                .clickButton("Далее");
-//        closeWebDriver();
+                .clickButton("Далее")
+                .waitForLoading();
     }
 }

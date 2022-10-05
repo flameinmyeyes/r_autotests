@@ -56,12 +56,11 @@ public class Test_04_07_02 extends Hooks {
         CommonFunctions.printStep();
 
         open("https://lk.t.exportcenter.ru/ru/main");
+        switchTo().alert().accept();
 
-        new GUIFunctions()
-                .authorization(P.getProperty("Номенклатура.Email"), P.getProperty("Номенклатура.Пароль"), P.getProperty("Номенклатура.Код"))
-                .waitForElementDisplayed("//*[text()='Показать все (100)']");
-
-        new GUIFunctions().clickButton("Показать все (100)")
+        new GUIFunctions().waitForElementDisplayed("//*[text()='Показать все (100)']")
+//                .clickButton("Показать все (100)")
+//                .scrollTo($x("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div"))
                 .clickByLocator("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div")
                 .refreshTab("Подписание Соглашения", 120)
                 .refreshTab("Продолжить", 15)
@@ -128,7 +127,5 @@ public class Test_04_07_02 extends Hooks {
                 .scrollTo("Далее")
                 .clickButton("Далее")
                 .waitForElementDisplayed("//*[contains(text(),'Проект Акта приёмки продукции направлен оператору')]");
-//        closeWebDriver();
     }
-
 }
