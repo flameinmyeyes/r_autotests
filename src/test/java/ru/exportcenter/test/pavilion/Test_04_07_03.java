@@ -32,7 +32,7 @@ public class Test_04_07_03  extends Hooks {
     @Link(name = "Test_04_07_03", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=170242302")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException, InterruptedException {
-//        requestNumber = "S/2022/302173";
+//        requestNumber = "S/2022/302992";
         precondition();
         step01();
         step02();
@@ -59,10 +59,11 @@ public class Test_04_07_03  extends Hooks {
 
         //Ввести логин и пароль
         open("https://lk.t.exportcenter.ru/");
-        new GUIFunctions().authorization(P.getProperty("Блок1.Email"), P.getProperty("Блок1.Пароль"), P.getProperty("Блок1.Код"));
+        switchTo().alert().accept();
 
         new GUIFunctions().waitForElementDisplayed("//*[text()='Показать все (100)']")
-                .clickButton("Показать все (100)")
+//                .clickButton("Показать все (100)")
+//                .scrollTo($x("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div"))
                 .clickByLocator("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div")
                 .waitForElementDisplayed("//*[text()='Продолжить']");
 
@@ -76,8 +77,6 @@ public class Test_04_07_03  extends Hooks {
 
         new GUIFunctions().clickButton("Продолжить")
                 .waitForLoading();
-//                .waitForElementDisplayed("//*[contains(text(),'Проект Акта приёмки продукции направлен оператору')]");
-//        closeWebDriver();
     }
 
     @Step("Блок2")
@@ -85,6 +84,7 @@ public class Test_04_07_03  extends Hooks {
         CommonFunctions.printStep();
 
         open("http://arm-pavilion.t.exportcenter.ru/");
+//        switchTo().alert().accept();
         new GUIFunctionsLKB().authorization(P.getProperty("Блок2.Email"),P.getProperty("Блок2.Пароль"));
 
         new GUIFunctionsLKB().clickByLocator("//span[@title='Все задачи']")
@@ -110,7 +110,6 @@ public class Test_04_07_03  extends Hooks {
                 .clickByLocator("//span[text()='Подписать и отправить']")
                 .waitForElementDisplayed("//*[text()='Вы успешно подписали Акт']")
                 .clickByLocator("//span[text()='Закрыть']");
-//        closeWebDriver();
     }
 
     @Step("Блок3")
@@ -118,10 +117,11 @@ public class Test_04_07_03  extends Hooks {
         CommonFunctions.printStep();
 
         open("https://lk.t.exportcenter.ru/");
-        new GUIFunctions().authorization(P.getProperty("Блок3.Email"), P.getProperty("Блок3.Пароль"), P.getProperty("Блок3.Код"));
+        switchTo().alert().accept();
 
         new GUIFunctions().waitForElementDisplayed("//*[text()='Показать все (100)']")
-                .clickButton("Показать все (100)")
+//                .clickButton("Показать все (100)")
+//                .scrollTo($x("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div"))
                 .clickByLocator("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div")
                 .refreshTab("Продолжить", 30)
                 .clickButton("Продолжить");

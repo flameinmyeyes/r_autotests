@@ -62,6 +62,7 @@ public class GUIFunctions extends ElementData {
     }
 
     public GUIFunctions authorization(String login, String password, String code) {
+        new GUIFunctions().waitForLoading();
         this.inContainer("Вход в личный кабинет")
                 .inField("Email").inputValue(login)
                 .inField("Пароль").inputValue(password)
