@@ -1,9 +1,13 @@
 package functions.api;
 
 import com.google.gson.JsonObject;
+import framework.integration.JupyterLabIntegration;
 import functions.common.Base64Encoder;
+import functions.common.CommonFunctions;
+import functions.file.FileFunctions;
 import functions.file.JSONHandler;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import net.sf.json.JSONObject;
 
 import java.io.*;
@@ -631,6 +635,171 @@ public class RESTFunctions {
                 .get("id").toString().replace("\"", "");
 
         return cargoID;
+    }
+
+    public static String uploadAttachmentToProcess(String token, String baseURI, String processID, File attachmentFile) {
+
+//        String wayFile = "src/test/java/ru/exportcenter/dev/fito/file.xml";
+//        file = new File(wayFile);
+//        deleteFileIfExists(file);
+
+//        fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + "ResponseSuccess.xml");
+//        System.out.println("fileContent: \n" + fileContent);
+//
+//        FileFunctions.writeValueToFile(wayFile, fileContent);
+
+        String attachmentID = RestAssured
+                .given()
+                    .baseUri(baseURI)
+                    .basePath("/bpmn/api/v1/bpmn/process-instance/" + processID + "/attachments")
+                    .param("description", "test_description")
+                    .param("name", "test_name")
+                    .header("accept", "*/*")
+                    .header("camundaId", "camunda-exp-search")
+                    .header("Authorization", token)
+                    .header("Content-Type", "multipart/form-data") //.header("Content-Type", ContentType.MULTIPART)
+                    .multiPart("file", attachmentFile)
+                .when()
+                    .post()
+                .then()
+                    .assertThat().statusCode(200)
+                    .extract().response().jsonPath().getString("id");
+
+//                    .extract().response().jsonPath().prettify();
+
+//        JsonObject jsonObject = JSONHandler.parseJSONfromString(response);
+//        String attachmentID = jsonObject.get("id").toString().replace("\"", "");
+
+//        deleteFileIfExists(file);
+
+        return attachmentID;
+    }
+
+    public static String sendMessageToProcess(String token, String baseURI, String processID, JSONObject requestBody) {
+
+        //шаблон JSON:
+        /*
+        {
+          "all": true,
+          "messageName": "",
+          "processInstanceId": "",
+          "camundaId": "camunda-exp-search",
+          "processVariables": {
+            "attachId_AccOrgContrRequestMessage": {
+              "type": "string",
+              "value": ""
+            }
+          }
+        }
+
+        //"messageName":
+        //для 1 ВС "AccOrgContrRequestMessage"
+        //для 2 ВС "CheckAppInfRequestMessage"
+        //для 3 ВС "SendAppInfRequestMessage"
+
+        //"processInstanceId": ID процесса
+
+        //"attachId_":
+        //для 1 ВС "attachId_AccOrgContrRequestMessage"
+        //для 2 ВС "attachId_CheckAppInfRequestMessage"
+        //для 3 ВС "attachId_SendAppInfRequestMessage"
+
+        //"value": ID вложения
+        */
+
+        //строим JSON:
+        /*
+        JSONObject attachId_SendAppInfRequestMessage = new JSONObject();
+        attachId_SendAppInfRequestMessage.put("type", "string");
+        attachId_SendAppInfRequestMessage.put("value", attachmentID);
+
+        JSONObject processVariables = new JSONObject();
+        processVariables.put("attachId_SendAppInfRequestMessage", attachId_SendAppInfRequestMessage);
+
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("all", true);
+        requestBody.put("messageName", messageName);
+        requestBody.put("processInstanceId", processID);
+        requestBody.put("camundaId", "camunda-exp-search");
+        requestBody.put("processVariables", processVariables);
+         */
+
+        String response = RestAssured
+                .given()
+                    .baseUri(baseURI)
+                    .basePath("/bpmn/api/v1/bpmn/process-instance/" + processID + "/message")
+                    .header("accept", "*/*")
+                    .header("camundaId", "camunda-exp-search")
+                    .header("Authorization", token)
+                    .header("Content-Type", "application/json") //.header("Content-Type", ContentType.JSON)
+                    .body(requestBody)
+                .when()
+                    .post()
+                .then()
+                    .assertThat().statusCode(200)
+                    .extract().response().toString();
+
+        //response здесь пустой, это норма
+        return response;
+    }
+
+    public static String sendAttachmentToProcess(String token, String baseURI, String processID, File attachmentFile, String messageName) {
+        /**
+         * 1. Загрузка XML файла
+         */
+        String attachmentID = uploadAttachmentToProcess(token, baseURI, processID, attachmentFile);
+
+        /**
+         * 2. Запуск процесса
+         */
+        //шаблон JSON:
+        /*
+        {
+          "all": true,
+          "messageName": "",
+          "processInstanceId": "",
+          "camundaId": "camunda-exp-search",
+          "processVariables": {
+            "attachId_AccOrgContrRequestMessage": {
+              "type": "string",
+              "value": ""
+            }
+          }
+        }
+
+        //"messageName":
+        //для 1 ВС "AccOrgContrRequestMessage"
+        //для 2 ВС "CheckAppInfRequestMessage"
+        //для 3 ВС "SendAppInfRequestMessage"
+
+        //"processInstanceId": ID процесса
+
+        //"attachId_":
+        //для 1 ВС "attachId_AccOrgContrRequestMessage"
+        //для 2 ВС "attachId_CheckAppInfRequestMessage"
+        //для 3 ВС "attachId_SendAppInfRequestMessage"
+
+        //"value": ID вложения
+        */
+
+        //строим JSON:
+        JSONObject attachId_SendAppInfRequestMessage = new JSONObject();
+        attachId_SendAppInfRequestMessage.put("type", "string");
+        attachId_SendAppInfRequestMessage.put("value", attachmentID);
+
+        JSONObject processVariables = new JSONObject();
+        processVariables.put("attachId_" + messageName, attachId_SendAppInfRequestMessage);
+
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("all", true);
+        requestBody.put("messageName", messageName);
+        requestBody.put("processInstanceId", processID);
+        requestBody.put("camundaId", "camunda-exp-search");
+        requestBody.put("processVariables", processVariables);
+
+        String response = sendMessageToProcess(token, baseURI, processID, requestBody);
+
+        return response;
     }
 
 }

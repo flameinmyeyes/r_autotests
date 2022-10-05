@@ -42,6 +42,10 @@ public class Asserts extends ElementData {
 //            System.out.println("getUneditableInputXPath");
             actualValue = $x(new XPath(this).getUneditableInputXPath()).getText();
         }
+
+        //убираем NBSP (beta)
+        actualValue = actualValue.replace(" ", " ");
+
         return actualValue;
     }
 
