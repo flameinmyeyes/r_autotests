@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
 import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -101,7 +102,7 @@ public class CommonFunctions {
 
 
     /**
-     * Рандомный номер
+     * Сгенерировать рандомный номер в диапазоне от/до
      *
      * @param min - минимальное значение
      * @param max - максимальное значение
@@ -111,6 +112,14 @@ public class CommonFunctions {
         int num = min + rnd.nextInt(max - min + 1);
         String numString = Integer.toString(num);
         return numString;
+    }
+
+    /**
+     * Сгенерировать UUID
+     */
+    public static String generateUUID() {
+        String uuid = String.valueOf(UUID.randomUUID());
+        return uuid;
     }
 
     /**

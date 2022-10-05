@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
+@Deprecated
 public class Swagger/* extends Hooks*/ {
 
     public String WAY_TEST = Ways.DEV.getWay() + "/fito/";
@@ -38,10 +39,13 @@ public class Swagger/* extends Hooks*/ {
     private String token;
     private String processID;
     private String baseURI = "http://bpmn-api-service.bpms-dev.d.exportcenter.ru/";
-//    private String baseURI = "http://uidm.uidm-dev.d.exportcenter.ru";
     private String id = "";
     private String messageName = "";
     private String fileContent = "";
+
+    //Сервис BPMN Engine
+    //http://bpmn-api-service.bpms-dev.d.exportcenter.ru/bpmn/swagger-ui/#/
+    //Base URL: bpmn-api-service.bpms-dev.d.exportcenter.ru
 
     @Owner(value = "Балашов Илья")
     @Description("Метод работы со Swagger UI, загрузка XML файла")
@@ -49,8 +53,9 @@ public class Swagger/* extends Hooks*/ {
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
         step01();
-        step02();
+//        step02();
 //        step03();
+        step04();
     }
 
     @Step("Авторизация в Swagger")
@@ -62,10 +67,10 @@ public class Swagger/* extends Hooks*/ {
 
     private static void deleteFileIfExists(File file) {
         if(file.exists()) {
-            System.out.println("файл есть");
+            System.out.println("Файл обнаружен, будет произведено его удаление");
             file.delete();
         } else {
-            System.out.println("файла нет");
+            System.out.println("Файл не обнаружен, удаление не требуется");
         }
     }
 
@@ -73,15 +78,15 @@ public class Swagger/* extends Hooks*/ {
     public void step02() {
         CommonFunctions.printStep();
 
+        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        System.out.println("processID: " + processID);
+
         String wayFile = "src/test/java/ru/exportcenter/dev/fito/file.xml";
         File file = new File(wayFile);
         deleteFileIfExists(file);
 
         fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + "ResponseSuccess.xml");
         System.out.println("fileContent: \n" + fileContent);
-
-        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
-        System.out.println("processID: " + processID);
 
         FileFunctions.writeValueToFile(wayFile, fileContent);
 
@@ -153,11 +158,11 @@ public class Swagger/* extends Hooks*/ {
     public void step03() {
         CommonFunctions.printStep();
 
-        //для 1 ВС
+        //шаблон JSON:
         /*
         {
           "all": true,
-          "messageName": "AccOrgContrRequestMessage",
+          "messageName": "",
           "processInstanceId": "",
           "camundaId": "camunda-exp-search",
           "processVariables": {
@@ -167,38 +172,20 @@ public class Swagger/* extends Hooks*/ {
             }
           }
         }
-        */
 
-        //для 2 ВС
-        /*
-        {
-          "all": true,
-          "messageName": "CheckAppInfRequestMessage",
-          "processInstanceId": "",
-          "camundaId": "camunda-exp-search",
-          "processVariables": {
-            "attachId_CheckAppInfRequestMessage": {
-              "type": "string",
-              "value": ""
-            }
-          }
-        }
-        */
+        //"messageName":
+        //для 1 ВС "AccOrgContrRequestMessage"
+        //для 2 ВС "CheckAppInfRequestMessage"
+        //для 3 ВС "SendAppInfRequestMessage"
 
-        //для 3 ВС
-        /*
-        {
-          "all": true,
-          "messageName": "SendAppInfRequestMessage",
-          "processInstanceId": "",
-          "camundaId": "camunda-exp-search",
-          "processVariables": {
-            "attachId_SendAppInfRequestMessage": {
-              "type": "string",
-              "value": ""
-            }
-          }
-        }
+        //"processInstanceId": ID процесса
+
+        //"attachId_":
+        //для 1 ВС "attachId_AccOrgContrRequestMessage"
+        //для 2 ВС "attachId_CheckAppInfRequestMessage"
+        //для 3 ВС "attachId_SendAppInfRequestMessage"
+
+        //"value": ID вложения
         */
 
         JSONObject attachId_SendAppInfRequestMessage = new JSONObject();
@@ -206,7 +193,7 @@ public class Swagger/* extends Hooks*/ {
         attachId_SendAppInfRequestMessage.put("value", id);
 
         JSONObject processVariables = new JSONObject();
-        processVariables.put("attachId_SendAppInfRequestMessage", attachId_SendAppInfRequestMessage);
+        processVariables.put("attachId_" + messageName, attachId_SendAppInfRequestMessage);
 
         JSONObject requestBody = new JSONObject();
         requestBody.put("all", true);
@@ -233,6 +220,30 @@ public class Swagger/* extends Hooks*/ {
                     .assertThat().statusCode(200);
     }
 
+    public void step04() {
+        CommonFunctions.printStep();
 
+        processID = JupyterLabIntegration.getFileContent(WAY_TEST_PREVIOUS + "processID.txt");
+        System.out.println("processID: " + processID);
+
+        //удаляем временный файл, если он есть
+        String wayFile = "src/test/java/ru/exportcenter/dev/fito/file.xml";
+        File file = new File(wayFile);
+        deleteFileIfExists(file);
+
+        //читаем содержимое XML с файла на юпитере
+        fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + "ResponseSuccess.xml");
+        System.out.println("fileContent: \n" + fileContent);
+
+        //создаем временный файл и записываем туда содержимое XML
+        FileFunctions.writeValueToFile(wayFile, fileContent);
+        System.out.println("file: " + file);
+
+        //отправляем запрос
+        RESTFunctions.sendAttachmentToProcess(token, baseURI, processID, file,"AccOrgContrRequestMessage");
+
+        //удаляем временный файл
+        deleteFileIfExists(file);
+    }
 
 }
