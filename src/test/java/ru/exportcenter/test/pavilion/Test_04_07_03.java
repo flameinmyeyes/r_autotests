@@ -32,7 +32,7 @@ public class Test_04_07_03  extends Hooks {
     @Link(name = "Test_04_07_03", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=170242302")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException, InterruptedException {
-//        requestNumber = "S/2022/302992";
+//        requestNumber = "S/2022/303065";
         precondition();
         step01();
         step02();
@@ -84,7 +84,7 @@ public class Test_04_07_03  extends Hooks {
         CommonFunctions.printStep();
 
         open("http://arm-pavilion.t.exportcenter.ru/");
-//        switchTo().alert().accept();
+        switchTo().alert().accept();
         new GUIFunctionsLKB().authorization(P.getProperty("Блок2.Email"),P.getProperty("Блок2.Пароль"));
 
         new GUIFunctionsLKB().clickByLocator("//span[@title='Все задачи']")

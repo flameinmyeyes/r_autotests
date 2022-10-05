@@ -92,7 +92,7 @@ public class Test_04_07_02 extends Hooks {
     public void step03() {
         CommonFunctions.printStep();
 
-        new GUIFunctions()
+        new GUIFunctions().scrollTo("Фактический адрес изменился")
                 .inField("Фактический адрес изменился").setCheckboxON().assertCheckboxON()
                 .inField("Индекс").inputValue(P.getProperty("Фактический адрес.Индекс")).assertValue()
                 .inField("Регион").inputValue(P.getProperty("Фактический адрес.Регион")).assertValue()
