@@ -41,8 +41,8 @@ public class Test_01_07_02_1 extends Hooks {
     public void precondition() throws AWTException, InterruptedException  {
         CommonFunctions.printStep();
 
-        Test_01_07_01_1 test_04_07_01_1 = new Test_01_07_01_1();
-        test_04_07_01_1.steps();
+        Test_01_07_01_1 test_01_07_01_1 = new Test_01_07_01_1();
+        test_01_07_01_1.steps();
     }
 
     @Step("Навигация через Поиск")
