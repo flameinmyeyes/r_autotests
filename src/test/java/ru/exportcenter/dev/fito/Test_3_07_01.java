@@ -52,6 +52,13 @@ public class Test_3_07_01 extends Hooks {
         step10();
         step11();
         step12();
+        step13();
+        step14();
+        step15();
+        step16();
+        step17();
+        step18();
+//        step19();
     }
 
     @AfterMethod
@@ -105,7 +112,6 @@ public class Test_3_07_01 extends Hooks {
         //костыль
         if ($x("//button[contains(text(),'Запрос заключения о карантинном фитосанитарном состоянии')]").isDisplayed()){
             new GUIFunctions().clickByLocator("//button[contains(text(),'Запрос заключения о карантинном фитосанитарном состоянии')]");
-            webdriver().driver().switchTo().alert().accept();
         }
 
         //сохранить номер документа в файл
@@ -225,7 +231,7 @@ public class Test_3_07_01 extends Hooks {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Договор на установление карантинного  фитосанитарного состояния")
-                    .inField("Договор").selectValue(P.getProperty("Договор.Договор")).assertNoControl().assertValue()
+                    .inField("Договор").selectValue(P.getProperty("Договор.Договор")).waitForLoading().assertNoControl().assertValue()
                     .inField("Орган инспекции").assertValue(P.getProperty("Договор.Орган инспекции")).assertNoControl()
                     .inField("Номер").assertValue(P.getProperty("Договор.Номер")).assertNoControl()
                     .inField("Дата").assertValue(P.getProperty("Договор.Дата")).assertNoControl()
@@ -291,13 +297,37 @@ public class Test_3_07_01 extends Hooks {
     @Step("Шаг 13. Получение результата проверки сведений")
     public void step13() {
         CommonFunctions.printStep();
+
+        //Нажать на номер текущей заявки
+        String url = $x("//a[contains(text(), '" + docNum + "')]").getAttribute("href");
+        System.out.println("url: " + url);
+        open(url);
+
+//        new GUIFunctions()
+//                    .clickByLocator("//a[contains(text(), '" + docNum + "')]").waitForLoading();
+        webdriver().driver().switchTo().alert().accept();
+
+        new GUIFunctions()
+                .waitForLoading()
+                .waitForElementDisplayed("//div[text()='Номер заявки']/parent::div/div[text()='" + docNum + "']");
+
+        //На "Начальном экране" формирования запроса нажать "Продолжить"
+        refreshTab("//*[contains(text(), 'Продолжить')]", 60);
+        new GUIFunctions()
+                .clickButton("Продолжить")
+                .waitForElementDisplayed("//div[text()='Шаг 7 из 9']");
+    }
+
+    @Step("Шаг 14. Экран ознакомления с результатом проверки. Блок \"Форма заключения\"")
+    public void step14() {
+        CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Форма заключения")
                     .inField("Выберите требуемую форму заключения о карантинном фитосанитарном состоянии:").clickByLocator("//ancestor::div//span[contains(text(),'В электронной форме')][last()]");
     }
 
-    @Step("Экран ознакомления с результатом проверки. Блок \"Уполномоченное лицо для получения заключения\"")
-    public void step14() {
+    @Step("Шаг 15. Экран ознакомления с результатом проверки. Блок \"Уполномоченное лицо для получения заключения\"")
+    public void step15() {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Уполномоченное лицо для получения заключения")
@@ -312,8 +342,8 @@ public class Test_3_07_01 extends Hooks {
                     .waitForElementDisplayed("//div[text()='Шаг 8 из 9']");
     }
 
-    @Step("Шаг 11. Экран \"Шаг 8 из 9\"")
-    public void step15() {
+    @Step("Шаг 16. Экран \"Шаг 8 из 9\"")
+    public void step16() {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
@@ -324,8 +354,42 @@ public class Test_3_07_01 extends Hooks {
                     .waitForElementDisplayed("//div[text()='Шаг 9 из 9']");
     }
 
-    @Step("Шаг 12. Экран \"Результат предоставления услуги\"")
-    public void step16() {
+    @Step("Шаг 17. Редактирование XML ответа 1 для 3 ВС")
+    public void step17() {
+        CommonFunctions.printStep();
+        //читаем содержимое XML с файла на юпитере
+        String fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + "1ResponseSuccessBC3_1.xml");
+
+        //создаем временный XML файл и записываем туда содержимое XML
+        String wayFile = WAY_TEMP_FILE + "1ResponseSuccessBC3_1.xml";
+        deleteFileIfExists(new File(wayFile)); //удаляем временный файл, если он есть
+        FileFunctions.writeValueToFile(wayFile, fileContent);
+
+        //обновляем XML файл
+        XMLHandler.updateXML(wayFile, "common:GUID", guid);
+        XMLHandler.updateXML(wayFile, "common:SendDateTime", DateFunctions.dateToday("yyyy-MM-dd'T'HH:mm:ss")); //2022-10-04T12:49:27
+        XMLHandler.updateXML(wayFile, "common:ZayavlenieRegistrationDate", DateFunctions.dateToday("yyyy-MM-dd")); //2022-10-04
+        XMLHandler.updateXML(wayFile, "common:DogovorRegistrationDate", CommonFunctions.randomNumber(100, 999) + "-" + CommonFunctions.randomNumber(10, 99)); //100-89
+    }
+
+    @Step("Шаг 18. Загрузка XML файла через сваггер, запуск процесса (использовать значения для ВС 3)")
+    public void step18() {
+        CommonFunctions.printStep();
+
+        String wayFile = WAY_TEMP_FILE + "1ResponseSuccessBC3_1.xml";
+        String fileContent = FileFunctions.readValueFromFile(wayFile);
+        System.out.println("fileContent: " + fileContent);
+
+        String messageName = "SendAppInfRequestMessage";
+
+        //отправляем запрос
+        RESTFunctions.sendAttachmentToProcess(token, baseURI, processID, new File(wayFile), messageName);
+
+        deleteFileIfExists(new File(wayFile)); //удаляем временный файл
+    }
+
+    @Step("Шаг 19. Результат рассмотрения заявления")
+    public void step19() {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
