@@ -85,7 +85,7 @@ public class Test_04_07_03  extends Hooks {
         //Открыть портал
         //Авторизоваться под учетными данными
         open("http://arm-pavilion.t.exportcenter.ru/");
-        switchTo().alert().accept();
+//        switchTo().alert().accept();
         new GUIFunctionsLKB().authorization(P.getProperty("Блок2.Email"),P.getProperty("Блок2.Пароль"));
 
         CommonFunctions.wait(15);
@@ -94,15 +94,15 @@ public class Test_04_07_03  extends Hooks {
         //В аккордеоне Сведения о продукции нажать на кнопку Редактировать
         new GUIFunctionsLKB().clickByLocator("//span[@title='Все задачи']")
                 .clickByLocator("//div[@title='Подписать Акт приёмки продукции']")
-                .clickByLocator("(//li[text()='Подписать Акт приёмки продукции'])[1]")
-                .clickByLocator("//span[text()='Редактировать']");
+                .clickByLocator("(//li[text()='Подписать Акт приёмки продукции'])[1]");
+//                .clickByLocator("//span[text()='Редактировать']");
 
-        //Выбрать дату Годен до - Сегодня
-        $x("//input[@placeholder='Выберите дату']").sendKeys(P.getProperty("Блок2.Дата"));
-        $x("//input[@placeholder='Выберите дату']").pressEnter();
+//        //Выбрать дату Годен до - Сегодня
+//        $x("//input[@placeholder='Выберите дату']").sendKeys(P.getProperty("Блок2.Дата"));
+//        $x("//input[@placeholder='Выберите дату']").pressEnter();
 
-        //Нажать кнопку Сохранить
-        new GUIFunctionsLKB().clickByLocator("//span[text()='Сохранить']");
+//        //Нажать кнопку Сохранить
+//        new GUIFunctionsLKB().clickByLocator("//span[text()='Сохранить']");
 
         //В конце страницы нажать кнопку Далее
         $x("//span[text()='Далее']").scrollTo();
@@ -149,11 +149,11 @@ public class Test_04_07_03  extends Hooks {
                 .clickButton("Далее")
                 .waitForElementDisplayed("//button[contains(text(),'Господдержка. Демонстрационно-дегустационные павильоны АПК')]");
 
-        //Перейти на сводную информацию о заявке по "хлебным крошкам"
-        new GUIFunctions().clickByLocator("//button[contains(text(),'Господдержка. Демонстрационно-дегустационные павильоны АПК')]");
-        switchTo().alert().accept();
-
-        String url = webdriver().driver().getWebDriver().getCurrentUrl();
-        System.out.println(url);
+//        //Перейти на сводную информацию о заявке по "хлебным крошкам"
+//        new GUIFunctions().clickByLocator("//button[contains(text(),'Господдержка. Демонстрационно-дегустационные павильоны АПК')]");
+//        switchTo().alert().accept();
+//
+//        String url = webdriver().driver().getWebDriver().getCurrentUrl();
+//        System.out.println(url);
     }
 }
