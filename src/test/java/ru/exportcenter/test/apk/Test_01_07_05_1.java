@@ -70,6 +70,7 @@ public class Test_01_07_05_1 extends Hooks {
                 .waitForElementDisplayed("//*[contains(text(),'Сертификация продукции АПК')]")
                 .closeAllPopupWindows();
 
+
         if ($x("//button[contains(text(),'Сервис «Господдержка. Сертификация продукции АПК»')]").isDisplayed()){
 
             new GUIFunctions().clickByLocator("//button[contains(text(),'Сервис «Господдержка. Сертификация продукции АПК»')]");

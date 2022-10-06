@@ -124,6 +124,7 @@ public class Test_04_07_06 extends Hooks {
 
         new GUIFunctions().refreshTab("//*[text()='Продолжить']", 10);
 
+
         processID = CommonFunctions.getProcessIDFromURL();
         new GUIFunctions().clickButton("Продолжить")
                 .waitForElementDisplayed("//*[text()='Страна нахождения павильона']")
