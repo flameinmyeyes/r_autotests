@@ -107,7 +107,6 @@ public class Test_04_07_02 extends Hooks {
                 .waitForElementDisplayed("//*[text()='Подписать электронной подписью']");
     }
 
-
     @Step("Подписание и направление соглашения")
     public void step04() {
         CommonFunctions.printStep();

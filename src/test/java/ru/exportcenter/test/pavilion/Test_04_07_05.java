@@ -68,7 +68,6 @@ public class Test_04_07_05 extends Hooks {
         UUID = $x("//*[text()='UUID:']/parent::*").getOwnText();
         System.out.println(UUID);
 
-
         closeWindow();
         switchTo().window(0);
         $x("//button[text()='Выйти']").click();

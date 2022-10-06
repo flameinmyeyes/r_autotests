@@ -26,7 +26,6 @@ public class Test_04_07_01 extends Hooks {
     public String requestNumber;
     private String processID;
 
-
     @Owner(value = "Петрищев Руслан")
     @Description("04 07 01 Заполнение Заявки на получение услуги, подписание Заявки УКЭП и автоматическая передача Заявки на верификацию")
     @Link(name = "Test_04_07_01", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=163302431")
