@@ -36,6 +36,7 @@ public class Test_04_07_01 extends Hooks {
         step02();
         step03();
         step04();
+        step05();
     }
 
     @AfterMethod
@@ -63,45 +64,56 @@ public class Test_04_07_01 extends Hooks {
         new GUIFunctions().clickButton("Продолжить")
                 .waitForElementDisplayed("//*[text()='Страна нахождения павильона']");
 
-        new GUIFunctions()
-//                .inContainer("Сведения о демонстрационно-дегустационном павильоне")
-                .inField("Страна нахождения павильона").selectValue(PROPERTIES.getProperty("Авторизация.Страна нахождения павильона")).assertValue();
+        new GUIFunctions().inField("Страна нахождения павильона").selectValue(PROPERTIES.getProperty("Авторизация.Страна нахождения павильона")).assertValue();
 
         new GUIFunctions().clickButton("Далее")
                 .waitForElementDisplayed("//*[text()='Сведения о демонстрационно-дегустационном павильоне']");
     }
 
-    @Step("Заполнение заявки")
+    @Step("Пропуск этапа ФНС")
     public void step02() throws AWTException {
         CommonFunctions.printStep();
 
+        //В браузере перейти по ссылке
         open("https://bpms.t.exportcenter.ru/");
         switchTo().alert().accept();
 
-        new GUIFunctionsLKB()
-                .authorization("bpmn_admin", "password");
+        //Ввести логин и пароль
+        new GUIFunctionsLKB().authorization("bpmn_admin", "password");
 
+        //Развернуть аккордеон «camunda-exp-search»
+        //Выбрать вкладку «Cockpit»
         $x("//div[text()='camunda-exp-search']").click();
         $x("//div[text()='Cockpit']").click();
-//        CommonFunctions.wait(5);
+
+
         switchTo().frame($x("//iframe[contains(@src,'/camunda/')]"));
+
+        //Выбрать вкладку «Процессы» и найти значение «Name» = Павильоны. Господдержка. Демонстрационно-дегустационные павильоны АПК
+        //Нажать на «Павильоны. Господдержка. Демонстрационно-дегустационные павильоны АПК»
         new GUIFunctions().waitForElementDisplayed("//a[text()='Процессы']");
         $x("//a[text()='Процессы']").click();
-
-        new GUIFunctions().waitForLoading();
-//        switchTo().frame($x("//div[@class='ctn-view cockpit-section-dashboard processes-dashboard ng-scope']"));
-
-        new GUIFunctions().scrollTo($x("//*[contains(text(),'Павильоны. Господдержка. Демонстрационно-дегустационные павильоны АПК')]"))
+        new GUIFunctions().waitForLoading()
+                .scrollTo($x("//*[contains(text(),'Павильоны. Господдержка. Демонстрационно-дегустационные павильоны АПК')]"))
                 .clickByLocator("//*[contains(text(),'Павильоны. Господдержка. Демонстрационно-дегустационные павильоны АПК')]")
                 .waitForElementDisplayed("//input[@placeholder='Добавить критерии']");
 
+        //Найти Заявку по номеру (Бизнес ключи)
         $x("//input[@placeholder='Добавить критерии']").setValue(requestNumber).pressEnter();
         new GUIFunctions().waitForElementDisplayed("//td[@class='instance-id ng-isolate-scope']/span/a");
+
+        //Нажать на Идентификатор заявки
         $x("//td[@class='instance-id ng-isolate-scope']/span/a").click();
         new GUIFunctions().waitForElementDisplayed("//input[@placeholder='Добавить критерии']");
         CommonFunctions.wait(1);
+
+        //Ввести в поле поиска переменную "passSmevFnsRequest".Начать поиск
         $x("//input[@placeholder='Добавить критерии']").setValue("passSmevFnsRequest").pressEnter();
         CommonFunctions.wait(1);
+
+        //Нажать на кнопку редактирования переменной (красная, с карандашом)
+        //Выбрать тип "String", значение ввести "1"
+        //Применить изменения
         new GUIFunctions().waitForElementDisplayed("//button[@tooltip='Редактировать переменную']")
                 .clickByLocator("//button[@tooltip='Редактировать переменную']")
                 .waitForElementDisplayed("//select[@ng-model='variable.type']")
@@ -113,11 +125,12 @@ public class Test_04_07_01 extends Hooks {
         $x("//*[text()='Значение']").click();
         $x("//button[@tooltip='Сохранить переменную']").click();
         switchTo().defaultContent();
+
         new GUIFunctions().clickByLocator("//button[text()='Выйти']");
 //        new GUIFunctions().waitForElementDisplayed("//*[text()='Переменная 'passSmevFnsRequest' изменена.']");
     }
 
-    @Step("Блок «Информация о продукции»")
+    @Step("Заполнение заявки")
     public void step03() throws AWTException {
         CommonFunctions.printStep();
 
@@ -125,26 +138,51 @@ public class Test_04_07_01 extends Hooks {
         new GUIFunctions()
                 .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"));
 
+        //Вернуться в ЕЛК, в заявку
         new GUIFunctions()
                 .waitForURL("https://lk.t.exportcenter.ru/ru/main")
-//                .clickButton("Показать все (100)")
-//                .scrollTo($x("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div"))
                 .clickByLocator("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div")
                 .waitForElementDisplayed("//*[text()='" + requestNumber + "']")
                 .refreshTab("Продолжить", 15)
                 .clickButton("Продолжить")
                 .waitForElementDisplayed("//*[text()='Добавить +']");
 
+        //Перейти к блоку "Дополнительные сведения"
+        //В поле "Комментарий" ввести значение "Дополнительные сведения"
+
+    }
+
+    @Step("Блок \"Информация о продукции\"")
+    public void step04() {
+        CommonFunctions.printStep();
+
+        //Нажать кнопку "Добавить +"
+        //В поле "Каталог продукции" ввести значение "1704" и выбрать "1704909900 Белёвская пастила с чёрной смородиной"
         new GUIFunctions().clickButton("Добавить +");
         new CommonFunctions().wait(2);
         new GUIFunctions().inContainer("Сведения о продукции")
-                .inField("Каталог продукции").inputValue("1704")
-                .waitForElementDisplayed("//*[contains(text(), 'Белёвская пастила с чёрной смородиной')]")
-                .clickByLocator("//*[contains(text(), 'Белёвская пастила с чёрной смородиной')]");
+                .inField("Каталог продукции").inputValue(PROPERTIES.getProperty("Информация о продукции.Каталог продукции.Номер"))
+                .waitForElementDisplayed("//*[contains(text(), '" + PROPERTIES.getProperty("Информация о продукции.Каталог продукции") + "')]")
+                .clickByLocator("//*[contains(text(), '" + PROPERTIES.getProperty("Информация о продукции.Каталог продукции") + "')]");
 
-//        new GUIFunctions().inField("Каталог продукции").selectValue("1704909900\u00a0Белёвская пастила с чёрной смородиной");
-
-        new GUIFunctions().inField("Количество ед. продукции").inputValue(PROPERTIES.getProperty("Информация о продукции.Количество ед. продукции")).assertValue()
+        //В поле "Количество ед. продукции" ввести значение "12"
+        //В поле "Единица измерения" выбрать значение из выпадающего списка Выбираем "мм"
+        //В поле "Общая стоимость партии товара, включая затраты на транспортировку" ввести значение "25000"
+        //В поле "Условия транспортировки и хранения продукции" ввести значение "Условия хранения"
+        //Активировать чек-бокс "Розничная продажа"
+        //Активировать чек-бокс "Оптовая продажа"
+        //В поле "Оценка спроса (в рублях)" ввести значение "15000"
+        //Активировать чек-бокс "Готовность к адаптации"
+        //Активировать чек-бокс "Наличие сертификата страны размещения"
+        //В поле "Номер сертификата" ввести значение "12345"
+        //В поле "Дата выдачи" выбрать значение "01.07.2022"
+        //В поле "Наименование органа, выдавшего сертификат" ввести значение "Наименование"
+        //Активировать чек-бокс "Наличие презентационных материалов на английском языке или на языке страны размещения"
+        //Активировать чек-бокс "Наличие товарного знака в стране размещения"
+        //В поле "Наименование ЭТП размещения продукции" выбрать значение из выпадающего списка Выбираем "Umico"
+        //В поле "Данные дистрибьютора на рынке павильона" ввести значение "Данные"
+        new GUIFunctions()
+                .inField("Количество ед. продукции").inputValue(PROPERTIES.getProperty("Информация о продукции.Количество ед. продукции")).assertValue()
                 .inField("Единица измерения").selectValue(PROPERTIES.getProperty("Информация о продукции.Единица измерения")).assertValue()
                 .inField("Общая стоимость партии товара, включая затраты на транспортировку (юань)").inputValue(PROPERTIES.getProperty("Информация о продукции.Общая стоимость партии товара"))
                 .inField("Условия транспортировки и хранения продукции").inputValue(PROPERTIES.getProperty("Информация о продукции.Условия транспортировки и хранения продукции")).assertValue()
@@ -159,21 +197,36 @@ public class Test_04_07_01 extends Hooks {
                 .inField("Наличие презентационных материалов на английском языке или на языке страны размещения").setCheckboxON().assertCheckboxON()
                 .inField("Наличие товарного знака в стране размещения").setCheckboxON().assertCheckboxON()
                 .inField("Наименование ЭТП размещения продукции").selectValue(PROPERTIES.getProperty("Информация о продукции.Наименование ЭТП размещения продукции"))
-                .inField("Данные дистрибьютора на рынке павильона").inputValue(PROPERTIES.getProperty("Информация о продукции.Данные дистрибьютора на рынке павильона")).assertValue()
-                .clickButton("Добавить")
+                .inField("Данные дистрибьютора на рынке павильона").inputValue(PROPERTIES.getProperty("Информация о продукции.Данные дистрибьютора на рынке павильона")).assertValue();
+
+        //Нажать кнопку "Добавить"
+        new GUIFunctions().clickButton("Добавить");
+
+        //Нажать кнопку "Далее"
+        new GUIFunctions()
                 .clickButton("Далее")
                 .waitForElementDisplayed("//*[text()='Подписать электронной подписью']");
     }
 
     @Step("Подписание заявки")
-    public void step04() {
+    public void step05() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().clickButton("Подписать электронной подписью")
-                .inField("Выберите сертификат").selectValue("Ермухамбетова Балсикер Бисеньевна от 18.01.2022").assertValue()
+        //Нажать кнопку "Подписать электронной подписью"
+        //Выбрать электронный сертификат
+        //Нажать кнопку "Подписать"
+        //Нажать кнопку "Далее"
+        new GUIFunctions()
+                .clickButton("Подписать электронной подписью")
+                .inField("Выберите сертификат").selectValue(PROPERTIES.getProperty("Подписание заявки.Выберите сертификат")).assertValue()
                 .clickButton("Подписать")
                 .waitForElementDisplayed("//*[text()='Подписано']")
                 .clickButton("Далее")
-                .waitForLoading();
+                .waitForElementDisplayed("//button[contains(text(),'Господдержка. Демонстрационно-дегустационные павильоны АПК')]");
+
+//        //Перейти на сводную информацию о заявке по "хлебным крошкам"
+//        new GUIFunctions().clickByLocator("//button[contains(text(),'Господдержка. Демонстрационно-дегустационные павильоны АПК')]");
+//        switchTo().alert().accept();
+//        new GUIFunctions().waitForElementDisplayed("//div[text()='Номер заявки']/following-sibling::div");
     }
 }
