@@ -1,6 +1,7 @@
 package framework;
 
 import com.codeborne.selenide.WebDriverRunner;
+import functions.common.CommonFunctions;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -17,7 +18,7 @@ import static com.codeborne.selenide.FileDownloadMode.PROXY;
 
 public class DriverInit {
 
-    private RemoteWebDriver remoteWebDriver;
+    private RemoteWebDriver remoteWebDriver = null;
     private final int TIMEOUT = 60000;
     private final String DOWNLOADS_FOLDER = Ways.DOWNLOADS.getWay();
 
@@ -73,10 +74,21 @@ public class DriverInit {
                 pageLoadTimeout = TIMEOUT;
                 timeout = TIMEOUT;
 
-                //создание удаленного браузера
-                try {
-                    remoteWebDriver = new RemoteWebDriver(URI.create("http://selenoid.d.exportcenter.ru/wd/hub/").toURL(), desiredCapabilities);
-                } catch (Exception e) {}
+                //создание удаленного браузера, костыль
+                if (remoteWebDriver == null) {
+                    for (int i = 0; i < 7; i++) {
+                        try {
+                            remoteWebDriver = new RemoteWebDriver(URI.create("http://selenoid.d.exportcenter.ru/wd/hub/").toURL(), desiredCapabilities);
+                        } catch (Exception e) {
+                            System.out.println("Не удалось создать remoteWebDriver. Выполняется повторная попытка создания");
+                        }
+                        if (remoteWebDriver != null){
+                            break;
+                        }
+                        CommonFunctions.wait(1);
+                    }
+                }
+
                 WebDriverRunner.setWebDriver(remoteWebDriver);
                 remoteWebDriver.manage().window().maximize();
                 break;
