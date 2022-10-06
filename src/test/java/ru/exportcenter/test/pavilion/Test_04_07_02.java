@@ -28,7 +28,7 @@ public class Test_04_07_02 extends Hooks {
     @Link(name = "Test_04_07_02", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=163302518")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException, InterruptedException {
-//        requestNumber = "S/2022/302172";
+//        requestNumber = "S/2022/303225";
         precondition();
         step01();
         step02();
@@ -51,23 +51,27 @@ public class Test_04_07_02 extends Hooks {
         requestNumber = test_04_07_01.requestNumber;
     }
 
-    @Step("Номенклатура и объемы продукции")
+    @Step("Блок \"Номенклатура и объемы продукции\"")
     public void step01() {
         CommonFunctions.printStep();
 
         open("https://lk.t.exportcenter.ru/ru/main");
         switchTo().alert().accept();
 
-        new GUIFunctions().waitForElementDisplayed("//*[text()='Показать все (100)']")
-//                .clickButton("Показать все (100)")
-//                .scrollTo($x("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div"))
+        new GUIFunctions()
+                .waitForElementDisplayed("//*[text()='Показать все (100)']")
                 .clickByLocator("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div")
                 .refreshTab("Подписание Соглашения", 120)
                 .refreshTab("Продолжить", 15)
                 .clickButton("Продолжить");
 
+        //Нажать на кнопку "..."
+        //Нажать кнопку "Изменить"
+        //В поле "Количество ед. продукции" заменить значение "12" на "10"
+        //Нажать кнопку "Добавить"
         $x("//*[text()='Номенклатура и объемы продукции']").scrollTo();
-        new GUIFunctions().clickByLocator("(//button[@class='dropdown-icon'])[2]")
+        new GUIFunctions()
+                .clickByLocator("(//button[@class='dropdown-icon'])[2]")
                 .waitForElementDisplayed("//*[text()='Изменить']")
                 .waitForElementDisplayed("//*[text()='Удалить']")
                 .clickButton("Изменить")
@@ -77,22 +81,34 @@ public class Test_04_07_02 extends Hooks {
                 .clickButton("Добавить");
     }
 
-    @Step("Контактное лицо")
+    @Step("Блок \"Контактное лицо\"")
     public void step02() throws AWTException {
         CommonFunctions.printStep();
 
+        //Активировать чек-бокс "Контактное лицо"
+        //В поле "ФИО" выбрать значение из выпадающего списка Выбираем "ГУСЕВ ДМИТРИЙ МИХАЙЛОВИЧ"
         new GUIFunctions()
                 .inField("Контактное лицо").setCheckboxON().assertCheckboxON()
-//                .inField("ФИО").selectValue("Антонов\u00a0Антон\u00a0Антонович").assertValue();
-                .inField("ФИО").inputValue("Антонов")
-                .waitForElementDisplayed("//*[contains(text(), 'Антонович')]")
-                .clickByLocator("//*[contains(text(), 'Антонович')]");
+                .inField("ФИО").inputValue(P.getProperty("Контактное лицо.Имя"))
+                .waitForElementDisplayed("//*[contains(text(), '"+P.getProperty("Контактное лицо.Имя")+"')]")
+                .clickByLocator("//*[contains(text(), '"+P.getProperty("Контактное лицо.Имя")+"')]");
     }
-    @Step("Фактический адрес")
+    @Step("Блок \"Фактический адрес\"")
     public void step03() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().scrollTo("Фактический адрес изменился")
+        //Активировать чек-бокс "Фактический адрес изменился"
+        //В поле "Индекс" ввести значение "123456"
+        //В поле "Регион" ввести значение "Регион"
+        //В поле "Район" ввести значение "Район"
+        //В поле "Город" ввести значение "Город"
+        //В поле "Населенный пункт" ввести значение "Населенный пункт"
+        //В поле "Улица" ввести значение "Улица"
+        //В поле "Дом" ввести значение "12"
+        //В поле "Строение" ввести значение "3"
+        //В поле "Офис" ввести значение "4"
+        new GUIFunctions()
+                .scrollTo("Фактический адрес изменился")
                 .inField("Фактический адрес изменился").setCheckboxON().assertCheckboxON()
                 .inField("Индекс").inputValue(P.getProperty("Фактический адрес.Индекс")).assertValue()
                 .inField("Регион").inputValue(P.getProperty("Фактический адрес.Регион")).assertValue()
@@ -102,7 +118,10 @@ public class Test_04_07_02 extends Hooks {
                 .inField("Улица").inputValue(P.getProperty("Фактический адрес.Улица")).assertValue()
                 .inField("Дом").inputValue(P.getProperty("Фактический адрес.Дом")).assertValue()
                 .inField("Строение").inputValue(P.getProperty("Фактический адрес.Строение")).assertValue()
-                .inField("Офис").inputValue(P.getProperty("Фактический адрес.Офис")).assertValue()
+                .inField("Офис").inputValue(P.getProperty("Фактический адрес.Офис")).assertValue();
+
+        //Нажать кнопку "Далее"
+        new GUIFunctions()
                 .clickButton("Далее")
                 .waitForElementDisplayed("//*[text()='Подписать электронной подписью']");
     }
@@ -111,6 +130,10 @@ public class Test_04_07_02 extends Hooks {
     public void step04() {
         CommonFunctions.printStep();
 
+        //Вернуться на страницу с заявкой и нажать "Подписать электронной подписью"
+        //Выбрать электронный сертификат
+        //Нажать кнопку "Подписать"
+        //Нажать кнопку "Далее"
         new GUIFunctions().clickButton("Подписать электронной подписью")
                 .inField("Выберите сертификат").selectValue(P.getProperty("Подписание.Выберите сертификат")).assertValue()
                 .clickButton("Подписать")
@@ -123,6 +146,9 @@ public class Test_04_07_02 extends Hooks {
     public void step05() {
         CommonFunctions.printStep();
 
+        //Раскрыть аккордеон "О компании"
+        //Перейти к аккордеону "Номенклатура и объёмы продукции"
+        //Нажать кнопку "Далее"
         new GUIFunctions().clickButton("О компании")
                 .scrollTo("Далее")
                 .clickButton("Далее")
