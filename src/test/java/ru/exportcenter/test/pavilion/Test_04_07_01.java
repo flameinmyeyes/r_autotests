@@ -63,7 +63,8 @@ public class Test_04_07_01 extends Hooks {
         new GUIFunctions().clickButton("Продолжить")
                 .waitForElementDisplayed("//*[text()='Страна нахождения павильона']");
 
-        new GUIFunctions().inContainer("Сведения о демонстрационно-дегустационном павильоне")
+        new GUIFunctions()
+//                .inContainer("Сведения о демонстрационно-дегустационном павильоне")
                 .inField("Страна нахождения павильона").selectValue(PROPERTIES.getProperty("Авторизация.Страна нахождения павильона")).assertValue();
 
         new GUIFunctions().clickButton("Далее")
@@ -83,7 +84,7 @@ public class Test_04_07_01 extends Hooks {
         $x("//div[text()='camunda-exp-search']").click();
         $x("//div[text()='Cockpit']").click();
 //        CommonFunctions.wait(5);
-        switchTo().frame($x("//iframe[@src='/camunda/camunda-exp-search/app/cockpit/default/#']"));
+        switchTo().frame($x("//iframe[contains(@src,'/camunda/')]"));
         new GUIFunctions().waitForElementDisplayed("//a[text()='Процессы']");
         $x("//a[text()='Процессы']").click();
 

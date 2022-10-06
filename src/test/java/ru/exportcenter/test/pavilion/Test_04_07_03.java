@@ -32,7 +32,7 @@ public class Test_04_07_03  extends Hooks {
     @Link(name = "Test_04_07_03", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=170242302")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException, InterruptedException {
-//        requestNumber = "S/2022/303065";
+//        requestNumber = "S/2022/303011";
         precondition();
         step01();
         step02();
@@ -84,8 +84,11 @@ public class Test_04_07_03  extends Hooks {
         CommonFunctions.printStep();
 
         open("http://arm-pavilion.t.exportcenter.ru/");
+        //разкомментить
         switchTo().alert().accept();
         new GUIFunctionsLKB().authorization(P.getProperty("Блок2.Email"),P.getProperty("Блок2.Пароль"));
+
+        CommonFunctions.wait(15);
 
         new GUIFunctionsLKB().clickByLocator("//span[@title='Все задачи']")
                 .clickByLocator("//div[@title='Подписать Акт приёмки продукции']")
@@ -117,6 +120,8 @@ public class Test_04_07_03  extends Hooks {
         CommonFunctions.printStep();
 
         open("https://lk.t.exportcenter.ru/");
+        //стереть
+//        new GUIFunctions().authorization(P.getProperty("Блок3.Email"),P.getProperty("Блок3.Пароль"), "1234");
 
         new GUIFunctions().waitForElementDisplayed("//*[text()='Показать все (100)']")
 //                .clickButton("Показать все (100)")
@@ -130,7 +135,10 @@ public class Test_04_07_03  extends Hooks {
                 .clickButton("Подписать")
                 .waitForElementDisplayed("//*[text()='Подписано']")
                 .clickButton("Далее")
-                .waitForLoading();
+                .waitForElementDisplayed("//button[contains(text(),'Господдержка. Демонстрационно-дегустационные павильоны АПК')]");
+
+        new GUIFunctions().clickByLocator("//button[contains(text(),'Сервис «Господдержка. Сертификация продукции АПК»')]");
+        switchTo().alert().accept();
 
         String url = webdriver().driver().getWebDriver().getCurrentUrl();
         System.out.println(url);
