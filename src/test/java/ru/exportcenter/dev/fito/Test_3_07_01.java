@@ -27,13 +27,17 @@ public class Test_3_07_01 extends Hooks {
 
     public String WAY_TEST = Ways.DEV.getWay() + "/fito/Test_3_07_01/";
     public String WAY_TEMP_FILE = "src/test/java/ru/exportcenter/dev/fito/";
+    public String FILE_NAME_BC1 = "ResponseSuccess1.xml";
+    public String FILE_NAME_BC2 = "1ResponseSuccessBC2.xml";
+    public String FILE_NAME_BC_3_1 = "1ResponseSuccessBC3_1.xml";
+    public String FILE_NAME_BC_3_2 = "1ResponseSuccessBC3_2.xml";
     public String WAY_TO_PROPERTIES = Ways.DEV.getWay() + "/fito/Test_3_07_01/" + "Test_3_07_01_properties.xml";
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
     private String docNum;
+    private String guid;
     private String token;
     private String baseURI = "http://bpmn-api-service.bpms-dev.d.exportcenter.ru/";
-    private String guid;
 
     @Owner(value = "Балашов Илья")
     @Description("3.07.01 Сценарий получения услуги по ЗКФС (положительный результат)")
@@ -59,6 +63,15 @@ public class Test_3_07_01 extends Hooks {
         step17();
         step18();
 //        step19();
+//        step20();
+//        step21();
+//        step22();
+//        step23();
+//        step24();
+//        step25();
+//        step26();
+//        step27();
+//        step28();
     }
 
     @AfterMethod
@@ -167,10 +180,10 @@ public class Test_3_07_01 extends Hooks {
     public void step06() {
         CommonFunctions.printStep();
         //читаем содержимое XML с файла на юпитере
-        String fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + "ResponseSuccess.xml");
+        String fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + FILE_NAME_BC1);
 
         //создаем временный XML файл и записываем туда содержимое XML
-        String wayFile = WAY_TEMP_FILE + "ResponseSuccess.xml";
+        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC1;
         deleteFileIfExists(new File(wayFile)); //удаляем временный файл, если он есть
         FileFunctions.writeValueToFile(wayFile, fileContent);
 
@@ -187,7 +200,7 @@ public class Test_3_07_01 extends Hooks {
         token = RESTFunctions.getAccessToken("http://uidm.uidm-dev.d.exportcenter.ru", "bpmn_admin");
         System.out.println("token: " + token);
 
-        String wayFile = WAY_TEMP_FILE + "ResponseSuccess.xml";
+        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC1;
         String fileContent = FileFunctions.readValueFromFile(wayFile);
         System.out.println("fileContent: " + fileContent);
 
@@ -250,7 +263,7 @@ public class Test_3_07_01 extends Hooks {
         new GUIFunctions()
                 .inContainer("Запрос отбора проб")
                     .inField("Территориальное управление Россельхознадзора").selectValue(P.getProperty("Запрос отбора проб.Территориальное управление Россельхознадзора")).assertNoControl().assertValue()
-                    .inField("Планируемая дата отбора проб").inputValue(DateFunctions.dateToday("dd.MM.yyyy")).assertNoControl().assertValue()
+                    .inField("Планируемая дата отбора проб").inputValue(DateFunctions.dateShift("dd.MM.yyyy", +1)).assertNoControl().assertValue()
                     .inField("Планируемое время отбора проб").inputValue(P.getProperty("Запрос отбора проб.Планируемое время отбора проб")).assertNoControl().assertValue()
                     .inField("Адрес места отбора проб").inputValue(P.getProperty("Запрос отбора проб.Адрес места отбора проб")).assertNoControl().assertValue()
                     .inField("Дополнительные требования к исследованиям ").inputValue(P.getProperty("Запрос отбора проб.Дополнительные требования к исследованиям")).assertNoControl().assertValue()
@@ -266,23 +279,25 @@ public class Test_3_07_01 extends Hooks {
     public void step11() {
         CommonFunctions.printStep();
         //читаем содержимое XML с файла на юпитере
-        String fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + "ResponseSuccessBC2.xml");
+        String fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + FILE_NAME_BC2);
 
         //создаем временный XML файл и записываем туда содержимое XML
-        String wayFile = WAY_TEMP_FILE + "ResponseSuccessBC2.xml";
+        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC2;
         deleteFileIfExists(new File(wayFile)); //удаляем временный файл, если он есть
         FileFunctions.writeValueToFile(wayFile, fileContent);
 
         //обновляем XML файл
         XMLHandler.updateXML(wayFile, "common:GUID", guid);
         XMLHandler.updateXML(wayFile, "common:SendDateTime", DateFunctions.dateToday("yyyy-MM-dd'T'HH:mm:ss")); //2022-10-04T12:49:27
+        XMLHandler.updateXML(wayFile, "common:ProbeDate", DateFunctions.dateShift("yyyy-MM-dd", +1)); //2022-10-04
+        XMLHandler.updateXML(wayFile, "common:ProbeTime", DateFunctions.dateToday("yyyy-MM-dd'T'") + P.getProperty("Запрос отбора проб.Планируемое время отбора проб") + ":00"); //2022-10-04T14:00:00
     }
 
     @Step("Шаг 12. Загрузка XML файла через сваггер, запуск процесса")
     public void step12() {
         CommonFunctions.printStep();
 
-        String wayFile = WAY_TEMP_FILE + "ResponseSuccessBC2.xml";
+        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC2;
         String fileContent = FileFunctions.readValueFromFile(wayFile);
         System.out.println("fileContent: " + fileContent);
 
@@ -299,12 +314,12 @@ public class Test_3_07_01 extends Hooks {
         CommonFunctions.printStep();
 
         //Нажать на номер текущей заявки
+//        new GUIFunctions()
+//                    .clickByLocator("//a[contains(text(), '" + docNum + "')]").waitForLoading();
         String url = $x("//a[contains(text(), '" + docNum + "')]").getAttribute("href");
         System.out.println("url: " + url);
         open(url);
 
-//        new GUIFunctions()
-//                    .clickByLocator("//a[contains(text(), '" + docNum + "')]").waitForLoading();
         webdriver().driver().switchTo().alert().accept();
 
         new GUIFunctions()
@@ -358,10 +373,10 @@ public class Test_3_07_01 extends Hooks {
     public void step17() {
         CommonFunctions.printStep();
         //читаем содержимое XML с файла на юпитере
-        String fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + "1ResponseSuccessBC3_1.xml");
+        String fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + FILE_NAME_BC_3_1);
 
         //создаем временный XML файл и записываем туда содержимое XML
-        String wayFile = WAY_TEMP_FILE + "1ResponseSuccessBC3_1.xml";
+        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_3_1;
         deleteFileIfExists(new File(wayFile)); //удаляем временный файл, если он есть
         FileFunctions.writeValueToFile(wayFile, fileContent);
 
@@ -376,7 +391,7 @@ public class Test_3_07_01 extends Hooks {
     public void step18() {
         CommonFunctions.printStep();
 
-        String wayFile = WAY_TEMP_FILE + "1ResponseSuccessBC3_1.xml";
+        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_3_1;
         String fileContent = FileFunctions.readValueFromFile(wayFile);
         System.out.println("fileContent: " + fileContent);
 
@@ -394,15 +409,115 @@ public class Test_3_07_01 extends Hooks {
         new GUIFunctions()
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
                     .clickButton("Оформить сертификат");
+
+
+        //Нажать на номер текущей заявки
+//        new GUIFunctions()
+//                    .clickByLocator("//a[contains(text(), '" + docNum + "')]").waitForLoading();
+        String url = $x("//a[contains(text(), '" + docNum + "')]").getAttribute("href");
+        System.out.println("url: " + url);
+        open(url);
+
+        webdriver().driver().switchTo().alert().accept();
+
+        new GUIFunctions()
+                .waitForLoading()
+                .waitForElementDisplayed("//div[text()='Номер заявки']/parent::div/div[text()='" + docNum + "']");
+
+        //На "Начальном экране" формирования запроса нажать "Продолжить"
+        refreshTab("//*[contains(text(), 'Продолжить')]", 60);
+        new GUIFunctions()
+                .clickButton("Продолжить")
+                .waitForElementDisplayed("//div[text()='Шаг 7 из 9']");
+
+    }
+
+    @Step("Шаг 20. Редактирование XML ответа 2 для 3 ВС")
+    public void step20() {
+        CommonFunctions.printStep();
+        //читаем содержимое XML с файла на юпитере
+        String fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + FILE_NAME_BC_3_2);
+
+        //создаем временный XML файл и записываем туда содержимое XML
+        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_3_2;
+        deleteFileIfExists(new File(wayFile)); //удаляем временный файл, если он есть
+        FileFunctions.writeValueToFile(wayFile, fileContent);
+
+        //обновляем XML файл
+        XMLHandler.updateXML(wayFile, "common:GUID", guid);
+        XMLHandler.updateXML(wayFile, "common:SendDateTime", DateFunctions.dateToday("yyyy-MM-dd'T'HH:mm:ss")); //2022-10-04T12:49:27
+        XMLHandler.updateXML(wayFile, "common:AktDate", DateFunctions.dateToday("yyyy-MM-dd")); //2022-10-04
+        XMLHandler.updateXML(wayFile, "common:AktNumber", CommonFunctions.randomNumber(100, 999) + "-" + CommonFunctions.randomNumber(100, 999)); //100-100
+    }
+
+    @Step("Шаг 21. Загрузка XML файла через сваггер, запуск процесса (использовать значения для ВС 3)")
+    public void step21() {
+        CommonFunctions.printStep();
+        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_3_2;
+        String fileContent = FileFunctions.readValueFromFile(wayFile);
+        System.out.println("fileContent: " + fileContent);
+
+        String messageName = "SendAppInfRequestMessage";
+
+        //отправляем запрос
+        RESTFunctions.sendAttachmentToProcess(token, baseURI, processID, new File(wayFile), messageName);
+
+        deleteFileIfExists(new File(wayFile)); //удаляем временный файл
+    }
+
+    @Step("Шаг 22.  Ознакомление с информацией об отборе проб")
+    public void step22() {
+        CommonFunctions.printStep();
+
+    }
+
+    @Step("Шаг 23. Редактирование XML ответа 3 для 3 ВС")
+    public void step23() {
+        CommonFunctions.printStep();
+
+    }
+
+    @Step("Шаг 24. Загрузка XML файла через сваггер, запуск процесса (использовать значения для ВС 3)")
+    public void step24() {
+        CommonFunctions.printStep();
+
+    }
+
+    @Step("Шаг 25.  Ознакомление с результатом отбора проб")
+    public void step25() {
+        CommonFunctions.printStep();
+
+    }
+
+    @Step("Шаг 26. Редактирование XML ответа 4 для 3 ВС")
+    public void step26() {
+        CommonFunctions.printStep();
+
+    }
+
+    @Step("Шаг 27. Загрузка XML файла через сваггер, запуск процесса (использовать значения для ВС 3)")
+    public void step27() {
+        CommonFunctions.printStep();
+
+    }
+
+    @Step("Шаг 28. Ознакомление с результатом предоставления услуги")
+    public void step28() {
+        CommonFunctions.printStep();
+
     }
 
     public void refreshTab(String expectedXpath, int times) {
+//        new GUIFunctions().waitForElementDisplayed(expectedXpath);
+        if (!$x(expectedXpath).isDisplayed()) {
+            System.out.println("Refreshing...");
+        }
         for (int i = 0; i < times; i++) {
             if ($x(expectedXpath).isDisplayed()) {
                 break;
             }
-            System.out.println("Refreshing");
             refresh();
+            new GUIFunctions().waitForLoading();
             CommonFunctions.wait(1);
         }
     }
