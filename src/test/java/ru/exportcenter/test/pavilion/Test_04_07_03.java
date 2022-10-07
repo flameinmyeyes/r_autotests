@@ -3,6 +3,7 @@ package ru.exportcenter.test.pavilion;
 import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
+import functions.common.DateFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import functions.gui.lkb.GUIFunctionsLKB;
@@ -32,7 +33,6 @@ public class Test_04_07_03  extends Hooks {
     @Link(name = "Test_04_07_03", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=170242302")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException, InterruptedException {
-//        requestNumber = "S/2022/303011";
         precondition();
         step01();
         step02();
@@ -61,21 +61,12 @@ public class Test_04_07_03  extends Hooks {
         open("https://lk.t.exportcenter.ru/");
         switchTo().alert().accept();
 
+        CommonFunctions.wait(10);
+
         //Открыть заявку
         new GUIFunctions().waitForElementDisplayed("//*[text()='Показать все (100)']")
                 .clickByLocator("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div")
                 .waitForElementDisplayed("//*[text()='Продолжить']");
-
-        requestData = $x("//*[text()='Последнее изменение статуса']/following-sibling::div").getText();
-
-//        String tmp = "2 сентября 2022, 10:27:25";
-        requestData = requestData.substring(requestData.lastIndexOf(" "), requestData.length());
-        requestData = requestData.substring(0, requestData.lastIndexOf(":"));
-        requestData = requestData.replaceAll(" ", "");
-        System.out.println(requestData);
-
-        new GUIFunctions().clickButton("Продолжить")
-                .waitForLoading();
     }
 
     @Step("Шаг 2")
@@ -88,17 +79,25 @@ public class Test_04_07_03  extends Hooks {
 //        switchTo().alert().accept();
         new GUIFunctionsLKB().authorization(P.getProperty("Блок2.Email"),P.getProperty("Блок2.Пароль"));
 
-        CommonFunctions.wait(15);
-
         //Найти задачу Подписать Акт приемки продукции номеру Заявки, открыть
-        //В аккордеоне Сведения о продукции нажать на кнопку Редактировать
         new GUIFunctionsLKB().clickByLocator("//span[@title='Все задачи']")
-                .clickByLocator("//div[@title='Подписать Акт приёмки продукции']")
-                .clickByLocator("(//li[text()='Подписать Акт приёмки продукции'])[1]")
+                .clickByLocator("//div[@title='Подписать Акт приёмки продукции']");
+
+        CommonFunctions.wait(15);
+        new GUIFunctionsLKB()
+                .clickByLocator("//*[text()='S/2022/303306']/ancestor::ol/li[text()='Подписать Акт приёмки продукции']")
+                .waitForElementDisplayed("//span[text()='Редактировать']");
+
+        CommonFunctions.wait(5);
+
+        //В аккордеоне Сведения о продукции нажать на кнопку Редактировать
+        new GUIFunctionsLKB()
                 .clickByLocator("//span[text()='Редактировать']");
 
+        String currentDate = DateFunctions.dateToday("dd.MM.yyyy");
+
         //Выбрать дату Годен до - Сегодня
-        $x("//input[@placeholder='Выберите дату']").sendKeys(P.getProperty("Блок2.Дата"));
+        $x("//input[@placeholder='Выберите дату']").sendKeys(currentDate);
         $x("//input[@placeholder='Выберите дату']").pressEnter();
 
         //Нажать кнопку Сохранить

@@ -31,7 +31,6 @@ public class Test_04_07_01 extends Hooks {
     @Link(name = "Test_04_07_01", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=163302431")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException {
-//        requestNumber = "S/2022/302927";
         step01();
         step02();
         step03();
