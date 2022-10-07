@@ -9,6 +9,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
@@ -150,10 +151,13 @@ public class Test_04_07_02 extends Hooks {
         //Раскрыть аккордеон "О компании"
         //Перейти к аккордеону "Номенклатура и объёмы продукции"
         //Нажать кнопку "Далее"
-        new GUIFunctions().clickButton("О компании")
-                .scrollTo("Далее")
+        new GUIFunctions().clickButton("О компании");
+
+        $x("//*[text()='Фактический адрес']/following-sibling::*").scrollTo();
+        Assert.assertEquals($x("//*[text()='Фактический адрес']/following-sibling::*").getText(), "123456 Регион Район Город Населенный пункт Улица 12 3 4");
+
+        new GUIFunctions().scrollTo("Далее")
                 .clickButton("Далее")
                 .waitForLoading();
-//                .waitForElementDisplayed("//*[contains(text(),'Проект Акта приёмки продукции направлен оператору')]");
     }
 }

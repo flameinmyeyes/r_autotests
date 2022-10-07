@@ -11,13 +11,12 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
-
 import java.awt.*;
 import java.util.Properties;
-
 import static com.codeborne.selenide.Selenide.*;
 
 public class Test_04_07_03  extends Hooks {
@@ -26,7 +25,6 @@ public class Test_04_07_03  extends Hooks {
     public String WAY_TO_PROPERTIES = WAY_TEST + "Test_04_07_03_properties.xml";
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     public String requestNumber;
-    public String requestData;
 
     @Owner(value = "Петрищев Руслан")
     @Description("04 07 03 Подписание Акта")
@@ -70,23 +68,27 @@ public class Test_04_07_03  extends Hooks {
     }
 
     @Step("Шаг 2")
-    public void step02() {
+    public void step02() throws AWTException {
         CommonFunctions.printStep();
 
         //Открыть портал
         //Авторизоваться под учетными данными
         open("http://arm-pavilion.t.exportcenter.ru/");
-//        switchTo().alert().accept();
         new GUIFunctionsLKB().authorization(P.getProperty("Блок2.Email"),P.getProperty("Блок2.Пароль"));
 
         //Найти задачу Подписать Акт приемки продукции номеру Заявки, открыть
         new GUIFunctionsLKB().clickByLocator("//span[@title='Все задачи']")
                 .clickByLocator("//div[@title='Подписать Акт приёмки продукции']");
 
-        CommonFunctions.wait(15);
-        new GUIFunctionsLKB()
-                .clickByLocator("//*[text()='"+requestNumber+"']/ancestor::ol/li[text()='Подписать Акт приёмки продукции']")
-                .waitForElementDisplayed("//span[text()='Редактировать']");
+        CommonFunctions.wait(5);
+
+        new GUIFunctionsLKB().clickByLocator("//*[text()='"+requestNumber+"']/ancestor::ol/li[text()='Подписать Акт приёмки продукции']");
+
+        //Костыль
+        $x("//span[@class='anticon anticon-arrow-left']").click();
+        new GUIFunctionsLKB().clickByLocator("//*[text()='"+requestNumber+"']/ancestor::ol/li[text()='Подписать Акт приёмки продукции']");
+
+        new GUIFunctions().waitForElementDisplayed("//span[text()='Редактировать']");
 
         if ($x("//*[text()='Ошибка']").isDisplayed()){
             $x("//*[text()='OK']").click();
@@ -106,6 +108,8 @@ public class Test_04_07_03  extends Hooks {
 
         //Нажать кнопку Сохранить
         new GUIFunctionsLKB().clickByLocator("//span[text()='Сохранить']");
+
+        Assert.assertEquals($x("(//tr[@class='ant-table-row ant-table-row-level-0']/td)[6]").getText(), currentDate);
 
         //В конце страницы нажать кнопку Далее
         $x("//span[text()='Далее']").scrollTo();
