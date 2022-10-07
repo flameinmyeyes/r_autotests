@@ -94,15 +94,15 @@ public class Test_04_07_03  extends Hooks {
         //В аккордеоне Сведения о продукции нажать на кнопку Редактировать
         new GUIFunctionsLKB().clickByLocator("//span[@title='Все задачи']")
                 .clickByLocator("//div[@title='Подписать Акт приёмки продукции']")
-                .clickByLocator("(//li[text()='Подписать Акт приёмки продукции'])[1]");
-//                .clickByLocator("//span[text()='Редактировать']");
+                .clickByLocator("(//li[text()='Подписать Акт приёмки продукции'])[1]")
+                .clickByLocator("//span[text()='Редактировать']");
 
-//        //Выбрать дату Годен до - Сегодня
-//        $x("//input[@placeholder='Выберите дату']").sendKeys(P.getProperty("Блок2.Дата"));
-//        $x("//input[@placeholder='Выберите дату']").pressEnter();
+        //Выбрать дату Годен до - Сегодня
+        $x("//input[@placeholder='Выберите дату']").sendKeys(P.getProperty("Блок2.Дата"));
+        $x("//input[@placeholder='Выберите дату']").pressEnter();
 
-//        //Нажать кнопку Сохранить
-//        new GUIFunctionsLKB().clickByLocator("//span[text()='Сохранить']");
+        //Нажать кнопку Сохранить
+        new GUIFunctionsLKB().clickByLocator("//span[text()='Сохранить']");
 
         //В конце страницы нажать кнопку Далее
         $x("//span[text()='Далее']").scrollTo();
