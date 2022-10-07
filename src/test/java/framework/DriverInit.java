@@ -18,7 +18,7 @@ import static com.codeborne.selenide.FileDownloadMode.PROXY;
 
 public class DriverInit {
 
-    private RemoteWebDriver remoteWebDriver = null;
+    private RemoteWebDriver remoteWebDriver;
     private final int TIMEOUT = 60000;
     private final String DOWNLOADS_FOLDER = Ways.DOWNLOADS.getWay();
 
@@ -74,19 +74,19 @@ public class DriverInit {
                 pageLoadTimeout = TIMEOUT;
                 timeout = TIMEOUT;
 
-                //создание удаленного браузера, костыль
-                if (remoteWebDriver == null) {
-                    for (int i = 0; i < 7; i++) {
-                        try {
-                            remoteWebDriver = new RemoteWebDriver(URI.create("http://selenoid.d.exportcenter.ru/wd/hub/").toURL(), desiredCapabilities);
-                        } catch (Exception e) {
-                            System.out.println("Не удалось создать remoteWebDriver. Выполняется повторная попытка создания");
-                        }
-                        if (remoteWebDriver != null){
-                            break;
-                        }
-                        CommonFunctions.wait(1);
+//              создание удаленного браузера, костыль
+                System.out.println("src/test/java/framework/DriverInit.java создание remoteWebDriver");
+                for (int i = 1; i < 11; i++) {
+                    try {
+                        remoteWebDriver = new RemoteWebDriver(URI.create("http://selenoid.d.exportcenter.ru/wd/hub/").toURL(), desiredCapabilities);
+                    } catch (Exception e) {
+                        System.out.println("Alarm: remoteWebDriver НЕ создан, (" + i + "я попытка из 10)");
                     }
+                    if (remoteWebDriver != null){
+                        System.out.println("Bingo: remoteWebDriver remoteWebDriver создан, (" + i + "я попытка из 10)");
+                        break;
+                    }
+                    CommonFunctions.wait(1);
                 }
 
                 WebDriverRunner.setWebDriver(remoteWebDriver);

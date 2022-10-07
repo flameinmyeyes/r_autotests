@@ -64,10 +64,10 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-<!--    <test name="REC_all_tests_apk" thread-count="1" preserve-order="true">-->
-<!--        <classes>-->
-<!--&lt;!&ndash;            <class name="ru.exportcenter.dev.vet.Test_08_07_03"/>&ndash;&gt;-->
-<!--            <class name="ru.exportcenter.test.apk.Test_01_07_01_1"/>-->
+    <test name="REC_all_tests_apk" thread-count="1" preserve-order="true">
+        <classes>
+<!--            <class name="ru.exportcenter.dev.vet.Test_08_07_03"/>-->
+            <class name="ru.exportcenter.test.apk.Test_01_07_01_1"/>
 <!--            <class name="ru.exportcenter.test.apk.Test_01_07_02_1"/>-->
 <!--            <class name="ru.exportcenter.test.apk.Test_01_07_05_1"/>-->
 <!--            <class name="ru.exportcenter.test.apk.Test_01_07_05_2"/>-->
@@ -82,16 +82,16 @@
 <!--            <class name="ru.exportcenter.test.apk.Test_01_07_44.Test_01_07_44_5"/>-->
 <!--            <class name="ru.exportcenter.test.apk.Test_02_07_00.Test_02_07_00_1"/>-->
 <!--            <class name="ru.exportcenter.test.apk.Test_02_07_00.Test_02_07_00_2"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-
-    <test name="REC_all_tests_pavilion" thread-count="1" preserve-order="true">
-        <classes>
-<!--            <class name="ru.exportcenter.test.pavilion.Test_04_07_01"/>-->
-<!--            <class name="ru.exportcenter.test.pavilion.Test_04_07_02"/>-->
-            <class name="ru.exportcenter.test.pavilion.Test_04_07_03"/>
         </classes>
     </test>
+
+<!--    <test name="REC_all_tests_pavilion" thread-count="1" preserve-order="true">-->
+<!--        <classes>-->
+<!--&lt;!&ndash;            <class name="ru.exportcenter.test.pavilion.Test_04_07_01"/>&ndash;&gt;-->
+<!--&lt;!&ndash;            <class name="ru.exportcenter.test.pavilion.Test_04_07_02"/>&ndash;&gt;-->
+<!--            <class name="ru.exportcenter.test.pavilion.Test_04_07_03"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
 <!--    <test name="SPT" thread-count="1" preserve-order="true">-->
 <!--        <classes>-->
