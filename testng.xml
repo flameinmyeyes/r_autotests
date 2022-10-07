@@ -87,8 +87,8 @@
 
     <test name="REC_all_tests_pavilion" thread-count="1" preserve-order="true">
         <classes>
-            <class name="ru.exportcenter.test.pavilion.Test_04_07_01"/>
-            <class name="ru.exportcenter.test.pavilion.Test_04_07_02"/>
+<!--            <class name="ru.exportcenter.test.pavilion.Test_04_07_01"/>-->
+<!--            <class name="ru.exportcenter.test.pavilion.Test_04_07_02"/>-->
             <class name="ru.exportcenter.test.pavilion.Test_04_07_03"/>
         </classes>
     </test>
