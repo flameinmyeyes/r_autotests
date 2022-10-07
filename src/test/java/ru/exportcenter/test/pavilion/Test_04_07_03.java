@@ -85,8 +85,12 @@ public class Test_04_07_03  extends Hooks {
 
         CommonFunctions.wait(15);
         new GUIFunctionsLKB()
-                .clickByLocator("//*[text()='S/2022/303306']/ancestor::ol/li[text()='Подписать Акт приёмки продукции']")
+                .clickByLocator("//*[text()='"+requestNumber+"']/ancestor::ol/li[text()='Подписать Акт приёмки продукции']")
                 .waitForElementDisplayed("//span[text()='Редактировать']");
+
+        if ($x("//*[text()='Ошибка']").isDisplayed()){
+            $x("//*[text()='OK']").click();
+        }
 
         CommonFunctions.wait(5);
 
