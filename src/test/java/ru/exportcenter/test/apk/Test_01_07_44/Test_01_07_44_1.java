@@ -49,7 +49,8 @@ public class Test_01_07_44_1 extends Hooks {
     public void step01() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().refreshTab("Продолжить", 10)
+        new GUIFunctions()
+                .refreshTab("Продолжить", 10)
                 .clickButton("Продолжить")
                 .waitForElementDisplayed("//*[contains(text(),'Господдержка. Сертификация продукции')]");
     }
@@ -58,14 +59,17 @@ public class Test_01_07_44_1 extends Hooks {
     public void step02() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().closeAllPopupWindows()
+        new GUIFunctions()
+                .closeAllPopupWindows()
                 .inField("Доверенное лицо").setCheckboxON().assertCheckboxON()
-                .inField("ФИО").selectValue("Антонов\u00a0Антон\u00a0Антонович").assertValue();
+                .inField("ФИО").selectValue("Антонов\u00a0Антон\u00a0Антонович").assertValue("Антонов Антон Антонович");
 
         $x("//*[text()='ФИО']/following::input").click();
         $x("//*[text()='ФИО']/following::input").sendKeys(Keys.LEFT_CONTROL + "a");
         $x("//*[text()='ФИО']/following::input").sendKeys(Keys.BACK_SPACE);
-        new GUIFunctions().waitForLoading()
+
+        new GUIFunctions()
+                .waitForLoading()
                 .clickByLocator("//*[text()='ФИО']")
                 .waitForElementDisplayed("//input[@placeholder='Введите ФИО']//following::*[text()='Выберите значение из выпадающего списка']");
     }

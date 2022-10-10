@@ -53,7 +53,8 @@ public class Test_01_07_44_5 extends Hooks {
     public void step01() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().refreshTab("Продолжить", 10)
+        new GUIFunctions()
+                .refreshTab("Продолжить", 10)
                 .clickButton("Продолжить")
                 .waitForElementDisplayed("//*[contains(text(),'Господдержка. Сертификация продукции')]");
     }
@@ -62,7 +63,8 @@ public class Test_01_07_44_5 extends Hooks {
     public void step02() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().closeAllPopupWindows()
+        new GUIFunctions()
+                .closeAllPopupWindows()
                 .clickButton("Далее")
                 .waitForLoading()
                 .waitForLoading()
@@ -74,8 +76,10 @@ public class Test_01_07_44_5 extends Hooks {
     public void step03() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().clickButton("Добавить +")
-                .inField("Вид затраты, связанной с сертификацией продукции").selectValue("1\u00a0Услуги компетентного органа или уполномоченной организации в стране экспорта по осуществлению процедур оценки соответствия продукции (регистрации, подтверждения соответствия, испытаний, сертификации и других форм оценки соответствия, установленных законодательством иностранного государства или являющихся условием внешнеэкономического контракта)").assertValue()
+        new GUIFunctions()
+                .clickButton("Добавить +")
+                .inField("Вид затраты, связанной с сертификацией продукции").selectValue("1\u00a0Услуги компетентного органа или уполномоченной организации в стране экспорта по осуществлению процедур оценки соответствия продукции (регистрации, подтверждения соответствия, испытаний, сертификации и других форм оценки соответствия, установленных законодательством иностранного государства или являющихся условием внешнеэкономического контракта)")
+                    .assertValue("1 Услуги компетентного органа или уполномоченной организации в стране экспорта по осуществлению процедур оценки соответствия продукции (регистрации, подтверждения соответствия, испытаний, сертификации и других форм оценки соответствия, установленных законодательством иностранного государства или являющихся условием внешнеэкономического контракта)")
                 .inField("Основание понесенных затрат").selectValue("Требование контракта")
                 .uploadFile("Загрузить шаблон", "/share/" + WAY_TEST + "Шаблон 1 - фаст (1).xlsm");
 //                .uploadFile("Загрузить шаблон", "C:\\auto-tests\\Шаблон 1 - фаст (1).xlsm");
@@ -85,14 +89,16 @@ public class Test_01_07_44_5 extends Hooks {
     public void step04() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().inContainer("Загрузка подтверждающих документов")
+        new GUIFunctions()
+                .inContainer("Загрузка подтверждающих документов")
                 .scrollTo("Подтверждающие документы")
                 .uploadFile("Подтверждающие документы", "/share/" + WAY_TEST + "rec.zip")
 //                .uploadFile("Подтверждающие документы", "C:\\auto-tests\\rec.zip")
                 .uploadFile("Платежное поручение", "/share/" + WAY_TEST + "payment 228.zip");
 //                .uploadFile("Платежное поручение", "C:\\auto-tests\\payment 228.zip");
 
-        new GUIFunctions().scrollTo("Далее")
+        new GUIFunctions()
+                .scrollTo("Далее")
                 .clickButton("Далее")
                 .waitForElementDisplayed("//span[contains(text(),'Господдержка. Сертификация продукции')]");
     }
@@ -101,9 +107,9 @@ public class Test_01_07_44_5 extends Hooks {
     public void step05() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().scrollTo($x("//*[text()='Контактные данные лица, ответственного за работу в ГИИС \"Электронный бюджет\"']"));
-
-        new GUIFunctions().inContainer("Контактные данные лица, ответственного за работу в ГИИС \"Электронный бюджет\"")
+        new GUIFunctions()
+                .scrollTo($x("//*[text()='Контактные данные лица, ответственного за работу в ГИИС \"Электронный бюджет\"']"))
+                .inContainer("Контактные данные лица, ответственного за работу в ГИИС \"Электронный бюджет\"")
                 .inField("E-mail").inputValue("wor_ld@mai-l.ru").assertValue()
                 .clickByLocator("//*[text()='E-mail']/following::button[@name='close']")
                 .inField("E-mail").inputValue("1").assertValue()

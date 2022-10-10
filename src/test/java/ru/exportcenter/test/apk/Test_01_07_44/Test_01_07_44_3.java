@@ -47,7 +47,8 @@ public class Test_01_07_44_3 extends Hooks {
     public void step01() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().refreshTab("Продолжить", 10)
+        new GUIFunctions()
+                .refreshTab("Продолжить", 10)
                 .clickButton("Продолжить")
                 .waitForElementDisplayed("//*[contains(text(),'Господдержка. Сертификация продукции')]");
     }
@@ -56,7 +57,9 @@ public class Test_01_07_44_3 extends Hooks {
     public void step02() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().inField("Дополнительный контакт").setCheckboxON().assertCheckboxON()
+        new GUIFunctions()
+                .closeAllPopupWindows()
+                .inField("Дополнительный контакт").setCheckboxON().assertCheckboxON()
                 .inField("Новый дополнительный контакт").setCheckboxON().assertCheckboxON()
                 .inField("Имя").inputValue("Усть-Пос адский").assertValue()
                 .clickByLocator("//*[text()='Имя']/following::button[@name='close']")
