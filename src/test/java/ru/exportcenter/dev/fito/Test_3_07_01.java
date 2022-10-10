@@ -33,16 +33,13 @@ public class Test_3_07_01 extends Hooks {
     public String FILE_NAME_BC_3_2 = "1ResponseSuccessBC3_2.xml";
     public String FILE_NAME_BC_3_3 = "1ResponseSuccessBC3_3.xml";
     public String FILE_NAME_BC_3_4 = "1ResponseSuccessBC3_4.xml";
-
     public String WAY_TO_PROPERTIES = Ways.DEV.getWay() + "/fito/Test_3_07_01/" + "Test_3_07_01_properties.xml";
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
-
     private String processID;
     private String docNum;
     private String guid;
     private String token;
     private String baseURI = "http://bpmn-api-service.bpms-dev.d.exportcenter.ru/";
-
     private String zayavlenieRegistrationNumber;
     private String aktNumber;
     private String zKFSNumber;

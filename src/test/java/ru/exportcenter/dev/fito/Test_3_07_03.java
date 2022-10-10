@@ -57,7 +57,8 @@ public class Test_3_07_03 extends Hooks {
         new GUIFunctions()
                 .inContainer("Добавление продукции")
                     .clickButton("Добавить новый")
-                    .inField("Код ТН ВЭД").clickByLocator("//input[@placeholder='Введите или выберите из списка ' and @name='tnvedCode']").inputValue("кофе").waitForLoading().clickByLocator("//*[contains(text(), ' --- Кофе')]")
+                    .inField("Код ТН ВЭД").selectValue(P.getProperty("Добавление продукции.Код ТН ВЭД").split(" ")[0]).assertNoControl().assertValue(P.getProperty("Добавление продукции.Код ТН ВЭД"))
+//                    .inField("Код ТН ВЭД").selectValue("1004900000").assertNoControl().assertValue("1004900000 ОВЕС ПРОЧИЙ")
                     .inField("Тип продукции").selectValue(P.getProperty("Добавление продукции.Тип продукции")).assertNoControl().assertValue()
                     .inField("Наименование продукции").inputValue(P.getProperty("Добавление продукции.Наименование продукции")).assertNoControl().assertValue()
                     .inField("Производитель").clickByLocator("//ancestor::div//span[contains(text(),'Российский')][last()]")
@@ -69,6 +70,7 @@ public class Test_3_07_03 extends Hooks {
                     .inField("Описание упаковки").selectValue(P.getProperty("Добавление продукции.Описание упаковки")).assertNoControl().assertValue()
                     .inField("Размещение продукции").clickByLocator("//ancestor::div//span[contains(text(),'Навалом (наливом)')][last()]")
                     .inField("Наличие отличительных знаков (маркировки). Например, номера партий, серийные номера или названия торговых марок. ").setCheckboxON().assertCheckboxON()
+                    .inField("Номер партии зерна (продуктов переработки зерна)").inputValue(P.getProperty("Добавление продукции.Номер партии зерна")).assertNoControl().assertValue()
                     //Место происхождения( произрастания) продукции
                     .inField("Страна").selectValue(P.getProperty("Добавление продукции.Страна")).assertNoControl().assertValue()
                     .inField("Регион").selectValue(P.getProperty("Добавление продукции.Регион")).assertNoControl().assertValue();
