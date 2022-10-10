@@ -49,7 +49,8 @@ public class Test_01_07_10_1 extends Hooks {
 
         System.out.println(requestNumber);
         open("https://lk.t.exportcenter.ru/ru/main");
-        new GUIFunctions().clickButton("Показать все (100)")
+        new GUIFunctions()
+                .waitForElementDisplayed("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div")
                 .clickByLocator("//*[contains(text(),'" + requestNumber + "')]/parent::div/parent::div")
                 .waitForElementDisplayed("//*[text()='" + requestNumber + "']");
     }

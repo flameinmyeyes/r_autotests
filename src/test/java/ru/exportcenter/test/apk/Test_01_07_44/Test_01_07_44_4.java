@@ -51,7 +51,8 @@ public class Test_01_07_44_4 extends Hooks {
     public void step01() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().refreshTab("Продолжить", 10)
+        new GUIFunctions()
+                .refreshTab("Продолжить", 10)
                 .clickButton("Продолжить")
                 .waitForElementDisplayed("//*[contains(text(),'Господдержка. Сертификация продукции')]");
     }
@@ -60,7 +61,8 @@ public class Test_01_07_44_4 extends Hooks {
     public void step02() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().closeAllPopupWindows()
+        new GUIFunctions()
+                .closeAllPopupWindows()
                 .clickButton("Далее")
                 .waitForLoading()
                 .waitForLoading()
@@ -72,8 +74,10 @@ public class Test_01_07_44_4 extends Hooks {
     public void step03() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().clickButton("Добавить +")
-                .inField("Вид затраты, связанной с сертификацией продукции").selectValue("1\u00a0Услуги компетентного органа или уполномоченной организации в стране экспорта по осуществлению процедур оценки соответствия продукции (регистрации, подтверждения соответствия, испытаний, сертификации и других форм оценки соответствия, установленных законодательством иностранного государства или являющихся условием внешнеэкономического контракта)").assertValue()
+        new GUIFunctions()
+                .clickButton("Добавить +")
+                .inField("Вид затраты, связанной с сертификацией продукции").selectValue("1\u00a0Услуги компетентного органа или уполномоченной организации в стране экспорта по осуществлению процедур оценки соответствия продукции (регистрации, подтверждения соответствия, испытаний, сертификации и других форм оценки соответствия, установленных законодательством иностранного государства или являющихся условием внешнеэкономического контракта)")
+                    .assertValue("1 Услуги компетентного органа или уполномоченной организации в стране экспорта по осуществлению процедур оценки соответствия продукции (регистрации, подтверждения соответствия, испытаний, сертификации и других форм оценки соответствия, установленных законодательством иностранного государства или являющихся условием внешнеэкономического контракта)")
                 .inField("Основание понесенных затрат").selectValue("Требование контракта")
                 .uploadFile("Загрузить шаблон", "/share/" + WAY_TEST + "Шаблон 1 - фаст (1).xlsm");
 //                .uploadFile("Загрузить шаблон", "C:\\auto-tests\\Шаблон 1 - фаст (1).xlsm");
@@ -83,14 +87,16 @@ public class Test_01_07_44_4 extends Hooks {
     public void step04() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().inContainer("Загрузка подтверждающих документов")
+        new GUIFunctions()
+                .inContainer("Загрузка подтверждающих документов")
                 .scrollTo("Подтверждающие документы")
                 .uploadFile("Подтверждающие документы", "/share/" + WAY_TEST + "rec.zip")
 //                .uploadFile("Подтверждающие документы", "C:\\auto-tests\\rec.zip")
                 .uploadFile("Платежное поручение", "/share/" + WAY_TEST + "payment 228.zip");
 //                .uploadFile("Платежное поручение", "C:\\auto-tests\\payment 228.zip");
 
-        new GUIFunctions().scrollTo("Далее")
+        new GUIFunctions()
+                .scrollTo("Далее")
                 .clickButton("Далее")
                 .waitForElementDisplayed("//*[text()='Дата постановки на налоговый учёт']/following::button[contains(@class,'DateInput')]");
     }
@@ -99,7 +105,8 @@ public class Test_01_07_44_4 extends Hooks {
     public void step05() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().scrollTo($x("//*[text()='Дата постановки на налоговый учёт']/following::button[contains(@class,'DateInput')]"))
+        new GUIFunctions()
+                .scrollTo($x("//*[text()='Дата постановки на налоговый учёт']/following::button[contains(@class,'DateInput')]"))
                 .clickByLocator("//*[text()='Дата постановки на налоговый учёт']/following::button[contains(@class,'DateInput')]");
 
     }

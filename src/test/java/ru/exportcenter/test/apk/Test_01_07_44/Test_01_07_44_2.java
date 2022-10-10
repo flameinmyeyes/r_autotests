@@ -47,7 +47,8 @@ public class Test_01_07_44_2 extends Hooks {
     public void step01() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().refreshTab("Продолжить", 10)
+        new GUIFunctions()
+                .refreshTab("Продолжить", 10)
                 .clickButton("Продолжить")
                 .waitForElementDisplayed("//*[contains(text(),'Господдержка. Сертификация продукции')]");
     }
@@ -56,7 +57,9 @@ public class Test_01_07_44_2 extends Hooks {
     public void step02() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().inField("Дополнительный контакт").setCheckboxON().assertCheckboxON()
+        new GUIFunctions()
+                .closeAllPopupWindows()
+                .inField("Дополнительный контакт").setCheckboxON().assertCheckboxON()
                 .inField("Новый дополнительный контакт").setCheckboxON().assertCheckboxON();
 
         StringBuilder expectedSurname = new StringBuilder();
@@ -64,12 +67,14 @@ public class Test_01_07_44_2 extends Hooks {
             expectedSurname.append("a");
         }
         System.out.println(expectedSurname);
-        new GUIFunctions().inField("Фамилия").inputValue(String.valueOf(expectedSurname)).assertValue()
+        new GUIFunctions()
+                .inField("Фамилия").inputValue(String.valueOf(expectedSurname)).assertValue()
                 .clickByLocator("//*[text()='Фамилия']/following::button[@name='close']");
 
         expectedSurname.append("a");
 
-        new GUIFunctions().inField("Фамилия").inputValue(String.valueOf(expectedSurname)).assertValue()
+        new GUIFunctions()
+                .inField("Фамилия").inputValue(String.valueOf(expectedSurname)).assertValue()
                 .waitForElementDisplayed("//*[text()='Фамилия']//following::*[text()='Максимальное количество символов — 200']");
     }
 }
