@@ -31,13 +31,21 @@ public class Test_3_07_01 extends Hooks {
     public String FILE_NAME_BC2 = "1ResponseSuccessBC2.xml";
     public String FILE_NAME_BC_3_1 = "1ResponseSuccessBC3_1.xml";
     public String FILE_NAME_BC_3_2 = "1ResponseSuccessBC3_2.xml";
+    public String FILE_NAME_BC_3_3 = "1ResponseSuccessBC3_3.xml";
+    public String FILE_NAME_BC_3_4 = "1ResponseSuccessBC3_4.xml";
+
     public String WAY_TO_PROPERTIES = Ways.DEV.getWay() + "/fito/Test_3_07_01/" + "Test_3_07_01_properties.xml";
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
+
     private String processID;
     private String docNum;
     private String guid;
     private String token;
     private String baseURI = "http://bpmn-api-service.bpms-dev.d.exportcenter.ru/";
+
+    private String zayavlenieRegistrationNumber;
+    private String aktNumber;
+    private String zKFSNumber;
 
     @Owner(value = "Балашов Илья")
     @Description("3.07.01 Сценарий получения услуги по ЗКФС (положительный результат)")
@@ -62,16 +70,16 @@ public class Test_3_07_01 extends Hooks {
         step16();
         step17();
         step18();
-//        step19();
-//        step20();
-//        step21();
-//        step22();
-//        step23();
-//        step24();
-//        step25();
-//        step26();
-//        step27();
-//        step28();
+        step19();
+        step20();
+        step21();
+        step22();
+        step23();
+        step24();
+        step25();
+        step26();
+        step27();
+        step28();
     }
 
     @AfterMethod
@@ -196,7 +204,6 @@ public class Test_3_07_01 extends Hooks {
     @Step("Шаг 7. Загрузка XML файла через сваггер, запуск процесса (использовать значения для ВС 1)")
     public void step07() {
         CommonFunctions.printStep();
-
         token = RESTFunctions.getAccessToken("http://uidm.uidm-dev.d.exportcenter.ru", "bpmn_admin");
         System.out.println("token: " + token);
 
@@ -296,7 +303,6 @@ public class Test_3_07_01 extends Hooks {
     @Step("Шаг 12. Загрузка XML файла через сваггер, запуск процесса")
     public void step12() {
         CommonFunctions.printStep();
-
         String wayFile = WAY_TEMP_FILE + FILE_NAME_BC2;
         String fileContent = FileFunctions.readValueFromFile(wayFile);
         System.out.println("fileContent: " + fileContent);
@@ -312,14 +318,10 @@ public class Test_3_07_01 extends Hooks {
     @Step("Шаг 13. Получение результата проверки сведений")
     public void step13() {
         CommonFunctions.printStep();
-
-        //Нажать на номер текущей заявки
-//        new GUIFunctions()
-//                    .clickByLocator("//a[contains(text(), '" + docNum + "')]").waitForLoading();
+        //Нажать на ссылку с номером заявки
         String url = $x("//a[contains(text(), '" + docNum + "')]").getAttribute("href");
         System.out.println("url: " + url);
         open(url);
-
         webdriver().driver().switchTo().alert().accept();
 
         new GUIFunctions()
@@ -380,17 +382,21 @@ public class Test_3_07_01 extends Hooks {
         deleteFileIfExists(new File(wayFile)); //удаляем временный файл, если он есть
         FileFunctions.writeValueToFile(wayFile, fileContent);
 
+        //генерируем и сохраняем номер заявления в файл
+        zayavlenieRegistrationNumber = CommonFunctions.randomNumber(100, 999) + "-" + CommonFunctions.randomNumber(10, 99); //100-89
+        System.out.println("zayavlenieRegistrationNumber: " + zayavlenieRegistrationNumber);
+        JupyterLabIntegration.uploadTextContent(zayavlenieRegistrationNumber, WAY_TEST, "zayavlenieRegistrationNumber.txt");
+
         //обновляем XML файл
         XMLHandler.updateXML(wayFile, "common:GUID", guid);
         XMLHandler.updateXML(wayFile, "common:SendDateTime", DateFunctions.dateToday("yyyy-MM-dd'T'HH:mm:ss")); //2022-10-04T12:49:27
         XMLHandler.updateXML(wayFile, "common:ZayavlenieRegistrationDate", DateFunctions.dateToday("yyyy-MM-dd")); //2022-10-04
-        XMLHandler.updateXML(wayFile, "common:DogovorRegistrationDate", CommonFunctions.randomNumber(100, 999) + "-" + CommonFunctions.randomNumber(10, 99)); //100-89
+        XMLHandler.updateXML(wayFile, "common:ZayavlenieRegistrationNumber", zayavlenieRegistrationNumber);
     }
 
     @Step("Шаг 18. Загрузка XML файла через сваггер, запуск процесса (использовать значения для ВС 3)")
     public void step18() {
         CommonFunctions.printStep();
-
         String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_3_1;
         String fileContent = FileFunctions.readValueFromFile(wayFile);
         System.out.println("fileContent: " + fileContent);
@@ -406,18 +412,10 @@ public class Test_3_07_01 extends Hooks {
     @Step("Шаг 19. Результат рассмотрения заявления")
     public void step19() {
         CommonFunctions.printStep();
-        new GUIFunctions()
-                .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
-                    .clickButton("Оформить сертификат");
-
-
-        //Нажать на номер текущей заявки
-//        new GUIFunctions()
-//                    .clickByLocator("//a[contains(text(), '" + docNum + "')]").waitForLoading();
+        //Нажать на ссылку с номером заявки
         String url = $x("//a[contains(text(), '" + docNum + "')]").getAttribute("href");
         System.out.println("url: " + url);
         open(url);
-
         webdriver().driver().switchTo().alert().accept();
 
         new GUIFunctions()
@@ -428,8 +426,7 @@ public class Test_3_07_01 extends Hooks {
         refreshTab("//*[contains(text(), 'Продолжить')]", 60);
         new GUIFunctions()
                 .clickButton("Продолжить")
-                .waitForElementDisplayed("//div[text()='Шаг 7 из 9']");
-
+                .waitForElementDisplayed("//div[text()='Шаг 9 из 9']");
     }
 
     @Step("Шаг 20. Редактирование XML ответа 2 для 3 ВС")
@@ -443,11 +440,16 @@ public class Test_3_07_01 extends Hooks {
         deleteFileIfExists(new File(wayFile)); //удаляем временный файл, если он есть
         FileFunctions.writeValueToFile(wayFile, fileContent);
 
+        //генерируем и сохраняем номер акта в файл (не используется)
+        aktNumber = CommonFunctions.randomNumber(100, 999) + "-" + CommonFunctions.randomNumber(100, 999);
+        System.out.println("aktNumber: " + aktNumber);
+        JupyterLabIntegration.uploadTextContent(aktNumber, WAY_TEST, "aktNumber.txt");
+
         //обновляем XML файл
         XMLHandler.updateXML(wayFile, "common:GUID", guid);
         XMLHandler.updateXML(wayFile, "common:SendDateTime", DateFunctions.dateToday("yyyy-MM-dd'T'HH:mm:ss")); //2022-10-04T12:49:27
         XMLHandler.updateXML(wayFile, "common:AktDate", DateFunctions.dateToday("yyyy-MM-dd")); //2022-10-04
-        XMLHandler.updateXML(wayFile, "common:AktNumber", CommonFunctions.randomNumber(100, 999) + "-" + CommonFunctions.randomNumber(100, 999)); //100-100
+        XMLHandler.updateXML(wayFile, "common:AktNumber", aktNumber); //100-100
     }
 
     @Step("Шаг 21. Загрузка XML файла через сваггер, запуск процесса (использовать значения для ВС 3)")
@@ -468,47 +470,132 @@ public class Test_3_07_01 extends Hooks {
     @Step("Шаг 22.  Ознакомление с информацией об отборе проб")
     public void step22() {
         CommonFunctions.printStep();
+        //Кликнуть по номеру заявления из шага 17: тег <common:ZayavlenieRegistrationNumber> в XML
+        String url = $x("//a[contains(text(), '" + zayavlenieRegistrationNumber + "')]").getAttribute("href");
+        System.out.println("url: " + url);
+        open(url);
+        webdriver().driver().switchTo().alert().accept();
 
+        new GUIFunctions()
+                .waitForLoading()
+                .waitForElementDisplayed("//div[text()='Номер заявки']/parent::div/div[text()='" + docNum + "']");
+
+        //На "Начальном экране" формирования запроса нажать "Продолжить"
+        refreshTab("//*[contains(text(), 'Продолжить')]", 60);
+        new GUIFunctions()
+                .clickButton("Продолжить")
+                .waitForElementDisplayed("//div[text()='Шаг 9 из 9']");
     }
 
     @Step("Шаг 23. Редактирование XML ответа 3 для 3 ВС")
     public void step23() {
         CommonFunctions.printStep();
+        //читаем содержимое XML с файла на юпитере
+        String fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + FILE_NAME_BC_3_3);
 
+        //создаем временный XML файл и записываем туда содержимое XML
+        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_3_3;
+        deleteFileIfExists(new File(wayFile)); //удаляем временный файл, если он есть
+        FileFunctions.writeValueToFile(wayFile, fileContent);
+
+        //обновляем XML файл
+        XMLHandler.updateXML(wayFile, "common:GUID", guid);
+        XMLHandler.updateXML(wayFile, "common:SendDateTime", DateFunctions.dateToday("yyyy-MM-dd'T'HH:mm:ss")); //2022-10-04T12:49:27
+        XMLHandler.updateXML(wayFile, "common:ProbootborPlanDateEnd", DateFunctions.dateToday("yyyy-MM-dd")); //"2022-10-07
     }
 
     @Step("Шаг 24. Загрузка XML файла через сваггер, запуск процесса (использовать значения для ВС 3)")
     public void step24() {
         CommonFunctions.printStep();
+        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_3_3;
+        String fileContent = FileFunctions.readValueFromFile(wayFile);
+        System.out.println("fileContent: " + fileContent);
 
+        String messageName = "SendAppInfRequestMessage";
+
+        //отправляем запрос
+        RESTFunctions.sendAttachmentToProcess(token, baseURI, processID, new File(wayFile), messageName);
+
+        deleteFileIfExists(new File(wayFile)); //удаляем временный файл
     }
 
     @Step("Шаг 25.  Ознакомление с результатом отбора проб")
     public void step25() {
         CommonFunctions.printStep();
+        //Нажать на ссылку с номером заявки
+        String url = $x("//a[contains(text(), '" + zayavlenieRegistrationNumber + "')]").getAttribute("href");
+        System.out.println("url: " + url);
+        open(url);
+        webdriver().driver().switchTo().alert().accept();
 
+        new GUIFunctions()
+                .waitForLoading()
+                .waitForElementDisplayed("//div[text()='Номер заявки']/parent::div/div[text()='" + docNum + "']");
+
+        //На "Начальном экране" формирования запроса нажать "Продолжить"
+        refreshTab("//*[contains(text(), 'Продолжить')]", 60);
+        new GUIFunctions()
+                .clickButton("Продолжить")
+                .waitForElementDisplayed("//div[text()='Шаг 9 из 9']");
     }
 
     @Step("Шаг 26. Редактирование XML ответа 4 для 3 ВС")
     public void step26() {
         CommonFunctions.printStep();
+        //читаем содержимое XML с файла на юпитере
+        String fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + FILE_NAME_BC_3_4);
 
+        //создаем временный XML файл и записываем туда содержимое XML
+        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_3_4;
+        deleteFileIfExists(new File(wayFile)); //удаляем временный файл, если он есть
+        FileFunctions.writeValueToFile(wayFile, fileContent);
+
+        //генерируем и сохраняем номер ЗКФС в файл (не используется)
+        zKFSNumber = CommonFunctions.randomNumber(10000, 99999); //12345
+        System.out.println("zKFSNumber: " + zKFSNumber);
+        JupyterLabIntegration.uploadTextContent(zKFSNumber, WAY_TEST, "zKFSNumber.txt");
+
+        //обновляем XML файл
+        XMLHandler.updateXML(wayFile, "common:GUID", guid);
+        XMLHandler.updateXML(wayFile, "common:SendDateTime", DateFunctions.dateToday("yyyy-MM-dd'T'HH:mm:ss")); //2022-10-04T12:49:27
+        XMLHandler.updateXML(wayFile, "common:ZKFSNumber", zKFSNumber);
+        XMLHandler.updateXML(wayFile, "common:ZKFSDate", DateFunctions.dateToday("yyyy-MM-dd")); //2022-10-07
     }
 
     @Step("Шаг 27. Загрузка XML файла через сваггер, запуск процесса (использовать значения для ВС 3)")
     public void step27() {
         CommonFunctions.printStep();
+        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_3_4;
+        String fileContent = FileFunctions.readValueFromFile(wayFile);
+        System.out.println("fileContent: " + fileContent);
 
+        String messageName = "SendAppInfRequestMessage";
+
+        //отправляем запрос
+        RESTFunctions.sendAttachmentToProcess(token, baseURI, processID, new File(wayFile), messageName);
+
+        deleteFileIfExists(new File(wayFile)); //удаляем временный файл
     }
 
     @Step("Шаг 28. Ознакомление с результатом предоставления услуги")
     public void step28() {
         CommonFunctions.printStep();
+        //Нажать по ссылке  "Запрос заключения о карантинном фитосанитарном состоянии"
+        new GUIFunctions().clickByLocator("//button[contains(text(),'Запрос заключения о карантинном фитосанитарном состоянии')]");
+        webdriver().driver().switchTo().alert().accept();
 
+        new GUIFunctions()
+                .waitForLoading()
+                .waitForElementDisplayed("//div[text()='Номер заявки']/parent::div/div[text()='" + docNum + "']");
+
+        //На "Начальном экране" формирования запроса нажать "Продолжить"
+        refreshTab("//*[contains(text(), 'Продолжить')]", 60);
+        new GUIFunctions()
+                .clickButton("Продолжить")
+                .waitForElementDisplayed("//div[text()='Шаг 9 из 9']");
     }
 
     public void refreshTab(String expectedXpath, int times) {
-//        new GUIFunctions().waitForElementDisplayed(expectedXpath);
         if (!$x(expectedXpath).isDisplayed()) {
             System.out.println("Refreshing...");
         }
