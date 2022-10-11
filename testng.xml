@@ -84,13 +84,13 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-<!--    <test name="REC_all_tests_pavilion" thread-count="1" preserve-order="true">-->
-<!--        <classes>-->
-<!--&lt;!&ndash;            <class name="ru.exportcenter.test.pavilion.Test_04_07_01"/>&ndash;&gt;-->
-<!--&lt;!&ndash;            <class name="ru.exportcenter.test.pavilion.Test_04_07_02"/>&ndash;&gt;-->
-<!--            <class name="ru.exportcenter.test.pavilion.Test_04_07_03"/>-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="REC_all_tests_pavilion" thread-count="1" preserve-order="true">
+        <classes>
+            <class name="ru.exportcenter.test.pavilion.Test_04_07_01"/>
+            <class name="ru.exportcenter.test.pavilion.Test_04_07_02"/>
+            <class name="ru.exportcenter.test.pavilion.Test_04_07_03"/>
+        </classes>
+    </test>
 
 <!--    <test name="SPT" thread-count="1" preserve-order="true">-->
 <!--        <classes>-->
@@ -105,11 +105,11 @@
 <!--    </test>-->
 
 
-    <test name="REC_all_tests_apk" thread-count="1" preserve-order="true">
-        <classes>
-            <class name="ru.exportcenter.dev.vet.Test_08_07_01"/>
-            <class name="ru.exportcenter.dev.vet.Test_08_07_03"/>
-        </classes>
-    </test>
+<!--    <test name="REC_all_tests_vet" thread-count="1" preserve-order="true">-->
+<!--        <classes>-->
+<!--            <class name="ru.exportcenter.dev.vet.Test_08_07_01"/>-->
+<!--            <class name="ru.exportcenter.dev.vet.Test_08_07_03"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 
 </suite>
