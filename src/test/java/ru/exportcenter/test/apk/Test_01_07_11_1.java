@@ -92,8 +92,8 @@ public class Test_01_07_11_1 extends Hooks {
                 .waitForElementDisplayed("//*[text()='Шаблон к Затрате 1.xlsm']")
                 .inField("Основание понесенных затрат").selectValue("Требование контракта")
                 .scrollTo("Загрузить шаблон")
-//                .uploadFile("Загрузить шаблон", "/share/" + WAY_TEST + "Шаблон 1 - фаст (1).xlsm");
-                .uploadFile("Загрузить шаблон","C:\\auto-tests\\Шаблон 1 - фаст (1).xlsm");
+                .uploadFile("Загрузить шаблон", "/share/" + WAY_TEST + "Шаблон 1 - фаст (1).xlsm");
+//                .uploadFile("Загрузить шаблон","C:\\auto-tests\\Шаблон 1 - фаст (1).xlsm");
     }
 
     @Step("Заполнение блока \"Загрузка подтверждающих документов\"")
@@ -104,10 +104,10 @@ public class Test_01_07_11_1 extends Hooks {
         //Выбрать приложенный файл с устройства формата zip и нажать кнопку «Открыть»
         new GUIFunctions().inContainer("Загрузка подтверждающих документов")
                 .scrollTo("Подтверждающие документы")
-//                .uploadFile("Подтверждающие документы", "/share/" + WAY_TEST + "rec.zip")
-                .uploadFile("Подтверждающие документы", "C:\\auto-tests\\rec.zip")
-//                .uploadFile("Платежное поручение", "/share/" + WAY_TEST + "payment 228.zip")
-                .uploadFile("Платежное поручение", "C:\\auto-tests\\payment 228.zip")
+                .uploadFile("Подтверждающие документы", "/share/" + WAY_TEST + "rec.zip")
+//                .uploadFile("Подтверждающие документы", "C:\\auto-tests\\rec.zip")
+                .uploadFile("Платежное поручение", "/share/" + WAY_TEST + "payment 228.zip")
+//                .uploadFile("Платежное поручение", "C:\\auto-tests\\payment 228.zip")
                 .scrollTo("Далее");
 
         //Нажать на кнопку «Далее»
