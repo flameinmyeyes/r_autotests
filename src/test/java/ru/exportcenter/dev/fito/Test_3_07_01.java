@@ -27,8 +27,8 @@ public class Test_3_07_01 extends Hooks {
 
     public String WAY_TEST = Ways.DEV.getWay() + "/fito/Test_3_07_01/";
     public String WAY_TEMP_FILE = "src/test/java/ru/exportcenter/dev/fito/";
-    public String FILE_NAME_BC1 = "ResponseSuccess1.xml";
-    public String FILE_NAME_BC2 = "1ResponseSuccessBC2.xml";
+    public String FILE_NAME_BC_1 = "ResponseSuccess1.xml";
+    public String FILE_NAME_BC_2 = "1ResponseSuccessBC2.xml";
     public String FILE_NAME_BC_3_1 = "1ResponseSuccessBC3_1.xml";
     public String FILE_NAME_BC_3_2 = "1ResponseSuccessBC3_2.xml";
     public String FILE_NAME_BC_3_3 = "1ResponseSuccessBC3_3.xml";
@@ -185,10 +185,10 @@ public class Test_3_07_01 extends Hooks {
     public void step06() {
         CommonFunctions.printStep();
         //читаем содержимое XML с файла на юпитере
-        String fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + FILE_NAME_BC1);
+        String fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + FILE_NAME_BC_1);
 
         //создаем временный XML файл и записываем туда содержимое XML
-        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC1;
+        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_1;
         deleteFileIfExists(new File(wayFile)); //удаляем временный файл, если он есть
         FileFunctions.writeValueToFile(wayFile, fileContent);
 
@@ -204,7 +204,7 @@ public class Test_3_07_01 extends Hooks {
         token = RESTFunctions.getAccessToken("http://uidm.uidm-dev.d.exportcenter.ru", "bpmn_admin");
         System.out.println("token: " + token);
 
-        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC1;
+        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_1;
         String fileContent = FileFunctions.readValueFromFile(wayFile);
         System.out.println("fileContent: " + fileContent);
 
@@ -283,10 +283,10 @@ public class Test_3_07_01 extends Hooks {
     public void step11() {
         CommonFunctions.printStep();
         //читаем содержимое XML с файла на юпитере
-        String fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + FILE_NAME_BC2);
+        String fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + FILE_NAME_BC_2);
 
         //создаем временный XML файл и записываем туда содержимое XML
-        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC2;
+        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_2;
         deleteFileIfExists(new File(wayFile)); //удаляем временный файл, если он есть
         FileFunctions.writeValueToFile(wayFile, fileContent);
 
@@ -297,10 +297,10 @@ public class Test_3_07_01 extends Hooks {
         XMLHandler.updateXML(wayFile, "common:ProbeTime", DateFunctions.dateToday("yyyy-MM-dd'T'") + P.getProperty("Запрос отбора проб.Планируемое время отбора проб") + ":00"); //2022-10-04T14:00:00
     }
 
-    @Step("Шаг 12. Загрузка XML файла через сваггер, запуск процесса")
+    @Step("Шаг 12. Загрузка XML файла через сваггер, запуск процесса (использовать значения для ВС 2)")
     public void step12() {
         CommonFunctions.printStep();
-        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC2;
+        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_2;
         String fileContent = FileFunctions.readValueFromFile(wayFile);
         System.out.println("fileContent: " + fileContent);
 
