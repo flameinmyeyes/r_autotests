@@ -108,6 +108,7 @@
     <test name="REC_all_tests_apk" thread-count="1" preserve-order="true">
         <classes>
             <class name="ru.exportcenter.dev.vet.Test_08_07_01"/>
+            <class name="ru.exportcenter.dev.vet.Test_08_07_03"/>
         </classes>
     </test>
 
