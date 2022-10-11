@@ -65,7 +65,7 @@ public class Test_08_07_04 extends Hooks {
         //В поле Выберите тип услуги выбрать Оформить новое разрешение  Нажать "Продолжить"
         new GUIFunctions()
                 .inContainer("Тип услуги")
-                .inField("Выберите тип услуги").clickByLocator("//span[text()='Оформить новое разрешение']")
+                .inField("Выберите тип услуги").clickByLocator("//span[text()='Внести изменения в действующее разрешение']")
                 .inContainer("Запрос разрешения на вывоз подконтрольной продукции")
                 .clickButton("Продолжить")
                 .waitForLoading()
@@ -73,14 +73,16 @@ public class Test_08_07_04 extends Hooks {
 
     }
 
-    @Step("Ввод данных в карточку \"Информация о продукции\" ")
+    @Step("Переход на карточку \"Поиск действующего разрешения\"")
     public void step02() {
         CommonFunctions.printStep();
 
         //В поле Тип продукции выбрать Живые животные
         new GUIFunctions()
-                .inContainer("Информация о продукции")
-                .inField("Тип продукции").selectValue("Живые животные").assertNoControl().assertValue()
+                .inContainer("Поиск действующего разрешения")
+                .clickByLocator("//span[text()='Да']")
+                .inField("Номер").inputValue(P.getProperty("Номер"))
+                .inField("Дата").inputValue(P.getProperty("Дата"))
                 .inContainer("Запрос разрешения на вывоз подконтрольной продукции")
                 .clickButton("Продолжить")
                 .waitForLoading()

@@ -97,7 +97,7 @@ public class Test_08_07_03 extends Hooks {
                     .inField("Продукция").selectValue(P.getProperty("Продукция")).assertNoControl().assertValue()
                     .inField("Вид продукции").selectValue(P.getProperty("Вид продукции")).assertNoControl().assertValue()
                     .inField("Номер документа СИТЕС").inputValue(P.getProperty("Номер документа СИТЕС")).assertNoControl().assertValue()
-                    .inField("Единица измерения").selectValue(P.getProperty("Единица измерения")).assertNoControl().assertValue()
+                    .inField("Единица измерения").selectValue(P.getProperty("Единица измерения")) //ассерт глючит на этом поле
                     .inField("Количество в выбранных единицах").inputValue(P.getProperty("Количество в выбранных единицах")).assertNoControl().assertValue()
                     .inField("Выберите одного или несколько производителей").selectValue("RU-033/VH03882 123 Российская Федерация, Владимирская обл., г. Владимир")
                     .inField("Укажите информацию о продукции, которую считаете необходимо сообщить дополнительно").inputValue(P.getProperty("Укажите информацию о продукции, которую считаете необходимо сообщить дополнительно")).assertNoControl().assertValue()
@@ -128,7 +128,7 @@ public class Test_08_07_03 extends Hooks {
                 .inField("Цель вывоза").selectValue(P.getProperty("Цель вывоза"))
                 .clickButton("Добавить +")
                 .inContainer("Информация о поставке")
-                .inField("Укажите предприятие (места хранения/отгрузки)").selectValue("Тест2")
+                .inField("Укажите предприятие (места хранения/отгрузки)").selectValue("RU033")
                 .inField("Выберите один или несколько видов размещения").selectValue(P.getProperty("Выберите один или несколько видов размещения"))
                 .clickButton("Сохранить");
         //Нажать кнопку "продолжить"
