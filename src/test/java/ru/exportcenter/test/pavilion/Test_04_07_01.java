@@ -50,7 +50,18 @@ public class Test_04_07_01 extends Hooks {
         //Ввести логин и пароль
         open("https://lk.t.exportcenter.ru/ru/promo-service?key=pavilion&serviceId=a546931c-0eb9-4545-853a-8a683c0924f7&next_query=true");
         new GUIFunctions()
-                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"));
+                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"))
+                .waitForElementDisplayed("//*[text()='Господдержка. Демонстрационно-дегустационные павильоны АПК']")
+                .closeAllPopupWindows()
+                .clickByLocator("//button[text()='Субсидия на продвижение продукции АПК']");
+
+        switchTo().alert().accept();
+
+//        if ($x("//*[text()='Господдержка. Демонстрационно-дегустационные павильоны АПК']").isDisplayed()){
+//            new GUIFunctions()
+//                    .closeAllPopupWindows()
+//                    .clickByLocator("//button[text()='Субсидия на продвижение продукции АПК']");
+//        }
 
         requestNumber = $x("//div[text()='Номер заявки']/following-sibling::div").getText();
         System.out.println($x("//div[text()='Номер заявки']/following-sibling::div").getText());
@@ -61,7 +72,8 @@ public class Test_04_07_01 extends Hooks {
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
 
         new GUIFunctions().clickButton("Продолжить")
-                .waitForElementDisplayed("//*[text()='Страна нахождения павильона']");
+                .waitForElementDisplayed("//*[text()='Страна нахождения павильона']")
+                .closeAllPopupWindows();
 
         new GUIFunctions().inField("Страна нахождения павильона").selectValue(PROPERTIES.getProperty("Авторизация.Страна нахождения павильона")).assertValue();
 
@@ -78,7 +90,7 @@ public class Test_04_07_01 extends Hooks {
         switchTo().alert().accept();
 
         //Ввести логин и пароль
-        new GUIFunctionsLKB().authorization("bpmn_admin", "password");
+        new GUIFunctionsLKB().authorization(PROPERTIES.getProperty("Пропуск этапа ФНС.Email"), PROPERTIES.getProperty("Пропуск этапа ФНС.Пароль"));
 
         //Развернуть аккордеон «camunda-exp-search»
         //Выбрать вкладку «Cockpit»

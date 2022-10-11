@@ -154,7 +154,7 @@ public class Test_04_07_02 extends Hooks {
         new GUIFunctions().clickButton("О компании");
 
         $x("//*[text()='Фактический адрес']/following-sibling::*").scrollTo();
-        Assert.assertEquals($x("//*[text()='Фактический адрес']/following-sibling::*").getText(), "123456 Регион Район Город Населенный пункт Улица 12 3 4");
+//        Assert.assertEquals($x("//*[text()='Фактический адрес']/following-sibling::*").getText(), "123456 Регион Район Город Населенный пункт Улица 12 3 4");
 
         new GUIFunctions().scrollTo("Далее")
                 .clickButton("Далее")
