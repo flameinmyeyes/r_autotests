@@ -106,6 +106,10 @@ public class Test_3_07_04 extends Hooks {
 
         String messageName = "AccOrgContrRequestMessage";
 
+        //читаем processID из файла
+        processID = JupyterLabIntegration.getFileContent(WAY_TEST + "processID.txt");
+        System.out.println("processID: " + processID);
+
         //отправляем запрос
         RESTFunctions.sendAttachmentToProcess(token, baseURI, processID, new File(wayFile), messageName);
 
@@ -160,17 +164,17 @@ public class Test_3_07_04 extends Hooks {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Запрос отбора проб")
-                .inField("Территориальное управление Россельхознадзора").selectValue(P.getProperty("Запрос отбора проб.Территориальное управление Россельхознадзора")).assertNoControl().assertValue()
-                .inField("Планируемая дата отбора проб").inputValue(DateFunctions.dateShift("dd.MM.yyyy", +1)).assertNoControl().assertValue()
-                .inField("Планируемое время отбора проб").inputValue(P.getProperty("Запрос отбора проб.Планируемое время отбора проб")).assertNoControl().assertValue()
-                .inField("Адрес места отбора проб").inputValue(P.getProperty("Запрос отбора проб.Адрес места отбора проб")).assertNoControl().assertValue()
-                .inField("Дополнительные требования к исследованиям ").inputValue(P.getProperty("Запрос отбора проб.Дополнительные требования к исследованиям")).assertNoControl().assertValue()
+                    .inField("Территориальное управление Россельхознадзора").selectValue(P.getProperty("Запрос отбора проб.Территориальное управление Россельхознадзора")).assertNoControl().assertValue()
+                    .inField("Планируемая дата отбора проб").inputValue(DateFunctions.dateShift("dd.MM.yyyy", +1)).assertNoControl().assertValue()
+                    .inField("Планируемое время отбора проб").inputValue(P.getProperty("Запрос отбора проб.Планируемое время отбора проб")).assertNoControl().assertValue()
+                    .inField("Адрес места отбора проб").inputValue(P.getProperty("Запрос отбора проб.Адрес места отбора проб")).assertNoControl().assertValue()
+                    .inField("Дополнительные требования к исследованиям ").inputValue(P.getProperty("Запрос отбора проб.Дополнительные требования к исследованиям")).assertNoControl().assertValue()
 
                 //нажать "Продолжить"
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
-                .clickButton("Направить на проверку")
-                .waitForLoading()
-                .waitForElementDisplayed("//div[text()='Шаг 6 из 9']");
+                    .clickButton("Направить на проверку")
+                    .waitForLoading()
+                    .waitForElementDisplayed("//div[text()='Шаг 6 из 9']");
     }
 
     @Step("Шаг 11. Редактирование XML ответа проверки сведений из проекта заявления в Россельхознадзоре (ВС 2)")
