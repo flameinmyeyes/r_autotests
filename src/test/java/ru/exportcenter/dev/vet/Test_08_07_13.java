@@ -28,7 +28,7 @@ public class Test_08_07_13 extends Hooks {
     private String processID;
 
     @Owner(value = "Селедцов Вадим")
-    @Description("08.07.13 Авторизация (негативный тест)")
+    @Description("08.07.13 Ошибка авторизации")
     @Link(name = "Test_08_07_13", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=183178005")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
@@ -50,12 +50,7 @@ public class Test_08_07_13 extends Hooks {
 
         //Ввести логин и пароль demo_exporter/password
         new GUIFunctions()
-                .authorization(P.getProperty("Авторизация.Email"), P.getProperty("Авторизация.Пароль"))
-                //.waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
-                .waitForElementDisplayed("//span[text()='Запрос разрешения на вывоз подконтрольной продукции']")
-                .refreshTab("Продолжить", 20)  // это бага , кнопка продолжить не отображается с первого раза, перезагрузка страницы 10 раз
-                .clickButton("Продолжить")
-                .waitForElementDisplayed("//span[text()='Запрос разрешения на вывоз подконтрольной продукции']");
+                .authorization(P.getProperty("Авторизация.Email"), P.getProperty("Авторизация.Пароль"));
     }
 
     @Step(" Поле тип услуги оставить пустым ")
@@ -64,9 +59,7 @@ public class Test_08_07_13 extends Hooks {
 
         //поймать контроль на незаполненность полей
         new GUIFunctions()
-
-                .clickButton("К перечню заявлений")
-                .waitForElementDisplayed("//div[text()='Заполните поле']");
+                .waitForElementDisplayed("//span[text()='Данные введены с ошибкой. Проверьте веденные данные.']");
     }
 
 }
