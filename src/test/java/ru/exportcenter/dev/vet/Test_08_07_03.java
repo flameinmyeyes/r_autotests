@@ -150,7 +150,7 @@ public class Test_08_07_03 extends Hooks {
                 .inField("Маршрут следования").inputValue("Россия - Вена")
                 .inField("Регион проведения таможенного оформления").selectValue(P.getProperty("Регион проведения таможенного оформления"))
                 .inField("Таможенный пункт").selectValue(P.getProperty("Таможенный пункт"));
-                $x("//*[text() = 'Информация о транспортировке']/ancestor::div[contains(@class, 'container')][1]//textarea[text()='410086 М.О.\"Г.САРАТОВ\",Г.САРАТОВ,ЛЕНИНСКИЙ Р-OН,ТАМОЖЕННЫЙ ПРОЕЗД,№6']").shouldBe(exist);
+                $x("//*[text() = 'Информация о транспортировке']/ancestor::div[contains(@class, 'container')][1]//textarea[text()='140185, МОСКОВСКАЯ ОБЛ., Г.ЖУКОВСКИЙ, УЛ. НАРКОМВОД, Д. 3']").shouldBe(exist);
 
                 //Нажать кнопку "продолжить"
         new GUIFunctions()
@@ -193,14 +193,14 @@ public class Test_08_07_03 extends Hooks {
     public void step08() {
         CommonFunctions.printStep();
 
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Наименование организации']/following-sibling::span[1]").shouldHave(text("ООО \"АЛСЕЗА\""));
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='ИНН']/following-sibling::span[1]").shouldHave(text("7743300600"));
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='ОГРН']/following-sibling::span[1]").shouldHave(text("1157746363994"));
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Контактный телефон']/following-sibling::span[1]").shouldHave(text("79787677078"));
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Email']/following-sibling::span[1]").shouldHave(text("primakov.aleksandr@otr.ru"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Наименование организации']/following-sibling::span[1]").shouldHave(text("ООО «ОТР 2000»"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='ИНН']/following-sibling::span[1]").shouldHave(text("7718162032"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='ОГРН']/following-sibling::span[1]").shouldHave(text("1027700269530"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Контактный телефон']/following-sibling::span[1]").shouldHave(text("9999999999"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Email']/following-sibling::span[1]").shouldHave(text("rychagova.uliia@otr.ru"));
         //Блок Инфо об импортере
         $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Наименование']/following-sibling::span[1]").shouldHave(text("Swan"));
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Страна']/following-sibling::span[1]").shouldHave(text("АВСТРИЙСКАЯ РЕСПУБЛИКА"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Страна']/following-sibling::span[1]").shouldHave(text("Австрийская Республика"));
         $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Вена, ул.Стефана 2']").should(exist);
         $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Страна происхождения продукции ']").shouldHave(text("РОССИЯ"));
         $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Субъект Российской Федерации, в котором расположены поднадзорные объекты ']").shouldHave(text("Владимирская"));
@@ -208,8 +208,8 @@ public class Test_08_07_03 extends Hooks {
         $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Наименование организации-перевозчика ']").shouldHave(text("ООО \"АРГО\""));
         $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Вид транспорта, используемый для перевозки до пункта пропуска на границе Таможенного союза']").shouldHave(text("Автомобильный"));
         $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Маршрут следования ']").shouldHave(text("Россия - Вена"));
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Регион проведения таможенного оформления ']").shouldHave(text("Саратовская область"));
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Таможенный пункт ']").shouldHave(text("Саратовский таможенный пост"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Регион проведения таможенного оформления ']").shouldHave(text("Московская область"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Таможенный пункт ']").shouldHave(text("таможенный пост Аэродром Раменское"));
 
 
     }
