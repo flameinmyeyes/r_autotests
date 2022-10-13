@@ -27,20 +27,23 @@ import static com.codeborne.selenide.Selenide.refresh;
 public class Test_3_07_04 extends Hooks {
 
     public String WAY_TEST = Ways.DEV.getWay() + "/fito/Test_3_07_04/";
-    public String WAY_TEMP_FILE = "src/test/java/ru/exportcenter/dev/fito/";
-    public String FILE_NAME_BC_1 = "1ResponseNotDogovor.xml";
-    public String FILE_NAME_BC_2 = "2ResponseSuccessBC2.xml";
-    public String FILE_NAME_BC_3_1 = "1ResponseSuccessBC3_1.xml";
-    public String FILE_NAME_BC_3_2 = "1ResponseSuccessBC3_2.xml";
-    public String FILE_NAME_BC_3_3 = "1ResponseSuccessBC3_3.xml";
-    public String FILE_NAME_BC_3_4 = "1ResponseSuccessBC3_4.xml";
-    public String WAY_TO_PROPERTIES = Ways.DEV.getWay() + "/fito/Test_3_07_04/" + "Test_3_07_04_properties.xml";
-    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
+    private final String WAY_TEMP_FILE = "src/test/java/ru/exportcenter/dev/fito/";
+    private final String FILE_NAME_BC_1 = "1ResponseNotDogovor.xml";
+    private final String FILE_NAME_BC_2 = "2ResponseSuccessBC2.xml";
+    private final String FILE_NAME_BC_3_1 = "1ResponseSuccessBC3_1.xml";
+    private final String FILE_NAME_BC_3_2 = "1ResponseSuccessBC3_2.xml";
+    private final String FILE_NAME_BC_3_3 = "1ResponseSuccessBC3_3.xml";
+    private final String FILE_NAME_BC_3_4 = "1ResponseSuccessBC3_4.xml";
+
+    private String WAY_TO_PROPERTIES = Ways.DEV.getWay() + "/fito/Test_3_07_04/" + "Test_3_07_04_properties.xml";
+    private Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
+
     private String processID;
-    private String docNum;
-    private String guid;
     private String token;
     private String baseURI = "http://bpmn-api-service.bpms-dev.d.exportcenter.ru/";
+
+    private String docNum;
+    private String guid;
     private String zayavlenieRegistrationNumber;
     private String aktNumber;
     private String zKFSNumber;
