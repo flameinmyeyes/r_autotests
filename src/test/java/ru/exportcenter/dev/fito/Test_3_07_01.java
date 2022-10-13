@@ -26,20 +26,24 @@ import static com.codeborne.selenide.Selenide.*;
 public class Test_3_07_01 extends Hooks {
 
     public String WAY_TEST = Ways.DEV.getWay() + "/fito/Test_3_07_01/";
-    public String WAY_TEMP_FILE = "src/test/java/ru/exportcenter/dev/fito/";
-    public String FILE_NAME_BC_1 = "ResponseSuccess1.xml";
-    public String FILE_NAME_BC_2 = "1ResponseSuccessBC2.xml";
-    public String FILE_NAME_BC_3_1 = "1ResponseSuccessBC3_1.xml";
-    public String FILE_NAME_BC_3_2 = "1ResponseSuccessBC3_2.xml";
-    public String FILE_NAME_BC_3_3 = "1ResponseSuccessBC3_3.xml";
-    public String FILE_NAME_BC_3_4 = "1ResponseSuccessBC3_4.xml";
-    public String WAY_TO_PROPERTIES = Ways.DEV.getWay() + "/fito/Test_3_07_01/" + "Test_3_07_01_properties.xml";
-    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
+    private final String WAY_FILES = Ways.DEV.getWay() + "/fito/Test_3_07_01/"; //переменная нужна, т.к. значение WAY_TEST будет меняться при вызове текущего теста из других тестов
+    private final String WAY_TEMP_FILE = "src/test/java/ru/exportcenter/dev/fito/";
+    private final String FILE_NAME_BC_1 = "ResponseSuccess1.xml";
+    private final String FILE_NAME_BC_2 = "1ResponseSuccessBC2.xml";
+    private final String FILE_NAME_BC_3_1 = "1ResponseSuccessBC3_1.xml";
+    private final String FILE_NAME_BC_3_2 = "1ResponseSuccessBC3_2.xml";
+    private final String FILE_NAME_BC_3_3 = "1ResponseSuccessBC3_3.xml";
+    private final String FILE_NAME_BC_3_4 = "1ResponseSuccessBC3_4.xml";
+
+    private String WAY_TO_PROPERTIES = Ways.DEV.getWay() + "/fito/Test_3_07_01/" + "Test_3_07_01_properties.xml";
+    private Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
+
     private String processID;
-    private String docNum;
-    private String guid;
     private String token;
     private String baseURI = "http://bpmn-api-service.bpms-dev.d.exportcenter.ru/";
+
+    private String docNum;
+    private String guid;
     private String zayavlenieRegistrationNumber;
     private String aktNumber;
     private String zKFSNumber;
@@ -185,7 +189,7 @@ public class Test_3_07_01 extends Hooks {
     public void step06() {
         CommonFunctions.printStep();
         //читаем содержимое XML с файла на юпитере
-        String fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + FILE_NAME_BC_1);
+        String fileContent = JupyterLabIntegration.getFileContent(WAY_FILES + FILE_NAME_BC_1);
 
         //создаем временный XML файл и записываем туда содержимое XML
         String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_1;
@@ -283,7 +287,7 @@ public class Test_3_07_01 extends Hooks {
     public void step11() {
         CommonFunctions.printStep();
         //читаем содержимое XML с файла на юпитере
-        String fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + FILE_NAME_BC_2);
+        String fileContent = JupyterLabIntegration.getFileContent(WAY_FILES + FILE_NAME_BC_2);
 
         //создаем временный XML файл и записываем туда содержимое XML
         String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_2;
@@ -372,7 +376,7 @@ public class Test_3_07_01 extends Hooks {
     public void step17() {
         CommonFunctions.printStep();
         //читаем содержимое XML с файла на юпитере
-        String fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + FILE_NAME_BC_3_1);
+        String fileContent = JupyterLabIntegration.getFileContent(WAY_FILES + FILE_NAME_BC_3_1);
 
         //создаем временный XML файл и записываем туда содержимое XML
         String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_3_1;
@@ -430,7 +434,7 @@ public class Test_3_07_01 extends Hooks {
     public void step20() {
         CommonFunctions.printStep();
         //читаем содержимое XML с файла на юпитере
-        String fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + FILE_NAME_BC_3_2);
+        String fileContent = JupyterLabIntegration.getFileContent(WAY_FILES + FILE_NAME_BC_3_2);
 
         //создаем временный XML файл и записываем туда содержимое XML
         String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_3_2;
@@ -488,7 +492,7 @@ public class Test_3_07_01 extends Hooks {
     public void step23() {
         CommonFunctions.printStep();
         //читаем содержимое XML с файла на юпитере
-        String fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + FILE_NAME_BC_3_3);
+        String fileContent = JupyterLabIntegration.getFileContent(WAY_FILES + FILE_NAME_BC_3_3);
 
         //создаем временный XML файл и записываем туда содержимое XML
         String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_3_3;
@@ -540,7 +544,7 @@ public class Test_3_07_01 extends Hooks {
     public void step26() {
         CommonFunctions.printStep();
         //читаем содержимое XML с файла на юпитере
-        String fileContent = JupyterLabIntegration.getFileContent(WAY_TEST + FILE_NAME_BC_3_4);
+        String fileContent = JupyterLabIntegration.getFileContent(WAY_FILES + FILE_NAME_BC_3_4);
 
         //создаем временный XML файл и записываем туда содержимое XML
         String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_3_4;
