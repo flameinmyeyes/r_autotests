@@ -81,6 +81,7 @@
             <class name="ru.exportcenter.test.apk.Test_01_07_44.Test_01_07_44_5"/>
             <class name="ru.exportcenter.test.apk.Test_02_07_00.Test_02_07_00_1"/>
             <class name="ru.exportcenter.test.apk.Test_02_07_00.Test_02_07_00_2"/>
+            <class name="ru.exportcenter.test.apk.Test_02_07_00.Test_02_07_00_3"/>
         </classes>
     </test>
 
