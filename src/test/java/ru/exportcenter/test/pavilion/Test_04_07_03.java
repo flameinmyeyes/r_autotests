@@ -126,7 +126,7 @@ public class Test_04_07_03  extends Hooks {
         //Нажать Закрыть
         new GUIFunctionsLKB()
                 .clickByLocator("//span[text()='Сертификат']/following::input")
-                .clickByLocator("//div[@title='Ермухамбетова Балсикер Бисеньевна от 18.01.2022']")
+                .clickByLocator("//div[@title='"+ P.getProperty("Блок3.Сертификат") +"']")
                 .clickByLocator("//span[text()='Подписать и отправить']")
                 .waitForElementDisplayed("//*[text()='Вы успешно подписали Акт']")
                 .clickByLocator("//span[text()='Закрыть']");

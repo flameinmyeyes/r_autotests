@@ -135,10 +135,11 @@ public class Test_04_07_01 extends Hooks {
         $x("//input[@placeholder='Значение переменной']").setValue("1");
         $x("//*[text()='Значение']").click();
         $x("//button[@tooltip='Сохранить переменную']").click();
+        new GUIFunctions().waitForElementDisplayed("//*[text()=\"Переменная 'passSmevFnsRequest' изменена.\"]");
         switchTo().defaultContent();
 
         new GUIFunctions().clickByLocator("//button[text()='Выйти']");
-//        new GUIFunctions().waitForElementDisplayed("//*[text()='Переменная 'passSmevFnsRequest' изменена.']");
+
     }
 
     @Step("Заполнение заявки")

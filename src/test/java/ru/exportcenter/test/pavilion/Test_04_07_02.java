@@ -107,18 +107,18 @@ public class Test_04_07_02 extends Hooks {
         //В поле "Дом" ввести значение "12"
         //В поле "Строение" ввести значение "3"
         //В поле "Офис" ввести значение "4"
-//        new GUIFunctions()
-//                .scrollTo("Фактический адрес изменился")
-//                .inField("Фактический адрес изменился").setCheckboxON().assertCheckboxON()
-//                .inField("Индекс").inputValue(P.getProperty("Фактический адрес.Индекс")).assertValue()
-//                .inField("Регион").inputValue(P.getProperty("Фактический адрес.Регион")).assertValue()
-//                .inField("Район").inputValue(P.getProperty("Фактический адрес.Район")).assertValue()
-//                .inField("Город").inputValue(P.getProperty("Фактический адрес.Город")).assertValue()
-//                .inField("Населенный пункт").inputValue(P.getProperty("Фактический адрес.Населенный пункт")).assertValue()
-//                .inField("Улица").inputValue(P.getProperty("Фактический адрес.Улица")).assertValue()
-//                .inField("Дом").inputValue(P.getProperty("Фактический адрес.Дом")).assertValue()
-//                .inField("Строение").inputValue(P.getProperty("Фактический адрес.Строение")).assertValue()
-//                .inField("Офис").inputValue(P.getProperty("Фактический адрес.Офис")).assertValue();
+        new GUIFunctions()
+                .scrollTo("Фактический адрес изменился")
+                .inField("Фактический адрес изменился").setCheckboxON().assertCheckboxON()
+                .inField("Индекс").inputValue(P.getProperty("Фактический адрес.Индекс")).assertValue()
+                .inField("Регион").inputValue(P.getProperty("Фактический адрес.Регион")).assertValue()
+                .inField("Район").inputValue(P.getProperty("Фактический адрес.Район")).assertValue()
+                .inField("Город").inputValue(P.getProperty("Фактический адрес.Город")).assertValue()
+                .inField("Населенный пункт").inputValue(P.getProperty("Фактический адрес.Населенный пункт")).assertValue()
+                .inField("Улица").inputValue(P.getProperty("Фактический адрес.Улица")).assertValue()
+                .inField("Дом").inputValue(P.getProperty("Фактический адрес.Дом")).assertValue()
+                .inField("Строение").inputValue(P.getProperty("Фактический адрес.Строение")).assertValue()
+                .inField("Офис").inputValue(P.getProperty("Фактический адрес.Офис")).assertValue();
 
         new GUIFunctions().scrollTo("Далее");
 
