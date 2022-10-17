@@ -20,7 +20,7 @@ public class Test_01_07_11_1 extends Hooks {
     private String WAY_TEST = Ways.TEST.getWay() + "/apk/Test_01_07_11_1/";
 //    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_01_07_11_1_properties.xml";
 //    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
-    private String requestNumber;
+    public String requestNumber;
 
     @Owner(value = "Петрищев Руслан")
     @Description("01 07 11.1 Заполнение Заявки на получение услуги, подписание Заявки УКЭП и автоматическая передача Заявки на верификацию")

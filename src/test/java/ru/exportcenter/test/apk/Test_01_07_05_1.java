@@ -57,7 +57,8 @@ public class Test_01_07_05_1 extends Hooks {
 //        System.out.println(infoText);
 
         //Выбрать вкладку «Государственные»
-        new GUIFunctions().clickByLocator("//div[@data-history-code-translit='Государственные']")
+        new GUIFunctions()
+                .clickByLocator("//div[@data-history-code-translit='Государственные']")
                 .inputInSearchField("Поиск по разделу", "Господдержка. Сертификация продукции АПК");
 
 //        String infoText = $x("//div[@class='col-12 pb-2']").getText();
@@ -66,12 +67,12 @@ public class Test_01_07_05_1 extends Hooks {
         //Нажать кнопу "Оформить"
         new GUIFunctions().openSearchResult("Господдержка. Сертификация продукции АПК", "Оформить");
         switchTo().window(1);
-        new GUIFunctions().waitForLoading()
+        new GUIFunctions()
+                .waitForLoading()
                 .waitForElementDisplayed("//*[contains(text(),'Сертификация продукции АПК')]")
                 .closeAllPopupWindows();
 
         if ($x("//button[contains(text(),'Сервис «Господдержка. Сертификация продукции АПК»')]").isDisplayed()){
-
             new GUIFunctions().clickByLocator("//button[contains(text(),'Сервис «Господдержка. Сертификация продукции АПК»')]");
             webdriver().driver().switchTo().alert().accept();
         }
