@@ -24,7 +24,7 @@ public class Test_02_07_00_3 extends Hooks {
 //    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_01_07_01_1_properties.xml";
 //    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 //    public String requestNumber = null;
-    public String requestNumber = "S/2022/304460";
+    public String requestNumber = "";
     public String identifier;
 
     @Owner(value = "Петрищев Руслан")
@@ -69,9 +69,13 @@ public class Test_02_07_00_3 extends Hooks {
                 .waitForLoading();
 
         //скопировать в буфер
-//        $x("//span[contains(text(),'" + requestNumber + "')]/ancestor::tr/td[@class='instance-id ng-isolate-scope']/a[contains(@tooltip,'Нажмите, чтобы скопировать')]").click();
+        if (requestNumber.equals("")){
+            identifier = $x("(//tr/td/span/a)[1]").getText();
+        } else {
+            $x("//span[contains(text(),'" + requestNumber + "')]/ancestor::tr/td[@class='instance-id ng-isolate-scope']/a[contains(@tooltip,'Нажмите, чтобы скопировать')]").click();
+            identifier = $x("//span[contains(text(),'" + requestNumber + "')]/ancestor::tr/td[@class='instance-id ng-isolate-scope']/span/a").getText();
+        }
 
-        identifier = $x("//span[contains(text(),'" + requestNumber + "')]/ancestor::tr/td[@class='instance-id ng-isolate-scope']/span/a").getText();
         System.out.println(identifier);
     }
 }

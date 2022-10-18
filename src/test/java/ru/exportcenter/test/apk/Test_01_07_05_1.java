@@ -51,7 +51,8 @@ public class Test_01_07_05_1 extends Hooks {
         //Перейти на https://master-portal.t.exportcenter.ru/services/
         //В строке поиска ввести «Господдержка. Сертификация продукции АПК» и нажать на икноку "Лупа"
         open("https://master-portal.t.exportcenter.ru/services/");
-        new GUIFunctions().inputInSearchField("Поиск по разделу", "Господдержка. Сертификация продукции АПК");
+        new GUIFunctions()
+                .inputInSearchField("Поиск по разделу", "Господдержка. Сертификация продукции АПК");
 
 //        String infoText = $x("//div[@class='col-12 pb-2']").getText();
 //        System.out.println(infoText);
@@ -72,8 +73,8 @@ public class Test_01_07_05_1 extends Hooks {
                 .waitForElementDisplayed("//*[contains(text(),'Сертификация продукции АПК')]")
                 .closeAllPopupWindows();
 
-        if ($x("//button[contains(text(),'Сервис «Господдержка. Сертификация продукции АПК»')]").isDisplayed()){
-            new GUIFunctions().clickByLocator("//button[contains(text(),'Сервис «Господдержка. Сертификация продукции АПК»')]");
+        if ($x("//button[contains(text(),'Господдержка. Сертификация продукции АПК')]").isDisplayed()){
+            new GUIFunctions().clickByLocator("//button[contains(text(),'Господдержка. Сертификация продукции АПК')]");
             webdriver().driver().switchTo().alert().accept();
         }
 
