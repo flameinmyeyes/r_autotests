@@ -1,4 +1,4 @@
-package ru.exportcenter.test.pavilion;
+package ru.exportcenter.test.spt;
 
 import framework.RunTestAgain;
 import framework.Ways;
@@ -25,7 +25,23 @@ public class Test_07_07_00 extends Hooks {
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     public String requestNumber;
 
-    public String url = "", login = "", password = "", forma = "";
+    public String url = "", login = "", password = "", code="", forma = "", CompanyType = "";
+
+    public String NameOrganisaiton = "";    // Наименование организации
+    public String JuricAddress = "";        // Юридический адрес
+    public String INN = "";                 // ИНН
+    public String KPP = "";                 // КПП PROPERTIES.getProperty("КПП")
+    public String OGRN = "";                // ОГРН
+    public String email = "";               // Email
+    public String phone = "";               // Телефон
+
+    public String FIO = "";               //Фамилия Имя Отчество
+    public String Address = "";               //Адрес
+    public String INN_IP = "";               //ИНН_ИП
+    public String OGRNIP = "";               //ОГРНИП
+    public String email_IP = "";               //Email_ИП
+    public String phone_IP = "";               //Телефон_ИП
+
 
     @Owner(value = "Андрей В. Теребков")
     @Description("07 07 00 Заполнение Заявки на получение услуги, подписание Заявки УКЭП и автоматическая передача Заявки на верификацию")
@@ -51,14 +67,17 @@ public class Test_07_07_00 extends Hooks {
         open(url);
 
 //      Ввести логин и пароль
-        new GUIFunctions()
-                .waitForLoading()
-                .authorization(login, password)
-                .waitForLoading();
+        new GUIFunctions().waitForLoading();
+        if("Jur".equals(CompanyType))
+            new GUIFunctions().authorization(login, password);
+        else
+            new GUIFunctions().authorization(login, password, code);
+        new GUIFunctions().waitForLoading();
 
         CommonFunctions.wait(15);
 
-        System.out.println("class = " + $x("//*[@id='form-open-panel']/div[1]/span/div/div[2]/div[2]/div").getAttribute("class"));
+//        System.out.println("class = " + $x("//*[@id='form-open-panel']/div[1]/span/div/div[2]/div[2]/div").getAttribute("class"));
+        System.out.println("class = class");
         requestNumber = $x("//body").getAttribute("id");
         JupyterLabIntegration.uploadTextContent(requestNumber, WAY_TEST, "requestNumber.txt");
         System.out.println("requestNumber = " + requestNumber);
@@ -91,40 +110,74 @@ public class Test_07_07_00 extends Hooks {
     @Step("Предзаполненные данные в карточке «Информация о заявителе» и в карточке «Информация об импортере»")
     public void step04() {
         CommonFunctions.printStep();
-
-        new GUIFunctions()
+        if("Jur".equals(CompanyType)) {
+            new GUIFunctions()
                 .waitForElementDisplayed("//span[text()='Наименование организации']/following-sibling::span");
 
-        assertEquals(
-                $x("//span[text()='Наименование организации']/following-sibling::span").getText()
-                ,PROPERTIES.getProperty("Наименование организации")
-        );
-        assertEquals(
-                $x("//span[text()='Юридический адрес']/following-sibling::span").getText()
-                ,PROPERTIES.getProperty("Юридический адрес")
-        );
-        assertEquals(
-                $x("//span[text()='ИНН']/following-sibling::span").getText(),
-                PROPERTIES.getProperty("ИНН")
-        );
-        assertEquals(
-                $x("//span[text()='КПП']/following-sibling::span").getText(),
-                PROPERTIES.getProperty("КПП")
-        );
-        assertEquals(
-                $x("//span[text()='ОГРН']/following-sibling::span").getText()
-                ,PROPERTIES.getProperty("ОГРН"));
-        assertEquals(
-                $x("//input[contains(@class,'KrInput_input__xg4vc undefined')]").getValue()
-                ,PROPERTIES.getProperty("Email"));
-        assertEquals(
-                $x("(//input[contains(@class,'KrInput_input__xg4vc undefined')])[2]").getValue()
-                ,PROPERTIES.getProperty("Телефон")
-        );
-        assertEquals(
-                "" + $x("//*[@id='form-open-panel']/div[2]/div/form/div[2]/div/div[2]/div/div/div[3]/div/div[2]/div/label/div/input").isSelected()
-                , "true"
-        );
+            assertEquals(
+                    $x("//span[text()='Наименование организации']/following-sibling::span").getText()
+                    ,NameOrganisaiton
+            );
+            assertEquals(
+                    $x("//span[text()='Юридический адрес']/following-sibling::span").getText()
+                    ,JuricAddress
+            );
+            assertEquals(
+                    $x("//span[text()='ИНН']/following-sibling::span").getText()
+                    ,INN
+            );
+            assertEquals(
+                    $x("//span[text()='КПП']/following-sibling::span").getText()
+                    ,KPP
+            );
+            assertEquals(
+                    $x("//span[text()='ОГРН']/following-sibling::span").getText()
+                    ,OGRN
+            );
+            assertEquals(
+                    $x("//input[contains(@class,'KrInput_input__xg4vc undefined')]").getValue()
+                    ,email
+            );
+            assertEquals(
+                    $x("(//input[contains(@class,'KrInput_input__xg4vc undefined')])[2]").getValue()
+                    ,phone
+            );
+            assertEquals(
+                    "" + $x("//*[@id='form-open-panel']/div[2]/div/form/div[2]/div/div[2]/div/div/div[3]/div/div[2]/div/label/div/input").isSelected()
+                    , "true"
+            );
+        }
+
+        if("IP".equals(CompanyType)) {
+            new GUIFunctions()
+                .waitForElementDisplayed("//span[text()='Фамилия Имя Отчество']/following-sibling::span");
+
+            assertEquals(
+                    $x("//span[text()='Фамилия Имя Отчество']/following-sibling::span").getText()
+                    ,FIO
+            );
+            assertEquals(
+                    $x("//span[text()='Адрес']/following-sibling::span").getText()
+                    ,Address
+            );
+            assertEquals(
+                    $x("//span[text()='ИНН']/following-sibling::span").getText()
+                    ,INN_IP
+            );
+            assertEquals(
+                    $x("//span[text()='ОГРНИП']/following-sibling::span").getText()
+                    ,OGRNIP
+            );
+            assertEquals(
+                    $x("//input[contains(@class,'KrInput_input__xg4vc undefined')]").getValue()
+                    ,email_IP
+            );
+            assertEquals(
+                    $x("(//input[contains(@class,'KrInput_input__xg4vc undefined')])[2]").getValue()
+                    ,phone_IP
+            );
+
+        }
     }
 
     private void refreshTab(String expectedXpath, int times) {
