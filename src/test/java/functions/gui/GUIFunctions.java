@@ -245,6 +245,11 @@ public class GUIFunctions extends ElementData {
         return this;
     }
 
+    public GUIFunctions waitForElementDisplayed(String xPath, int seconds) {
+        new Wait(this).waitForElementDisplayed(xPath, seconds);
+        return this;
+    }
+
     public GUIFunctions waitForElementDisappeared(String xPath) {
         new Wait(this).waitForElementDisappeared(xPath);
         return this;
