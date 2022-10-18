@@ -96,16 +96,20 @@ public class XPath extends ElementData {
         return getContainerXPath() + getFieldXPath() + "//span[contains(@class, 'message') and . !='']";
     }
 
+//    public String getCheckboxXPath() {
+//        if (value.equals("")) {
+//            return getContainerXPath() + getFieldXPath() + "/parent::label/span";
+//        } else {
+//            return getValueXPath() + "//parent::label/span";
+//        }
+//    }
+
     public String getCheckboxXPath() {
-        if (value.equals("")) {
-            return getContainerXPath() + getFieldXPath() + "/parent::label/span";
-        } else {
-            return getValueXPath() + "//parent::label/span";
-        }
+        return getContainerXPath() + getFieldXPath() + "/parent::label/span";
     }
 
     public String getCheckedCheckboxXPath() {
-        return getCheckboxXPath() + "[contains(@class,'ant-checkbox')]";
+        return getCheckboxXPath() + "[contains(@class,'checked')]";
     }
 
     public String getRadiobuttonXPath() {
