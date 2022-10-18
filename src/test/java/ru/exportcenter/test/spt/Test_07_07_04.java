@@ -13,7 +13,7 @@ import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
-import ru.exportcenter.test.pavilion.Test_07_07_00;
+
 
 import java.awt.*;
 import java.util.Properties;
@@ -36,7 +36,7 @@ public class Test_07_07_04 extends Hooks {
     public void steps() throws AWTException {
         precondition();
         step01();
-        step02();
+      step02();
     }
 
     @AfterMethod
@@ -49,10 +49,29 @@ public class Test_07_07_04 extends Hooks {
     public void precondition() throws AWTException {
         CommonFunctions.printStep();
         Test_07_07_00 test_07_07_00 = new Test_07_07_00();
-        test_07_07_00.url = "http://uidm.uidm-dev.d.exportcenter.ru/promo-service?key=service-spt&serviceId=27ddd0b2-5ed9-4100-9c93-2b0e07a2d599&next_query=true";
+        test_07_07_00.url = "https://lk.t.exportcenter.ru/promo-service?key=service-spt&serviceId=dc83e6b2-138f-4a39-99ca-117d8f8a27c8&next_query=true";
         test_07_07_00.login = PROPERTIES.getProperty("Авторизация.Email");
         test_07_07_00.password = PROPERTIES.getProperty("Авторизация.Пароль");
-        test_07_07_00.forma = "Формы СТ-1";
+        test_07_07_00.code = PROPERTIES.getProperty("Авторизация.Код");
+        test_07_07_00.forma = PROPERTIES.getProperty("Форма");
+
+        test_07_07_00.CompanyType = PROPERTIES.getProperty("CompanyType");
+
+        test_07_07_00.NameOrganisaiton = PROPERTIES.getProperty("Наименование организации");
+        test_07_07_00.JuricAddress = PROPERTIES.getProperty("Юридический адрес");
+        test_07_07_00.INN = PROPERTIES.getProperty("ИНН");
+        test_07_07_00.KPP = PROPERTIES.getProperty("КПП");
+        test_07_07_00.OGRN = PROPERTIES.getProperty("ОГРН");
+        test_07_07_00.email = PROPERTIES.getProperty("Email");
+        test_07_07_00.phone = PROPERTIES.getProperty("Телефон");
+
+        test_07_07_00.FIO = PROPERTIES.getProperty("Фамилия Имя Отчество");
+        test_07_07_00.Address = PROPERTIES.getProperty("Адрес");
+        test_07_07_00.INN_IP =PROPERTIES.getProperty("ИНН_ИП");
+        test_07_07_00.OGRNIP = PROPERTIES.getProperty("ОГРНИП");
+        test_07_07_00.email_IP = PROPERTIES.getProperty("Email_ИП");
+        test_07_07_00.phone_IP = PROPERTIES.getProperty("Телефон_ИП");
+
         test_07_07_00.steps();
         requestNumber = test_07_07_00.requestNumber;
     }
@@ -70,7 +89,7 @@ public class Test_07_07_04 extends Hooks {
 
         $x("//*[@id='form-open-panel']/div[2]/div/form/div[3]/div[2]/div/div[3]/div/button").click();
 
-        if(!$x("//*[@id='form-open-panel']/div[2]/div/form/div[1]/div/div[2]/div/div/div[3]/div/div[1]/div/label/div[1]/div").exists())
+        if(("" + $x("//*[@id='form-open-panel']/div[2]/div/form/div[1]/div/div[2]/div/div/div[3]/div/div[1]/div/label/div[1]/div").exists()).equals("null"))
             $x("//*[@id='form-open-panel']/div[2]/div/form/div[3]/div[2]/div/div[3]/div/button").click();
 
         new GUIFunctions()//.clickButton("Продолжить")
@@ -87,7 +106,7 @@ public class Test_07_07_04 extends Hooks {
                 .inField("Адрес по контракту (договору) на русском или английском языке").inputValue(PROPERTIES.getProperty("Адрес по контракту"))
                 .clickButton("Продолжить")
                 .waitForLoading()
-              .waitForURL("")
+                .waitForURL("")
         ;
 
         assertEquals(

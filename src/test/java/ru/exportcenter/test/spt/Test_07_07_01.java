@@ -43,11 +43,14 @@ public class Test_07_07_01 extends Hooks {
     public void step01() {
         CommonFunctions.printStep();
 
-        String url = "http://uidm.uidm-dev.d.exportcenter.ru/promo-service?key=service-spt&serviceId=27ddd0b2-5ed9-4100-9c93-2b0e07a2d599&next_query=true";
+        String url =
+//                "http://uidm.uidm-dev.d.exportcenter.ru/promo-service?key=service-spt&serviceId=27ddd0b2-5ed9-4100-9c93-2b0e07a2d599&next_query=true";
+        "https://lk.t.exportcenter.ru/promo-service?key=service-spt&serviceId=dc83e6b2-138f-4a39-99ca-117d8f8a27c8&next_query=true";
+
         open(url);
         new GUIFunctions()
                 .waitForLoading()
-                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"))
+                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль")) //, PROPERTIES.getProperty("Авторизация.Код"))
                 .waitForLoading();
         CommonFunctions.wait(15);
 

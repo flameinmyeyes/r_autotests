@@ -13,8 +13,6 @@ import io.qameta.allure.Step;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
-import ru.exportcenter.test.pavilion.Test_07_07_00;
-
 
 import java.awt.*;
 import java.util.Properties;
@@ -43,6 +41,17 @@ public class Test_07_07_05 extends Hooks {
         CommonFunctions.screenShot(WAY_TEST + "screen.png");
     }
 
+    @Step("Предусловия")
+    public void precondition() throws AWTException {
+        CommonFunctions.printStep();
+        Test_07_07_00 test_07_07_00 = new Test_07_07_00();
+        test_07_07_00.url = "http://uidm.uidm-dev.d.exportcenter.ru/promo-service?key=service-spt&serviceId=27ddd0b2-5ed9-4100-9c93-2b0e07a2d599&next_query=true";
+        test_07_07_00.login = PROPERTIES.getProperty("Авторизация.Email");
+        test_07_07_00.password = PROPERTIES.getProperty("Авторизация.Пароль");
+        test_07_07_00.forma = "Формы СТ-2 (выдать на русском языке)";
+        test_07_07_00.steps();
+        requestNumber = test_07_07_00.requestNumber;
+    }
 
     @Step("Ввод данных в карточку «Информация о заявителе»  и в карточку «Информация об импортере»")
     public void step01() {
@@ -85,17 +94,6 @@ public class Test_07_07_05 extends Hooks {
     }
 
 
-    @Step("Предусловия")
-    public void precondition() throws AWTException {
-        CommonFunctions.printStep();
-        Test_07_07_00 test_07_07_00 = new Test_07_07_00();
-        test_07_07_00.url = "http://uidm.uidm-dev.d.exportcenter.ru/promo-service?key=service-spt&serviceId=27ddd0b2-5ed9-4100-9c93-2b0e07a2d599&next_query=true";
-        test_07_07_00.login = PROPERTIES.getProperty("Авторизация.Email");
-        test_07_07_00.password = PROPERTIES.getProperty("Авторизация.Пароль");
-        test_07_07_00.forma = "Формы СТ-2 (выдать на русском языке)";
-        test_07_07_00.steps();
-        requestNumber = test_07_07_00.requestNumber;
-    }
 
 
     private void refreshTab(String expectedXpath, int times) {
