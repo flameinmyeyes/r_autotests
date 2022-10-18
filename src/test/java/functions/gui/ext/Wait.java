@@ -3,8 +3,9 @@ package functions.gui.ext;
 import com.codeborne.selenide.Condition;
 import functions.gui.ElementData;
 
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.webdriver;
+import java.time.Duration;
+
+import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.WebDriverConditions.url;
 
 public class Wait extends ElementData {
@@ -30,6 +31,10 @@ public class Wait extends ElementData {
 
     public void waitForElementDisplayed(String xPath) {
         $x(new XPath(this).getContainerXPath() + xPath).shouldBe(Condition.visible);
+    }
+
+    public void waitForElementDisplayed(String xPath, int seconds) {
+        $x(new XPath(this).getContainerXPath() + xPath).shouldBe(Condition.visible, Duration.ofSeconds(seconds));
     }
 
     public void waitForElementDisappeared(String xPath) {

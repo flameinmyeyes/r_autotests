@@ -35,8 +35,8 @@ public class Test_3_07_01 extends Hooks {
     private final String FILE_NAME_BC_3_3 = "1ResponseSuccessBC3_3.xml";
     private final String FILE_NAME_BC_3_4 = "1ResponseSuccessBC3_4.xml";
 
-    private String WAY_TO_PROPERTIES = Ways.DEV.getWay() + "/fito/Test_3_07_01/" + "Test_3_07_01_properties.xml";
-    private Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
+    public String WAY_TO_PROPERTIES = Ways.DEV.getWay() + "/fito/Test_3_07_01/" + "Test_3_07_01_properties.xml";
+    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     private String processID;
     private String token;
@@ -106,6 +106,7 @@ public class Test_3_07_01 extends Hooks {
         new GUIFunctions()
                 .clickButton("Заказать услугу")
                 .switchPageTo(1)
+                .waitForLoading()
                 .clickByLocator("//div[@data-history-code='/services/state'][normalize-space(text()='Государственные')]")
                 .waitForURL("http://master-portal-dev.d.exportcenter.ru/services/state")
 
@@ -113,28 +114,24 @@ public class Test_3_07_01 extends Hooks {
                 .inputInSearchField("Поиск по разделу", "ФИТО")
                 .closeAllPopupWindows()
 
-                .openSearchResult("Запрос заключения о карантинном фитосанитарном состоянии", "Оформить")
+                .openSearchResult("Запрос заключения о карантинном фитосанитарном состоянии подкарантинной продукции", "Оформить")
                 .switchPageTo(2)
-                .waitForLoading();
+                .waitForLoading()
+//                .waitForElementDisplayed("//*[contains(text(),'Запрос заключения о карантинном фитосанитарном состоянии')]"); //если страница с номером заявки проскакивает
+                .waitForElementDisplayed("//div[text()='Номер заявки']/parent::div/div[contains(@class, 'description')]");
     }
 
     @Step("Шаг 3. Начальный экран")
     public void step03() {
         CommonFunctions.printStep();
+
+        //если страница с номером заявки проскакивает
+//        clickRequestLinkIfRequestNumberPageIsSkipped("Запрос заключения о карантинном фитосанитарном состоянии");
+
         //сохранить processID в файл
         processID = CommonFunctions.getProcessIDFromURL();
         System.out.println("processID: " + processID);
         JupyterLabIntegration.uploadTextContent(processID, WAY_TEST, "processID.txt");
-
-        new GUIFunctions()
-                .waitForLoading()
-                .waitForElementDisplayed("//*[contains(text(),'Запрос заключения о карантинном фитосанитарном состоянии')]")
-                .closeAllPopupWindows();
-
-        //костыль
-        if ($x("//button[contains(text(),'Запрос заключения о карантинном фитосанитарном состоянии')]").isDisplayed()){
-            new GUIFunctions().clickByLocator("//button[contains(text(),'Запрос заключения о карантинном фитосанитарном состоянии')]");
-        }
 
         //сохранить номер документа в файл
         docNum = $x("//div[text()='Номер заявки']/parent::div/div[contains(@class, 'description')]").getText();
@@ -142,7 +139,7 @@ public class Test_3_07_01 extends Hooks {
         JupyterLabIntegration.uploadTextContent(docNum, WAY_TEST, "docNum.txt");
 
         //На "Начальном экране" формирования запроса нажать "Продолжить"
-        refreshTab("//*[contains(text(), 'Продолжить')]", 60);
+        refreshTabUntilElementIsDisplayed("//*[contains(text(), 'Продолжить')]", 60);
         new GUIFunctions()
                 .clickButton("Продолжить")
                 .waitForElementDisplayed("//div[text()='Шаг 1 из 9']");
@@ -330,7 +327,7 @@ public class Test_3_07_01 extends Hooks {
                 .waitForElementDisplayed("//div[text()='Номер заявки']/parent::div/div[text()='" + docNum + "']");
 
         //На "Начальном экране" формирования запроса нажать "Продолжить"
-        refreshTab("//*[contains(text(), 'Продолжить')]", 60);
+        refreshTabUntilElementIsDisplayed("//*[contains(text(), 'Продолжить')]", 60);
         new GUIFunctions()
                 .clickButton("Продолжить")
                 .waitForElementDisplayed("//div[text()='Шаг 7 из 9']");
@@ -424,7 +421,7 @@ public class Test_3_07_01 extends Hooks {
                 .waitForElementDisplayed("//div[text()='Номер заявки']/parent::div/div[text()='" + docNum + "']");
 
         //На "Начальном экране" формирования запроса нажать "Продолжить"
-        refreshTab("//*[contains(text(), 'Продолжить')]", 60);
+        refreshTabUntilElementIsDisplayed("//*[contains(text(), 'Продолжить')]", 60);
         new GUIFunctions()
                 .clickButton("Продолжить")
                 .waitForElementDisplayed("//div[text()='Шаг 9 из 9']");
@@ -482,7 +479,7 @@ public class Test_3_07_01 extends Hooks {
                 .waitForElementDisplayed("//div[text()='Номер заявки']/parent::div/div[text()='" + docNum + "']");
 
         //На "Начальном экране" формирования запроса нажать "Продолжить"
-        refreshTab("//*[contains(text(), 'Продолжить')]", 60);
+        refreshTabUntilElementIsDisplayed("//*[contains(text(), 'Продолжить')]", 60);
         new GUIFunctions()
                 .clickButton("Продолжить")
                 .waitForElementDisplayed("//div[text()='Шаг 9 из 9']");
@@ -534,7 +531,7 @@ public class Test_3_07_01 extends Hooks {
                 .waitForElementDisplayed("//div[text()='Номер заявки']/parent::div/div[text()='" + docNum + "']");
 
         //На "Начальном экране" формирования запроса нажать "Продолжить"
-        refreshTab("//*[contains(text(), 'Продолжить')]", 60);
+        refreshTabUntilElementIsDisplayed("//*[contains(text(), 'Продолжить')]", 60);
         new GUIFunctions()
                 .clickButton("Продолжить")
                 .waitForElementDisplayed("//div[text()='Шаг 9 из 9']");
@@ -590,13 +587,40 @@ public class Test_3_07_01 extends Hooks {
                 .waitForElementDisplayed("//div[text()='Номер заявки']/parent::div/div[text()='" + docNum + "']");
 
         //На "Начальном экране" формирования запроса нажать "Продолжить"
-        refreshTab("//*[contains(text(), 'Продолжить')]", 60);
+        refreshTabUntilElementIsDisplayed("//*[contains(text(), 'Продолжить')]", 60);
         new GUIFunctions()
                 .clickButton("Продолжить")
                 .waitForElementDisplayed("//div[text()='Шаг 9 из 9']");
     }
 
-    public void refreshTab(String expectedXpath, int times) {
+//    public void refreshTab(String expectedXpath, int times) {
+//        if (!$x(expectedXpath).isDisplayed()) {
+//            System.out.println("Refreshing...");
+//        }
+//        for (int i = 0; i < times; i++) {
+//            if ($x(expectedXpath).isDisplayed()) {
+//                break;
+//            }
+//            refresh();
+//            new GUIFunctions().waitForLoading();
+//            CommonFunctions.wait(1);
+//        }
+//    }
+
+    private static void deleteFileIfExists(File file) {
+        if(file.exists()) {
+            System.out.print("Временный файл обнаружен");
+            file.delete();
+            System.out.println(" и успешно удален");
+        } else {
+            System.out.println("Временный файл не обнаружен, удаление не требуется");
+        }
+    }
+
+    /**
+     * Костыль: обновлять страницу, пока не появится кнопка "Продолжить"
+     */
+    private static void refreshTabUntilElementIsDisplayed(String expectedXpath, int times) {
         if (!$x(expectedXpath).isDisplayed()) {
             System.out.println("Refreshing...");
         }
@@ -610,13 +634,12 @@ public class Test_3_07_01 extends Hooks {
         }
     }
 
-    private static void deleteFileIfExists(File file) {
-        if(file.exists()) {
-            System.out.print("Временный файл обнаружен");
-            file.delete();
-            System.out.println(" и успешно удален");
-        } else {
-            System.out.println("Временный файл не обнаружен, удаление не требуется");
+    /**
+     * Костыль: если страница с номером заявки проскакивается - кликаем по ссылке с необходимым типом заявки
+     */
+    private static void clickRequestLinkIfRequestNumberPageIsSkipped(String requestName) {
+        if ($x("//button[contains(text(),'" + requestName + "')]").isDisplayed()) {
+            new GUIFunctions().clickByLocator("//button[contains(text(),'" + requestName + "')]");
         }
     }
 
