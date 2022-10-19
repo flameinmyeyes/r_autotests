@@ -4,6 +4,7 @@ import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.common.DateFunctions;
+import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
@@ -13,13 +14,15 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
 import java.awt.*;
+import java.util.Properties;
+
 import static com.codeborne.selenide.Selenide.*;
 
 public class Test_01_07_11_1 extends Hooks {
 
     private String WAY_TEST = Ways.TEST.getWay() + "/apk/Test_01_07_11_1/";
-//    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_01_07_11_1_properties.xml";
-//    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_01_07_11_1_properties.xml";
+    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     public String requestNumber;
 
     @Owner(value = "Петрищев Руслан")
@@ -123,47 +126,72 @@ public class Test_01_07_11_1 extends Hooks {
                 .inField("ОКВЭД2").selectValue("01.11\u00a0Выращивание зерновых (кроме риса), зернобобовых культур и семян масличных культур")
                     .assertValue("01.11 Выращивание зерновых (кроме риса), зернобобовых культур и семян масличных культур")
                 .inField("Признак вида деятельности").assertValue("Основной")
-                .inField("Код типа вида деятельности").inputValue("1221").assertValue();
+                .inField("Код типа вида деятельности").inputValue(P.getProperty("Подтверждение сведений заявителем.Код типа вида деятельности")).assertValue();
 
         new GUIFunctions().clickButton("Сохранить");
 
         new GUIFunctions()
-                .inField("Код по ОКОПФ").inputValue("12247").assertValue()
-                .inField("Наименование по ОКОПФ").inputValue("Частные учреждения").assertValue()
-                .inField("Код по ОКПО").inputValue("12345678").assertValue()
-                .inField("Код по ОКТМО").inputValue("12345678901").assertValue()
-                .inField("Почтовый индекс").inputValue("123456").assertValue()
-                .inField("Дата постановки на налоговый учёт").inputValue("01.08.2022").assertValue()
-                .inField("Наименование субъекта Российской Федерации").selectValue("Новгородская область").assertValue()
-                .inField("Тип населенного пункта").inputValue("город").assertValue()
-                .inField("Наименование населенного пункта").selectValue("Населенный пункт").assertValue()
-                .inField("Тип элемента планировочной структуры").inputValue("улица").assertValue()
-                .inField("Наименование элемента планировочной структуры").inputValue("Волкова").assertValue()
-                .inField("Тип элемента улично-дорожной сети").inputValue("дом").assertValue()
-                .inField("Наименование элемента улично-дорожной сети").selectValue("Улица").assertValue()
-                .inField("Тип объекта адресации").inputValue("Телевизионная").assertValue()
-                .inField("Тип помещения").inputValue("поле").assertValue()
-                .inField("Номер помещения, расположенного в здании или сооружении").inputValue("10").assertValue()
-                .inField("Цифровое или буквенно-цифровое обозначение объекта адресации").inputValue("108").assertValue()
-                .inField("Номер банковского счета").inputValue("40702810000000000046").assertValue()
-                .inField("БИК банка").selectValue("004525659").assertValue()
-                .inField("Корреспондентский счет").inputValue("30101810100000000722").assertValue();
+                .inField("Код по ОКОПФ").inputValue(P.getProperty("Подтверждение сведений заявителем.Код по ОКОПФ")).assertValue()
+                .inField("Наименование по ОКОПФ").inputValue(P.getProperty("Подтверждение сведений заявителем.Наименование по ОКОПФ")).assertValue()
+                .inField("Код по ОКПО").inputValue(P.getProperty("Подтверждение сведений заявителем.Код по ОКПО")).assertValue()
+                .inField("Код по ОКТМО").inputValue(P.getProperty("Подтверждение сведений заявителем.Код по ОКТМО")).assertValue()
+                .inField("Почтовый индекс").inputValue(P.getProperty("Подтверждение сведений заявителем.Почтовый индекс")).assertValue()
+                .inField("Дата постановки на налоговый учёт").inputValue(P.getProperty("Подтверждение сведений заявителем.Дата постановки на налоговый учёт")).assertValue()
+                .inField("Наименование субъекта Российской Федерации").selectValue(P.getProperty("Подтверждение сведений заявителем.Наименование субъекта Российской Федерации")).assertValue()
+                .inField("Тип населенного пункта").inputValue(P.getProperty("Подтверждение сведений заявителем.Тип населенного пункта")).assertValue()
+                .inField("Наименование населенного пункта").selectValue(P.getProperty("Подтверждение сведений заявителем.Наименование населенного пункта")).assertValue()
+                .inField("Тип элемента планировочной структуры").inputValue(P.getProperty("Подтверждение сведений заявителем.Тип элемента планировочной структуры")).assertValue()
+                .inField("Наименование элемента планировочной структуры").inputValue(P.getProperty("Подтверждение сведений заявителем.Наименование элемента планировочной структуры")).assertValue()
+                .inField("Тип элемента улично-дорожной сети").inputValue(P.getProperty("Подтверждение сведений заявителем.Тип элемента улично-дорожной сети")).assertValue()
+                .inField("Наименование элемента улично-дорожной сети").selectValue(P.getProperty("Подтверждение сведений заявителем.Наименование элемента улично-дорожной сети")).assertValue()
+                .inField("Тип объекта адресации").inputValue(P.getProperty("Подтверждение сведений заявителем.Тип объекта адресации")).assertValue()
+                .inField("Тип помещения").inputValue(P.getProperty("Подтверждение сведений заявителем.Тип помещения")).assertValue()
+                .inField("Номер помещения, расположенного в здании или сооружении").inputValue(P.getProperty("Подтверждение сведений заявителем.Номер помещения")).assertValue()
+                .inField("Цифровое или буквенно-цифровое обозначение объекта адресации").inputValue(P.getProperty("Подтверждение сведений заявителем.Цифровое или буквенно-цифровое обозначение")).assertValue()
+                .inField("Номер банковского счета").inputValue(P.getProperty("Подтверждение сведений заявителем.Номер банковского счета")).assertValue()
+                .inField("БИК банка").selectValue(P.getProperty("Подтверждение сведений заявителем.БИК банка")).assertValue()
+                .inField("Корреспондентский счет").inputValue(P.getProperty("Подтверждение сведений заявителем.Корреспондентский счет")).assertValue();
 
         new GUIFunctions().inContainer("Данные о руководителе / уполномоченном лице компании")
-                .inField("ИНН").inputValue("123456789012").assertValue()
-                .inField("СНИЛС").inputValue("12345678901").assertValue()
-                .inField("Телефон").inputValue("71234567890").assertValue("+7(712)345-67-89")
-                .inField("Добавочный номер ").inputValue("20").assertValue();
+                .inField("ИНН").inputValue(P.getProperty("Подтверждение сведений заявителем.Данные о руководителе.ИНН")).assertValue()
+                .inField("СНИЛС").inputValue(P.getProperty("Подтверждение сведений заявителем.Данные о руководителе.СНИЛС")).assertValue()
+                .inField("Телефон").inputValue("71234567890+").assertValue("+7(712)345-67-89")
+                .inField("Добавочный номер ").inputValue(P.getProperty("Подтверждение сведений заявителем.Данные о руководителе.Добавочный номер")).assertValue();
 
         new GUIFunctions().inContainer("Контактные данные лица, ответственного за работу в ГИИС \"Электронный бюджет\"")
-                .inField("ФИО").selectValue("фва\u00a0ыва\u00a0ва").assertValue("фва ыва ва")
+                .inField("ФИО").selectValue(P.getProperty("Подтверждение сведений заявителем.Контактные данные.ФИО1") + " " +
+                                            P.getProperty("Подтверждение сведений заявителем.Контактные данные.ФИО2") + " " +
+                                            P.getProperty("Подтверждение сведений заявителем.Контактные данные.ФИО3"))
+                               .assertValue(P.getProperty("Подтверждение сведений заявителем.Контактные данные.ФИО1") + " " +
+                                            P.getProperty("Подтверждение сведений заявителем.Контактные данные.ФИО2") + " " +
+                                            P.getProperty("Подтверждение сведений заявителем.Контактные данные.ФИО3"))
                 .inField("Телефон").inputValue("71234567890").assertValue("+7(712)345-67-89");
 
         new GUIFunctions().inContainer("Направление заявки на регистрацию уполномоченных лиц участника системы")
-                .inField("Ввод данных (ФИО)").selectValue("Антонов\u00a0Антон\u00a0Антонович").assertValue("Антонов Антон Антонович")
-                .inField("Согласование (ФИО)").selectValue("Антонов\u00a0Антон\u00a0Антонович").assertValue("Антонов Антон Антонович")
-                .inField("Утверждение (ФИО)").selectValue("Антонов\u00a0Антон\u00a0Антонович").assertValue("Антонов Антон Антонович")
-                .inField("Просмотр (ФИО)").selectValue("Антонов\u00a0Антон\u00a0Антонович").assertValue("Антонов Антон Антонович");
+                .inField("Ввод данных (ФИО)").selectValue(P.getProperty("Подтверждение сведений заявителем.Направление заявки.Ввод данных1") + " " +
+                                                          P.getProperty("Подтверждение сведений заявителем.Направление заявки.Ввод данных2") + " " +
+                                                          P.getProperty("Подтверждение сведений заявителем.Направление заявки.Ввод данных3"))
+                                             .assertValue(P.getProperty("Подтверждение сведений заявителем.Направление заявки.Ввод данных1") + " " +
+                                                          P.getProperty("Подтверждение сведений заявителем.Направление заявки.Ввод данных2") + " " +
+                                                          P.getProperty("Подтверждение сведений заявителем.Направление заявки.Ввод данных3"))
+                .inField("Согласование (ФИО)").selectValue(P.getProperty("Подтверждение сведений заявителем.Направление заявки.Согласование1") + " " +
+                                                           P.getProperty("Подтверждение сведений заявителем.Направление заявки.Согласование2") + " " +
+                                                           P.getProperty("Подтверждение сведений заявителем.Направление заявки.Согласование3"))
+                                              .assertValue(P.getProperty("Подтверждение сведений заявителем.Направление заявки.Согласование1") + " " +
+                                                           P.getProperty("Подтверждение сведений заявителем.Направление заявки.Согласование2") + " " +
+                                                           P.getProperty("Подтверждение сведений заявителем.Направление заявки.Согласование3"))
+                .inField("Утверждение (ФИО)").selectValue(P.getProperty("Подтверждение сведений заявителем.Направление заявки.Утверждение1") + " " +
+                                                          P.getProperty("Подтверждение сведений заявителем.Направление заявки.Утверждение2") + " " +
+                                                          P.getProperty("Подтверждение сведений заявителем.Направление заявки.Утверждение3"))
+                                             .assertValue(P.getProperty("Подтверждение сведений заявителем.Направление заявки.Утверждение1") + " " +
+                                                          P.getProperty("Подтверждение сведений заявителем.Направление заявки.Утверждение2") + " " +
+                                                          P.getProperty("Подтверждение сведений заявителем.Направление заявки.Утверждение3"))
+                .inField("Просмотр (ФИО)").selectValue(P.getProperty("Подтверждение сведений заявителем.Направление заявки.Просмотр1") + " " +
+                                                       P.getProperty("Подтверждение сведений заявителем.Направление заявки.Просмотр2") + " " +
+                                                       P.getProperty("Подтверждение сведений заявителем.Направление заявки.Просмотр3"))
+                                          .assertValue(P.getProperty("Подтверждение сведений заявителем.Направление заявки.Просмотр1") + " " +
+                                                       P.getProperty("Подтверждение сведений заявителем.Направление заявки.Просмотр2") + " " +
+                                                       P.getProperty("Подтверждение сведений заявителем.Направление заявки.Просмотр3"));
 
         String currentTime = DateFunctions.dateToday("dd.MM.yyyy");
 
@@ -181,7 +209,7 @@ public class Test_01_07_11_1 extends Hooks {
         CommonFunctions.printStep();
 
         new GUIFunctions().clickButton("Подписать электронной подписью")
-                .inField("Выберите сертификат").selectValue("Ермухамбетова Балсикер Бисеньевна от 18.01.2022").assertValue()
+                .inField("Выберите сертификат").selectValue(P.getProperty("Подписание Заявки электронной подписью.Выберите сертификат")).assertValue()
                 .clickButton("Подписать")
                 .waitForElementDisplayed("//*[text()='Подписано']")
                 .clickButton("Далее")
