@@ -50,7 +50,7 @@ public class Test_04_07_01 extends Hooks {
         //Ввести логин и пароль
         open("https://lk.t.exportcenter.ru/ru/promo-service?key=pavilion&serviceId=a546931c-0eb9-4545-853a-8a683c0924f7&next_query=true");
         new GUIFunctions()
-                .authorization(PROPERTIES.getProperty("Авторизация.Email"), PROPERTIES.getProperty("Авторизация.Пароль"), PROPERTIES.getProperty("Авторизация.Код"))
+                .authorization(PROPERTIES.getProperty("Сведения о демонстрационно-дегустационном павильоне.Email"), PROPERTIES.getProperty("Сведения о демонстрационно-дегустационном павильоне.Пароль"), PROPERTIES.getProperty("Сведения о демонстрационно-дегустационном павильоне.Код"))
                 .waitForElementDisplayed("//*[text()='Господдержка. Демонстрационно-дегустационные павильоны АПК']")
                 .closeAllPopupWindows()
                 .clickByLocator("//button[text()='Субсидия на продвижение продукции АПК']");
@@ -75,7 +75,7 @@ public class Test_04_07_01 extends Hooks {
                 .waitForElementDisplayed("//*[text()='Страна нахождения павильона']")
                 .closeAllPopupWindows();
 
-        new GUIFunctions().inField("Страна нахождения павильона").selectValue(PROPERTIES.getProperty("Авторизация.Страна нахождения павильона")).assertValue();
+        new GUIFunctions().inField("Страна нахождения павильона").selectValue(PROPERTIES.getProperty("Сведения о демонстрационно-дегустационном павильоне.Страна нахождения павильона")).assertValue();
 
         new GUIFunctions().clickButton("Далее")
                 .waitForElementDisplayed("//*[text()='Сведения о демонстрационно-дегустационном павильоне']");
