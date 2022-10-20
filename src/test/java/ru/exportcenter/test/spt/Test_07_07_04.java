@@ -36,7 +36,7 @@ public class Test_07_07_04 extends Hooks {
     public void steps() throws AWTException {
         precondition();
         step01();
-      step02();
+        step02();
     }
 
     @AfterMethod
@@ -107,7 +107,7 @@ public class Test_07_07_04 extends Hooks {
 //                .inputInSearchField("Страна", PROPERTIES.getProperty("Страна"));
 //                .inField("Страна").selectValue(PROPERTIES.getProperty("Страна"));
 
-  //      $("//input[@class='KrDropdown_input__1h8gb KrDropdown_inputPointer__CFf-G']").setValue(PROPERTIES.getProperty("Страна"));
+        //      $("//input[@class='KrDropdown_input__1h8gb KrDropdown_inputPointer__CFf-G']").setValue(PROPERTIES.getProperty("Страна"));
 
 
 
