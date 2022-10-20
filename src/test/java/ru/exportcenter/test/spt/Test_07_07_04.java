@@ -100,9 +100,18 @@ public class Test_07_07_04 extends Hooks {
     public void step02() {
         CommonFunctions.printStep();
 
+
+        new GUIFunctions() .inField("Наименование").inputValue(PROPERTIES.getProperty("Наименование"));
+
+//        new GUIFunctions()
+//                .inputInSearchField("Страна", PROPERTIES.getProperty("Страна"));
+//                .inField("Страна").selectValue(PROPERTIES.getProperty("Страна"));
+
+  //      $("//input[@class='KrDropdown_input__1h8gb KrDropdown_inputPointer__CFf-G']").setValue(PROPERTIES.getProperty("Страна"));
+
+
+
         new GUIFunctions()
-                .inField("Наименование").inputValue(PROPERTIES.getProperty("Наименование"))
-                .inField("Страна").selectValue(PROPERTIES.getProperty("Страна"))
                 .inField("Адрес по контракту (договору) на русском или английском языке").inputValue(PROPERTIES.getProperty("Адрес по контракту"))
                 .clickButton("Продолжить")
                 .waitForLoading()
