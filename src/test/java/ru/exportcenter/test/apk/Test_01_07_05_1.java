@@ -60,15 +60,16 @@ public class Test_01_07_05_1 extends Hooks {
         //Выбрать вкладку «Государственные»
         new GUIFunctions()
                 .clickByLocator("//div[@data-history-code-translit='Государственные']")
-                .inputInSearchField("Поиск по разделу", "Господдержка. Сертификация продукции АПК");
+                .inputInSearchField("Поиск по разделу", "Господдержка. Сертификация продукции АПК")
+                .closeAllPopupWindows();
 
 //        String infoText = $x("//div[@class='col-12 pb-2']").getText();
 //        System.out.println(infoText);
 
         //Нажать кнопу "Оформить"
-        new GUIFunctions().openSearchResult("Господдержка. Сертификация продукции АПК", "Оформить");
-        switchTo().window(1);
         new GUIFunctions()
+                .openSearchResult("Господдержка. Сертификация продукции АПК", "Оформить")
+                .switchPageTo(1)
                 .waitForLoading()
                 .waitForElementDisplayed("//*[contains(text(),'Сертификация продукции АПК')]")
                 .closeAllPopupWindows();
