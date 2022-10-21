@@ -72,6 +72,7 @@ public class Test_01_07_11_1 extends Hooks {
         //Нажать на кнопку «Далее»
         new GUIFunctions().closeAllPopupWindows()
                 .clickButton("Далее")
+                .waitForLoading()
                 .waitForElementDisplayed("//*[text()='Сведения о затратах']");
 
     }
