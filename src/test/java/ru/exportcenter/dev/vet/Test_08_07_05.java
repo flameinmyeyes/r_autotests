@@ -20,17 +20,17 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.refresh;
 
-public class Test_08_07_04 extends Hooks {
+public class Test_08_07_05 extends Hooks {
 
-    public String WAY_TEST = Ways.TEST.getWay() + "/vet/Test_08_07_04/";
-    public String WAY_TO_PROPERTIES = Ways.TEST.getWay() + "/vet/Test_08_07_04/" + "Test_08_07_04_properties.xml";
+    public String WAY_TEST = Ways.TEST.getWay() + "/vet/Test_08_07_05/";
+    public String WAY_TO_PROPERTIES = Ways.TEST.getWay() + "/vet/Test_08_07_05/" + "Test_08_07_05_properties.xml";
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
 
 
     @Owner(value = "Селедцов Вадим")
-    @Description("08.07.04 Внести изменение в действующее разрешение в заявку")
-    @Link(name = "Test_08_07_04", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=175275595")
+    @Description("08.07.05 Новая заявка. Тип продукции - рыба и морепродукты")
+    @Link(name = "Test_08_07_05", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=170230743")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
         precondition();
@@ -58,14 +58,14 @@ public class Test_08_07_04 extends Hooks {
 
     }
 
-    @Step("Переход на карточку \"Тип услуги\" ")
+    @Step("Ввод данных в карточку Тип услуги")
     public void step01() {
         CommonFunctions.printStep();
 
         //В поле Выберите тип услуги выбрать Оформить новое разрешение  Нажать "Продолжить"
         new GUIFunctions()
                 .inContainer("Тип услуги")
-                .inField("Выберите тип услуги").clickByLocator("//span[text()='Внести изменения в действующее разрешение']")
+                .inField("Выберите тип услуги").clickByLocator("//span[text()='Оформить новое разрешение']")
                 .inContainer("Запрос разрешения на вывоз подконтрольной продукции")
                 .clickButton("Продолжить")
                 .waitForLoading()
@@ -73,18 +73,14 @@ public class Test_08_07_04 extends Hooks {
 
     }
 
-    @Step("Переход на карточку \"Поиск действующего разрешения\"")
+    @Step("Ввод данных в карточку \"Информация о продукции\" ")
     public void step02() {
         CommonFunctions.printStep();
 
-
+        //В поле Тип продукции выбрать Живые животные
         new GUIFunctions()
-                .inContainer("Поиск действующего разрешения")
-                .inField("Страна импортер").selectValue(P.getProperty("Страна импортер")).assertNoControl().assertValue()
-                .inField("Тип продукции").selectValue(P.getProperty("Тип продукции")).assertNoControl().assertValue()
-                .inField("Продукция").selectValue(P.getProperty("Продукция")).assertNoControl().assertValue()
-                .inField("Вид продукции").selectValue(P.getProperty("Вид продукции")).assertNoControl().assertValue()
-                .inField("Укажите предприятие (места хранения/отгрузки)").selectValue("RU033")
+                .inContainer("Информация о продукции")
+                .inField("Тип продукции").selectValue("Рыба и морепродукты").assertNoControl().assertValue()
                 .inContainer("Запрос разрешения на вывоз подконтрольной продукции")
                 .clickButton("Продолжить")
                 .waitForLoading()
@@ -97,11 +93,13 @@ public class Test_08_07_04 extends Hooks {
                 .inContainer("Добавление продукции")
                 .inField("Продукция").selectValue(P.getProperty("Продукция")).assertNoControl().assertValue()
                 .inField("Вид продукции").selectValue(P.getProperty("Вид продукции")).assertNoControl().assertValue()
-                .inField("Номер документа СИТЕС").inputValue(P.getProperty("Номер документа СИТЕС")).assertNoControl().assertValue()
-                .inField("Единица измерения").selectValue(P.getProperty("Единица измерения")) //ассерт глючит на этом поле
-                .inField("Количество в выбранных единицах").inputValue(P.getProperty("Количество в выбранных единицах")).assertNoControl().assertValue()
-                .inField("Выберите одного или несколько производителей").selectValue("RU-033/VH03882 123 Российская Федерация, Владимирская обл., г. Владимир")
-                .inField("Укажите информацию о продукции, которую считаете необходимо сообщить дополнительно").inputValue(P.getProperty("Укажите информацию о продукции, которую считаете необходимо сообщить дополнительно")).assertNoControl().assertValue()
+                .clickByLocator("//span[text()='Без выгрузки на берегу']")
+                .waitForElementDisplayed("//span[contains(text(), 'По данным Россельхознадзора оформление разрешения')]")
+                .clickByLocator("//span[text()='С выгрузкой на берегу']")
+                .inField("Район вылова водных биологических ресурсов (ВБР)").selectValue(P.getProperty("Район вылова водных биологических ресурсов (ВБР)")).assertNoControl().assertValue()
+
+
+
                 .clickButton("Сохранить");
         //Нажать кнопку "продолжить"
         new GUIFunctions()
@@ -226,4 +224,5 @@ public class Test_08_07_04 extends Hooks {
             CommonFunctions.wait(1);
         }
     }
+
 }
