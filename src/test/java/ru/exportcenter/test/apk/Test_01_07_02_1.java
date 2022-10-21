@@ -60,7 +60,8 @@ public class Test_01_07_02_1 extends Hooks {
         //Выбрать вкладку «Государственные»
         new GUIFunctions()
                 .clickByLocator("//div[@data-history-code-translit='Государственные']")
-                .inputInSearchField("Поиск по разделу", "Господдержка. Сертификация продукции АПК");
+                .inputInSearchField("Поиск по разделу", "Господдержка. Сертификация продукции АПК")
+                .closeAllPopupWindows();
     }
 
     @Step("Получение информации о сервисе")
