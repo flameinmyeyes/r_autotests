@@ -71,6 +71,8 @@ public class Test_01_07_02_1 extends Hooks {
         new GUIFunctions()
                 .openSearchResult("Господдержка. Сертификация продукции АПК", "Подробнее")
                 .waitForLoading()
+                .closeAllPopupWindows()
+
                 .scrollTo($x("//a[@href='#description']"))
                 .clickButton("Описание")
                 .scrollTo($x("//a[@href='#howto']"))
