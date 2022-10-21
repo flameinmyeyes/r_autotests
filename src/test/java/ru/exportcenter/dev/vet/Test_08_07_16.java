@@ -1,10 +1,12 @@
 package ru.exportcenter.dev.vet;
 
+import com.codeborne.selenide.SelenideElement;
 import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
+import functions.gui.ext.Wait;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -13,35 +15,31 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
 
+
+import java.io.File;
 import java.util.Properties;
 
 import static com.codeborne.selenide.Condition.exist;
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.refresh;
+import static com.codeborne.selenide.Selenide.*;
+import static functions.file.FileFunctions.searchFileInDefaultDownloadDir;
 
-public class Test_08_07_04 extends Hooks {
+public class Test_08_07_16 extends Hooks {
 
-    public String WAY_TEST = Ways.TEST.getWay() + "/vet/Test_08_07_04/";
-    public String WAY_TO_PROPERTIES = Ways.TEST.getWay() + "/vet/Test_08_07_04/" + "Test_08_07_04_properties.xml";
+    public String WAY_TEST = Ways.TEST.getWay() + "/vet/Test_08_07_16/";
+    public String WAY_TO_PROPERTIES = Ways.TEST.getWay() + "/vet/Test_08_07_16/" + "Test_08_07_16_properties.xml";
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
 
 
     @Owner(value = "Селедцов Вадим")
-    @Description("08.07.04 Внести изменение в действующее разрешение в заявку")
-    @Link(name = "Test_08_07_04", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=175275595")
+    @Description("08.07.16 Общий отчет")
+    @Link(name = "Test_08_07_16", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=183200561")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
         precondition();
         step01();
         step02();
-        step03();
-        step04();
-        step05();
-        step06();
-        step07();
-        step08();
     }
 
     @AfterMethod
@@ -52,63 +50,53 @@ public class Test_08_07_04 extends Hooks {
     @Step("Авторизация")
     public void precondition() {
         //Предусловие: выполнить шаги 1-4 из ТК https://confluence.exportcenter.ru/pages/viewpage.action?pageId=163308618
-        Test_08_07_01 test_08_07_01 = new Test_08_07_01();
-        test_08_07_01.WAY_TEST = this.WAY_TEST;
-        test_08_07_01.steps();
+        Test_08_07_15 test_08_07_15 = new Test_08_07_15();
+        test_08_07_15.WAY_TEST = this.WAY_TEST;
+        test_08_07_15.steps();
 
     }
 
-    @Step("Переход на карточку \"Тип услуги\" ")
+    @Step("Ввод данных в карточку \"Тип услуги\" ")
     public void step01() {
         CommonFunctions.printStep();
 
         //В поле Выберите тип услуги выбрать Оформить новое разрешение  Нажать "Продолжить"
         new GUIFunctions()
-                .inContainer("Тип услуги")
-                .inField("Выберите тип услуги").clickByLocator("//span[text()='Внести изменения в действующее разрешение']")
                 .inContainer("Запрос разрешения на вывоз подконтрольной продукции")
-                .clickButton("Продолжить")
+                .clickByLocator("//a[text()='Сформировать отчет']")
                 .waitForLoading()
-                .waitForElementDisplayed("//div[text()='Шаг 2 из 9']");
+                .inContainer("Выбор отчёта")
+                .waitForElementDisplayed("//span[text()='Общий']");
 
     }
 
-    @Step("Переход на карточку \"Поиск действующего разрешения\"")
+    @Step("В поле Выбор отчёта, выбираем - Общий ")
     public void step02() {
         CommonFunctions.printStep();
 
 
         new GUIFunctions()
-                .inContainer("Поиск действующего разрешения")
-                .inField("Страна импортер").selectValue(P.getProperty("Страна импортер")).assertNoControl().assertValue()
-                .inField("Тип продукции").selectValue(P.getProperty("Тип продукции")).assertNoControl().assertValue()
-                .inField("Продукция").selectValue(P.getProperty("Продукция")).assertNoControl().assertValue()
-                .inField("Вид продукции").selectValue(P.getProperty("Вид продукции")).assertNoControl().assertValue()
-                .inField("Укажите предприятие (места хранения/отгрузки)").selectValue("RU033")
-                .inContainer("Запрос разрешения на вывоз подконтрольной продукции")
-                .clickButton("Продолжить")
+                .inContainer("Выбор отчёта")
+                .clickByLocator("//span[text()='Общий']")
                 .waitForLoading()
-                .waitForElementDisplayed("//div[text()='Шаг 3 из 9']");
+                .inContainer("Общий отчёт")
+                .clickByLocator("//span[text()='Полный']")
+                .inField("Дата от").inputValue("01.10.2022")
+                .inField("Дата до").inputValue("04.10.2022")
+                .inContainer("Формирование отчетности по разрешениям на вывоз подконтрольной продукции")
+                .clickButton("Далее")
+                .waitForElementDisplayed("//div[text()='Сформированные отчеты']",360);
 
 
-        //Нажать кнопку "Добавить"
+        //нажать на просмотр общего отчета
         new GUIFunctions()
-                .clickButton("Добавить +")
-                .inContainer("Добавление продукции")
-                .inField("Продукция").selectValue(P.getProperty("Продукция")).assertNoControl().assertValue()
-                .inField("Вид продукции").selectValue(P.getProperty("Вид продукции")).assertNoControl().assertValue()
-                .inField("Номер документа СИТЕС").inputValue(P.getProperty("Номер документа СИТЕС")).assertNoControl().assertValue()
-                .inField("Единица измерения").selectValue(P.getProperty("Единица измерения")) //ассерт глючит на этом поле
-                .inField("Количество в выбранных единицах").inputValue(P.getProperty("Количество в выбранных единицах")).assertNoControl().assertValue()
-                .inField("Выберите одного или несколько производителей").selectValue("RU-033/VH03882 123 Российская Федерация, Владимирская обл., г. Владимир")
-                .inField("Укажите информацию о продукции, которую считаете необходимо сообщить дополнительно").inputValue(P.getProperty("Укажите информацию о продукции, которую считаете необходимо сообщить дополнительно")).assertNoControl().assertValue()
-                .clickButton("Сохранить");
+
+                .inContainer("Сформированные отчеты");
+             //   .clickByLocator("//div[text()='Общий отчет.pdf']")
+        File report = (File) $("//div[text()='Общий отчет.pdf']");
+        System.out.println("done");
+        searchFileInDefaultDownloadDir ("Общий отчет");
         //Нажать кнопку "продолжить"
-        new GUIFunctions()
-                .inContainer("Запрос разрешения на вывоз подконтрольной продукции")
-                .clickButton("Продолжить")
-                .waitForLoading()
-                .waitForElementDisplayed("//div[text()='Шаг 4 из 9']");
     }
 
     @Step("Предзаполненные данные в карточке \"Информация о поставке\" ")
@@ -215,15 +203,4 @@ public class Test_08_07_04 extends Hooks {
 
     }
 
-
-    public void refreshTab(String expectedXpath, int times) {
-        for (int i = 0; i < times; i++) {
-            if ($x(expectedXpath).isDisplayed()) {
-                break;
-            }
-            System.out.println("Refreshing");
-            refresh();
-            CommonFunctions.wait(1);
-        }
-    }
 }

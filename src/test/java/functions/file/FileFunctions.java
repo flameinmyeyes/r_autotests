@@ -463,5 +463,22 @@ public class FileFunctions {
 //        Assert.assertTrue(new File(wayToDownloadFile).exists());
 
     }
+    /**
+     * Найти файл в  дефолтной даунлоад папке, должно работать одинаково и в  винде и в линуксе
+     * @param containsName - часть имени разыскиваемого файла
+     *  пример searchFileInDefaultDownloadDir ("Общий отчет");
+     */
+
+    public static void searchFileInDefaultDownloadDir(String containsName) {
+        System.out.println("Поиск файла с именем, содержащим: " + containsName);
+        File folder = new File(System.getProperty("user.home") +"\\Downloads");
+        for (final File fileEntry : folder.listFiles()) {
+            if (fileEntry.getAbsolutePath().contains(containsName))
+                foundFile = fileEntry;
+        }
+        if (foundFile == null) org.junit.Assert.fail("Файл не найден");
+        System.out.println("Найден файл: " + foundFile);
+
+    }
 
 }
