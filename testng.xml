@@ -67,8 +67,6 @@
     <test name="REC_all_tests_apk" thread-count="1" preserve-order="true">
         <classes>
             <class name="ru.exportcenter.test.apk.Test_01_07_01_1"/>
-            <class name="ru.exportcenter.test.apk.Test_01_07_02_1"/>
-            <class name="ru.exportcenter.test.apk.Test_01_07_05_1"/>
             <class name="ru.exportcenter.test.apk.Test_01_07_05_2"/>
             <class name="ru.exportcenter.test.apk.Test_01_07_09_1"/>
             <class name="ru.exportcenter.test.apk.Test_01_07_10_1"/>
@@ -82,6 +80,8 @@
             <class name="ru.exportcenter.test.apk.Test_02_07_00.Test_02_07_00_1"/>
             <class name="ru.exportcenter.test.apk.Test_02_07_00.Test_02_07_00_2"/>
             <class name="ru.exportcenter.test.apk.Test_02_07_00.Test_02_07_00_3"/>
+            <class name="ru.exportcenter.test.apk.Test_01_07_02_1"/>
+            <class name="ru.exportcenter.test.apk.Test_01_07_05_1"/>
         </classes>
     </test>
 
