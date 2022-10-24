@@ -26,8 +26,8 @@ public class Wait extends ElementData {
         String spinnerLocator = "//*[contains(@class, 'preloader') or contains(@class,'spinner') or contains(@class,'Loader_item') or contains(@class,'animate-spin')]";
         if ($x(spinnerLocator).isDisplayed()) {
 //          Протез "увеличение тайм-оута"
-//            waitForElementDisappeared(spinnerLocator);
-            waitForElementDisappeared(spinnerLocator, 180);
+            waitForElementDisappeared(spinnerLocator);
+//            waitForElementDisappeared(spinnerLocator, 180);
         }
     }
 
