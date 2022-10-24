@@ -66,8 +66,7 @@ public class Test_01_07_44_4 extends Hooks {
         new GUIFunctions()
                 .closeAllPopupWindows()
                 .clickButton("Далее")
-                .waitForLoading()
-                .waitForLoading()
+                .waitForElementDisplayed("//*[text()='Добавить +']", 180)
                 .closeAllPopupWindows()
                 .waitForElementDisplayed("//*[text()='Добавить +']");
     }
