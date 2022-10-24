@@ -25,7 +25,9 @@ public class Wait extends ElementData {
     public void waitForLoading() {
         String spinnerLocator = "//*[contains(@class, 'preloader') or contains(@class,'spinner') or contains(@class,'Loader_item') or contains(@class,'animate-spin')]";
         if ($x(spinnerLocator).isDisplayed()) {
-            waitForElementDisappeared(spinnerLocator);
+//          Протез "увеличение тайм-оута"
+//            waitForElementDisappeared(spinnerLocator);
+            waitForElementDisappeared(spinnerLocator, 180);
         }
     }
 
@@ -41,4 +43,7 @@ public class Wait extends ElementData {
         $x(new XPath(this).getContainerXPath() + xPath).shouldBe(Condition.disappear);
     }
 
+    public void waitForElementDisappeared(String xPath, int seconds) {
+        $x(new XPath(this).getContainerXPath() + xPath).shouldBe(Condition.disappear, Duration.ofSeconds(seconds));
+    }
 }
