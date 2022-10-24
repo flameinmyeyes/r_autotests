@@ -20,7 +20,7 @@ import static com.codeborne.selenide.Selenide.open;
 public class Test_02_07_00_1 extends Hooks {
 
     private String WAY_TEST = Ways.TEST.getWay() + "/apk/Test_02_07_00/Test_02_07_00_1/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_01_07_01_1_properties.xml";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_02_07_00_1_properties.xml";
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     @Owner(value = "Петрищев Руслан")
@@ -41,9 +41,9 @@ public class Test_02_07_00_1 extends Hooks {
         CommonFunctions.printStep();
 
         //Ввести логин и пароль, нажать «Войти»
-        open(P.getProperty("Авторизация.Start_URL"));
+        open("https://mdm.t.exportcenter.ru/");
         new GUIFunctionsLKB()
-                .authorization(P.getProperty("Авторизация.Email"), P.getProperty("Авторизация.Password"))
-                .waitForURL(P.getProperty("Авторизация.Expected_URL"));
+                .authorization("mdm_admin", "password")
+                .waitForURL("https://mdm.t.exportcenter.ru/catalog");
     }
 }

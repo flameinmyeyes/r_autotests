@@ -42,8 +42,8 @@ public class Test_02_07_00_2 extends Hooks {
     public void step01() {
         CommonFunctions.printStep();
 
-        open(P.getProperty("Авторизация в МДМ.Start_URL"));
-        new GUIFunctionsLKB().authorization(P.getProperty("Авторизация в МДМ.Email"), P.getProperty("Авторизация в МДМ.Password"))
-                .waitForURL(P.getProperty("Авторизация в МДМ.Expected_URL"));
+        open("https://bpms.t.exportcenter.ru/main");
+        new GUIFunctionsLKB().authorization("bpmn_admin", "password")
+                .waitForURL("https://bpms.t.exportcenter.ru/main");
     }
 }
