@@ -10,13 +10,14 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
 import java.awt.*;
 import java.util.Properties;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$x;
 
 public class Test_01_07_11_1 extends Hooks {
 
@@ -91,10 +92,12 @@ public class Test_01_07_11_1 extends Hooks {
         //Из выпадающего списка "Основание понесенных затрат" выбрать значение "Требование контракта"
         //Выбрать приложенный файл с устройства формата xlsx и нажать кнопку «Открыть»
         new GUIFunctions().inContainer("Затрата")
-                .inField("Вид затраты, связанной с сертификацией продукции").selectValue("1\u00a0Услуги компетентного органа или уполномоченной организации в стране экспорта по осуществлению процедур оценки соответствия продукции (регистрации, подтверждения соответствия, испытаний, сертификации и других форм оценки соответствия, установленных законодательством иностранного государства или являющихся условием внешнеэкономического контракта)")
-                    .assertValue("1 Услуги компетентного органа или уполномоченной организации в стране экспорта по осуществлению процедур оценки соответствия продукции (регистрации, подтверждения соответствия, испытаний, сертификации и других форм оценки соответствия, установленных законодательством иностранного государства или являющихся условием внешнеэкономического контракта)")
+                .inField("Вид затраты, связанной с сертификацией продукции").selectValue(P.getProperty("Сведения о затратах.Вид затраты1") + " " +
+                                                                                         P.getProperty("Сведения о затратах.Вид затраты2"))
+                                                                            .assertValue(P.getProperty("Сведения о затратах.Вид затраты1") + " " +
+                                                                                         P.getProperty("Сведения о затратах.Вид затраты2"))
                 .waitForElementDisplayed("//*[text()='Шаблон к Затрате 1.xlsm']")
-                .inField("Основание понесенных затрат").selectValue("Требование контракта")
+                .inField("Основание понесенных затрат").selectValue(P.getProperty("Сведения о затратах.Основание понесенных затрат"))
                 .scrollTo("Загрузить шаблон")
                 .uploadFile("Загрузить шаблон", "/share/" + WAY_TEST + "Шаблон 1 - фаст (1).xlsm");
 //                .uploadFile("Загрузить шаблон","C:\\auto-tests\\Шаблон 1 - фаст (1).xlsm");
@@ -116,20 +119,37 @@ public class Test_01_07_11_1 extends Hooks {
 
         //Нажать на кнопку «Далее»
         new GUIFunctions().clickButton("Далее")
-                .waitForElementDisplayed("//*[text()='Сведения о затратах']");
+                .waitForElementDisplayed("//*[text()='Сведения о затратах']", 180);
     }
 
     @Step("Заполнение блока \"Подтверждение сведений заявителем\"")
     public void step05() {
         CommonFunctions.printStep();
 
-        new GUIFunctions().clickByLocator("(//*[text()='Добавить +'])[1]")
-                .inField("ОКВЭД2").selectValue("01.11\u00a0Выращивание зерновых (кроме риса), зернобобовых культур и семян масличных культур")
-                    .assertValue("01.11 Выращивание зерновых (кроме риса), зернобобовых культур и семян масличных культур")
-                .inField("Признак вида деятельности").assertValue("Основной")
-                .inField("Код типа вида деятельности").inputValue(P.getProperty("Подтверждение сведений заявителем.Код типа вида деятельности")).assertValue();
+        new GUIFunctions()
+                .clickByLocator("(//*[text()='Добавить +'])[1]")
+                .inField("ОКВЭД2").selectValue(P.getProperty("Подтверждение сведений заявителем.ОКВЭД2_1") + " " +
+                                               P.getProperty("Подтверждение сведений заявителем.ОКВЭД2_2"))
+                                  .assertValue(P.getProperty("Подтверждение сведений заявителем.ОКВЭД2_1") + " " +
+                                               P.getProperty("Подтверждение сведений заявителем.ОКВЭД2_2"))
+                .inField("Код типа вида деятельности").inputValue(P.getProperty("Подтверждение сведений заявителем.Код типа вида деятельности")).assertValue()
+                .inField("Признак вида деятельности").assertValue(P.getProperty("Подтверждение сведений заявителем.Признак вида деятельности"));
+
+        String NameVed = $x("//*[text()='Наименование ВЭД']/following::textarea").getText();
 
         new GUIFunctions().clickButton("Сохранить");
+
+        Assert.assertEquals(P.getProperty("Подтверждение сведений заявителем.ОКВЭД2_1") + " " +
+                               P.getProperty("Подтверждение сведений заявителем.ОКВЭД2_2"),
+                $x("//tr[contains(@class,'ant-table-row')]/td[1]").getText());
+
+        Assert.assertEquals(NameVed, $x("//tr[contains(@class,'ant-table-row')]/td[2]").getText());
+
+        Assert.assertEquals(P.getProperty("Подтверждение сведений заявителем.Код типа вида деятельности"),
+                $x("//tr[contains(@class,'ant-table-row')]/td[3]").getText());
+
+        Assert.assertEquals(P.getProperty("Подтверждение сведений заявителем.Признак вида деятельности"),
+                $x("//tr[contains(@class,'ant-table-row')]/td[4]").getText());
 
         new GUIFunctions()
                 .inField("Код по ОКОПФ").inputValue(P.getProperty("Подтверждение сведений заявителем.Код по ОКОПФ")).assertValue()
@@ -156,7 +176,7 @@ public class Test_01_07_11_1 extends Hooks {
         new GUIFunctions().inContainer("Данные о руководителе / уполномоченном лице компании")
                 .inField("ИНН").inputValue(P.getProperty("Подтверждение сведений заявителем.Данные о руководителе.ИНН")).assertValue()
                 .inField("СНИЛС").inputValue(P.getProperty("Подтверждение сведений заявителем.Данные о руководителе.СНИЛС")).assertValue()
-                .inField("Телефон").inputValue("71234567890+").assertValue("+7(712)345-67-89")
+//                .inField("Телефон").inputValue("71234567890+").assertValue("+7(712)345-67-89")
                 .inField("Добавочный номер ").inputValue(P.getProperty("Подтверждение сведений заявителем.Данные о руководителе.Добавочный номер")).assertValue();
 
         new GUIFunctions().inContainer("Контактные данные лица, ответственного за работу в ГИИС \"Электронный бюджет\"")
