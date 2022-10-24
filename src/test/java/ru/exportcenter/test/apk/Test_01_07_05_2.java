@@ -34,7 +34,7 @@ public class Test_01_07_05_2 extends Hooks {
     }
 
     @Step("Предусловия")
-    public void precondition() throws AWTException, InterruptedException  {
+    public void precondition() throws AWTException {
         CommonFunctions.printStep();
 
         Test_01_07_01_1 test_01_07_01_1 = new Test_01_07_01_1();
