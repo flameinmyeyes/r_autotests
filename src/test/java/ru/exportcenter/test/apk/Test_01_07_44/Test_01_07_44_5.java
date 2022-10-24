@@ -22,14 +22,14 @@ import static com.codeborne.selenide.Selenide.$x;
 public class Test_01_07_44_5 extends Hooks {
 
     private String WAY_TEST = Ways.TEST.getWay() + "/apk/Test_01_07_44/Test_01_07_44_5/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_01_07_44_4_properties.xml";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_01_07_44_5_properties.xml";
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     @Owner(value = "Петрищев Руслан")
     @Description("01 07 44.5 Проверка типа \"маска\"")
     @Link(name = "Test_01_07_44_5", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=170237336")
     @Test(retryAnalyzer = RunTestAgain.class)
-    public void steps() throws AWTException, InterruptedException {
+    public void steps() throws InterruptedException, AWTException {
         precondition();
         step01();
         step02();
@@ -44,7 +44,7 @@ public class Test_01_07_44_5 extends Hooks {
     }
 
     @Step("Предусловия")
-    public void precondition() throws AWTException, InterruptedException  {
+    public void precondition() throws InterruptedException, AWTException {
         CommonFunctions.printStep();
 
         Test_01_07_05_2 test_01_07_05_2 = new Test_01_07_05_2();
