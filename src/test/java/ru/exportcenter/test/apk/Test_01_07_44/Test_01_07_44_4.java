@@ -66,7 +66,7 @@ public class Test_01_07_44_4 extends Hooks {
         new GUIFunctions()
                 .closeAllPopupWindows()
                 .clickButton("Далее")
-                .waitForElementDisplayed("//*[text()='Добавить +']", 180)
+                .waitForElementDisplayed("//*[text()='Добавить +']", 240)
                 .closeAllPopupWindows()
                 .waitForElementDisplayed("//*[text()='Добавить +']");
     }
@@ -111,6 +111,5 @@ public class Test_01_07_44_4 extends Hooks {
         new GUIFunctions()
                 .scrollTo($x("//*[text()='Дата постановки на налоговый учёт']/following::button[contains(@class,'DateInput')]"))
                 .clickByLocator("//*[text()='Дата постановки на налоговый учёт']/following::button[contains(@class,'DateInput')]");
-
     }
 }
