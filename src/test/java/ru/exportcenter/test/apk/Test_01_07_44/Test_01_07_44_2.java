@@ -17,8 +17,6 @@ import java.awt.*;
 public class Test_01_07_44_2 extends Hooks {
 
     private String WAY_TEST = Ways.TEST.getWay() + "/apk/Test_01_07_44/Test_01_07_44_2/";
-//    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_01_07_44_2_properties.xml";
-//    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     @Owner(value = "Петрищев Руслан")
     @Description("01 07 44.2 Проверка на ограничение количества символов")

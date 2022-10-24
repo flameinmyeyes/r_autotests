@@ -3,6 +3,7 @@ package ru.exportcenter.test.apk.Test_01_07_44;
 import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
+import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
@@ -13,12 +14,13 @@ import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
 import ru.exportcenter.test.apk.Test_01_07_05_2;
 import java.awt.*;
+import java.util.Properties;
 
 public class Test_01_07_44_3 extends Hooks {
 
     private String WAY_TEST = Ways.TEST.getWay() + "/apk/Test_01_07_44/Test_01_07_44_3/";
-//    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_01_07_44_3_properties.xml";
-//    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_01_07_44_3_properties.xml";
+    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     @Owner(value = "Петрищев Руслан")
     @Description("01 07 44.3 Проверка типа \"буквы (кириллица), пробел и тире\"")

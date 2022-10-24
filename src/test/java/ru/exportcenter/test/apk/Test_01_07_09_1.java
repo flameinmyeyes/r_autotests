@@ -18,8 +18,6 @@ import static com.codeborne.selenide.Selenide.*;
 public class Test_01_07_09_1 extends Hooks {
 
     private String WAY_TEST = Ways.TEST.getWay() + "/apk/Test_01_07_09_1/";
-//    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_01_07_01_1_properties.xml";
-//    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     @Owner(value = "Петрищев Руслан")
     @Description("01 07 09.1 Ознакомление с возможностями Сервиса (onboarding)")
