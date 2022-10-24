@@ -52,7 +52,7 @@ public class Test_01_07_44_3 extends Hooks {
         new GUIFunctions()
                 .refreshTab("Продолжить", 10)
                 .clickButton("Продолжить")
-                .waitForElementDisplayed("//*[contains(text(),'Господдержка. Сертификация продукции')]");
+                .waitForElementDisplayed("//*[contains(text(),'Господдержка. Сертификация продукции')]", 240);
     }
 
     @Step("Заполнение блока \"Информация о Заявителе\"")

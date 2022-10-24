@@ -52,7 +52,7 @@ public class Test_01_07_09_1 extends Hooks {
         new GUIFunctions().refreshTab("Продолжить", 10)
                 .clickButton("Продолжить")
                 .waitForLoading()
-                .waitForElementDisplayed("//*[contains(text(),'Сертификация продукции АПК')]");
+                .waitForElementDisplayed("//*[contains(text(),'Сертификация продукции АПК')]", 240);
     }
 
     @Step("Отказ от прохождения onboarding")
