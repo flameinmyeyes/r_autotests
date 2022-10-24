@@ -49,7 +49,7 @@ public class Test_01_07_05_2 extends Hooks {
         open("https://lk.t.exportcenter.ru/ru/promo-service?key=apkNaVr&serviceId=6c3b2323-423a-4428-a152-50b0298b6055&next_query=true");
         new GUIFunctions()
                 .waitForLoading()
-                .waitForElementDisplayed("//*[contains(text(),'Сертификация продукции АПК')]");
+                .waitForElementDisplayed("//*[contains(text(),'Сертификация продукции АПК')]", 180);
 
         if ($x("//button[contains(text(),'Господдержка. Сертификация продукции АПК')]").isDisplayed()){
 
