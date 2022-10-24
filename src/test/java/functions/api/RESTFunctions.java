@@ -660,6 +660,7 @@ public class RESTFunctions {
                     .header("Content-Type", "multipart/form-data") //.header("Content-Type", ContentType.MULTIPART)
                     .multiPart("file", attachmentFile)
                 .when()
+//                    .log().all()
                     .post()
                 .then()
                     .assertThat().statusCode(200)
@@ -736,6 +737,7 @@ public class RESTFunctions {
                 .when()
                     .post()
                 .then()
+//                    .log().all()
                     .assertThat().statusCode(200)
                     .extract().response().toString();
 
@@ -747,6 +749,13 @@ public class RESTFunctions {
         /**
          * 1. Загрузка XML файла
          */
+
+        //
+//        System.out.println("token: " + token);
+//        System.out.println("baseURI: " + baseURI);
+//        System.out.println("processID: " + processID);
+//        System.out.println("attachmentFile: " + attachmentFile);
+        //
         String attachmentID = uploadAttachmentToProcess(token, baseURI, processID, attachmentFile);
 
         /**
@@ -797,6 +806,12 @@ public class RESTFunctions {
         requestBody.put("camundaId", "camunda-exp-search");
         requestBody.put("processVariables", processVariables);
 
+        //
+//        System.out.println("token: " + token);
+//        System.out.println("baseURI: " + baseURI);
+//        System.out.println("processID: " + processID);
+//        System.out.println("requestBody: " + requestBody);
+        //
         String response = sendMessageToProcess(token, baseURI, processID, requestBody);
 
         return response;
