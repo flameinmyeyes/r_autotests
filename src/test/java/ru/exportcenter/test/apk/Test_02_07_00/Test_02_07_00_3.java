@@ -21,9 +21,6 @@ import static com.codeborne.selenide.Selenide.*;
 public class Test_02_07_00_3 extends Hooks {
 
     private String WAY_TEST = Ways.TEST.getWay() + "/apk/Test_02_07_00/Test_02_07_00_3/";
-//    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_01_07_01_1_properties.xml";
-//    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
-//    public String requestNumber = null;
     public String requestNumber = "";
     public String identifier;
 

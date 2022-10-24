@@ -3,6 +3,7 @@ package ru.exportcenter.test.apk.Test_02_07_00;
 import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
+import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import functions.gui.lkb.GUIFunctionsLKB;
 import io.qameta.allure.Description;
@@ -14,14 +15,15 @@ import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
 
 import java.awt.*;
+import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
 public class Test_02_07_00_2 extends Hooks {
 
     private String WAY_TEST = Ways.TEST.getWay() + "/apk/Test_02_07_00/Test_02_07_00_2/";
-//    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_01_07_01_1_properties.xml";
-//    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_02_07_00_2_properties.xml";
+    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     @Owner(value = "Петрищев Руслан")
     @Description("02 07 00.2 Авторизация в bpms")
@@ -40,8 +42,8 @@ public class Test_02_07_00_2 extends Hooks {
     public void step01() {
         CommonFunctions.printStep();
 
-        open("https://bpms.t.exportcenter.ru/main");
-        new GUIFunctionsLKB().authorization("bpmn_admin", "password")
-                .waitForURL("https://bpms.t.exportcenter.ru/main");
+        open(P.getProperty("Авторизация в МДМ.Start_URL"));
+        new GUIFunctionsLKB().authorization(P.getProperty("Авторизация в МДМ.Email"), P.getProperty("Авторизация в МДМ.Password"))
+                .waitForURL(P.getProperty("Авторизация в МДМ.Expected_URL"));
     }
 }

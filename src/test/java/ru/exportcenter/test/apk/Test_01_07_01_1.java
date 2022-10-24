@@ -40,9 +40,9 @@ public class Test_01_07_01_1 extends Hooks {
         CommonFunctions.printStep();
 
         //Ввести логин и пароль, нажать «Войти»
-        open("https://lk.t.exportcenter.ru/ru/login");
+        open(P.getProperty("Авторизация.Start_URL"));
         new GUIFunctions()
                 .authorization(P.getProperty("Авторизация.Email"), P.getProperty("Авторизация.Пароль"), P.getProperty("Авторизация.Код"))
-                .waitForURL("https://lk.t.exportcenter.ru/ru/main");
+                .waitForURL(P.getProperty("Авторизация.Expected_URL"));
     }
 }

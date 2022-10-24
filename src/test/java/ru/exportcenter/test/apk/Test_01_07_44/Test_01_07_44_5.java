@@ -3,6 +3,7 @@ package ru.exportcenter.test.apk.Test_01_07_44;
 import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
+import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
@@ -14,14 +15,15 @@ import ru.exportcenter.Hooks;
 import ru.exportcenter.test.apk.Test_01_07_05_2;
 
 import java.awt.*;
+import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.$x;
 
 public class Test_01_07_44_5 extends Hooks {
 
     private String WAY_TEST = Ways.TEST.getWay() + "/apk/Test_01_07_44/Test_01_07_44_5/";
-//    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_01_07_44_4_properties.xml";
-//    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_01_07_44_4_properties.xml";
+    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     @Owner(value = "Петрищев Руслан")
     @Description("01 07 44.5 Проверка типа \"маска\"")
@@ -78,9 +80,11 @@ public class Test_01_07_44_5 extends Hooks {
 
         new GUIFunctions()
                 .clickButton("Добавить +")
-                .inField("Вид затраты, связанной с сертификацией продукции").selectValue("1\u00a0Услуги компетентного органа или уполномоченной организации в стране экспорта по осуществлению процедур оценки соответствия продукции (регистрации, подтверждения соответствия, испытаний, сертификации и других форм оценки соответствия, установленных законодательством иностранного государства или являющихся условием внешнеэкономического контракта)")
-                    .assertValue("1 Услуги компетентного органа или уполномоченной организации в стране экспорта по осуществлению процедур оценки соответствия продукции (регистрации, подтверждения соответствия, испытаний, сертификации и других форм оценки соответствия, установленных законодательством иностранного государства или являющихся условием внешнеэкономического контракта)")
-                .inField("Основание понесенных затрат").selectValue("Требование контракта")
+                .inField("Вид затраты, связанной с сертификацией продукции").selectValue(P.getProperty("Сведения о затратах.Вид затраты1") + " " +
+                                                                                         P.getProperty("Сведения о затратах.Вид затраты2"))
+                                                                            .assertValue(P.getProperty("Сведения о затратах.Вид затраты1") + " " +
+                                                                                         P.getProperty("Сведения о затратах.Вид затраты2"))
+                .inField("Основание понесенных затрат").selectValue(P.getProperty("Сведения о затратах.Основание понесенных затрат"))
                 .uploadFile("Загрузить шаблон", "/share/" + WAY_TEST + "Шаблон 1 - фаст (1).xlsm");
 //                .uploadFile("Загрузить шаблон", "C:\\auto-tests\\Шаблон 1 - фаст (1).xlsm");
     }
@@ -110,9 +114,9 @@ public class Test_01_07_44_5 extends Hooks {
         new GUIFunctions()
                 .scrollTo($x("//*[text()='Контактные данные лица, ответственного за работу в ГИИС \"Электронный бюджет\"']"))
                 .inContainer("Контактные данные лица, ответственного за работу в ГИИС \"Электронный бюджет\"")
-                .inField("E-mail").inputValue("wor_ld@mai-l.ru").assertValue()
+                .inField("E-mail").inputValue(P.getProperty("Подтверждение сведений заявителем.E-mail1")).assertValue()
                 .clickByLocator("//*[text()='E-mail']/following::button[@name='close']")
-                .inField("E-mail").inputValue("1").assertValue()
+                .inField("E-mail").inputValue(P.getProperty("Подтверждение сведений заявителем.E-mail2")).assertValue()
                 .waitForElementDisplayed("//*[text()='E-mail']/following::*[text()='Укажите e-mail']");
     }
 }

@@ -3,6 +3,7 @@ package ru.exportcenter.test.apk.Test_01_07_44;
 import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
+import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
@@ -14,13 +15,15 @@ import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
 import ru.exportcenter.test.apk.Test_01_07_05_2;
 import java.awt.*;
+import java.util.Properties;
+
 import static com.codeborne.selenide.Selenide.$x;
 
 public class Test_01_07_44_1 extends Hooks {
 
     private String WAY_TEST = Ways.TEST.getWay() + "/apk/Test_01_07_44/Test_01_07_44_1/";
-//    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_01_07_44_1_properties.xml";
-//    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_01_07_44_1_properties.xml";
+    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     @Owner(value = "Петрищев Руслан")
     @Description("01 07 44.1 Проверка на обязательность заполнения поля")
@@ -62,7 +65,12 @@ public class Test_01_07_44_1 extends Hooks {
         new GUIFunctions()
                 .closeAllPopupWindows()
                 .inField("Доверенное лицо").setCheckboxON().assertCheckboxON()
-                .inField("ФИО").selectValue("Антонов\u00a0Антон\u00a0Антонович").assertValue("Антонов Антон Антонович");
+                .inField("ФИО").selectValue(P.getProperty("Информация о Заявителе.ФИО1") + " " +
+                                            P.getProperty("Информация о Заявителе.ФИО2") + " " +
+                                            P.getProperty("Информация о Заявителе.ФИО3"))
+                               .assertValue(P.getProperty("Информация о Заявителе.ФИО1") + " " +
+                                            P.getProperty("Информация о Заявителе.ФИО2") + " " +
+                                            P.getProperty("Информация о Заявителе.ФИО3"));
 
         $x("//*[text()='ФИО']/following::input").click();
         $x("//*[text()='ФИО']/following::input").sendKeys(Keys.LEFT_CONTROL + "a");
