@@ -5,7 +5,7 @@ import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
-import functions.gui.mdm_functions;
+import functions.gui.MDM_Functions;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -31,8 +31,8 @@ public class Test_3_07_07 extends Hooks {
     private final String FILE_NAME_BC_3_3 = "1ResponseSuccessBC3_3.xml";
     private final String FILE_NAME_BC_3_4 = "1ResponseSuccessBC3_4.xml";
 
-//    public String WAY_TO_PROPERTIES = Ways.DEV.getWay() + "/fito/Test_3_07_07/" + "Test_3_07_01_properties.xml";
-//    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
+    public String WAY_TO_PROPERTIES = Ways.DEV.getWay() + "/fito/Test_3_07_07/" + "Test_3_07_07_properties.xml";
+    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     private String processID;
     private String token;
@@ -50,23 +50,23 @@ public class Test_3_07_07 extends Hooks {
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
         step01();
-//        Test_3_07_01 test_3_07_01 = new Test_3_07_01();
-//        test_3_07_01.WAY_TEST = this.WAY_TEST;
-//        test_3_07_01.step01();
-//        test_3_07_01.step03();
-//        test_3_07_01.step04();
-//        test_3_07_01.step05();
-//        test_3_07_01.step06();
-//        test_3_07_01.step07();
-//        test_3_07_01.step08();
-//        test_3_07_01.step09();
-//        test_3_07_01.step10();
-//        test_3_07_01.step11();
-//        test_3_07_01.step12();
-//        test_3_07_01.step13();
-//        step14();
-//        step15();
-//        step16();
+        Test_3_07_01 test_3_07_01 = new Test_3_07_01();
+        test_3_07_01.WAY_TEST = this.WAY_TEST;
+        test_3_07_01.step01();
+        test_3_07_01.step03();
+        test_3_07_01.step04();
+        test_3_07_01.step05();
+        test_3_07_01.step06();
+        test_3_07_01.step07();
+        test_3_07_01.step08();
+        test_3_07_01.step09();
+        test_3_07_01.step10();
+        test_3_07_01.step11();
+        test_3_07_01.step12();
+        test_3_07_01.step13();
+        step14();
+        step15();
+        step16();
     }
 
     @AfterMethod
@@ -78,34 +78,27 @@ public class Test_3_07_07 extends Hooks {
     public void step01() {
         CommonFunctions.printStep();
         //В новой вкладке перейти по ссылке https://mdm.t.exportcenter.ru/catalog/d6f7a2b8-b91b-437c-8645-9744b2aece5c
-        open("https://mdm.t.exportcenter.ru/catalog/d6f7a2b8-b91b-437c-8645-9744b2aece5c");
+        open(P.getProperty("MDM.URL"));
 
-        //Необходимо внести логин/пароль: mdm_admin/password
-        //Необходимо нажать "Войти"
-        new mdm_functions().authorization("mdm_admin", "password");
-
-        //В поле "Укажите поисковый запрос" укажите "Истечение срока ожиданий действий пользователя при подписании заявления (1.8)" и нажмите "Поиск"
-        new mdm_functions().inputInSearchField("Истечение срока ожиданий действий пользователя при подписании заявления (1.8)");
-
-        //Нажмите два раза на поле "Истечение срока ожиданий действий пользователя при подписании заявления (1.8)"
-        new mdm_functions().openSearchResult("Истечение срока ожиданий действий пользователя при подписании заявления (1.8)");
-
-        //Нажать "Изменить"
-        new mdm_functions().clickButtonByText("Изменить");
-
-        //Изменить значения "Тип параметра" - "Время в минутах", "Значение" - "3", "Тип значения" - "Время в минутах"
-        new mdm_functions()
+        new MDM_Functions()
+                //Необходимо внести логин/пароль: mdm_admin/password
+                //Необходимо нажать "Войти"
+                .authorization(P.getProperty("MDM.Email"), P.getProperty("MDM.Пароль"))
+                //В поле "Укажите поисковый запрос" укажите "Истечение срока ожиданий действий пользователя при подписании заявления (1.8)" и нажмите "Поиск"
+                .inputInSearchField("Истечение срока ожиданий действий пользователя при подписании заявления (1.8)")
+                //Нажмите два раза на поле "Истечение срока ожиданий действий пользователя при подписании заявления (1.8)"
+                .openSearchResult("Истечение срока ожиданий действий пользователя при подписании заявления (1.8)")
+                //Нажать "Изменить"
+                .clickButtonByText("Изменить")
+                //Изменить значения "Тип параметра" - "Время в минутах", "Значение" - "3", "Тип значения" - "Время в минутах"
                 .inputValueInField("Тип параметра", "Время в минутах")
                 .inputValueInField("Значение", "3")
-                .selectValueInField("Тип значения", "Время в минутах");
+                .selectValueInField("Тип значения", "Время в минутах")
+                //Нажать "Сохранить"
+                .clickButtonByText("Сохранить")
 
-        //Нажать "Сохранить"
-        new mdm_functions().clickButtonByText("Сохранить");
-
-        CommonFunctions.wait(180);
-
-        //Закрыть справочник
-        closeWindow();
+                //Закрыть справочник
+                .logout();
     }
 
     @Step("Шаг 14. Заявка аннулирована по причине отсутствия действий по его подписанию в течение установленного времени.")
@@ -115,7 +108,6 @@ public class Test_3_07_07 extends Hooks {
         //Нажать на "Закрытие вкладки"
 
         //Подождать 3 минуты
-
 
 
     }
@@ -136,34 +128,28 @@ public class Test_3_07_07 extends Hooks {
     @Step("Шаг 16. Внесение изменений в значения справочника \"Настройка сервиса \"Запрос заключения о карантинном фитосанитарном состоянии\"")
     public void step16() {
         CommonFunctions.printStep();
-
         //В новой вкладке перейти по ссылке https://mdm.t.exportcenter.ru/catalog/d6f7a2b8-b91b-437c-8645-9744b2aece5c
+        open(P.getProperty("MDM.URL"));
 
+        new MDM_Functions()
+                //Необходимо внести логин/пароль: mdm_admin/password
+                //Необходимо нажать "Войти"
+                .authorization(P.getProperty("MDM.Email"), P.getProperty("MDM.Пароль"))
+                //В поле "Укажите поисковый запрос" укажите "Истечение срока ожиданий действий пользователя при подписании заявления (1.8)" и нажмите "Поиск"
+                .inputInSearchField("Истечение срока ожиданий действий пользователя при подписании заявления (1.8)")
+                //Нажмите два раза на поле "Истечение срока ожиданий действий пользователя при подписании заявления (1.8)"
+                .openSearchResult("Истечение срока ожиданий действий пользователя при подписании заявления (1.8)")
+                //Нажать "Изменить"
+                .clickButtonByText("Изменить")
+                //Изменить значения "Тип параметра" - "Количество рабочих дней", "Значение" - "2", "Тип значения" - "Количество рабочих дней"
+                .inputValueInField("Тип параметра", "Количество рабочих дней")
+                .inputValueInField("Значение", "2")
+                .selectValueInField("Тип значения", "Количество рабочих дней")
+                //Нажать "Сохранить"
+                .clickButtonByText("Сохранить")
 
-        //Найти значение "Истечение срока ожиданий действий пользователя при подписании заявления (1.8)"
-
-
-        //Нажать "Изменить"
-
-
-        //Изменить значения "Тип параметра" - "Количество рабочих дней", "Значение" - "2", "Тип значения" - "Количество рабочих дней"
-
-
-        //Нажать "Сохранить"
-
-
-        //Закрыть справочник
-
-    }
-
-    private static void deleteFileIfExists(File file) {
-        if(file.exists()) {
-            System.out.print("Временный файл обнаружен");
-            file.delete();
-            System.out.println(" и успешно удален");
-        } else {
-            System.out.println("Временный файл не обнаружен, удаление не требуется");
-        }
+                //Закрыть справочник
+                .logout();
     }
 
     /**
