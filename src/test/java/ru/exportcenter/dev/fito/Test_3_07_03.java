@@ -62,7 +62,7 @@ public class Test_3_07_03 extends Hooks {
                     .inField("Тип продукции").selectValue(P.getProperty("Добавление продукции.Тип продукции")).assertNoControl().assertValue()
                     .inField("Наименование продукции").inputValue(P.getProperty("Добавление продукции.Наименование продукции")).assertNoControl().assertValue()
                     .inField("Производитель").clickByLocator("//ancestor::div//span[contains(text(),'Российский')][last()]")
-                    .inField("Наименование производителя").selectValue(P.getProperty("Добавление продукции.Наименование производителя")).assertNoControl().assertValue()
+                    .inField("Наименование производителя").selectValue(P.getProperty("Добавление продукции.Наименование производителя").split(" ")[0]).assertNoControl().assertValue(P.getProperty("Добавление продукции.Наименование производителя"))
                     .inField("Дополнительная информация о продукции. Например, страна производства (произрастания) продукции, сорт продукции и т.д.").inputValue(P.getProperty("Добавление продукции.Дополнительная информация о продукции")).assertNoControl().assertValue()
                     .inField("Вес груза (нетто), кг").inputValue(P.getProperty("Добавление продукции.Вес груза (нетто)")).assertNoControl().assertValue()
                     .inField("Особые единицы измерения").selectValue(P.getProperty("Добавление продукции.Особые единицы измерения")).assertNoControl().assertValue()

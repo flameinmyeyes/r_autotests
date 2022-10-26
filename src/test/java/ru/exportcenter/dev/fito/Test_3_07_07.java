@@ -10,6 +10,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
@@ -39,6 +40,7 @@ public class Test_3_07_07 extends Hooks {
     private String baseURI = "http://bpmn-api-service.bpms-dev.d.exportcenter.ru/";
 
     private String docNum;
+    private String docStatus;
     private String guid;
     private String zayavlenieRegistrationNumber;
     private String aktNumber;
@@ -115,13 +117,22 @@ public class Test_3_07_07 extends Hooks {
     @Step("Шаг 15. Проверка смены статуса заявки")
     public void step15() {
         CommonFunctions.printStep();
+        //Открыть основную страницу личного кабинета по ссылке: https://lk.t.exportcenter.ru/ru/login
+        open(P.getProperty("Авторизация.URL"));
 
-        //Открыть основную страницу личного кабинета
+        //Необходимо внести логин/пароль: demo_exporter/password
 
+
+        //Нажать "Войти"
 
         //Нажать на "Показать все"
 
         //В списке найти заявку № (номер заявки) и нажать
+
+
+        docStatus = $x("//div[text()='Статус']/parent::div/div[contains(@class, 'description')]").getText();
+        System.out.println("docStatus: " + docStatus);
+        Assert.assertEquals(docStatus, "Завершено. Отказ клиента");
 
     }
 

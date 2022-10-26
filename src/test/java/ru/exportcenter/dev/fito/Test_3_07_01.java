@@ -28,7 +28,8 @@ public class Test_3_07_01 extends Hooks {
     public String WAY_TEST = Ways.DEV.getWay() + "/fito/Test_3_07_01/";
     private final String WAY_FILES = Ways.DEV.getWay() + "/fito/Test_3_07_01/"; //переменная нужна, т.к. значение WAY_TEST будет меняться при вызове текущего теста из других тестов
     private final String WAY_TEMP_FILE = "src/test/java/ru/exportcenter/dev/fito/";
-    private final String FILE_NAME_BC_1 = "ResponseSuccess1.xml";
+//    private final String FILE_NAME_BC_1 = "ResponseSuccess1.xml";
+    private final String FILE_NAME_BC_1 = "ResponseSuccess1_new.xml";
     private final String FILE_NAME_BC_2 = "1ResponseSuccessBC2.xml";
     private final String FILE_NAME_BC_3_1 = "1ResponseSuccessBC3_1.xml";
     private final String FILE_NAME_BC_3_2 = "1ResponseSuccessBC3_2.xml";
