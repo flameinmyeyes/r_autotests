@@ -20,23 +20,24 @@ import java.util.Properties;
 import static com.codeborne.selenide.Selenide.*;
 import static org.testng.Assert.assertEquals;
 
-public class Test_07_07_04 extends Hooks {
+public class Test_07_07_19 extends Hooks {
 
-    private String WAY_TEST = Ways.TEST.getWay() + "/SPT/Test_07_07_04/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_07_07_04_properties.xml";
+    private String WAY_TEST = Ways.TEST.getWay() + "/SPT/Test_07_07_19/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_07_07_19_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     public String requestNumber;
 
     public boolean trueValue = true;
 
     @Owner(value = "Теребков Андрей")
-    @Description("07.07.04 Выдача сертификата о происхождении товара сертификат СТ-1")
-    @Link(name = "Test_07_07_04", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=175264516")
+    @Description("07.07.19 СТ-1 Узбекистан - СПТ (реэкспорт) + оплата + успешное оформление")
+    @Link(name = "Test_07_07_19", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=188868781")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() throws AWTException {
         precondition();
         step01();
         step02();
+        step03();
     }
 
     @AfterMethod
@@ -86,7 +87,7 @@ public class Test_07_07_04 extends Hooks {
                 .inField("Адрес по контракту (договору) на русском или английском языке").inputValue(PROPERTIES.getProperty("Адрес по контракту"))
                 .waitForLoading();
 
-        $x("//button[text()='Продолжить']").click();
+        repitClick("//div[text()='Информация об условиях поставки']", 20);
 
         new GUIFunctions()
                 .waitForLoading();
@@ -96,39 +97,53 @@ public class Test_07_07_04 extends Hooks {
     public void step02() {
         CommonFunctions.printStep();
 
+        assertEquals(
+                "" + $x("//*[@id='form-open-panel']/div[2]/div/form/div[1]/div/div[2]/div/div/div[3]/div/div[1]/div/label/div[1]/div").exists()
+                , "true"
+        );
 
         new GUIFunctions()
-                .waitForLoading()
-                .inContainer("Информация об условиях поставки")
+                .inField("Наименование").inputValue(PROPERTIES.getProperty("Наименование"))
+                .inField("Страна").selectValue(PROPERTIES.getProperty("Страна"))
+                .inField("Адрес по контракту (договору) на русском или английском языке").inputValue(PROPERTIES.getProperty("Адрес по контракту"));
+
+        repitClick("//div[text()='Маршрут следования']", 20);
+
+        new GUIFunctions().waitForLoading();
+    }
+    @Step("Ввод данных в карточку «Информация о заявителе»  и в карточку «Информация об импортере»")
+    public void step03() {
+        CommonFunctions.printStep();
+        assertEquals(
+                "" + $x("//*[@id='form-open-panel']/div[2]/div/form/div[1]/div/div[2]/div/div/div[3]/div/div[1]/div/label/div[1]/div").exists()
+                , "true"
+        );
+
+        new GUIFunctions()
                 .inField("Наименование").inputValue(PROPERTIES.getProperty("Наименование"))
                 .inField("Страна").selectValue(PROPERTIES.getProperty("Страна"))
                 .inField("Адрес по контракту (договору) на русском или английском языке").inputValue(PROPERTIES.getProperty("Адрес по контракту"))
-                .waitForLoading()
-                .waitForURL("");
+
+        repitClick("//div[text()='Маршрут следования']", 20);
+
+        new GUIFunctions().waitForLoading();
 
 
 
         $x("//button[text()='Продолжить']").click();
-
-        new GUIFunctions()
-                .waitForLoading();
-
-//        assertEquals(
-//                "" + $x("//*[@id='form-open-panel']/div[2]/div/form/div[1]/div/div[2]/div/div/div[3]/div/div[1]/div/label/div[1]/div").exists()
-//                , "true"
-//        );
-
     }
 
-    private void refreshTab(String expectedXpath, int times) {
+    private void repitClick(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
+            System.out.println("repitClick()");
             new functions.gui.GUIFunctions().waitForLoading();
             if($x(expectedXpath).isDisplayed()) {
+                System.out.println("тут");
                 break;
             }
-            refresh();
-            System.out.println("refresh()");
-            CommonFunctions.wait(1);
+            $x("//button[text()='Продолжить']").click();
+            CommonFunctions.wait(2);
         }
     }
+
 }
