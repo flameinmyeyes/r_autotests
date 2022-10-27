@@ -1,7 +1,9 @@
 package functions.gui.ext;
 
 import functions.gui.ElementData;
+import org.openqa.selenium.By;
 
+import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class Click extends ElementData {
@@ -23,13 +25,39 @@ public class Click extends ElementData {
     }
 
     public void openSearchResult(String searchResultName, String buttonName) {
+
+        String[] searchResultPossibleXpaths = {
+                "//*[contains(text(), '" + searchResultName + "')]" +
+                        "//following-sibling::div//descendant::*[contains(text(), '" + buttonName + "')]",
+
+                "//div[@class='js-tabs__block open']//h2[text()='" + searchResultName + "']" +
+                        "/ancestor::div[@class='services__item']//a[text()='" + buttonName + "']",
+
+                "//div[@class='js-tabs__block open']//h2/a[text()='" + searchResultName + "']" +
+                        "/ancestor::div[@class='services__item']//a[text()='" + buttonName + "']"
+        };
+
+        String searchResultXpath = null;
+        for (String searchResultPossibleXpath : searchResultPossibleXpaths) {
+            if ($x(searchResultPossibleXpath).isDisplayed()) {
+                searchResultXpath = searchResultPossibleXpath;
+            }
+        }
+
+        /*
         String searchResultXpath = "//*[contains(text(), '" + searchResultName + "')]" +
                 "//following-sibling::div//descendant::*[contains(text(), '" + buttonName + "')]";
 
         //новый локатор
         if (!$x(searchResultXpath).isDisplayed()) {
-            searchResultXpath = "//div[@class='js-tabs__block open']//h2[text()='" + searchResultName + "']/ancestor::div[@class='services__item']//a[text()='" + buttonName + "']";
+            searchResultXpath = "//div[@class='js-tabs__block open']//h2[text()='" + searchResultName + "']" +
+                    "/ancestor::div[@class='services__item']//a[text()='" + buttonName + "']";
         }
+        if (!$x(searchResultXpath).isDisplayed()) {
+            searchResultXpath = "//div[@class='js-tabs__block open']//h2/a[text()='" + searchResultName + "']" +
+                    "/ancestor::div[@class='services__item']//a[text()='" + buttonName + "']";
+        }
+        */
 
         $x(searchResultXpath).click();
         new Wait().waitForLoading();
