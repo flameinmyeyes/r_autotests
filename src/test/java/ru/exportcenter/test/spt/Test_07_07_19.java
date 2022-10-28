@@ -77,7 +77,7 @@ public class Test_07_07_19 extends Hooks {
         requestNumber = test_07_07_00.requestNumber;
     }
 
-    @Step("Ввод данных в карточку «Информация о заявителе»  и в карточку «Информация об импортере»")
+    @Step("Ввод данных в карточку «Информация о заявителе»  и в карточку «Информация об импортере» [4]")
     public void step01() {
         CommonFunctions.printStep();
 
@@ -93,7 +93,7 @@ public class Test_07_07_19 extends Hooks {
                 .waitForLoading();
     }
 
-    @Step("Ввод данных в карточку «Информация о заявителе»  и в карточку «Информация об импортере»")
+    @Step("Ввод данных в карточку «Информация о заявителе»  и в карточку «Информация об импортере» [6]")
     public void step02() {
         CommonFunctions.printStep();
 
@@ -101,6 +101,12 @@ public class Test_07_07_19 extends Hooks {
                 "" + $x("//*[@id='form-open-panel']/div[2]/div/form/div[1]/div/div[2]/div/div/div[3]/div/div[1]/div/label/div[1]/div").exists()
                 , "true"
         );
+
+        assertEquals(
+                $x("//div[@class='Radio_checkMark__18knp Radio_checkedWrapper__1JyWl']//div[1]").isSelected()
+                , "true"
+        );
+
 
         new GUIFunctions()
                 .inField("Наименование").inputValue(PROPERTIES.getProperty("Наименование"))
@@ -122,11 +128,11 @@ public class Test_07_07_19 extends Hooks {
         new GUIFunctions()
                 .inField("Наименование").inputValue(PROPERTIES.getProperty("Наименование"))
                 .inField("Страна").selectValue(PROPERTIES.getProperty("Страна"))
-                .inField("Адрес по контракту (договору) на русском или английском языке").inputValue(PROPERTIES.getProperty("Адрес по контракту"))
+                .inField("Адрес по контракту (договору) на русском или английском языке").inputValue(PROPERTIES.getProperty("Адрес по контракту"));
 
         repitClick("//div[text()='Маршрут следования']", 20);
 
-        new GUIFunctions().waitForLoading();
+        new GUIFunctions().waitForLoading().waitForURL("");
 
 
 
