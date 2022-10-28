@@ -96,7 +96,7 @@ public class Test_3_07_01 extends Hooks {
 
         //Ввести логин и пароль demo_exporter/password
         new GUIFunctions()
-                .authorization(P.getProperty("Авторизация.Email"), P.getProperty("Авторизация.Пароль"))
+                .authorization(P.getProperty("Авторизация.Email"), P.getProperty("Авторизация.Пароль"), "1234")
                 .waitForURL(P.getProperty("Авторизация.URL") + "/ru/main");
     }
 
