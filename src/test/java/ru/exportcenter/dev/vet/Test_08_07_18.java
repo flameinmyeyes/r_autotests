@@ -1,13 +1,11 @@
 package ru.exportcenter.dev.vet;
 
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
 import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
-import functions.gui.ext.Wait;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -16,32 +14,29 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
 
-
-import java.io.File;
 import java.util.Properties;
 
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$x;
 import static functions.file.FileFunctions.searchFileInDefaultDownloadDir;
 
-public class Test_08_07_16 extends Hooks {
+public class Test_08_07_18 extends Hooks {
 
-    public String WAY_TEST = Ways.TEST.getWay() + "/vet/Test_08_07_16/";
-    public String WAY_TO_PROPERTIES = Ways.TEST.getWay() + "/vet/Test_08_07_16/" + "Test_08_07_16_properties.xml";
+    public String WAY_TEST = Ways.TEST.getWay() + "/vet/Test_08_07_18/";
+    public String WAY_TO_PROPERTIES = Ways.TEST.getWay() + "/vet/Test_08_07_18/" + "Test_08_07_18_properties.xml";
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
 
 
     @Owner(value = "Селедцов Вадим")
-    @Description("08.07.16 Общий отчет")
-    @Link(name = "Test_08_07_16", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=183200561")
+    @Description("08.07.18 Аналитический отчет")
+    @Link(name = "08.07.18", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=183200892")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
         precondition();
         step01();
         step02();
         step03();
+        step04();
     }
 
     @AfterMethod
@@ -72,36 +67,50 @@ public class Test_08_07_16 extends Hooks {
 
     }
 
-    @Step("В поле Выбор отчёта, выбираем - Общий ")
+    @Step("Выбрать тип отчета \"Аналитический\".")
     public void step02() {
         CommonFunctions.printStep();
 
 
         new GUIFunctions()
                 .inContainer("Выбор отчёта")
-                .clickByLocator("//span[text()='Общий']")
+                .clickByLocator("//span[text()='Аналитический']")
                 .waitForLoading()
-                .inContainer("Общий отчёт")
-                .clickByLocator("//span[text()='Полный']")
+                .inContainer("Аналитический отчёт")
+                .clickByLocator("//span[text()='Детализированный']")
                 .inField("Дата от").inputValue("01.10.2022")
                 .inField("Дата до").inputValue("04.10.2022")
+                .clickByLocator("//span[text()='Страна импорта']")
+                .inField("Страна импортер").selectValue("РЕСПУБЛИКА ХОРВАТИЯ")
+                .clickByLocator("//span[text()='Вид продукции']")
+                .clickByLocator("//span[text()='Наименование продукции']")
+
+
+                //span[text()='Скачать архив со всеми сформированными отчётами']
                 .inContainer("Формирование отчетности по разрешениям на вывоз подконтрольной продукции")
                 .clickButton("Далее")
                 .waitForElementDisplayed("//div[text()='Сформированные отчеты']", 360);
 
     }
+
     @Step("Скачать и провертиь отчет")
     public void step03() {
         //нажать на просмотр общего отчета
         new GUIFunctions()
                 .inContainer("Сформированные отчеты")
-                .clickByLocator("//div[text()='Общий отчет.pdf']");
-        // File report = (File) $("//div[text()='Общий отчет.pdf']");
+                .clickByLocator("//div[text()='Аналитический отчет.xlsx']");
         Selenide.sleep(10000);  // после правки бага с зависанием , можно заменить на нормальное ожидание
-
-        System.out.println("done");
-        searchFileInDefaultDownloadDir("Общий отчет");
-
+        searchFileInDefaultDownloadDir("Аналитический");
     }
 
+    @Step("Кейс 08.07.10 Переход из отчета с типом \"Аналитический\" в личный кабинет")
+    // ТЕ неправильно написала кейс, вынесла этот шаг в отдельный
+    public void step04() {
+        new GUIFunctions()
+                .inContainer("Формирование отчетности по разрешениям на вывоз подконтрольной продукции")
+                .clickButton("Вернуться в личный кабинет");
+        new GUIFunctions()
+                .waitForElementDisplayed("//h4[text()='Мои услуги']");
+
+    }
 }

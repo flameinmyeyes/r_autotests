@@ -1,13 +1,11 @@
 package ru.exportcenter.dev.vet;
 
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
 import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
-import functions.gui.ext.Wait;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -16,26 +14,22 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
 
-
-import java.io.File;
 import java.util.Properties;
 
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$x;
 import static functions.file.FileFunctions.searchFileInDefaultDownloadDir;
 
-public class Test_08_07_16 extends Hooks {
+public class Test_08_07_17 extends Hooks {
 
-    public String WAY_TEST = Ways.TEST.getWay() + "/vet/Test_08_07_16/";
-    public String WAY_TO_PROPERTIES = Ways.TEST.getWay() + "/vet/Test_08_07_16/" + "Test_08_07_16_properties.xml";
+    public String WAY_TEST = Ways.TEST.getWay() + "/vet/Test_08_07_17/";
+    public String WAY_TO_PROPERTIES = Ways.TEST.getWay() + "/vet/Test_08_07_17/" + "Test_08_07_17_properties.xml";
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     private String processID;
 
 
     @Owner(value = "Селедцов Вадим")
-    @Description("08.07.16 Общий отчет")
-    @Link(name = "Test_08_07_16", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=183200561")
+    @Description("08.07.17 Страновой отчет - Детализированный")
+    @Link(name = "Test_08_07_17", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=183200759")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
         precondition();
@@ -79,12 +73,23 @@ public class Test_08_07_16 extends Hooks {
 
         new GUIFunctions()
                 .inContainer("Выбор отчёта")
-                .clickByLocator("//span[text()='Общий']")
+                .clickByLocator("//span[text()='Страновой']")
                 .waitForLoading()
-                .inContainer("Общий отчёт")
-                .clickByLocator("//span[text()='Полный']")
-                .inField("Дата от").inputValue("01.10.2022")
-                .inField("Дата до").inputValue("04.10.2022")
+                .inContainer("Страновой отчёт")
+                .clickByLocator("//span[text()='Детализированный']");
+        $x("//input[@name='$.createItem.country.search.period1.create_date_from']").setValue("01.09.2022");
+        $x("//input[@name='$.createItem.country.search.period1.create_date_to']").setValue("30.09.2022");
+        $x("//input[@name='$.createItem.country.search.period2.create_date_from']").setValue("01.10.2022");
+        $x("//input[@name='$.createItem.country.search.period2.create_date_to']").setValue("20.10.2022");
+        new GUIFunctions()
+                .inContainer("Страновой отчёт")
+                .clickByLocator("//span[text()='Страна импорта']")
+                .inField("Страна импортер").selectValue("КИТАЙСКАЯ НАРОДНАЯ РЕСПУБЛИКА")
+                .clickByLocator("//span[text()='Вид продукции']")
+                .clickByLocator("//span[text()='Наименование продукции']")
+
+
+        //span[text()='Скачать архив со всеми сформированными отчётами']
                 .inContainer("Формирование отчетности по разрешениям на вывоз подконтрольной продукции")
                 .clickButton("Далее")
                 .waitForElementDisplayed("//div[text()='Сформированные отчеты']", 360);
@@ -95,12 +100,12 @@ public class Test_08_07_16 extends Hooks {
         //нажать на просмотр общего отчета
         new GUIFunctions()
                 .inContainer("Сформированные отчеты")
-                .clickByLocator("//div[text()='Общий отчет.pdf']");
+                .clickByLocator("//div[text()='Страновой отчет.xlsx']");
         // File report = (File) $("//div[text()='Общий отчет.pdf']");
         Selenide.sleep(10000);  // после правки бага с зависанием , можно заменить на нормальное ожидание
 
         System.out.println("done");
-        searchFileInDefaultDownloadDir("Общий отчет");
+        searchFileInDefaultDownloadDir("Страновой отчет");
 
     }
 
