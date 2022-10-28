@@ -83,7 +83,7 @@ public class Test_08_07_03 extends Hooks {
         //В поле Тип продукции выбрать Живые животные
         new GUIFunctions()
                 .inContainer("Информация о продукции")
-                    .inField("Тип продукции").selectValue("Живые животные").assertNoControl().assertValue()
+                .inField("Тип продукции").selectValue("Живые животные").assertNoControl().assertValue()
                 .inContainer("Запрос разрешения на вывоз подконтрольной продукции")
                 .clickButton("Продолжить")
                 .waitForLoading()

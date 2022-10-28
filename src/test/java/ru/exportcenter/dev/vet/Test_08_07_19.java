@@ -50,7 +50,13 @@ public class Test_08_07_19 extends Hooks {
         //Ввести логин и пароль demo_exporter/password
         new GUIFunctions()
                 .authorization(P.getProperty("Авторизация.Email"), P.getProperty("Авторизация.Пароль"), P.getProperty("Авторизация.Код"))
-                .waitForElementDisplayed("//span[text()='Запрос разрешения на вывоз подконтрольной продукции']")
+                .waitForElementDisplayed("//span[text()='Запрос разрешения на вывоз подконтрольной продукции']");
+        try {
+            Thread.sleep(20000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        new GUIFunctions()
                 .refreshTab("Продолжить", 30)                      // это бага НА ДЕВЕ , кнопка продолжить не отображается с первого раза, перезагрузка страницы 10 раз
                 .clickButton("Продолжить")
                 .waitForElementDisplayed("//span[text()='Запрос разрешения на вывоз подконтрольной продукции']");
