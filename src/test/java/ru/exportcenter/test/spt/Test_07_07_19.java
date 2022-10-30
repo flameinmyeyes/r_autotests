@@ -6,6 +6,7 @@ import framework.Ways;
 import functions.common.CommonFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
+import functions.gui.lkb.GUIFunctionsLKB;
 import io.qameta.allure.Description;
 import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
@@ -38,6 +39,8 @@ public class Test_07_07_19 extends Hooks {
         step01();
         step02();
         step03();
+        step04();
+        step05();
     }
 
     @AfterMethod
@@ -82,6 +85,8 @@ public class Test_07_07_19 extends Hooks {
         CommonFunctions.printStep();
 
         new GUIFunctions()
+                .inField("E-mail").inputValue(PROPERTIES.getProperty("Email"))
+                .inField("Телефон").inputValue(PROPERTIES.getProperty("Телефон"))
                 .inField("Наименование").inputValue(PROPERTIES.getProperty("Наименование"))
                 .inField("Страна").selectValue(PROPERTIES.getProperty("Страна"))
                 .inField("Адрес по контракту (договору) на русском или английском языке").inputValue(PROPERTIES.getProperty("Адрес по контракту"))
@@ -97,15 +102,15 @@ public class Test_07_07_19 extends Hooks {
     public void step02() {
         CommonFunctions.printStep();
 
-        assertEquals(
-                "" + $x("//*[@id='form-open-panel']/div[2]/div/form/div[1]/div/div[2]/div/div/div[3]/div/div[1]/div/label/div[1]/div").exists()
-                , "true"
-        );
-
-        assertEquals(
-                $x("//div[@class='Radio_checkMark__18knp Radio_checkedWrapper__1JyWl']//div[1]").isSelected()
-                , "true"
-        );
+//        assertEquals(
+//                "" + $x("//*[@id='form-open-panel']/div[2]/div/form/div[1]/div/div[2]/div/div/div[3]/div/div[1]/div/label/div[1]/div").exists()
+//                , "true"
+//        );
+//
+//        assertEquals(
+//                $x("//div[@class='Radio_checkMark__18knp Radio_checkedWrapper__1JyWl']//div[1]").isSelected()
+//                , "true"
+//        );
 
 
         new GUIFunctions()
@@ -115,28 +120,114 @@ public class Test_07_07_19 extends Hooks {
 
         repitClick("//div[text()='Маршрут следования']", 20);
 
-        new GUIFunctions().waitForLoading();
+        new GUIFunctions()
+                .waitForLoading();
     }
+
     @Step("Ввод данных в карточку «Информация о заявителе»  и в карточку «Информация об импортере»")
     public void step03() {
         CommonFunctions.printStep();
-        assertEquals(
-                "" + $x("//*[@id='form-open-panel']/div[2]/div/form/div[1]/div/div[2]/div/div/div[3]/div/div[1]/div/label/div[1]/div").exists()
-                , "true"
-        );
+//        assertEquals(
+//                "" + $x("//*[@id='form-open-panel']/div[2]/div/form/div[1]/div/div[2]/div/div/div[3]/div/div[1]/div/label/div[1]/div").exists()
+//                , "true"
+//        );
 
         new GUIFunctions()
-                .inField("Наименование").inputValue(PROPERTIES.getProperty("Наименование"))
-                .inField("Страна").selectValue(PROPERTIES.getProperty("Страна"))
-                .inField("Адрес по контракту (договору) на русском или английском языке").inputValue(PROPERTIES.getProperty("Адрес по контракту"));
+                .inContainer("Место отправления").inField("Населенный пункт").inputValue(PROPERTIES.getProperty("Населенный пункт отправления"))
+                .inContainer("Место отправления").inField("Вид транспорта").selectValue(PROPERTIES.getProperty("Вид транспорта"));
 
-        repitClick("//div[text()='Маршрут следования']", 20);
+//        new GUIFunctions().inContainer("Место назначения").inField("Населенный пункт").inputValue(PROPERTIES.getProperty("Населенный пункт назначения"));
+        $x("(//input[@class='KrInput_input__xg4vc undefined'])[2]").setValue(PROPERTIES.getProperty("Населенный пункт назначения"));
 
-        new GUIFunctions().waitForLoading().waitForURL("");
+        new GUIFunctions()
+                  .inField("Предполагаемая / фактическая дата отгрузки").inputValue(PROPERTIES.getProperty("Предполагаемая / фактическая дата отгрузки"));
+
+        repitClick("//div[text()='Информация о партии товаров']", 20);
+
+        new GUIFunctions()
+                .waitForLoading();
+    }
+
+    @Step("Ввод данных в карточку «Информация о заявителе»  и в карточку «Информация об импортере» [4]")
+    public void step04() {
+        CommonFunctions.printStep();
+
+        new GUIFunctions()
+                .clickButton("Добавить +")
+                .inContainer("Добавление продукции")
+                    .inField("Каталог продукции").selectValue("0306240000 Крабы")
+                    .clickButton("Сертификат происхождения товара, выданный другой страной")
+                    .inField("Страна, выдавшая сертификат").selectValue("Белоруссия")
+                    .inField("Номер сертификата").inputValue("111-11Y")
+                    .inField("Вид сертификата").inputValue("Реэкспорт")
+                    .inField("Номер бланка").inputValue("111-11Y")
+                    .inField("Дата выдачи сертификата").inputValue("01.10.2022")
+
+//                  В поле Наименование товара не совпадает с наименованием в сертификате происхождения товара другой страны не указано значение  (не заполнен чекбокс)
+                    .inField("Единица измерения товара").selectValue("Килограмм")
+                    .inField("Количество товара").inputValue("100")
+                    .inField("Количество мест").inputValue("10")
+                    .inField("Вид упаковки").selectValue("Контейнер средней грузоподъемности для массовых грузов из древесного материала")
+//                  .inField("Масса в кг (нетто)").inputValue("100")
+                    .inField("Масса в кг (брутто)").inputValue("110")
+                    .clickButton("Сохранить");
+
+        new GUIFunctions()
+                .waitForLoading()
+                .clickButton("Отправить на проверку")
+                .waitForLoading()
+                .clickButton("К перечню заявлений")
+                .waitForLoading();
+
+    }
 
 
+    @Step("Ввод данных в карточку «Информация о заявителе»  и в карточку «Информация об импортере» [4]")
+    public void step05() {
+        CommonFunctions.printStep();
 
-        $x("//button[text()='Продолжить']").click();
+        CommonFunctions.wait(15);
+
+        refresh();
+//        refreshTab("//span[text()='№" + requestNumber + "']", 20);
+
+        new GUIFunctions()
+                .waitForLoading()
+                .clickButton("№" + requestNumber)
+                .waitForLoading()
+                .clickButton("Продолжить")
+                .waitForLoading()
+                .clickButton("Перейти к заявлению на экспертизу")
+                .waitForLoading();
+
+        new GUIFunctions()
+                .inField("Организация").selectValue("Союз «Пензенская областная торгово-промышленная палата»")
+                .inField("ФИО уполномоченного лица").selectValue("Иванов  Иван Иванович")
+                .waitForLoading()
+                .clickButton("Продолжить")
+                .waitForLoading();
+
+        new GUIFunctions()
+                .clickButton("Подписать и отправить")
+                .inField("Выберите сертификат").selectValue("Ермухамбетова Балсикер Бисеньевна от 18.01.2022").assertValue()
+                .clickButton("Подписать")
+                .waitForElementDisplayed("//*[text()='Подписано']")
+                .clickButton("Далее")
+                .waitForURL("");
+
+    }
+
+
+    private void refreshTab(String expectedXpath, int times) {
+        for (int i = 0; i < times; i++) {
+            new functions.gui.GUIFunctions().waitForLoading();
+            if($x(expectedXpath).isDisplayed()) {
+                break;
+            }
+            refresh();
+            System.out.println("refresh()");
+            CommonFunctions.wait(5);
+        }
     }
 
     private void repitClick(String expectedXpath, int times) {
@@ -148,7 +239,7 @@ public class Test_07_07_19 extends Hooks {
                 break;
             }
             $x("//button[text()='Продолжить']").click();
-            CommonFunctions.wait(2);
+            CommonFunctions.wait(5);
         }
     }
 

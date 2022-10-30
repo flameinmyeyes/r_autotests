@@ -64,13 +64,13 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-    <test name="REC_all_tests_apk" thread-count="1" preserve-order="true">
-        <classes>
+<!--    <test name="REC_all_tests_apk" thread-count="1" preserve-order="true">-->
+<!--        <classes>-->
 <!--            <class name="ru.exportcenter.test.apk.Test_01_07_01_1"/>-->
 <!--            <class name="ru.exportcenter.test.apk.Test_01_07_05_2"/>-->
 <!--            <class name="ru.exportcenter.test.apk.Test_01_07_09_1"/>-->
 <!--            <class name="ru.exportcenter.test.apk.Test_01_07_10_1"/>-->
-            <class name="ru.exportcenter.test.apk.Test_01_07_11_1"/>
+<!--            <class name="ru.exportcenter.test.apk.Test_01_07_11_1"/>-->
 <!--            <class name="ru.exportcenter.test.apk.Test_01_07_32_1"/>-->
 <!--            <class name="ru.exportcenter.test.apk.Test_01_07_44.Test_01_07_44_1"/>-->
 <!--            <class name="ru.exportcenter.test.apk.Test_01_07_44.Test_01_07_44_2"/>-->
@@ -82,8 +82,8 @@
 <!--            <class name="ru.exportcenter.test.apk.Test_02_07_00.Test_02_07_00_3"/>-->
 <!--            <class name="ru.exportcenter.test.apk.Test_01_07_02_1"/>-->
 <!--            <class name="ru.exportcenter.test.apk.Test_01_07_05_1"/>-->
-        </classes>
-    </test>
+<!--        </classes>-->
+<!--    </test>-->
 
 <!--    <test name="REC_all_tests_pavilion" thread-count="1" preserve-order="true">-->
 <!--        <classes>-->
@@ -93,17 +93,11 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-<!--    <test name="SPT" thread-count="1" preserve-order="true">-->
-<!--        <classes>-->
-<!--            <class name="ru.exportcenter.test.spt.Test_07_07_01" />-->
-<!--            <class name="ru.exportcenter.test.spt.Test_07_07_02" />-->
-<!--            <class name="ru.exportcenter.test.spt.Test_07_07_03" />-->
-<!--            &lt;!&ndash; class name="ru.exportcenter.test.spt.Test_07_07_04" />-->
-<!--            <class name="ru.exportcenter.test.spt.Test_07_07_05" / &ndash;&gt;-->
-
-<!--            &lt;!&ndash; class name="ru.exportcenter.test.SPT.Test_07_07_08" / &ndash;&gt;-->
-<!--        </classes>-->
-<!--    </test>-->
+    <test name="SPT" thread-count="1" preserve-order="true">
+        <classes>
+            <class name="ru.exportcenter.test.spt.Test_07_07_19" />
+        </classes>
+    </test>
 
 
 <!--    <test name="REC_all_tests_vet" thread-count="1" preserve-order="true">-->
