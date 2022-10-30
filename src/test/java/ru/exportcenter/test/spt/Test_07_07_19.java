@@ -211,14 +211,11 @@ public class Test_07_07_19 extends Hooks {
                 .clickButton("Подписать и отправить")
                 .inField("Выберите сертификат").selectValue("Ермухамбетова Балсикер Бисеньевна от 18.01.2022").assertValue()
                 .clickButton("Подписать")
-                .waitForElementDisplayed("//*[text()='Подписано']")
-                .clickButton("Далее")
                 .waitForLoading()
                 .clickButton("К перечню заявлений")
                 .waitForLoading();
 
     }
-
 
     private void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
