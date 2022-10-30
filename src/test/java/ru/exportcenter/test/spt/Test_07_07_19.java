@@ -213,7 +213,9 @@ public class Test_07_07_19 extends Hooks {
                 .clickButton("Подписать")
                 .waitForElementDisplayed("//*[text()='Подписано']")
                 .clickButton("Далее")
-                .waitForURL("");
+                .waitForLoading()
+                .clickButton("К перечню заявлений")
+                .waitForLoading();
 
     }
 
