@@ -1,12 +1,9 @@
-package ru.exportcenter.dev.fito;
+package ru.exportcenter.test.fito;
 
 import framework.RunTestAgain;
 import framework.Ways;
-import functions.api.RESTFunctions;
-import functions.api.SQLFunctions;
 import functions.common.CommonFunctions;
 import functions.common.DateFunctions;
-import functions.file.FileFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
@@ -19,13 +16,12 @@ import ru.exportcenter.Hooks;
 
 import java.util.Properties;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$x;
 
-@Deprecated
 public class Test_3_07_02 extends Hooks {
 
-    public String WAY_TEST = Ways.DEV.getWay() + "/fito/Test_3_07_02/";
-    public String WAY_TO_PROPERTIES = Ways.DEV.getWay() + "/fito/Test_3_07_02/" + "Test_3_07_02_properties.xml";
+    public String WAY_TEST = Ways.TEST.getWay() + "/fito/Test_3_07_02/";
+    public String WAY_TO_PROPERTIES = Ways.TEST.getWay() + "/fito/Test_3_07_02/" + "Test_3_07_02_properties.xml";
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     @Owner(value = "Балашов Илья")
@@ -44,7 +40,7 @@ public class Test_3_07_02 extends Hooks {
     }
 
     public void precondition() {
-        //Предусловие: выполнить шаги 1-4 из ТК https://confluence.exportcenter.ru/pages/viewpage.action?pageId=163308618
+        //Предусловие: выполнить шаги 1-4 из ТК https://confluence.exportcenter.ru/pages/viewpage.action?pageId=188852997
         Test_3_07_01 test_3_07_01 = new Test_3_07_01();
         test_3_07_01.WAY_TEST = this.WAY_TEST;
         test_3_07_01.step01();
@@ -73,17 +69,15 @@ public class Test_3_07_02 extends Hooks {
     public void step06() {
         CommonFunctions.printStep();
 
-        //костыль: нужно проскроллить и кликать, пока не появится нужное всплывающее меню:
-        new GUIFunctions().scrollTo("Запрос заключения о карантинном фитосанитарном состоянии");
-        for(int i = 0; i < 10; i++) {
-            if(!$x("//span[text()='Запрос заключения о карантинном фитосанитарном состоянии']/parent::div/following-sibling::div//li[text()='Отменить заявку']").isDisplayed()) {
-                new GUIFunctions()
-                        .clickByLocator("//span[text()='Запрос заключения о карантинном фитосанитарном состоянии']/parent::div/following-sibling::div/button[@class='dropdown-icon']")
-                        .waitForLoading();
-                CommonFunctions.wait(1);
-            }
-        }
+        //Нажать кнопку <...>
+        new GUIFunctions()
+                .scrollTo("Запрос заключения о карантинном фитосанитарном состоянии")
+                .clickByLocator("//span[text()='Запрос заключения о карантинном фитосанитарном состоянии']" +
+                        "/parent::div/following-sibling::div/button[@class='dropdown-icon']")
+                .waitForLoading();
+        clickUntilCancelButtonIsDisplayed(60);
 
+        //Нажать "Отменить заявку"
         new GUIFunctions()
                 .clickByLocator("//span[text()='Запрос заключения о карантинном фитосанитарном состоянии']/parent::div/following-sibling::div//li[text()='Отменить заявку']")
                 .waitForLoading();
@@ -93,7 +87,23 @@ public class Test_3_07_02 extends Hooks {
             new GUIFunctions().clickByLocator("//div//button[@title='Да']");
         }
 
-        new GUIFunctions().waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
+        new GUIFunctions().waitForURL(new Test_3_07_01().P.getProperty("Авторизация.URL") + "/ru/main");
+    }
+
+    /**
+     * Костыль: кликать, пока не появится нужное всплывающее меню
+     */
+    private static void clickUntilCancelButtonIsDisplayed(int times) {
+        for(int i = 0; i < times; i++) {
+            if(!$x("//span[text()='Запрос заключения о карантинном фитосанитарном состоянии']" +
+                    "/parent::div/following-sibling::div//li[text()='Отменить заявку']").isDisplayed()) {
+                new GUIFunctions()
+                        .clickByLocator("//span[text()='Запрос заключения о карантинном фитосанитарном состоянии']" +
+                                "/parent::div/following-sibling::div/button[@class='dropdown-icon']")
+                        .waitForLoading();
+                CommonFunctions.wait(1);
+            }
+        }
     }
 
 }
