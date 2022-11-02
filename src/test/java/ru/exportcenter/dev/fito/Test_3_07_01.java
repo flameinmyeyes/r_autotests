@@ -38,9 +38,10 @@ public class Test_3_07_01 extends Hooks {
     public String WAY_TO_PROPERTIES = Ways.DEV.getWay() + "/fito/Test_3_07_01/" + "Test_3_07_01_properties.xml";
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
-    private String processID;
     private String token;
-    private String baseURI = "http://bpmn-api-service.bpms-dev.d.exportcenter.ru/";
+
+    private String BASE_URI = "http://bpmn-api-service.bpms-dev.d.exportcenter.ru";
+    private String processID;
 
     private String docNum;
     private String guid;
@@ -202,7 +203,7 @@ public class Test_3_07_01 extends Hooks {
     @Step("Шаг 7. Загрузка XML файла через сваггер, запуск процесса (использовать значения для ВС 1)")
     public void step07() {
         CommonFunctions.printStep();
-        token = RESTFunctions.getAccessToken("http://uidm.uidm-dev.d.exportcenter.ru", "bpmn_admin");
+        token = RESTFunctions.getAccessToken(P.getProperty("Авторизация.URL"), "bpmn_admin");
         System.out.println("token: " + token);
 
         String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_1;
@@ -212,7 +213,7 @@ public class Test_3_07_01 extends Hooks {
         String messageName = "AccOrgContrRequestMessage";
 
         //отправляем запрос
-        RESTFunctions.sendAttachmentToProcess(token, baseURI, processID, new File(wayFile), messageName);
+        RESTFunctions.sendAttachmentToProcess(token, BASE_URI, processID, new File(wayFile), messageName);
 
         deleteFileIfExists(new File(wayFile)); //удаляем временный файл
     }
@@ -308,7 +309,7 @@ public class Test_3_07_01 extends Hooks {
         String messageName = "CheckAppInfRequestMessage";
 
         //отправляем запрос
-        RESTFunctions.sendAttachmentToProcess(token, baseURI, processID, new File(wayFile), messageName);
+        RESTFunctions.sendAttachmentToProcess(token, BASE_URI, processID, new File(wayFile), messageName);
 
         deleteFileIfExists(new File(wayFile)); //удаляем временный файл
     }
@@ -402,7 +403,7 @@ public class Test_3_07_01 extends Hooks {
         String messageName = "SendAppInfRequestMessage";
 
         //отправляем запрос
-        RESTFunctions.sendAttachmentToProcess(token, baseURI, processID, new File(wayFile), messageName);
+        RESTFunctions.sendAttachmentToProcess(token, BASE_URI, processID, new File(wayFile), messageName);
 
         deleteFileIfExists(new File(wayFile)); //удаляем временный файл
     }
@@ -460,7 +461,7 @@ public class Test_3_07_01 extends Hooks {
         String messageName = "SendAppInfRequestMessage";
 
         //отправляем запрос
-        RESTFunctions.sendAttachmentToProcess(token, baseURI, processID, new File(wayFile), messageName);
+        RESTFunctions.sendAttachmentToProcess(token, BASE_URI, processID, new File(wayFile), messageName);
 
         deleteFileIfExists(new File(wayFile)); //удаляем временный файл
     }
@@ -512,7 +513,7 @@ public class Test_3_07_01 extends Hooks {
         String messageName = "SendAppInfRequestMessage";
 
         //отправляем запрос
-        RESTFunctions.sendAttachmentToProcess(token, baseURI, processID, new File(wayFile), messageName);
+        RESTFunctions.sendAttachmentToProcess(token, BASE_URI, processID, new File(wayFile), messageName);
 
         deleteFileIfExists(new File(wayFile)); //удаляем временный файл
     }
@@ -570,7 +571,7 @@ public class Test_3_07_01 extends Hooks {
         String messageName = "SendAppInfRequestMessage";
 
         //отправляем запрос
-        RESTFunctions.sendAttachmentToProcess(token, baseURI, processID, new File(wayFile), messageName);
+        RESTFunctions.sendAttachmentToProcess(token, BASE_URI, processID, new File(wayFile), messageName);
 
         deleteFileIfExists(new File(wayFile)); //удаляем временный файл
     }
