@@ -38,9 +38,10 @@ public class Test_3_07_01 extends Hooks {
     public String WAY_TO_PROPERTIES = Ways.TEST.getWay() + "/fito/Test_3_07_01/" + "Test_3_07_01_properties.xml";
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
-    private String processID;
     private String token;
-    private String baseURI = "http://bpmn-api-service.bpms-dev.d.exportcenter.ru/";
+
+    private final String BASE_URI = "https://lk.t.exportcenter.ru";
+    private String processID;
 
     private String docNum;
     private String guid;
@@ -150,15 +151,15 @@ public class Test_3_07_01 extends Hooks {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Получатель")
-                .inField("Наименование получателя (на английском языке)").inputValue(P.getProperty("Получатель.Наименование получателя")).assertNoControl().assertValue()
-                .inField("Страна").selectValue(P.getProperty("Получатель.Страна")).assertNoControl().assertValue()
-                .inField("Юридический адрес на английском языке в формате: номер дома, улица, город, индекс").inputValue(P.getProperty("Получатель.Юридический адрес")).assertNoControl().assertValue()
+                    .inField("Наименование получателя (на английском языке)").inputValue(P.getProperty("Получатель.Наименование получателя")).assertNoControl().assertValue()
+                    .inField("Страна").selectValue(P.getProperty("Получатель.Страна")).assertNoControl().assertValue()
+                    .inField("Юридический адрес на английском языке в формате: номер дома, улица, город, индекс").inputValue(P.getProperty("Получатель.Юридический адрес")).assertNoControl().assertValue()
 
                 //нажать "Продолжить"
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
-                .clickButton("Продолжить")
-                .waitForLoading()
-                .waitForElementDisplayed("//div[text()='Шаг 2 из 9']");
+                    .clickButton("Продолжить")
+                    .waitForLoading()
+                    .waitForElementDisplayed("//div[text()='Шаг 2 из 9']");
     }
 
     @Step("Шаг 5. Блок  \"Условия поставки\"")
@@ -166,20 +167,20 @@ public class Test_3_07_01 extends Hooks {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Условия поставки")
-                //Условия транспортировки
-                .inField("Вид транспорта").selectValue(P.getProperty("Условия поставки.Вид транспорта")).assertNoControl().assertValue()
-                .inField("Страна назначения").selectValue(P.getProperty("Условия поставки.Страна назначения")).assertNoControl().assertValue()
-                .inField("Пункт ввоза в стране назначения").inputValue(P.getProperty("Условия поставки.Пункт ввоза в стране назначения")).assertNoControl().assertValue()
-                //Документы на груз
-                .inField("Тип документа о происхождении груза. Если тип документа в списке отсутствует — выберите «другое»").selectValue(P.getProperty("Условия поставки.Тип документа о происхождении груза. Если тип документа в списке отсутствует — выберите «другое»")).assertNoControl().assertValue()
-                .inField("Номер документа на груз").inputValue(P.getProperty("Условия поставки.Номер документа на груз")).assertNoControl().assertValue()
-                .inField("Дата").inputValue(DateFunctions.dateToday("dd.MM.yyyy")).assertNoControl().assertValue()
+                    //Условия транспортировки
+                    .inField("Вид транспорта").selectValue(P.getProperty("Условия поставки.Вид транспорта")).assertNoControl().assertValue()
+                    .inField("Страна назначения").selectValue(P.getProperty("Условия поставки.Страна назначения")).assertNoControl().assertValue()
+                    .inField("Пункт ввоза в стране назначения").inputValue(P.getProperty("Условия поставки.Пункт ввоза в стране назначения")).assertNoControl().assertValue()
+                    //Документы на груз
+                    .inField("Тип документа о происхождении груза. Если тип документа в списке отсутствует — выберите «другое»").selectValue(P.getProperty("Условия поставки.Тип документа о происхождении груза. Если тип документа в списке отсутствует — выберите «другое»")).assertNoControl().assertValue()
+                    .inField("Номер документа на груз").inputValue(P.getProperty("Условия поставки.Номер документа на груз")).assertNoControl().assertValue()
+                    .inField("Дата").inputValue(DateFunctions.dateToday("dd.MM.yyyy")).assertNoControl().assertValue()
 
                 //нажать "Продолжить"
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
-                .clickButton("Продолжить")
-                .waitForLoading()
-                .waitForElementDisplayed("//div[text()='Шаг 3 из 9']");
+                    .clickButton("Продолжить")
+                    .waitForLoading()
+                    .waitForElementDisplayed("//div[text()='Шаг 3 из 9']");
     }
 
     @Step("Шаг 6. Редактирование XML файла ответа при получении сведений из реестра договоров с аккредитованными организациями (ВС 1)")
@@ -202,7 +203,7 @@ public class Test_3_07_01 extends Hooks {
     @Step("Шаг 7. Загрузка XML файла через сваггер, запуск процесса (использовать значения для ВС 1)")
     public void step07() {
         CommonFunctions.printStep();
-        token = RESTFunctions.getAccessToken("http://uidm.uidm-dev.d.exportcenter.ru", "bpmn_admin");
+        token = RESTFunctions.getAccessToken(P.getProperty("Авторизация.URL"), "bpmn_admin");
         System.out.println("token: " + token);
 
         String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_1;
@@ -212,7 +213,7 @@ public class Test_3_07_01 extends Hooks {
         String messageName = "AccOrgContrRequestMessage";
 
         //отправляем запрос
-        RESTFunctions.sendAttachmentToProcess(token, baseURI, processID, new File(wayFile), messageName);
+        RESTFunctions.sendAttachmentToProcess(token, BASE_URI, processID, new File(wayFile), messageName);
 
         deleteFileIfExists(new File(wayFile)); //удаляем временный файл
     }
@@ -222,26 +223,26 @@ public class Test_3_07_01 extends Hooks {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Добавление продукции")
-                .inField("Каталог продукции").selectValue(P.getProperty("Добавление продукции.Каталог продукции").split(" ")[0]).assertNoControl().assertValue(P.getProperty("Добавление продукции.Каталог продукции"))
-                .inField("Код ТН ВЭД").assertValue(P.getProperty("Добавление продукции.Код ТН ВЭД"))
-                .inField("Тип продукции").selectValue(P.getProperty("Добавление продукции.Тип продукции")).assertNoControl().assertValue()
-                .inField("Дополнительная информация о продукции. Например, страна производства (произрастания) продукции, сорт продукции и т.д.").inputValue(P.getProperty("Добавление продукции.Дополнительная информация о продукции")).assertNoControl().assertValue()
-                .inField("Вес груза (нетто), кг").inputValue(P.getProperty("Добавление продукции.Вес груза (нетто)")).assertNoControl().assertValue()
-                .inField("Особые единицы измерения").selectValue(P.getProperty("Добавление продукции.Особые единицы измерения")).assertNoControl().assertValue()
-                .inField("Количество в особых единицах измерения").inputValue(P.getProperty("Добавление продукции.Количество в особых единицах измерения")).assertNoControl().assertValue()
-                .inField("Описание упаковки").selectValue(P.getProperty("Добавление продукции.Описание упаковки")).assertNoControl().assertValue()
-                .inField("Размещение продукции").clickByLocator("//ancestor::div//span[contains(text(),'Навалом (наливом)')][last()]")
-                .inField("Наличие отличительных знаков (маркировки). Например, номера партий, серийные номера или названия торговых марок. ").setCheckboxON().assertCheckboxON()
-                .inField("Номер партии зерна (продуктов переработки зерна)").inputValue(P.getProperty("Добавление продукции.Номер партии зерна")).assertNoControl().assertValue()
-                //Место происхождения( произрастания) продукции
-                .inField("Страна").selectValue(P.getProperty("Добавление продукции.Страна")).assertNoControl().assertValue()
-                .inField("Регион").selectValue(P.getProperty("Добавление продукции.Регион")).assertNoControl().assertValue()
+                    .inField("Каталог продукции").selectValue(P.getProperty("Добавление продукции.Каталог продукции").split(" ")[0]).assertNoControl().assertValue(P.getProperty("Добавление продукции.Каталог продукции"))
+                    .inField("Код ТН ВЭД").assertValue(P.getProperty("Добавление продукции.Код ТН ВЭД"))
+                    .inField("Тип продукции").selectValue(P.getProperty("Добавление продукции.Тип продукции")).assertNoControl().assertValue()
+                    .inField("Дополнительная информация о продукции. Например, страна производства (произрастания) продукции, сорт продукции и т.д.").inputValue(P.getProperty("Добавление продукции.Дополнительная информация о продукции")).assertNoControl().assertValue()
+                    .inField("Вес груза (нетто), кг").inputValue(P.getProperty("Добавление продукции.Вес груза (нетто)")).assertNoControl().assertValue()
+                    .inField("Особые единицы измерения").selectValue(P.getProperty("Добавление продукции.Особые единицы измерения")).assertNoControl().assertValue()
+                    .inField("Количество в особых единицах измерения").inputValue(P.getProperty("Добавление продукции.Количество в особых единицах измерения")).assertNoControl().assertValue()
+                    .inField("Описание упаковки").selectValue(P.getProperty("Добавление продукции.Описание упаковки")).assertNoControl().assertValue()
+                    .inField("Размещение продукции").clickByLocator("//ancestor::div//span[contains(text(),'Навалом (наливом)')][last()]")
+                    .inField("Наличие отличительных знаков (маркировки). Например, номера партий, серийные номера или названия торговых марок. ").setCheckboxON().assertCheckboxON()
+                    .inField("Номер партии зерна (продуктов переработки зерна)").inputValue(P.getProperty("Добавление продукции.Номер партии зерна")).assertNoControl().assertValue()
+                    //Место происхождения( произрастания) продукции
+                    .inField("Страна").selectValue(P.getProperty("Добавление продукции.Страна")).assertNoControl().assertValue()
+                    .inField("Регион").selectValue(P.getProperty("Добавление продукции.Регион")).assertNoControl().assertValue()
 
                 //нажать "Продолжить"
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
-                .clickButton("Продолжить")
-                .waitForLoading()
-                .waitForElementDisplayed("//div[text()='Шаг 4 из 9']");
+                    .clickButton("Продолжить")
+                    .waitForLoading()
+                    .waitForElementDisplayed("//div[text()='Шаг 4 из 9']");
     }
 
     @Step("Шаг 9. Блок \"Договор на установление карантинного фитосанитарного состояния\"")
@@ -249,17 +250,17 @@ public class Test_3_07_01 extends Hooks {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Договор на установление карантинного  фитосанитарного состояния")
-                .inField("Договор").selectValue(P.getProperty("Договор.Договор")).waitForLoading().assertNoControl().assertValue()
-                .inField("Орган инспекции").assertValue(P.getProperty("Договор.Орган инспекции")).assertNoControl()
-                .inField("Номер").assertValue(P.getProperty("Договор.Номер")).assertNoControl()
-                .inField("Дата").assertValue(P.getProperty("Договор.Дата")).assertNoControl()
-                .inField("Срок действия").assertValue(P.getProperty("Договор.Срок действия")).assertNoControl()
+                    .inField("Договор").selectValue(P.getProperty("Договор.Договор")).waitForLoading().assertNoControl().assertValue()
+                    .inField("Орган инспекции").assertValue(P.getProperty("Договор.Орган инспекции")).assertNoControl()
+                    .inField("Номер").assertValue(P.getProperty("Договор.Номер")).assertNoControl()
+                    .inField("Дата").assertValue(P.getProperty("Договор.Дата")).assertNoControl()
+                    .inField("Срок действия").assertValue(P.getProperty("Договор.Срок действия")).assertNoControl()
 
                 //нажать "Продолжить"
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
-                .clickButton("Продолжить")
-                .waitForLoading()
-                .waitForElementDisplayed("//div[text()='Шаг 5 из 9']");
+                    .clickButton("Продолжить")
+                    .waitForLoading()
+                    .waitForElementDisplayed("//div[text()='Шаг 5 из 9']");
     }
 
     @Step("Шаг 10. Блок \"Запрос отбора проб\"")
@@ -267,17 +268,17 @@ public class Test_3_07_01 extends Hooks {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Запрос отбора проб")
-                .inField("Территориальное управление Россельхознадзора").selectValue(P.getProperty("Запрос отбора проб.Территориальное управление Россельхознадзора")).assertNoControl().assertValue()
-                .inField("Планируемая дата отбора проб").inputValue(DateFunctions.dateShift("dd.MM.yyyy", +1)).assertNoControl().assertValue()
-                .inField("Планируемое время отбора проб").inputValue(P.getProperty("Запрос отбора проб.Планируемое время отбора проб")).assertNoControl().assertValue()
-                .inField("Адрес места отбора проб").inputValue(P.getProperty("Запрос отбора проб.Адрес места отбора проб")).assertNoControl().assertValue()
-                .inField("Дополнительные требования к исследованиям ").inputValue(P.getProperty("Запрос отбора проб.Дополнительные требования к исследованиям")).assertNoControl().assertValue()
+                    .inField("Территориальное управление Россельхознадзора").selectValue(P.getProperty("Запрос отбора проб.Территориальное управление Россельхознадзора")).assertNoControl().assertValue()
+                    .inField("Планируемая дата отбора проб").inputValue(DateFunctions.dateShift("dd.MM.yyyy", +1)).assertNoControl().assertValue()
+                    .inField("Планируемое время отбора проб").inputValue(P.getProperty("Запрос отбора проб.Планируемое время отбора проб")).assertNoControl().assertValue()
+                    .inField("Место отбора проб").inputValue(P.getProperty("Запрос отбора проб.Места отбора проб")).assertNoControl().assertValue()
+                    .inField("Дополнительные требования к исследованиям ").inputValue(P.getProperty("Запрос отбора проб.Дополнительные требования к исследованиям")).assertNoControl().assertValue()
 
                 //нажать "Продолжить"
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
-                .clickButton("Направить на проверку")
-                .waitForLoading()
-                .waitForElementDisplayed("//div[text()='Шаг 6 из 9']");
+                    .clickButton("Направить на проверку")
+                    .waitForLoading()
+                    .waitForElementDisplayed("//div[text()='Шаг 6 из 9']");
     }
 
     @Step("Шаг 11. Редактирование XML ответа проверки сведений из проекта заявления в Россельхознадзоре (ВС 2)")
@@ -308,7 +309,7 @@ public class Test_3_07_01 extends Hooks {
         String messageName = "CheckAppInfRequestMessage";
 
         //отправляем запрос
-        RESTFunctions.sendAttachmentToProcess(token, baseURI, processID, new File(wayFile), messageName);
+        RESTFunctions.sendAttachmentToProcess(token, BASE_URI, processID, new File(wayFile), messageName);
 
         deleteFileIfExists(new File(wayFile)); //удаляем временный файл
     }
@@ -338,7 +339,7 @@ public class Test_3_07_01 extends Hooks {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Форма заключения")
-                .inField("Выберите требуемую форму заключения о карантинном фитосанитарном состоянии:").clickByLocator("//ancestor::div//span[contains(text(),'В электронной форме')][last()]");
+                    .inField("Выберите требуемую форму заключения о карантинном фитосанитарном состоянии:").clickByLocator("//ancestor::div//span[contains(text(),'В электронной форме')][last()]");
     }
 
     @Step("Шаг 15. Экран ознакомления с результатом проверки. Блок \"Уполномоченное лицо для получения заключения\"")
@@ -346,15 +347,15 @@ public class Test_3_07_01 extends Hooks {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Уполномоченное лицо для получения заключения")
-                .inField("ФИО").clickByLocator("//input[@name='authorizedPersonFullName'][@placeholder='Не выбрано']").inputValue("Грибоедов").waitForLoading().clickByLocator("//*[contains(text(), 'Грибоедов Гриб Грибович')]")
-                .inField("Телефон").assertValue(P.getProperty("Форма заключения.Телефон")).assertNoControl()
-                .inField("Email").assertValue(P.getProperty("Форма заключения.Email")).assertNoControl()
+                    .inField("ФИО").inputValue(P.getProperty("Форма заключения.ФИО").split(" ")[0]).selectValue(P.getProperty("Форма заключения.ФИО").split(" ")[0])
+                    .inField("Телефон").assertValue(P.getProperty("Форма заключения.Телефон")).assertNoControl()
+                    .inField("Email").assertValue(P.getProperty("Форма заключения.Email")).assertNoControl()
 
                 //нажать "Продолжить"
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
-                .clickButton("Продолжить")
-                .waitForLoading()
-                .waitForElementDisplayed("//div[text()='Шаг 8 из 9']");
+                    .clickButton("Продолжить")
+                    .waitForLoading()
+                    .waitForElementDisplayed("//div[text()='Шаг 8 из 9']");
     }
 
     @Step("Шаг 16. Экран \"Шаг 8 из 9\"")
@@ -362,11 +363,11 @@ public class Test_3_07_01 extends Hooks {
         CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
-                .clickButton("Подписать и отправить")
-                .inField("Выберите сертификат").selectValue("Ермухамбетова Балсикер Бисеньевна от 18.01.2022").assertValue()
-                .clickButton("Подписать")
-                .waitForLoading()
-                .waitForElementDisplayed("//div[text()='Шаг 9 из 9']");
+                    .clickButton("Подписать и отправить")
+                    .inField("Выберите сертификат").selectValue("Ермухамбетова Балсикер Бисеньевна от 18.01.2022").assertValue()
+                    .clickButton("Подписать")
+                    .waitForLoading()
+                    .waitForElementDisplayed("//div[text()='Шаг 9 из 9']");
     }
 
     @Step("Шаг 17. Редактирование XML ответа 1 для 3 ВС")
@@ -402,7 +403,7 @@ public class Test_3_07_01 extends Hooks {
         String messageName = "SendAppInfRequestMessage";
 
         //отправляем запрос
-        RESTFunctions.sendAttachmentToProcess(token, baseURI, processID, new File(wayFile), messageName);
+        RESTFunctions.sendAttachmentToProcess(token, BASE_URI, processID, new File(wayFile), messageName);
 
         deleteFileIfExists(new File(wayFile)); //удаляем временный файл
     }
@@ -460,7 +461,7 @@ public class Test_3_07_01 extends Hooks {
         String messageName = "SendAppInfRequestMessage";
 
         //отправляем запрос
-        RESTFunctions.sendAttachmentToProcess(token, baseURI, processID, new File(wayFile), messageName);
+        RESTFunctions.sendAttachmentToProcess(token, BASE_URI, processID, new File(wayFile), messageName);
 
         deleteFileIfExists(new File(wayFile)); //удаляем временный файл
     }
@@ -512,7 +513,7 @@ public class Test_3_07_01 extends Hooks {
         String messageName = "SendAppInfRequestMessage";
 
         //отправляем запрос
-        RESTFunctions.sendAttachmentToProcess(token, baseURI, processID, new File(wayFile), messageName);
+        RESTFunctions.sendAttachmentToProcess(token, BASE_URI, processID, new File(wayFile), messageName);
 
         deleteFileIfExists(new File(wayFile)); //удаляем временный файл
     }
@@ -570,7 +571,7 @@ public class Test_3_07_01 extends Hooks {
         String messageName = "SendAppInfRequestMessage";
 
         //отправляем запрос
-        RESTFunctions.sendAttachmentToProcess(token, baseURI, processID, new File(wayFile), messageName);
+        RESTFunctions.sendAttachmentToProcess(token, BASE_URI, processID, new File(wayFile), messageName);
 
         deleteFileIfExists(new File(wayFile)); //удаляем временный файл
     }
