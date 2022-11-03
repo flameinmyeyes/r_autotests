@@ -11,7 +11,7 @@ public class JupyterLabIntegration {
     //https://jupyter-server.readthedocs.io/en/latest/developers/rest-api.html
 
 // ~4-5 числа каждого месяца Токен "протухает"
-    static String tokenNum = "7648f69cb716fd065bf18c06586918c9dd92bae9205e2692";
+    static String tokenNum = "a82e8282da90271207fbb5ac6c1aaaf80d84ed8c9796c6ff";
 
     public static String getFileContent(String filePath) {
         String content = RestAssured
