@@ -50,7 +50,7 @@ public class Test_3_07_01 extends Hooks {
     private String zKFSNumber;
 
     @Owner(value = "Балашов Илья")
-    @Description("3.07.01 Сценарий получения услуги по ЗКФС (положительный результат)")
+    @Description("3.07.01 (Тест контур) Сценарий получения услуги по ЗКФС (положительный результат)")
     @Link(name = "Test_3_07_01", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=188852997")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
