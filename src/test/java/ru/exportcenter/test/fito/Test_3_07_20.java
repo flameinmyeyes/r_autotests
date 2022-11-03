@@ -99,7 +99,11 @@ public class Test_3_07_20 extends Hooks {
 
         new GUIFunctions()
                 .waitForElementDisplayed("//*[contains(text(),'Показать все')]")
-                .clickByLocator("//*[contains(text(),'Показать все')]")
+                .clickByLocator("//*[contains(text(),'Показать все')]");
+
+        CommonFunctions.wait(600);
+
+        new GUIFunctions()
                 .clickByLocator("//*[contains(text(),'" + docNum + "')]/parent::div/following-sibling::button/div[text()='Продолжить']")
                 .waitForLoading()
                 .waitForElementDisplayed("//div[text()='Номер заявки']/parent::div/div[text()='" + docNum + "']");
