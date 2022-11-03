@@ -54,6 +54,7 @@ public class Test_3_07_07 extends Hooks {
         Test_3_07_01 test_3_07_01 = new Test_3_07_01();
         test_3_07_01.WAY_TEST = this.WAY_TEST;
         test_3_07_01.step01();
+        test_3_07_01.step02();
         test_3_07_01.step03();
         test_3_07_01.step04();
         test_3_07_01.step05();
@@ -105,6 +106,8 @@ public class Test_3_07_07 extends Hooks {
     @Step("Шаг 14. Заявка аннулирована по причине отсутствия действий по его подписанию в течение установленного времени.")
     public void step14() {
         CommonFunctions.printStep();
+
+        CommonFunctions.wait(600);
 
         //Нажать на "Закрытие вкладки"
 
