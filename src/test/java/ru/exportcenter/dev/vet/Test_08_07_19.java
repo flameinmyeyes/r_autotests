@@ -16,8 +16,7 @@ import ru.exportcenter.Hooks;
 import java.util.Properties;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class Test_08_07_19 extends Hooks {
 
@@ -32,7 +31,7 @@ public class Test_08_07_19 extends Hooks {
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
         step01();
-        step02();
+        //step02();
         //step03();  этот шаг раз  пять добавляли\убирали в тк , оставил закомментированным
 
     }
@@ -51,15 +50,17 @@ public class Test_08_07_19 extends Hooks {
         new GUIFunctions()
                 .authorization(P.getProperty("Авторизация.Email"), P.getProperty("Авторизация.Пароль"), P.getProperty("Авторизация.Код"))
                 .waitForElementDisplayed("//span[text()='Запрос разрешения на вывоз подконтрольной продукции']");
-        try {
-            Thread.sleep(20000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+
+        if ($x("//div[text()='Шаг 1 из 2']").isDisplayed()) {       //костыль, по логике стенда может кидать либо на одну страницу, либо на другую , зависит от загрузки. отв. Рычагова Юлия
+            new GUIFunctions()
+                    .clickByLocator("//button[contains(text(),'Запрос разрешения на вывоз подконтрольной продукции')]");
+            webdriver().driver().switchTo().alert().accept();
+            new GUIFunctions()
+                    .waitForElementDisplayed("//a[text()='Сформировать отчет']");
         }
+
         new GUIFunctions()
-                .refreshTab("Продолжить", 30)                      // это бага НА ДЕВЕ , кнопка продолжить не отображается с первого раза, перезагрузка страницы 10 раз
-                .clickButton("Продолжить")
-                .waitForElementDisplayed("//span[text()='Запрос разрешения на вывоз подконтрольной продукции']");
+                .refreshTab("Продолжить", 30);                 // это бага НА ДЕВЕ , кнопка продолжить не отображается с первого раза, перезагрузка страницы 10 раз
     }
 
     @Step("Выбрать Запрос разрешения на вывоз подконтрольной продукции")

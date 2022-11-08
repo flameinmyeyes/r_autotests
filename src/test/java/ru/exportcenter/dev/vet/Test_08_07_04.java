@@ -73,7 +73,7 @@ public class Test_08_07_04 extends Hooks {
 
     }
 
-    @Step("Переход на карточку \"Поиск действующего разрешения\"")
+    @Step("Заполнить поля")
     public void step02() {
         CommonFunctions.printStep();
 
@@ -84,11 +84,12 @@ public class Test_08_07_04 extends Hooks {
                 .inField("Тип продукции").selectValue(P.getProperty("Тип продукции")).assertNoControl().assertValue()
                 .inField("Продукция").selectValue(P.getProperty("Продукция")).assertNoControl().assertValue()
                 .inField("Вид продукции").selectValue(P.getProperty("Вид продукции")).assertNoControl().assertValue()
-                .inField("Укажите предприятие (места хранения/отгрузки)").selectValue("RU033")
+                .inField("Укажите предприятие (места хранения/отгрузки)").selectValue("7718162032")
                 .inContainer("Запрос разрешения на вывоз подконтрольной продукции")
                 .clickButton("Продолжить")
                 .waitForLoading()
-                .waitForElementDisplayed("//div[text()='Шаг 3 из 9']");
+                .waitForElementDisplayed("//button[text()='Скоректировать']")
+                .clickButton("Скоректировать");
 
 
         //Нажать кнопку "Добавить"

@@ -51,10 +51,10 @@ public class Test_08_07_05 extends Hooks {
 
     @Step("Авторизация")
     public void precondition() {
-        //Предусловие: выполнить шаги 1-4 из ТК https://confluence.exportcenter.ru/pages/viewpage.action?pageId=163308618
-        Test_08_07_01 test_08_07_01 = new Test_08_07_01();
-        test_08_07_01.WAY_TEST = this.WAY_TEST;
-        test_08_07_01.steps();
+        //Предусловие: выполнить шаги 1-4 из ТК 08.07.02 Авторизация для ИП
+        Test_08_07_02 test_08_07_02 = new Test_08_07_02();
+        test_08_07_02.WAY_TEST = this.WAY_TEST;
+        test_08_07_02.steps();
 
     }
 
@@ -77,7 +77,7 @@ public class Test_08_07_05 extends Hooks {
     public void step02() {
         CommonFunctions.printStep();
 
-        //В поле Тип продукции выбрать Живые животные
+        //В поле Тип продукции выбрать Рыба и морепродукты
         new GUIFunctions()
                 .inContainer("Информация о продукции")
                 .inField("Тип продукции").selectValue("Рыба и морепродукты").assertNoControl().assertValue()
@@ -87,34 +87,31 @@ public class Test_08_07_05 extends Hooks {
                 .waitForElementDisplayed("//div[text()='Шаг 3 из 9']");
 
 
-        //Нажать кнопку "Добавить"
+        //Нажать кнопку "Добавить" и заполнение полей
         new GUIFunctions()
                 .clickButton("Добавить +")
                 .inContainer("Добавление продукции")
-                .inField("Продукция").selectValue(P.getProperty("Продукция")).assertNoControl().assertValue()
-                .inField("Вид продукции").selectValue(P.getProperty("Вид продукции")).assertNoControl().assertValue()
-                .clickByLocator("//span[text()='Без выгрузки на берегу']")
-                .waitForElementDisplayed("//span[contains(text(), 'По данным Россельхознадзора оформление разрешения')]")
+                .inField("Продукция").selectValue(P.getProperty("Продукция")) // выпадающий список - глючит, значения с NBSP
+                .inField("Вид продукции").selectValue(P.getProperty("Вид продукции"))
                 .clickByLocator("//span[text()='С выгрузкой на берегу']")
-                .inField("Район вылова водных биологических ресурсов (ВБР)").selectValue(P.getProperty("Район вылова водных биологических ресурсов (ВБР)")).assertNoControl().assertValue()
-
-
-
-                .clickButton("Сохранить");
-        //Нажать кнопку "продолжить"
-        new GUIFunctions()
+                .waitForElementDisplayed("//*[text() = 'Добавление продукции']/ancestor::div[contains(@class, 'container')][1]//*[text() = 'Район вылова водных биологических ресурсов (ВБР)']")
+                .inField("Район вылова водных биологических ресурсов (ВБР)").inputValue(P.getProperty("Район вылова водных биологических ресурсов (ВБР)"))
+                .inField("Единица измерения").selectValue(P.getProperty("Единица измерения"))
+                .inField("Количество в выбранных единицах").inputValue(P.getProperty("Количество в выбранных единицах"))
+                .inField("Выберите одного или несколько производителей").selectValue("RU-065/BT02750")
+                .clickButton("Добавить")
                 .inContainer("Запрос разрешения на вывоз подконтрольной продукции")
                 .clickButton("Продолжить")
                 .waitForLoading()
                 .waitForElementDisplayed("//div[text()='Шаг 4 из 9']");
     }
 
-    @Step("Предзаполненные данные в карточке \"Информация о поставке\" ")
+    @Step("Предзаполненные данные в карточке \"Информация о поставке\" 4 шаг")
     public void step03() {
         CommonFunctions.printStep();
 
         $x("//*[text() = 'Информация о поставке']/ancestor::div[contains(@class, 'container')][1]//span[text()='Страна происхождения продукции']/following-sibling::span[1]").shouldHave(text("РОССИЯ"));
-        $x("//*[text() = 'Информация о поставке']/ancestor::div[contains(@class, 'container')][1]//span[text()='Тип продукции ']").shouldHave(text("  Живые животные"));
+        $x("//*[text() = 'Информация о поставке']/ancestor::div[contains(@class, 'container')][1]//span[text()='Тип продукции ']").shouldHave(text("  Рыба и морепродукты"));
 
     }
 
@@ -125,11 +122,8 @@ public class Test_08_07_05 extends Hooks {
                 .inContainer("Информация о поставке")
                 .inField("Субъект Российской Федерации, в котором расположены поднадзорные объекты").selectValue(P.getProperty("Субъект Российской Федерации, в котором расположены поднадзорные объекты")).assertNoControl().assertValue()
                 .inField("Цель вывоза").selectValue(P.getProperty("Цель вывоза"))
-                .clickButton("Добавить +")
-                .inContainer("Информация о поставке")
-                .inField("Укажите предприятие (места хранения/отгрузки)").selectValue("RU033")
-                .inField("Выберите один или несколько видов размещения").selectValue(P.getProperty("Выберите один или несколько видов размещения"))
-                .clickButton("Сохранить");
+                .inField("Укажите одно или несколько предприятий (места хранения/отгрузки)").selectValue("RU035");
+
         //Нажать кнопку "продолжить"
         new GUIFunctions()
                 .inContainer("Запрос разрешения на вывоз подконтрольной продукции")
@@ -146,10 +140,10 @@ public class Test_08_07_05 extends Hooks {
                 .inContainer("Информация о транспортировке")
                 .inField("Наименование организации-перевозчика").inputValue(P.getProperty("Наименование организации-перевозчика")).assertNoControl().assertValue()
                 .inField("Вид транспорта, используемый для перевозки до пункта пропуска на границе Таможенного союза (выберите один или несколько)").selectValue(P.getProperty("Вид транспорта, используемый для перевозки до пункта пропуска на границе Таможенного союза (выберите один или несколько)"))
-                .inField("Маршрут следования").inputValue("Россия - Вена")
+                .inField("Маршрут следования").inputValue("Москва-Китай")
                 .inField("Регион проведения таможенного оформления").selectValue(P.getProperty("Регион проведения таможенного оформления"))
                 .inField("Таможенный пункт").selectValue(P.getProperty("Таможенный пункт"));
-        $x("//*[text() = 'Информация о транспортировке']/ancestor::div[contains(@class, 'container')][1]//textarea[text()='140185, МОСКОВСКАЯ ОБЛ., Г.ЖУКОВСКИЙ, УЛ. НАРКОМВОД, Д. 3']").shouldBe(exist);
+        $x("//*[text() = 'Информация о транспортировке']/ancestor::div[contains(@class, 'container')][1]//textarea[text()='124460 МОСКВА, Г. ЗЕЛЕНОГРАД, 2-Й ЗАПАДНЫЙ ПР-Д, Д.3, СТР.1']").shouldBe(exist);
 
         //Нажать кнопку "продолжить"
         new GUIFunctions()
@@ -165,9 +159,9 @@ public class Test_08_07_05 extends Hooks {
 
         new GUIFunctions()
                 .inContainer("Информация об импортере")
-                .inField("Наименование").inputValue(P.getProperty("Наименование")).assertNoControl().assertValue()
+                .inField("Наименование").inputValue(P.getProperty("Наименование"))
                 .inField("Страна").selectValue(P.getProperty("Страна"))
-                .inField("Введите адрес на русском или английском языке").inputValue("Вена, ул.Стефана 2");
+                .inField("Введите адрес на русском или английском языке").inputValue("Room 1203,  Guangming Office Building No. 42 Liangmaqiao Road, Chaoyang District, Beijing, 100125, P.R. China");
         //Нажать кнопку "продолжить"
         new GUIFunctions()
                 .inContainer("Запрос разрешения на вывоз подконтрольной продукции")
@@ -192,37 +186,29 @@ public class Test_08_07_05 extends Hooks {
     public void step08() {
         CommonFunctions.printStep();
 
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Наименование организации']/following-sibling::span[1]").shouldHave(text("ООО «ОТР 2000»"));
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='ИНН']/following-sibling::span[1]").shouldHave(text("7718162032"));
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='ОГРН']/following-sibling::span[1]").shouldHave(text("1027700269530"));
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Контактный телефон']/following-sibling::span[1]").shouldHave(text("9999999999"));
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Email']/following-sibling::span[1]").shouldHave(text("rychagova.uliia@otr.ru"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Наименование организации']/b").shouldHave(text("ИП Федоров Ф.Ф."));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='ИНН ']/b").shouldHave(text("318396766019"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='ОГРН ']/b").shouldHave(text("302920179182270"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Контактный телефон ']/b").shouldHave(text("79085452618"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Email ']/b").shouldHave(text("vet1_exporter@otr.ru"));
         //Блок Инфо об импортере
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Наименование']/following-sibling::span[1]").shouldHave(text("Swan"));
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Страна']/following-sibling::span[1]").shouldHave(text("Австрийская Республика"));
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Вена, ул.Стефана 2']").should(exist);
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Страна происхождения продукции ']").shouldHave(text("РОССИЯ"));
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Субъект Российской Федерации, в котором расположены поднадзорные объекты ']").shouldHave(text("Владимирская"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Наименование ']/b").shouldHave(text("Импортер"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Страна ']/b").shouldHave(text("Китайская Народная Республика"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Адрес ']/b[text()='Room 1203,  Guangming Office Building No. 42 Liangmaqiao Road, Chaoyang District, Beijing, 100125, P.R. China']").should(exist);
+        //Блок Инфо о поставке
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Страна происхождения продукции ']/b").shouldHave(text("РОССИЯ"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Субъект Российской Федерации, в котором расположены поднадзорные объекты ']/b").shouldHave(text("Вологодская"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Цель вывоза ']/b").shouldHave(text("реализация в пищу людям"));
+
         //Блок Инфо о транспортировке
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Наименование организации-перевозчика ']").shouldHave(text("ООО \"АРГО\""));
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Вид транспорта, используемый для перевозки до пункта пропуска на границе Таможенного союза']").shouldHave(text("Автомобильный"));
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Маршрут следования ']").shouldHave(text("Россия - Вена"));
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Регион проведения таможенного оформления ']").shouldHave(text("Московская область"));
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Таможенный пункт ']").shouldHave(text("таможенный пост Аэродром Раменское"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Наименование организации-перевозчика ']/b").shouldHave(text("ООО \"АРГО\""));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Вид транспорта, используемый для перевозки до пункта пропуска на границе Таможенного союза']/b").shouldHave(text("Автомобильный"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Наименование пункта пропуска']/b").shouldHave(text("Выбраны все пункты пропуска, соответствующие видам транспорта"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Маршрут следования ']/b").shouldHave(text("Москва-Китай"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Регион проведения таможенного оформления ']/b").shouldHave(text("Московская область"));
+        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Таможенный пункт ']/b").shouldHave(text("Пикинский таможенный пост"));
 
 
-    }
-
-
-    public void refreshTab(String expectedXpath, int times) {
-        for (int i = 0; i < times; i++) {
-            if ($x(expectedXpath).isDisplayed()) {
-                break;
-            }
-            System.out.println("Refreshing");
-            refresh();
-            CommonFunctions.wait(1);
-        }
     }
 
 }
