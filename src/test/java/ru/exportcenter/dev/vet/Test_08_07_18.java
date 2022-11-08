@@ -81,7 +81,7 @@ public class Test_08_07_18 extends Hooks {
                 .inField("Дата от").inputValue("01.10.2022")
                 .inField("Дата до").inputValue("04.10.2022")
                 .clickByLocator("//span[text()='Страна импорта']")
-                .inField("Страна импортер").selectValue("РЕСПУБЛИКА ХОРВАТИЯ")
+                //.inField("Страна импорта").selectValue("РЕСПУБЛИКА ХОРВАТИЯ")  изменили поле, сделали необзяательным
                 .clickByLocator("//span[text()='Вид продукции']")
                 .clickByLocator("//span[text()='Наименование продукции']")
 
@@ -95,6 +95,7 @@ public class Test_08_07_18 extends Hooks {
 
     @Step("Скачать и провертиь отчет")
     public void step03() {
+        CommonFunctions.printStep();
         //нажать на просмотр общего отчета
         new GUIFunctions()
                 .inContainer("Сформированные отчеты")
@@ -106,6 +107,7 @@ public class Test_08_07_18 extends Hooks {
     @Step("Кейс 08.07.10 Переход из отчета с типом \"Аналитический\" в личный кабинет")
     // ТЕ неправильно написала кейс, вынесла этот шаг в отдельный
     public void step04() {
+        CommonFunctions.printStep();
         new GUIFunctions()
                 .inContainer("Формирование отчетности по разрешениям на вывоз подконтрольной продукции")
                 .clickButton("Вернуться в личный кабинет");

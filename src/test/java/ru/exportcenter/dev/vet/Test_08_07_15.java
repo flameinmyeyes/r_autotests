@@ -16,8 +16,7 @@ import ru.exportcenter.Hooks;
 import java.util.Properties;
 
 import static com.codeborne.selenide.Condition.text;
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 public class Test_08_07_15 extends Hooks {
 
@@ -50,13 +49,21 @@ public class Test_08_07_15 extends Hooks {
         //Ввести логин и пароль demo_exporter/password
         new GUIFunctions()
                 .authorization(P.getProperty("Авторизация.Email"), P.getProperty("Авторизация.Пароль"), P.getProperty("Авторизация.Код"))
-                //.waitForURL("http://uidm.uidm-dev.d.exportcenter.ru/ru/main");
-                //.waitForElementDisplayed("//span[text()='Запрос разрешения на вывоз подконтрольной продукции']");   / переделывали ТК уже четыре раза, не удалять.
-
-                //.refreshTab("Продолжить", 30)                      // это бага НА ДЕВЕ , кнопка продолжить не отображается с первого раза, перезагрузка страницы 10 раз
-                //.clickButton("Продолжить")
                 .waitForElementDisplayed("//span[text()='Запрос разрешения на вывоз подконтрольной продукции']");
+
+
+        if ($x("//div[text()='Шаг 1 из 9']").isDisplayed()){
+
+            new GUIFunctions()
+                    .clickByLocator("//button[contains(text(),'Запрос разрешения на вывоз подконтрольной продукции')]");
+            webdriver().driver().switchTo().alert().accept();
+            new GUIFunctions()
+                    .waitForElementDisplayed("//a[text()='Сформировать отчет']");
+        }
     }
+
+
+
 
     @Step("Проверить корректность предзаполненных данных")
     public void step02() {

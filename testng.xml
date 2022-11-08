@@ -93,18 +93,17 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-    <test name="SPT" thread-count="1" preserve-order="true">
+<!--    <test name="SPT" thread-count="1" preserve-order="true">
         <classes>
             <class name="ru.exportcenter.test.spt.Test_07_07_19" />
         </classes>
+    </test>-->
+
+
+    <test name="REC_all_tests_vet" thread-count="1" preserve-order="true">
+        <classes>
+            <class name="ru.exportcenter.dev.vet.Test_08_07_03"/>
+        </classes>
     </test>
-
-
-<!--    <test name="REC_all_tests_vet" thread-count="1" preserve-order="true">-->
-<!--        <classes>-->
-<!--            <class name="ru.exportcenter.dev.vet.Test_08_07_01"/>-->
-<!--            <class name="ru.exportcenter.dev.vet.Test_08_07_03"/>-->
-<!--        </classes>-->
-<!--    </test>-->
 
 </suite>

@@ -67,14 +67,14 @@ public class Test_08_07_07 extends Hooks {
 
     }
 
-    @Step("Ввод данных в карточку \"Информация о продукции\" ")
+    @Step("Ввод данных и отмена заявки ")
     public void step02() {
         CommonFunctions.printStep();
 
-        //В поле Тип продукции выбрать Живые животные
+        //В поле Тип продукции выбрать Рыба и морепродукты
         new GUIFunctions()
                 .inContainer("Информация о продукции")
-                .inField("Тип продукции").selectValue("Продукция, не требующая разрешения").assertNoControl().assertValue()
+                .inField("Тип продукции").selectValue("Рыба и морепродукты")
                 .inContainer("Запрос разрешения на вывоз подконтрольной продукции")
                 .clickByLocator("//button[@class='dropdown-icon']")
                 .clickByLocator("//li[text()='Отменить заявку']")
@@ -83,15 +83,5 @@ public class Test_08_07_07 extends Hooks {
 
     }
 
-    public void refreshTab(String expectedXpath, int times) {
-        for (int i = 0; i < times; i++) {
-            if ($x(expectedXpath).isDisplayed()) {
-                break;
-            }
-            System.out.println("Refreshing");
-            refresh();
-            CommonFunctions.wait(1);
-        }
-    }
 
 }

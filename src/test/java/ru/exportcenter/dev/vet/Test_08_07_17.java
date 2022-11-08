@@ -84,7 +84,7 @@ public class Test_08_07_17 extends Hooks {
         new GUIFunctions()
                 .inContainer("Страновой отчёт")
                 .clickByLocator("//span[text()='Страна импорта']")
-                .inField("Страна импортер").selectValue("КИТАЙСКАЯ НАРОДНАЯ РЕСПУБЛИКА")
+            //  .inField("Страна импорта").selectValue("КИТАЙСКАЯ НАРОДНАЯ РЕСПУБЛИКА")  поле стало необязательным
                 .clickByLocator("//span[text()='Вид продукции']")
                 .clickByLocator("//span[text()='Наименование продукции']")
 
