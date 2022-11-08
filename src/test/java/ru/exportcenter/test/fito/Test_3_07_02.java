@@ -25,8 +25,8 @@ public class Test_3_07_02 extends Hooks {
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     @Owner(value = "Балашов Илья")
-    @Description("3.07.02 Сценарий с отсутствием типа документа в списке \"Тип документа о происхождении груза\"")
-    @Link(name = "Test_3_07_02", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=163308873")
+    @Description("3.07.02 (Тест контур) Сценарий с отсутствием типа документа в списке \"Тип документа о происхождении груза\"")
+    @Link(name = "Test_3_07_02", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=196777462")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
         precondition();

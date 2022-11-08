@@ -27,7 +27,7 @@ public class Test_3_07_01 extends Hooks {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/fito/Test_3_07_01/";
     private final String WAY_FILES = Ways.TEST.getWay() + "/fito/Test_3_07_01/"; //переменная нужна, т.к. значение WAY_TEST будет меняться при вызове текущего теста из других тестов
-    private final String WAY_TEMP_FILE = "src/test/java/ru/exportcenter/dev/fito/";
+    private final String WAY_TEMP_FILE = "src/test/java/ru/exportcenter/test/fito/";
     private final String FILE_NAME_BC_1 = "ResponseSuccessBC1_test_new.xml";
     private final String FILE_NAME_BC_2 = "ResponseSuccessBC2_test_new.xml";
     private final String FILE_NAME_BC_3_1 = "ResponseSuccessBC3_1_test_new.xml";
@@ -143,6 +143,7 @@ public class Test_3_07_01 extends Hooks {
         refreshTabUntilElementIsDisplayed("//*[contains(text(), 'Продолжить')]", 60);
         new GUIFunctions()
                 .clickButton("Продолжить")
+                .waitForLoading()
                 .waitForElementDisplayed("//div[text()='Шаг 1 из 9']");
     }
 
@@ -331,6 +332,7 @@ public class Test_3_07_01 extends Hooks {
         refreshTabUntilElementIsDisplayed("//*[contains(text(), 'Продолжить')]", 60);
         new GUIFunctions()
                 .clickButton("Продолжить")
+                .waitForLoading()
                 .waitForElementDisplayed("//div[text()='Шаг 7 из 9']");
     }
 
@@ -425,6 +427,7 @@ public class Test_3_07_01 extends Hooks {
         refreshTabUntilElementIsDisplayed("//*[contains(text(), 'Продолжить')]", 60);
         new GUIFunctions()
                 .clickButton("Продолжить")
+                .waitForLoading()
                 .waitForElementDisplayed("//div[text()='Шаг 9 из 9']");
     }
 
@@ -483,6 +486,7 @@ public class Test_3_07_01 extends Hooks {
         refreshTabUntilElementIsDisplayed("//*[contains(text(), 'Продолжить')]", 60);
         new GUIFunctions()
                 .clickButton("Продолжить")
+                .waitForLoading()
                 .waitForElementDisplayed("//div[text()='Шаг 9 из 9']");
     }
 
@@ -535,6 +539,7 @@ public class Test_3_07_01 extends Hooks {
         refreshTabUntilElementIsDisplayed("//*[contains(text(), 'Продолжить')]", 60);
         new GUIFunctions()
                 .clickButton("Продолжить")
+                .waitForLoading()
                 .waitForElementDisplayed("//div[text()='Шаг 9 из 9']");
     }
 
@@ -579,8 +584,11 @@ public class Test_3_07_01 extends Hooks {
     @Step("Шаг 28. Ознакомление с результатом предоставления услуги")
     public void step28() {
         CommonFunctions.printStep();
+
         //Нажать по ссылке  "Запрос заключения о карантинном фитосанитарном состоянии"
-        new GUIFunctions().clickByLocator("//button[contains(text(),'Запрос заключения о карантинном фитосанитарном состоянии')]");
+        String url = $x("//button[contains(text(),'Запрос заключения о карантинном фитосанитарном состоянии')]/parent::a").getAttribute("href");
+        System.out.println("url: " + url);
+        open(url);
         webdriver().driver().switchTo().alert().accept();
 
         new GUIFunctions()
@@ -591,6 +599,7 @@ public class Test_3_07_01 extends Hooks {
         refreshTabUntilElementIsDisplayed("//*[contains(text(), 'Продолжить')]", 60);
         new GUIFunctions()
                 .clickButton("Продолжить")
+                .waitForLoading()
                 .waitForElementDisplayed("//div[text()='Шаг 9 из 9']");
     }
 

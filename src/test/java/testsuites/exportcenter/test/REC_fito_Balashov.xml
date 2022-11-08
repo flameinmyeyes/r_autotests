@@ -8,6 +8,8 @@
 		<classes>
 			<class name="ru.exportcenter.test.fito.Test_3_07_01"/>
 			<class name="ru.exportcenter.test.fito.Test_3_07_02"/>
+			<class name="ru.exportcenter.test.fito.Test_3_07_03"/>
+<!--			<class name="ru.exportcenter.test.fito.Test_3_07_02"/>-->
 		</classes>
 	</test>
 

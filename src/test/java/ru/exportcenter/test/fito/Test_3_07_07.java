@@ -23,7 +23,7 @@ public class Test_3_07_07 extends Hooks {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/fito/Test_3_07_07/";
     private final String WAY_FILES = Ways.TEST.getWay() + "/fito/Test_3_07_07/"; //переменная нужна, т.к. значение WAY_TEST будет меняться при вызове текущего теста из других тестов
-    private final String WAY_TEMP_FILE = "src/test/java/ru/exportcenter/dev/fito/";
+    private final String WAY_TEMP_FILE = "src/test/java/ru/exportcenter/test/fito/";
     private final String FILE_NAME_BC_1 = "ResponseSuccess1.xml";
     private final String FILE_NAME_BC_2 = "1ResponseSuccessBC2.xml";
     private final String FILE_NAME_BC_3_1 = "1ResponseSuccessBC3_1.xml";
@@ -34,9 +34,10 @@ public class Test_3_07_07 extends Hooks {
     public String WAY_TO_PROPERTIES = Ways.TEST.getWay() + "/fito/Test_3_07_07/" + "Test_3_07_07_properties.xml";
     public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
-    private String processID;
     private String token;
-    private String baseURI = "http://bpmn-api-service.bpms-dev.d.exportcenter.ru/";
+
+    private final String BASE_URI = "http://bpmn-api-service.bpms-dev.d.exportcenter.ru/";
+    private String processID;
 
     private String docNum;
     private String docStatus;
