@@ -100,6 +100,7 @@ public class Test_08_07_21 extends Hooks {
         $x("//div[text()='Дата создания заявки']").shouldBe(exist);
         $x("//div[text()='Последнее изменение статуса']").shouldBe(exist);
         $x("//div[text()='Номер заявки']").shouldBe(exist);
-
+        //new GUIFunctions().waitForElementDisplayed("//span[text()='Продолжить']");
+        new GUIFunctions().refreshTab("Продолжить", 30);   // Bug стенда, чтобы появилась кнопка, надо перегружать страницу
     }
 }

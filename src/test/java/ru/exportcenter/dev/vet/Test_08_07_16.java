@@ -96,8 +96,8 @@ public class Test_08_07_16 extends Hooks {
         new GUIFunctions()
                 .inContainer("Сформированные отчеты")
                 .clickByLocator("//div[text()='Общий отчет.pdf']");
-        // File report = (File) $("//div[text()='Общий отчет.pdf']");
-        Selenide.sleep(10000);  // после правки бага с зависанием , можно заменить на нормальное ожидание
+
+        Selenide.sleep(10000);  // после правки бага с зависанием стенда, можно заменить на нормальное ожидание
 
         System.out.println("done");
         searchFileInDefaultDownloadDir("Общий отчет");
