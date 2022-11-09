@@ -192,7 +192,8 @@ public class Test_08_07_03 extends Hooks {
     @Step("Предзаполненные данные проверка")
     public void step08() {
         CommonFunctions.printStep();
-                         //*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Наименование организации']/b
+
+
         $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Наименование организации']/b").shouldHave(text("ООО «ОТР 2000»"));
         $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='ИНН ']/b").shouldHave(text("7718162032"));
         $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='ОГРН ']/b").shouldHave(text("1027700269530"));
@@ -209,7 +210,11 @@ public class Test_08_07_03 extends Hooks {
         $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Маршрут следования ']/b").shouldHave(text("Россия - Вена"));
         $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Регион проведения таможенного оформления ']/b").shouldHave(text("Московская область"));
         $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Таможенный пункт ']/b").shouldHave(text("таможенный пост Аэродром Раменское"));
-
+        new GUIFunctions()
+                .inContainer("Информация о продукции")
+                .clickByLocator("//button[@class='dropdown-icon']")
+                .clickByLocator("//span[text() ='Просмотреть']")
+                .waitForElementDisplayed("//span[text() ='Закрыть']");
 
     }
 

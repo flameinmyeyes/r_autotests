@@ -208,7 +208,11 @@ public class Test_08_07_05 extends Hooks {
         $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Регион проведения таможенного оформления ']/b").shouldHave(text("Московская область"));
         $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Таможенный пункт ']/b").shouldHave(text("Пикинский таможенный пост"));
 
-
+        new GUIFunctions()   //проверка окна по кнопке "Просмотреть"
+                .inContainer("Информация о продукции")
+                .clickByLocator("//button[@class='dropdown-icon']")
+                .clickByLocator("//span[text() ='Просмотреть']")
+                .waitForElementDisplayed("//span[text() ='Закрыть']");
     }
 
 }

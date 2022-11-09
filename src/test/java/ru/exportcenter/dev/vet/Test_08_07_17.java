@@ -76,17 +76,25 @@ public class Test_08_07_17 extends Hooks {
                 .clickByLocator("//span[text()='Страновой']")
                 .waitForLoading()
                 .inContainer("Страновой отчёт")
-                .clickByLocator("//span[text()='Детализированный']");
+                .clickByLocator("//span[text()='Детализированный']")
+                .inContainer("Формирование отчетности по разрешениям на вывоз подконтрольной продукции")
+                .clickButton("Далее")
+                .waitForElementDisplayed("//span[text()='Заполните поле']");
+
         $x("//input[@name='$.createItem.country.search.period1.create_date_from']").setValue("01.09.2022");
         $x("//input[@name='$.createItem.country.search.period1.create_date_to']").setValue("30.09.2022");
         $x("//input[@name='$.createItem.country.search.period2.create_date_from']").setValue("01.10.2022");
         $x("//input[@name='$.createItem.country.search.period2.create_date_to']").setValue("20.10.2022");
-        new GUIFunctions()
+        new GUIFunctions()   //заполнение полей с последующим закрытием каждого поля после проверки
                 .inContainer("Страновой отчёт")
                 .clickByLocator("//span[text()='Страна импорта']")
-            //  .inField("Страна импорта").selectValue("КИТАЙСКАЯ НАРОДНАЯ РЕСПУБЛИКА")  поле стало необязательным
+                .inField("Необязательно").selectValue("КИТАЙСКАЯ НАРОДНАЯ РЕСПУБЛИКА")
+                .clickByLocator("//span[text()='Страна импорта']")
+                .clickByLocator("//span[text()='Вид продукции']")
+                .inField("Необязательно").selectValue("сухой заменитель молока")
                 .clickByLocator("//span[text()='Вид продукции']")
                 .clickByLocator("//span[text()='Наименование продукции']")
+                .inField("Необязательно").inputValue("Наименование продукции")
 
 
         //span[text()='Скачать архив со всеми сформированными отчётами']
