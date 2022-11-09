@@ -80,10 +80,15 @@ public class Test_08_07_18 extends Hooks {
                 .clickByLocator("//span[text()='Детализированный']")
                 .inField("Дата от").inputValue("01.10.2022")
                 .inField("Дата до").inputValue("04.10.2022")
+
                 .clickByLocator("//span[text()='Страна импорта']")
-                //.inField("Страна импорта").selectValue("РЕСПУБЛИКА ХОРВАТИЯ")  изменили поле, сделали необзяательным
+                .inField("Необязательно").selectValue("РЕСПУБЛИКА ХОРВАТИЯ")
+                .clickByLocator("//span[text()='Страна импорта']")
+                .clickByLocator("//span[text()='Вид продукции']")
+                .inField("Необязательно").selectValue("сухой заменитель молока")
                 .clickByLocator("//span[text()='Вид продукции']")
                 .clickByLocator("//span[text()='Наименование продукции']")
+                .inField("Необязательно").inputValue("Наименование продукции")
 
 
                 //span[text()='Скачать архив со всеми сформированными отчётами']
