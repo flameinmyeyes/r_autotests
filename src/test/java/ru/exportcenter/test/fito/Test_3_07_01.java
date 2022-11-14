@@ -108,8 +108,8 @@ public class Test_3_07_01 extends Hooks {
                 .clickButton("Заказать услугу")
                 .switchPageTo(1)
                 .waitForLoading()
-                .clickByLocator("//div[@data-history-code='/services/state'][normalize-space(text()='Государственные')]")
-                .waitForURL("https://master-portal.t.exportcenter.ru/services/state")
+//                .clickByLocator("//div[@data-history-code='/services/state'][normalize-space(text()='Государственные')]")
+//                .waitForURL("https://master-portal.t.exportcenter.ru/services/state")
 
                 .waitForElementDisplayed("//div[@class='js-tabs__block open']//input[@placeholder='Поиск по разделу']")
                 .inputInSearchField("Поиск по разделу", "ФИТО")
