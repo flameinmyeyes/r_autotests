@@ -143,7 +143,7 @@ public class Test_08_07_03 extends Hooks {
                 .inContainer("Информация о транспортировке")
                 .inField("Наименование организации-перевозчика").inputValue(P.getProperty("Наименование организации-перевозчика")).assertNoControl().assertValue()
                 .inField("Вид транспорта, используемый для перевозки до пункта пропуска на границе Таможенного союза (выберите один или несколько)").selectValue(P.getProperty("Вид транспорта, используемый для перевозки до пункта пропуска на границе Таможенного союза (выберите один или несколько)"))
-                .inField("Маршрут следования").inputValue("Россия - Вена")
+                .inField("Маршрут следования").inputValue(P.getProperty("Маршрут следования"))
                 .inField("Регион проведения таможенного оформления").selectValue(P.getProperty("Регион проведения таможенного оформления"))
                 .inField("Таможенный пункт").selectValue(P.getProperty("Таможенный пункт"));
                 $x("//*[text() = 'Информация о транспортировке']/ancestor::div[contains(@class, 'container')][1]//textarea[text()='140185, МОСКОВСКАЯ ОБЛ., Г.ЖУКОВСКИЙ, УЛ. НАРКОМВОД, Д. 3']").shouldBe(exist);
@@ -164,7 +164,7 @@ public class Test_08_07_03 extends Hooks {
                 .inContainer("Информация об импортере")
                 .inField("Наименование").inputValue(P.getProperty("Наименование")).assertNoControl().assertValue()
                 .inField("Страна").selectValue(P.getProperty("Страна"))
-                .inField("Введите адрес на русском или английском языке").inputValue("Вена, ул.Стефана 2");
+                .inField("Введите адрес на русском или английском языке").inputValue(P.getProperty("Введите адрес на русском или английском языке"));
         //Нажать кнопку "продолжить"
         new GUIFunctions()
                 .inContainer("Запрос разрешения на вывоз подконтрольной продукции")
