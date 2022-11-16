@@ -4,6 +4,7 @@ import com.codeborne.selenide.Selenide;
 import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
+import functions.file.FileFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
@@ -14,9 +15,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
 
+import java.io.File;
 import java.util.Properties;
-
-import static functions.file.FileFunctions.searchFileInDefaultDownloadDir;
 
 public class Test_08_07_16 extends Hooks {
 
@@ -69,7 +69,6 @@ public class Test_08_07_16 extends Hooks {
     public void step02() {
         CommonFunctions.printStep();
 
-
         new GUIFunctions()
                 .inContainer("Выбор отчёта")
                 .clickByLocator("//span[text()='Общий']")
@@ -85,6 +84,11 @@ public class Test_08_07_16 extends Hooks {
     }
     @Step("Скачать и провертиь отчет")
     public void step03() {
+        CommonFunctions.printStep();
+
+        //удаляем все файлы в папке downloads
+        FileFunc.recursiveDeleteWithoutMainDir(new File(Ways.DOWNLOADS.getWay()));
+
         //нажать на просмотр общего отчета
         new GUIFunctions()
                 .inContainer("Сформированные отчеты")
@@ -93,7 +97,11 @@ public class Test_08_07_16 extends Hooks {
         Selenide.sleep(10000);  // после правки бага с зависанием стенда, можно заменить на нормальное ожидание
 
         System.out.println("done");
-        searchFileInDefaultDownloadDir("Общий отчет");
+
+        //поиск скачанного файла
+        FileFunctions.searchFileInDirectoriesRecursive(new File(Ways.DOWNLOADS.getWay()),"Общий отчет");
+        //очищаем папку скачивания
+        FileFunc.recursiveDeleteWithoutMainDir(new File(Ways.DOWNLOADS.getWay()));
 
     }
 
