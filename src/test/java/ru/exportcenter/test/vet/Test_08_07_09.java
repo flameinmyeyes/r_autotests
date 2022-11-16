@@ -4,6 +4,7 @@ import com.codeborne.selenide.Selenide;
 import framework.RunTestAgain;
 import framework.Ways;
 import functions.common.CommonFunctions;
+import functions.file.FileFunctions;
 import functions.file.PropertiesHandler;
 import functions.gui.GUIFunctions;
 import io.qameta.allure.Description;
@@ -14,10 +15,11 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.$x;
-import static functions.file.FileFunctions.searchFileInDefaultDownloadDir;
 
 public class Test_08_07_09 extends Hooks {
 
@@ -31,7 +33,7 @@ public class Test_08_07_09 extends Hooks {
     @Description("08.07.09 Выбор отчёта: Общий отчет, Страновой отчет, Аналитический отчет.")
     @Link(name = "Test_08_07_09", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=183200561")
     @Test(retryAnalyzer = RunTestAgain.class)
-    public void steps() {
+    public void steps(){
         precondition();
         step01();
         step02();
@@ -97,8 +99,12 @@ public class Test_08_07_09 extends Hooks {
                 .waitForElementDisplayed("//div[text()='Сформированные отчеты']", 600);
 
     }
-    public void step03() {
+    public void step03(){
         //нажать на просмотр общего отчета
+
+        //удаляем все файлы в папке downloads
+        FileFunc.recursiveDeleteWithoutMainDir(new File(Ways.DOWNLOADS.getWay()));
+
         new GUIFunctions()
                 .inContainer("Сформированные отчеты")
                 .clickByLocator("//span[text()='Скачать архив со всеми сформированными отчётами']")
@@ -108,7 +114,11 @@ public class Test_08_07_09 extends Hooks {
         Selenide.sleep(10000);  // после правки бага с зависанием , можно заменить на нормальное ожидание
 
         System.out.println("done");
-        searchFileInDefaultDownloadDir("export");
+
+        //поиск скачанного файла
+        FileFunctions.searchFileInDirectoriesRecursive(new File(Ways.DOWNLOADS.getWay()),"export");
+        //очищаем папку скачивания
+        FileFunc.recursiveDeleteWithoutMainDir(new File(Ways.DOWNLOADS.getWay()));
 
     }
 
