@@ -19,6 +19,7 @@ import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.*;
 
+@Deprecated
 public class Test_3_07_07 extends Hooks {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/fito/Test_3_07_07/";

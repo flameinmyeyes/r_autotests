@@ -43,8 +43,8 @@ public class Test_3_07_01 extends Hooks {
     private final String BASE_URI = "https://lk.t.exportcenter.ru";
     private String processID;
 
+    public String guid;
     private String docNum;
-    private String guid;
     private String zayavlenieRegistrationNumber;
     private String aktNumber;
     private String zKFSNumber;
@@ -152,13 +152,15 @@ public class Test_3_07_01 extends Hooks {
                 .inContainer("Получатель")
                     .inField("Наименование получателя (на английском языке)").inputValue(P.getProperty("Получатель.Наименование получателя")).assertNoControl().assertValue()
                     .inField("Страна").selectValue(P.getProperty("Получатель.Страна")).assertNoControl().assertValue()
-                    .inField("Юридический адрес на английском языке в формате: номер дома, улица, город, индекс").inputValue(P.getProperty("Получатель.Юридический адрес")).assertNoControl().assertValue()
+                    .inField("Юридический адрес на английском языке в формате: номер дома, улица, город, индекс").inputValue(P.getProperty("Получатель.Юридический адрес")).assertNoControl().assertValue();
+
+        CommonFunctions.wait(2);
 
                 //нажать "Продолжить"
-                .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
-                    .clickButton("Продолжить")
-                    .waitForLoading()
-                    .waitForElementDisplayed("//div[text()='Шаг 2 из 9']");
+        new GUIFunctions()
+                .clickButton("Продолжить")
+                .waitForLoading()
+                .waitForElementDisplayed("//div[text()='Шаг 2 из 9']");
     }
 
     @Step("Шаг 5. Блок  \"Условия поставки\"")

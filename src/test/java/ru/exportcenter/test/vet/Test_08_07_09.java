@@ -100,11 +100,12 @@ public class Test_08_07_09 extends Hooks {
 
     }
     public void step03(){
-        //нажать на просмотр общего отчета
+        CommonFunctions.printStep();
 
         //удаляем все файлы в папке downloads
         FileFunc.recursiveDeleteWithoutMainDir(new File(Ways.DOWNLOADS.getWay()));
 
+        //нажать на просмотр общего отчета
         new GUIFunctions()
                 .inContainer("Сформированные отчеты")
                 .clickByLocator("//span[text()='Скачать архив со всеми сформированными отчётами']")
