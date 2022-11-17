@@ -24,33 +24,35 @@ import java.util.Properties;
 
 import static com.codeborne.selenide.Selenide.switchTo;
 
-public class Test_3_07_21_2 extends Hooks {
+public class Test_3_07_21_4 extends Hooks {
 
-    public String WAY_TEST = Ways.TEST.getWay() + "/fito/Test_3_07_21/Test_3_07_21_2/";
-    private final String WAY_FILES = Ways.TEST.getWay() + "/fito/Test_3_07_21/Test_3_07_21_2/"; //переменная нужна, т.к. значение WAY_TEST будет меняться при вызове текущего теста из других тестов
-    private final String WAY_TEMP_FILE = "src/test/java/ru/exportcenter/test/fito/Test_3_07_21_2/";
-    private final String FILE_NAME_BC_2 = "ResponseFailDataBC2.xml";
+    public String WAY_TEST = Ways.TEST.getWay() + "/fito/Test_3_07_21/Test_3_07_21_4/";
+    private final String WAY_FILES = Ways.TEST.getWay() + "/fito/Test_3_07_21/Test_3_07_21_4/"; //переменная нужна, т.к. значение WAY_TEST будет меняться при вызове текущего теста из других тестов
+    private final String WAY_TEMP_FILE = "src/test/java/ru/exportcenter/test/fito/Test_3_07_21_4/";
+    private final String FILE_NAME_BC_3_2 = "ResponseFailDataBC3_2.xml";
+
+    public String WAY_TO_PROPERTIES = Ways.TEST.getWay() + "/fito/Test_3_07_21/Test_3_07_21_4/" + "Test_3_07_21_4_properties.xml";
+    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
 
     private final String BASE_URI = "https://lk.t.exportcenter.ru";
     private String processID;
 
+    private String zayavlenieRegistrationNumber;
+    private String aktNumber;
     private String docNum;
     private String guid;
     private String token;
 
-    public String WAY_TO_PROPERTIES = Ways.TEST.getWay() + "/fito/Test_3_07_21/Test_3_07_21_2/" + "Test_3_07_21_2_properties.xml";
-    public Properties P = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
-
     @Owner(value = "Петрищев Руслан")
-    @Description("3.07.21.2 (Г) ВС 2")
-    @Link(name = "Test_3_07_21_2", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=196796014")
+    @Description("3.07.21.4 (Г) ВС 3 ответ 2")
+    @Link(name = "Test_3_07_21_4", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=196796021")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
         precondition();
-        step11();
-        step12();
-        step13();
-        step14();
+        step20();
+        step21();
+        step22();
+        step23();
     }
 
     @AfterMethod
@@ -59,7 +61,7 @@ public class Test_3_07_21_2 extends Hooks {
     }
 
     public void precondition() {
-        //Предусловие: выполнить шаги 1-5 из ТК https://confluence.exportcenter.ru/pages/viewpage.action?pageId=188852997
+        //Предусловие: выполнить шаги 1-19 из ТК https://confluence.exportcenter.ru/pages/viewpage.action?pageId=188852997
         Test_3_07_01 test_3_07_01 = new Test_3_07_01();
         test_3_07_01.WAY_TEST = this.WAY_TEST;
         test_3_07_01.step01();
@@ -72,57 +74,70 @@ public class Test_3_07_21_2 extends Hooks {
         test_3_07_01.step08();
         test_3_07_01.step09();
         test_3_07_01.step10();
+        test_3_07_01.step11();
+        test_3_07_01.step12();
+        test_3_07_01.step13();
+        test_3_07_01.step14();
+        test_3_07_01.step15();
+        test_3_07_01.step16();
+        test_3_07_01.step17();
+        test_3_07_01.step18();
+        test_3_07_01.step19();
         this.guid = test_3_07_01.guid;
+        this.zayavlenieRegistrationNumber = JupyterLabIntegration.getFileContent(test_3_07_01.WAY_TEST + "zayavlenieRegistrationNumber.txt");
         this.processID = JupyterLabIntegration.getFileContent(test_3_07_01.WAY_TEST + "processID.txt");
         this.docNum = JupyterLabIntegration.getFileContent(test_3_07_01.WAY_TEST + "docNum.txt");
-        System.out.println("guid: " + guid);
     }
 
-    @Step("Шаг 11. Редактирование XML ответа проверки сведений из проекта заявления в Россельхознадзоре (ВС 2)")
-    public void step11() {
+    @Step("Шаг 20. Редактирование XML ответа 2 для 3 ВС")
+    public void step20() {
         CommonFunctions.printStep();
 
         //читаем содержимое XML с файла на юпитере
-        String fileContent = JupyterLabIntegration.getFileContent(WAY_FILES + FILE_NAME_BC_2);
+        String fileContent = JupyterLabIntegration.getFileContent(WAY_FILES + FILE_NAME_BC_3_2);
 
         //создаем временный XML файл и записываем туда содержимое XML
-        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_2;
+        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_3_2;
         deleteFileIfExists(new File(wayFile)); //удаляем временный файл, если он есть
         FileFunctions.writeValueToFile(wayFile, fileContent);
 
+        //генерируем и сохраняем номер заявления в файл
+        aktNumber = CommonFunctions.randomNumber(100, 999) + "-" + CommonFunctions.randomNumber(100, 999); //100-100
+        System.out.println("aktNumber: " + aktNumber);
+        JupyterLabIntegration.uploadTextContent(aktNumber, WAY_TEST, "aktNumber.txt");
+
         //обновляем XML файл
         XMLHandler.updateXML(wayFile, "common:GUID", guid);
-        XMLHandler.updateXML(wayFile, "common:SendDateTime", DateFunctions.dateToday("yyyy-MM-dd'T'HH:mm:ss")); //2022-10-04T13:22:27
-        XMLHandler.updateXML(wayFile, "common:ProbeDate", DateFunctions.dateShift("yyyy-MM-dd", +1)); ; //2022-10-31
-        XMLHandler.updateXML(wayFile, "common:ProbeTime", DateFunctions.dateToday("yyyy-MM-dd'T'") + P.getProperty("Запрос отбора проб.Планируемое время отбора проб") + ":00"); //2022-10-31T14:00:00
+        XMLHandler.updateXML(wayFile, "common:SendDateTime", DateFunctions.dateToday("yyyy-MM-dd'T'HH:mm:ss")); //2022-10-07T11:18:52
+        XMLHandler.updateXML(wayFile, "common:AktDate", DateFunctions.dateToday("yyyy-MM-dd")); //2022-10-07
+        XMLHandler.updateXML(wayFile, "common:AktNumber", guid); //100-100
     }
 
-    @Step("Шаг 12. Загрузка XML файла через сваггер, запуск процесса (использовать значения для ВС 2)")
-    public void step12() {
+    @Step("Шаг 21. Загрузка XML файла через сваггер, запуск процесса (использовать значения для ВС 3)")
+    public void step21() {
         CommonFunctions.printStep();
 
         token = RESTFunctions.getAccessToken(P.getProperty("Авторизация.URL"), "bpmn_admin");
         System.out.println("token: " + token);
 
-        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_2;
+        String wayFile = WAY_TEMP_FILE + FILE_NAME_BC_3_2;
         String fileContent = FileFunctions.readValueFromFile(wayFile);
         System.out.println("fileContent: " + fileContent);
 
-        String messageName = "CheckAppInfRequestMessage";
+        String messageName = "SendAppInfRequestMessage";
 
         //отправляем запрос
         RESTFunctions.sendAttachmentToProcess(token, BASE_URI, processID, new File(wayFile), messageName);
 
         deleteFileIfExists(new File(wayFile)); //удаляем временный файл
-
     }
 
-    @Step("Шаг 13. Получение результата проверки сведений")
-    public void step13() {
+    @Step("Шаг 22.  Ознакомление с информацией об отборе проб")
+    public void step22() {
         CommonFunctions.printStep();
 
         //Нажать на ссылку с номером заявки
-        new GUIFunctions().clickByLocator("//*[contains(text(),'"+docNum+"')]");
+        new GUIFunctions().clickByLocator("//*[contains(text(),'"+zayavlenieRegistrationNumber+"')]");
 
         //Нажать "Уйти"
         switchTo().alert().accept();
@@ -133,20 +148,14 @@ public class Test_3_07_21_2 extends Hooks {
                 .clickButton("Продолжить");
     }
 
-    @Step("Шаг 14. Проверка уведомления в ЕЛК. ")
-    public void step14() {
+    @Step("Шаг 23. Проверка уведомления в ЕЛК. ")
+    public void step23() {
         CommonFunctions.printStep();
 
         //нажать на список уведомлений
         new GUIFunctions()
                 .clickByLocator("//button[contains(@class,'NotificationBadge')]")
-                .waitForElementDisplayed("//*[contains(text(),'Получение ЗКФС. Технический сбой. Заявление № "+docNum+"')]");
-    }
-
-    @Step("Шаг 15. Проверка уведомления почта")
-    public void step15() {
-        CommonFunctions.printStep();
-
+                .waitForElementDisplayed("//*[contains(text(),'Получение ЗКФС. Технический сбой. Заявление № "+zayavlenieRegistrationNumber+"')]");
     }
 
     private static void deleteFileIfExists(File file) {
@@ -158,4 +167,5 @@ public class Test_3_07_21_2 extends Hooks {
             System.out.println("Временный файл не обнаружен, удаление не требуется");
         }
     }
+
 }

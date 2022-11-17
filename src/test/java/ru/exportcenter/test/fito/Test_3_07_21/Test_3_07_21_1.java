@@ -1,6 +1,5 @@
 package ru.exportcenter.test.fito.Test_3_07_21;
 
-import com.codeborne.selenide.Selenide;
 import framework.RunTestAgain;
 import framework.Ways;
 import framework.integration.JupyterLabIntegration;
@@ -22,8 +21,6 @@ import ru.exportcenter.test.fito.Test_3_07_01;
 
 import java.io.File;
 import java.util.Properties;
-
-import static com.codeborne.selenide.Selenide.*;
 
 public class Test_3_07_21_1 extends Hooks {
 
