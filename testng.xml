@@ -108,19 +108,19 @@
 
         <test name="REC_all_tests_vet" thread-count="1" preserve-order="true">
             <classes>
-                <class name="ru.exportcenter.dev.vet.Test_08_07_01"/>
-                <class name="ru.exportcenter.dev.vet.Test_08_07_02"/>
-                <class name="ru.exportcenter.dev.vet.Test_08_07_03"/>
-                <class name="ru.exportcenter.dev.vet.Test_08_07_04"/>
-                <class name="ru.exportcenter.dev.vet.Test_08_07_05"/>
-                <class name="ru.exportcenter.dev.vet.Test_08_07_07"/>
-                <class name="ru.exportcenter.dev.vet.Test_08_07_08"/>
-                <class name="ru.exportcenter.dev.vet.Test_08_07_13"/>
-                <class name="ru.exportcenter.dev.vet.Test_08_07_14"/>
-                <class name="ru.exportcenter.dev.vet.Test_08_07_15"/>
-                <class name="ru.exportcenter.dev.vet.Test_08_07_19"/>
-                <class name="ru.exportcenter.dev.vet.Test_08_07_21"/>
-                <class name="ru.exportcenter.dev.vet.Test_08_07_22"/>
+<!--                <class name="ru.exportcenter.test.vet.Test_08_07_01"/>-->
+<!--                <class name="ru.exportcenter.test.vet.Test_08_07_02"/>-->
+<!--                <class name="ru.exportcenter.test.vet.Test_08_07_03"/>-->
+<!--                <class name="ru.exportcenter.test.vet.Test_08_07_04"/>-->
+                <class name="ru.exportcenter.test.vet.Test_08_07_05"/>
+<!--                <class name="ru.exportcenter.test.vet.Test_08_07_07"/>-->
+                <class name="ru.exportcenter.test.vet.Test_08_07_08"/>
+<!--                <class name="ru.exportcenter.test.vet.Test_08_07_13"/>-->
+                <class name="ru.exportcenter.test.vet.Test_08_07_14"/>
+<!--                <class name="ru.exportcenter.test.vet.Test_08_07_15"/>-->
+<!--                <class name="ru.exportcenter.test.vet.Test_08_07_19"/>-->
+                <class name="ru.exportcenter.test.vet.Test_08_07_21"/>
+<!--                <class name="ru.exportcenter.test.vet.Test_08_07_22"/>-->
             </classes>
         </test>
 
