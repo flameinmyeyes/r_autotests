@@ -64,8 +64,10 @@ public class Test_08_07_21 extends Hooks {
     public void step01() {
         CommonFunctions.printStep();
 
+        new GUIFunctions().inputInSearchField("Поиск по разделу", P.getProperty("Поиск по разделу"));
         new GUIFunctions()
-                .inputInSearchField("Поиск по разделу", P.getProperty("Поиск по разделу"))
+                .waitForElementDisplayed("//*[contains(text(),'Примите участие в тестировании сервисов «Мой экспорт»')]", 600)
+                .clickByLocator("//*[contains(text(),'Примите участие в тестировании сервисов «Мой экспорт»')]/button")
                 .inContainer("Запрос ветеринарного сертификата")
                 .clickButton("Оформить")
                 .waitForLoading()

@@ -197,7 +197,8 @@ public class Test_08_07_05 extends Hooks {
         //Блок Инфо о поставке
         $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Страна происхождения продукции ']/b").shouldHave(text("РОССИЯ"));
         $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Субъект Российской Федерации, в котором расположены поднадзорные объекты ']/b").shouldHave(text("Вологодская"));
-        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Цель вывоза ']/b").shouldHave(text("реализация в пищу людям"));
+//        $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Цель вывоза ']/b").shouldHave(text("реализация в пищу людям"));
+        $x("//*[text()='Цель вывоза']/b").shouldHave(text("реализация в пищу людям"));
 
         //Блок Инфо о транспортировке
         $x("//*[text() = 'Проект заявления']/ancestor::div[contains(@class, 'container')][1]//span[text()='Наименование организации-перевозчика ']/b").shouldHave(text("ООО \"АРГО\""));

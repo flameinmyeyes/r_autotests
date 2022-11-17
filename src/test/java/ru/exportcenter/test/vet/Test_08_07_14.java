@@ -73,7 +73,7 @@ public class Test_08_07_14 extends Hooks {
 //Нажать кнопку "Далее"
         new GUIFunctions()
                 .inContainer("Формирование отчетности по разрешениям на вывоз подконтрольной продукции")
-                .clickButton("Далее")
+                .clickButton("Продолжить")
                 .waitForElementDisplayed("//div[text()='Заполните поле']", 60);
 
     }
