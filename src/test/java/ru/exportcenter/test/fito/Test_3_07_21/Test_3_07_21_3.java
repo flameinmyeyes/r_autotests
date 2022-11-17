@@ -44,8 +44,8 @@ public class Test_3_07_21_3 extends Hooks {
 
 
     @Owner(value = "Петрищев Руслан")
-    @Description("3.07.21.2 (Г) ВС 2")
-    @Link(name = "Test_3_07_21_2", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=196796014")
+    @Description("3.07.21.3 (Г) ВС 3 ответ 1")
+    @Link(name = "Test_3_07_21_3", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=196796017")
     @Test(retryAnalyzer = RunTestAgain.class)
     public void steps() {
         precondition();
@@ -53,7 +53,6 @@ public class Test_3_07_21_3 extends Hooks {
         step18();
         step19();
         step20();
-//        step21();
     }
 
     @AfterMethod
@@ -153,12 +152,6 @@ public class Test_3_07_21_3 extends Hooks {
         new GUIFunctions()
                 .clickByLocator("//button[contains(@class,'NotificationBadge')]")
                 .waitForElementDisplayed("//*[contains(text(),'Получение ЗКФС. Технический сбой. Заявление № "+docNum+"')]");
-    }
-
-    @Step("")
-    public void step21() {
-        CommonFunctions.printStep();
-
     }
 
     private static void deleteFileIfExists(File file) {
