@@ -78,7 +78,7 @@ public class Test_08_07_16 extends Hooks {
                 .inField("Дата от").inputValue("01.10.2022")
                 .inField("Дата до").inputValue("04.10.2022")
                 .inContainer("Формирование отчетности по разрешениям на вывоз подконтрольной продукции")
-                .clickButton("Далее")
+                .clickButton("Продолжить")
                 .waitForElementDisplayed("//div[text()='Сформированные отчеты']", 360);
 
     }

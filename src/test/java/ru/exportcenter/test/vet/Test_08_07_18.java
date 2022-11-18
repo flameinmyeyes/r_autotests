@@ -92,7 +92,7 @@ public class Test_08_07_18 extends Hooks {
 
                 //span[text()='Скачать архив со всеми сформированными отчётами']
                 .inContainer("Формирование отчетности по разрешениям на вывоз подконтрольной продукции")
-                .clickButton("Далее")
+                .clickButton("Продолжить")
                 .waitForElementDisplayed("//div[text()='Сформированные отчеты']", 360);
 
     }
