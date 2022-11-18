@@ -79,7 +79,7 @@ public class Test_08_07_17 extends Hooks {
                 .inContainer("Страновой отчёт")
                 .clickByLocator("//span[text()='Детализированный']")
                 .inContainer("Формирование отчетности по разрешениям на вывоз подконтрольной продукции")
-                .clickButton("Далее")
+                .clickButton("Продолжить")
                 .waitForElementDisplayed("//span[text()='Заполните поле']");
 
         $x("//input[@name='$.createItem.country.search.period1.create_date_from']").setValue("01.09.2022");
@@ -100,7 +100,7 @@ public class Test_08_07_17 extends Hooks {
 
         //span[text()='Скачать архив со всеми сформированными отчётами']
                 .inContainer("Формирование отчетности по разрешениям на вывоз подконтрольной продукции")
-                .clickButton("Далее")
+                .clickButton("Продолжить")
                 .waitForElementDisplayed("//div[text()='Сформированные отчеты']", 360);
 
     }
