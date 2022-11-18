@@ -15,10 +15,11 @@ import ru.exportcenter.Hooks;
 import java.util.Properties;
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_07_07_19 extends Hooks {
 
-    private String WAY_TEST = Ways.TEST.getWay() + "/SPT/Test_07_07_19/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_07_07_19_properties.xml";
+public class Test_07_07_25 extends Hooks {
+
+    private String WAY_TEST = Ways.TEST.getWay() + "/SPT/Test_07_07_25/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_07_07_25_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     public String requestNumber;
     private String processID;
@@ -26,10 +27,9 @@ public class Test_07_07_19 extends Hooks {
     private String token;
 
     @Owner(value = "Теребков Андрей")
-    @Description("07.07.19 СТ-1 Узбекистан - СПТ (реэкспорт) + оплата + успешное оформление")
-    @Link(name = "Test_07_07_19", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=188868781")
+    @Description("07.07.25 Итог Сертификат формы A : сертификат происхождения другой страны не подтверждается, мотивированный отказ  (Черногория)")
+    @Link(name = "Test_07_07_25", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=194314843")
     @Test(retryAnalyzer = RunTestAgain.class)
-
     public void steps(){
         precondition();
         step01();
@@ -61,10 +61,9 @@ public class Test_07_07_19 extends Hooks {
     public void step01() {
         CommonFunctions.printStep();
         System.out.println("requestNumber = " + requestNumber);
-
-
 //      Информация о заявителе / Информация об импортере
     }
+
 
     private void refreshTab(String expectedXpath, int times) {
         for (int i = 0; i < times; i++) {
@@ -77,5 +76,4 @@ public class Test_07_07_19 extends Hooks {
             CommonFunctions.wait(1);
         }
     }
-
 }

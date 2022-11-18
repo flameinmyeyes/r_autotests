@@ -444,10 +444,61 @@ public class RESTFunctions {
         return response;
     }
 
+
+    public static String getAccessToken_SVT(String login) {
+        String baseUri = "http://lk.t.exportcenter.ru";
+
+        String execution = RestAssured
+                .given()
+                .baseUri(baseUri)
+                .basePath("/sso/oauth2/access_token")
+                .header("Accept", "application/json")
+                .contentType("application/x-www-form-urlencoded; charset=utf-8")
+                .formParam("client_id", "mdm-api-service")
+                .formParam("client_secret", "password")
+                .formParam("realm", "/customer")
+                .formParam("grant_type", "urn:roox:params:oauth:grant-type:m2m")
+                .formParam("service", "dispatcher")
+                .formParam("scope", "organizations currentOrgId")
+                .when()
+                .post()
+                .then()
+                .assertThat().statusCode(200)
+                .extract().response().jsonPath().getString("execution");
+
+        String response = RestAssured
+                .given()
+                .baseUri(baseUri)
+                .basePath("/sso/oauth2/access_token")
+                .header("Accept", "application/json")
+                .contentType("application/x-www-form-urlencoded; charset=utf-8")
+                .formParam("client_id", "mdm-api-service")
+                .formParam("client_secret", "password")
+                .formParam("realm", "/customer")
+                .formParam("grant_type", "urn:roox:params:oauth:grant-type:m2m")
+                .formParam("service", "dispatcher")
+                .formParam("_eventId", "next")
+                .formParam("username", login)
+                .formParam("password", "password")
+                .formParam("scope", "organizations currentOrgId")
+                .formParam("execution", execution)
+                .when()
+                .post()
+                .then()
+                .assertThat().statusCode(200)
+                .extract().response().jsonPath().getString("access_token");
+
+        String token = "Bearer sso_1.0_" + response;
+
+        return token;
+    }
+
+
     public static String getAccessToken(String login) {
 
 //        String baseUri = "http://uidm.uidm-dev.d.exportcenter.ru";
         String baseUri = "https://lk.t.exportcenter.ru";
+
 
         String execution = RestAssured
                 .given()
@@ -537,6 +588,35 @@ public class RESTFunctions {
         return token;
     }
 
+    public static String getOrderID_SVT(String processID) {
+
+        String token = getAccessToken_SVT("bpmn_admin");
+
+        System.out.println(token);
+
+        String baseUri = "https://lk.t.exportcenter.ru";
+
+        String response = RestAssured
+                .given()
+                    .baseUri(baseUri)
+                    .basePath("/bpmn/api/v1/bpmn/tasks/"+ processID)
+                    .header("camundaId", "camunda-exp-search")
+                    .header("Accept", "application/json")
+                    .header("Authorization", token)
+                .when()
+                .get()
+                .then()
+//                  .assertThat().statusCode(200)
+                    .extract().response().jsonPath().prettify();
+
+        JsonObject jsonObject = JSONHandler.parseJSONfromString(response);
+
+        String orderID = jsonObject.get("processInstanceId").toString();
+
+        return orderID;
+    }
+
+
     public static String getOrderID(String processID) {
 
         String token = getAccessToken("bpmn_admin");
@@ -548,6 +628,7 @@ public class RESTFunctions {
                 .given()
                     .baseUri(baseUri)
                     .basePath("/bpmn/api/v1/bpmn/history/process-instance")
+//                /bpmn/api/v1/bpmn/tasks
                     .param("variableName", "mdmOrder")
                     .header("Accept", "application/json")
                     .header("camundaId", "camunda-exp-search")
@@ -559,6 +640,8 @@ public class RESTFunctions {
                     .extract().response().jsonPath().prettify();
 
         JsonObject jsonObject = JSONHandler.parseJSONfromString(response);
+
+        System.out.println(response);
 
         String orderID = jsonObject.getAsJsonArray("content")
                 .get(0).getAsJsonObject()

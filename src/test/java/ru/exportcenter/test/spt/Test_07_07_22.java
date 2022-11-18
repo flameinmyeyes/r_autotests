@@ -15,10 +15,10 @@ import ru.exportcenter.Hooks;
 import java.util.Properties;
 import static com.codeborne.selenide.Selenide.*;
 
-public class Test_07_07_19 extends Hooks {
+public class Test_07_07_22 extends Hooks {
 
-    private String WAY_TEST = Ways.TEST.getWay() + "/SPT/Test_07_07_19/";
-    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_07_07_19_properties.xml";
+    private String WAY_TEST = Ways.TEST.getWay() + "/SPT/Test_07_07_22/";
+    public String WAY_TO_PROPERTIES = WAY_TEST + "Test_07_07_22_properties.xml";
     public Properties PROPERTIES = PropertiesHandler.parseProperties(WAY_TO_PROPERTIES);
     public String requestNumber;
     private String processID;
@@ -26,8 +26,8 @@ public class Test_07_07_19 extends Hooks {
     private String token;
 
     @Owner(value = "Теребков Андрей")
-    @Description("07.07.19 СТ-1 Узбекистан - СПТ (реэкспорт) + оплата + успешное оформление")
-    @Link(name = "Test_07_07_19", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=188868781")
+    @Description("07.07.22 Итог СТ-2 на русском языке: аналог СТ общей формы на англ языке, но комментариев нет, на этапе подтверждения оплаты приходит мотивированный отказ (Сербия)")
+    @Link(name = "Test_07_07_22", url = "https://confluence.exportcenter.ru/pages/viewpage.action?pageId=194314812")
     @Test(retryAnalyzer = RunTestAgain.class)
 
     public void steps(){
@@ -60,10 +60,14 @@ public class Test_07_07_19 extends Hooks {
     @Step("Ввод данных в карточку «Выдача сертификата о происхождении товара»")
     public void step01() {
         CommonFunctions.printStep();
+
+        Test_07_07_00 test_07_07_00 = new Test_07_07_00();
+        String smevFlag = "{\"smevSkip\":true,\"__coment1__\":\"//smevSkip=true//smevAction[positive,negative,techError]\",\"smevAction\":{\"vs1\":\"positive\",\"vs2\":\"positive2\",\"vs3\":\"positive\",\"vs4\":\"positive\",\"vs5\":\"negative\",\"vs6\":\"positive\",\"vs7\":\"positive\",\"vs8\":\"positive\",\"vs9\":\"positive\",\"vs9pay\":\"positive\",\"vs9cmnt\":\"positive\",\"vs10\":\"positive\"},\"__comment2__\":\"//smevSkip=false//smevMode[dev,prod]\",\"smevMode\":\"dev\"}";
+        test_07_07_00.Swagger(smevFlag);
+
         System.out.println("requestNumber = " + requestNumber);
 
-
-//      Информация о заявителе / Информация об импортере
+//      Информация о партии товаров
     }
 
     private void refreshTab(String expectedXpath, int times) {
