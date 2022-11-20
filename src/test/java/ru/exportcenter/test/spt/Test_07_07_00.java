@@ -34,6 +34,8 @@ public class Test_07_07_00 extends Hooks {
     public String processID = "";
     public String docUUID = "";
     public String token = "";
+    public String smevFlag = "";
+    public boolean isNegative = false;
 
     public String url = "", login = "", password = "", code="", forma = "";
 
@@ -44,6 +46,7 @@ public class Test_07_07_00 extends Hooks {
     public void steps(){
         step01();
         step02();
+        Swagger(smevFlag, isNegative);
     }
 
     @AfterMethod
@@ -52,39 +55,39 @@ public class Test_07_07_00 extends Hooks {
     }
 
     @Step("Отправка JSON-запроса в Swagger")
-    public void Swagger(String smevAction) {
+    public void Swagger(String smevFlag, boolean isNegative) {
         CommonFunctions.printStep();
 
         processID = CommonFunctions.getProcessIDFromURL();
         token = RESTFunctions.getAccessToken_SVT("bpmn_admin");
         docUUID = RESTFunctions.getOrderID_SVT(processID);
-        System.out.println("processID = " + processID + "; docUUID = " + docUUID + "; token = " + token);
+//        System.out.println("processID = " + processID + "; docUUID = " + docUUID + "; token = " + token);
+        if(isNegative) {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String outerJsonString = "{\"variables\":{\"smevFlag\":{\"local\":false,\"type\":\"Object\",\"valueInfo\":{\"objectTypeName\":\"java.util.LinkedHashMap\",\"serializationDataFormat\":\"application/json\"}}}}";
 
-        String outerJsonString = "{\"variables\":{\"smevFlag\":{\"local\":false,\"type\":\"Object\",\"valueInfo\":{\"objectTypeName\":\"java.util.LinkedHashMap\",\"serializationDataFormat\":\"application/json\"}}}}";
-        String smevFlag = smevAction;
+            JsonObject outerJson = new JsonParser().parse(outerJsonString).getAsJsonObject();
+            outerJson.addProperty("name", "CHANGEVARS-" + docUUID.replaceAll("\"", ""));
+            outerJson.get("variables").getAsJsonObject().get("smevFlag").getAsJsonObject().addProperty("value", smevFlag);
 
-        JsonObject outerJson = new JsonParser().parse(outerJsonString).getAsJsonObject();
-        outerJson.addProperty("name", "CHANGEVARS-"+docUUID.replaceAll("\"", ""));
-        outerJson.get("variables").getAsJsonObject().get("smevFlag").getAsJsonObject().addProperty("value", smevFlag);
+          System.out.println(outerJson.getClass());
+          System.out.println(gson.toJson(outerJson));
 
-        System.out.println(outerJson.getClass());
-        System.out.println(gson.toJson(outerJson));
-
-        RestAssured
-                .given()
-                .baseUri("https://lk.t.exportcenter.ru")
-                .basePath("/bpmn/api/v1/bpmn/execution/signal")
-                .header("accept", "*/*")
-                .header("Content-Type", "application/json")
-                .header("Authorization", token)
-                .body(String.valueOf(outerJson))
-                .when()
-                .post()
-                .then()
+            RestAssured
+                    .given()
+                    .baseUri("https://lk.t.exportcenter.ru")
+                    .basePath("/bpmn/api/v1/bpmn/execution/signal")
+                    .header("accept", "*/*")
+                    .header("Content-Type", "application/json")
+                    .header("Authorization", token)
+                    .body(String.valueOf(outerJson))
+                    .when()
+                    .post()
+                    .then()
 //              .assertThat().statusCode(200)
-        ;
+            ;
+        }
     }
 
 

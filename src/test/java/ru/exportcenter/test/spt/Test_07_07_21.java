@@ -50,11 +50,17 @@ public class Test_07_07_21 extends Hooks {
         test_07_07_00.code = PROPERTIES.getProperty("Авторизация.Код");
         test_07_07_00.forma = PROPERTIES.getProperty("Форма");
 
+        test_07_07_00.smevFlag = "{\"smevSkip\":true,\"__coment1__\":\"//smevSkip=true//smevAction[positive,negative,techError]\",\"smevAction\":{\"vs1\":\"positive\",\"vs2\":\"positive\",\"vs3\":\"positive\",\"vs4\":\"positive\",\"vs5\":\"positive\",\"vs6\":\"positive\",\"vs7\":\"positive\",\"vs8\":\"positive\",\"vs9\":\"positive\",\"vs9pay\":\"positive\",\"vs9cmnt\":\"positive\",\"vs10\":\"positive\"},\"__comment2__\":\"//smevSkip=false//smevMode[dev,prod]\",\"smevMode\":\"dev\"}";
+        test_07_07_00.isNegative = false;
+
         test_07_07_00.steps();
+
         requestNumber = test_07_07_00.requestNumber;
         processID = test_07_07_00.processID;
         docUUID = test_07_07_00.docUUID;
         token = test_07_07_00.token;
+
+        System.out.println("processID = " + processID + "; docUUID = " + docUUID + "; token = " + token + "; requestNumber = " + requestNumber);
     }
 
     @Step("Ввод данных в карточку «Выдача сертификата о происхождении товара»")
