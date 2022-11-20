@@ -37,6 +37,8 @@ public class Test_07_07_25 extends Hooks {
         step02();
         step03();
         step04();
+        step05();
+        step06();
     }
 
     @AfterMethod
@@ -259,7 +261,7 @@ public class Test_07_07_25 extends Hooks {
                 .waitForLoading();
 
         new GUIFunctions()
-                .inField("Организация").selectValue(PROPERTIES.getProperty("Организация")).waitForURL("")
+                .inField("Организация").selectValue(PROPERTIES.getProperty("Организация"))
                 .inField("ФИО уполномоченного лица").selectValue("Отров Отр Отрович")
                 .waitForLoading()
                 .clickButton("Продолжить")
@@ -271,6 +273,25 @@ public class Test_07_07_25 extends Hooks {
                 .clickButton("Подписать")
                 .waitForLoading()
                 .clickButton("К перечню заявлений")
+                .waitForLoading();
+    }
+
+    @Step("Ввод данных в карточку «Информация о заявителе»  и в карточку «Информация об импортере» [4]")
+    public void step06() {
+        CommonFunctions.printStep();
+
+        CommonFunctions.wait(15);
+
+        refresh();
+//      refreshTab("//span[text()='№" + requestNumber + "']", 20);
+
+        new GUIFunctions()
+                .waitForLoading()
+                .clickButton("№" + requestNumber)
+                .waitForLoading()
+                .clickButton("Продолжить")
+                .waitForLoading().waitForURL("")
+                .clickButton("Перейти к заявлению на экспертизу")
                 .waitForLoading();
     }
 

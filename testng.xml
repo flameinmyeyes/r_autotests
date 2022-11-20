@@ -93,11 +93,17 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-<!--    <test name="SPT" thread-count="1" preserve-order="true">
+<test name="REC_all_tests_SPT" thread-count="1" preserve-order="true">
         <classes>
             <class name="ru.exportcenter.test.spt.Test_07_07_19" />
+            <class name="ru.exportcenter.test.spt.Test_07_07_21" />
+            <class name="ru.exportcenter.test.spt.Test_07_07_22" />
+            <class name="ru.exportcenter.test.spt.Test_07_07_20" />
+            <class name="ru.exportcenter.test.spt.Test_07_07_20" />
+            <class name="ru.exportcenter.test.spt.Test_07_07_20" />
+            <class name="ru.exportcenter.test.spt.Test_07_07_20" />
         </classes>
-    </test>-->
+    </test>
 
 
 <!--    <test name="REC_all_tests_vet" thread-count="1" preserve-order="true">-->
@@ -106,21 +112,21 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-        <test name="REC_all_tests_vet" thread-count="1" preserve-order="true">
-            <classes>
-<!--                <class name="ru.exportcenter.test.vet.Test_08_07_01"/>-->
-                <class name="ru.exportcenter.test.vet.Test_08_07_02"/>
-<!--                <class name="ru.exportcenter.test.vet.Test_08_07_03"/>-->
-<!--                <class name="ru.exportcenter.test.vet.Test_08_07_05"/>-->
-                <class name="ru.exportcenter.test.vet.Test_08_07_07"/>
-<!--                <class name="ru.exportcenter.test.vet.Test_08_07_08"/>-->
-<!--                <class name="ru.exportcenter.test.vet.Test_08_07_13"/>-->
-<!--                <class name="ru.exportcenter.test.vet.Test_08_07_14"/>-->
-                <class name="ru.exportcenter.test.vet.Test_08_07_15"/>
-                <class name="ru.exportcenter.test.vet.Test_08_07_19"/>
-<!--                <class name="ru.exportcenter.test.vet.Test_08_07_21"/>-->
-<!--                <class name="ru.exportcenter.test.vet.Test_08_07_22"/>-->
-            </classes>
-        </test>
+<!--        <test name="REC_all_tests_vet" thread-count="1" preserve-order="true">-->
+<!--            <classes>-->
+<!--&lt;!&ndash;                <class name="ru.exportcenter.test.vet.Test_08_07_01"/>&ndash;&gt;-->
+<!--                <class name="ru.exportcenter.test.vet.Test_08_07_02"/>-->
+<!--&lt;!&ndash;                <class name="ru.exportcenter.test.vet.Test_08_07_03"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <class name="ru.exportcenter.test.vet.Test_08_07_05"/>&ndash;&gt;-->
+<!--                <class name="ru.exportcenter.test.vet.Test_08_07_07"/>-->
+<!--&lt;!&ndash;                <class name="ru.exportcenter.test.vet.Test_08_07_08"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <class name="ru.exportcenter.test.vet.Test_08_07_13"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <class name="ru.exportcenter.test.vet.Test_08_07_14"/>&ndash;&gt;-->
+<!--                <class name="ru.exportcenter.test.vet.Test_08_07_15"/>-->
+<!--                <class name="ru.exportcenter.test.vet.Test_08_07_19"/>-->
+<!--&lt;!&ndash;                <class name="ru.exportcenter.test.vet.Test_08_07_21"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <class name="ru.exportcenter.test.vet.Test_08_07_22"/>&ndash;&gt;-->
+<!--            </classes>-->
+<!--        </test>-->
 
 </suite>
