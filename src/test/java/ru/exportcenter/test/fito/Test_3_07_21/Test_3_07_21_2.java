@@ -28,7 +28,7 @@ public class Test_3_07_21_2 extends Hooks {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/fito/Test_3_07_21/Test_3_07_21_2/";
     private final String WAY_FILES = Ways.TEST.getWay() + "/fito/Test_3_07_21/Test_3_07_21_2/"; //переменная нужна, т.к. значение WAY_TEST будет меняться при вызове текущего теста из других тестов
-    private final String WAY_TEMP_FILE = "src/test/java/ru/exportcenter/test/fito/Test_3_07_21_2/";
+    private final String WAY_TEMP_FILE = "src/test/java/ru/exportcenter/test/fito/Test_3_07_21/";
     private final String FILE_NAME_BC_2 = "ResponseFailDataBC2.xml";
 
     private final String BASE_URI = "https://lk.t.exportcenter.ru";
