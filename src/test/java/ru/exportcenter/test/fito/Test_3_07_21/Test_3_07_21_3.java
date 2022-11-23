@@ -28,7 +28,7 @@ public class Test_3_07_21_3 extends Hooks {
 
     public String WAY_TEST = Ways.TEST.getWay() + "/fito/Test_3_07_21/Test_3_07_21_3/";
     private final String WAY_FILES = Ways.TEST.getWay() + "/fito/Test_3_07_21/Test_3_07_21_3/"; //переменная нужна, т.к. значение WAY_TEST будет меняться при вызове текущего теста из других тестов
-    private final String WAY_TEMP_FILE = "src/test/java/ru/exportcenter/test/fito/Test_3_07_21_3/";
+    private final String WAY_TEMP_FILE = "src/test/java/ru/exportcenter/test/fito/Test_3_07_21/";
     private final String FILE_NAME_BC_3_1 = "ResponseFailDataBC3_1.xml";
 
     private final String BASE_URI = "https://lk.t.exportcenter.ru";
@@ -106,7 +106,7 @@ public class Test_3_07_21_3 extends Hooks {
         XMLHandler.updateXML(wayFile, "common:GUID", guid);
         XMLHandler.updateXML(wayFile, "common:SendDateTime", DateFunctions.dateToday("yyyy-MM-dd'T'HH:mm:ss")); //2022-10-05T13:44:27
         XMLHandler.updateXML(wayFile, "common:ZayavlenieRegistrationDate", DateFunctions.dateToday("yyyy-MM-dd"));
-        XMLHandler.updateXML(wayFile, "common:ZayavlenieRegistrationNumber", guid);
+        XMLHandler.updateXML(wayFile, "common:ZayavlenieRegistrationNumber", zayavlenieRegistrationNumber);
      }
 
     @Step("Шаг 18. Загрузка XML файла через сваггер, запуск процесса (использовать значения для ВС 3)")

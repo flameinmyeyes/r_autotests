@@ -113,13 +113,14 @@ public class Test_3_07_21_1 extends Hooks {
 
         new GUIFunctions()
                 .inContainer("Добавление продукции")
+                .clickByLocator("//*[text()='Добавить +']")
                 .inField("Каталог продукции").selectValue(P.getProperty("Добавление продукции.Каталог продукции").split(" ")[0]).assertNoControl().assertValue(P.getProperty("Добавление продукции.Каталог продукции"))
                 .inField("Код ТН ВЭД").assertValue(P.getProperty("Добавление продукции.Код ТН ВЭД"))
                 .inField("Тип продукции").selectValue(P.getProperty("Добавление продукции.Тип продукции")).assertNoControl().assertValue()
                 .inField("Дополнительная информация о продукции. Например, страна производства (произрастания) продукции, сорт продукции и т.д.").inputValue(P.getProperty("Добавление продукции.Дополнительная информация о продукции")).assertNoControl().assertValue()
-                .inField("Вес груза (нетто), кг").inputValue(P.getProperty("Добавление продукции.Вес груза (нетто)")).assertNoControl().assertValue()
+                .inField("Вес груза (нетто), кг").inputValue(P.getProperty("Добавление продукции.Вес груза (нетто)")).assertNoControl()
                 .inField("Особые единицы измерения").selectValue(P.getProperty("Добавление продукции.Особые единицы измерения")).assertNoControl().assertValue()
-                .inField("Количество в особых единицах измерения").inputValue(P.getProperty("Добавление продукции.Количество в особых единицах измерения")).assertNoControl().assertValue()
+//                .inField("Количество в особых единицах измерения").inputValue(P.getProperty("Добавление продукции.Количество в особых единицах измерения")).assertNoControl().assertValue()
                 .inField("Описание упаковки").selectValue(P.getProperty("Добавление продукции.Описание упаковки")).assertNoControl().assertValue()
                 .inField("Размещение продукции").clickByLocator("//ancestor::div//span[contains(text(),'Навалом (наливом)')][last()]")
                 .inField("Наличие отличительных знаков (маркировки). Например, номера партий, серийные номера или названия торговых марок. ").setCheckboxON().assertCheckboxON()
@@ -127,6 +128,7 @@ public class Test_3_07_21_1 extends Hooks {
                 //Место происхождения( произрастания) продукции
                 .inField("Страна").selectValue(P.getProperty("Добавление продукции.Страна")).assertNoControl().assertValue()
                 .inField("Регион").selectValue(P.getProperty("Добавление продукции.Регион")).assertNoControl().assertValue()
+                .clickButton("Сохранить")
 
                 //нажать "Продолжить"
                 .inContainer("Запрос заключения о карантинном фитосанитарном состоянии")
