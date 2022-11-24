@@ -145,6 +145,10 @@ public class Test_07_07_19 extends Hooks {
                 , "true"
         );
 
+//        new GUIFunctions()
+//                .inContainer("Информация о заявителе")
+//                .inField("E-mail").inputValue(PROPERTIES.getProperty("Email"));
+
         new GUIFunctions()
                 .inField("Наименование").inputValue(PROPERTIES.getProperty("Наименование"))
                 .inField("Страна").selectValue(PROPERTIES.getProperty("Страна"))
@@ -341,21 +345,31 @@ public class Test_07_07_19 extends Hooks {
                 .inField("Дата оформления").inputValue(PROPERTIES.getProperty("Дата оформления"))
                 .inField("Номер").inputValue(PROPERTIES.getProperty("Номер"))
 
-                .uploadFile("Сертификат происхождения товара, выданный другой страной", "C:\\auto-tests\\tmp.pdf")
+//                .uploadFile("Счёт фактура (инвойс)", "C:\\auto-tests\\tmp.pdf")
 //              .uploadFile("Сертификат происхождения товара, выданный другой страной", "/share/" + WAY_TEST + "tmp.pdf")
 //                .uploadFile("Укажите информацию о товаре (продукции), которую считаете необходимым сообщить дополнительно, например страна производства (произрастания) продукции, сорт продукции и т.д.", "C:\\auto-tests\\tmp.pdf")
 //                .uploadFile("Укажите информацию о товаре (продукции), которую считаете необходимым сообщить дополнительно, например страна производства (произрастания) продукции, сорт продукции и т.д.", "/share/" + WAY_TEST + "tmp.pdf")
 //                .clickButton("Сохранить")
 //                .waitForURL("")
         ;
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
-       // $x("//span[text()='Загрузите документ']").uploadFile("C:\\auto-tests\\tmp.pdf");
+//        "/share/" + WAY_TEST + "tmp.pdf"
+        $x("(//*[text()='Каталог продукции']/ancestor::div[@class='Grid_container__2Nvhh']//following::input[@type='file'])[1]").sendKeys("C:\\auto-tests\\tmp.pdf");
+        $x("(//*[text()='Каталог продукции']/ancestor::div[@class='Grid_container__2Nvhh']//following::input[@type='file'])[2]").sendKeys("C:\\auto-tests\\tmp.pdf");
+
+
+        new GUIFunctions().waitForURL("");
+
+        $x("//[text()='Каталог продукции']/following::[text()='Загрузите документ'][1]").sendKeys("C:\\auto-tests\\tmp.pdf");
+        $x("//[text()='Каталог продукции']/following::[text()='Загрузите документ'][2]").sendKeys("C:\\auto-tests\\tmp.pdf");
+//       $x("//span[text()='Загрузите документ']").click();//.sendKeys("C:\\auto-tests\\tmp.pdf");
 System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
  //       $x("//span[text()='Загрузите документ']']").click();
 
         //*[@id='uploadInput-50ae27eb-761d-4bbd-8b69-3a80371bb7de']
 
-        $x("//*[@id='uploadInput-50ae27eb-761d-4bbd-8b69-3a80371bb7de']").sendKeys("C:\\auto-tests\\tmp.pdf");
+        $x("//[text()='Сертификат происхождения товара, выданный другой страной']/following::[text()='Загрузите документ']").sendKeys("C:\\auto-tests\\tmp.pdf");
         $x("//*[@id='uploadInput-50ae27eb-761d-4bbd-8b69-3a80371bb7de']").submit();
         System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }

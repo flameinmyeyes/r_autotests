@@ -16,6 +16,12 @@ import io.qameta.allure.Link;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
+import io.restassured.config.ObjectMapperConfig;
+import io.restassured.filter.log.ErrorLoggingFilter;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
+import io.restassured.mapper.ObjectMapperType;
+import io.restassured.specification.RequestSpecification;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ru.exportcenter.Hooks;
@@ -61,7 +67,8 @@ public class Test_07_07_00 extends Hooks {
         processID = CommonFunctions.getProcessIDFromURL();
         token = RESTFunctions.getAccessToken_SVT("bpmn_admin");
         docUUID = RESTFunctions.getOrderID_SVT(processID);
-//        System.out.println("processID = " + processID + "; docUUID = " + docUUID + "; token = " + token);
+
+        System.out.println("processID = " + processID + "; docUUID = " + docUUID + "; token = " + token);
         if(isNegative) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -71,24 +78,41 @@ public class Test_07_07_00 extends Hooks {
             outerJson.addProperty("name", "CHANGEVARS-" + docUUID.replaceAll("\"", ""));
             outerJson.get("variables").getAsJsonObject().get("smevFlag").getAsJsonObject().addProperty("value", smevFlag);
 
-          System.out.println(outerJson.getClass());
-          System.out.println(gson.toJson(outerJson));
+            System.out.println("processID = " + processID + "; docUUID = " + docUUID + "; token = " + token + "; requestNumber = " + requestNumber);
+            System.out.println(outerJson.getClass());
+            System.out.println(gson.toJson(outerJson));
 
-            RestAssured
-                    .given()
-                    .baseUri("https://lk.t.exportcenter.ru")
-                    .basePath("/bpmn/api/v1/bpmn/execution/signal")
+
+//            RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter(), new ErrorLoggingFilter());
+
+                    given()
+                    .baseUri("https://lk.t.exportcenter.ru/bpmn/api/v1/bpmn/execution/signal")
+//                  .basePath("/bpmn/api/v1/bpmn/execution/signal")
                     .header("accept", "*/*")
                     .header("Content-Type", "application/json")
                     .header("Authorization", token)
-                    .body(String.valueOf(outerJson))
+                    .header("camundaId", "camunda-exp-search")
+                    .body(outerJson)
+//                  .body(String.valueOf(outerJson))
                     .when()
                     .post()
                     .then()
-//              .assertThat().statusCode(200)
+                    .assertThat().statusCode(200)
             ;
         }
     }
+
+
+
+
+
+        public static RequestSpecification given() {
+            return RestAssured.given()
+                    .config(RestAssured.config()
+                            .objectMapperConfig(new ObjectMapperConfig(ObjectMapperType.GSON)));
+
+        }
+
 
 
     @Step("Авторизация»")

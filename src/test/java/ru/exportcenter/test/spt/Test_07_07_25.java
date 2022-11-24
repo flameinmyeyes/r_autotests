@@ -38,7 +38,7 @@ public class Test_07_07_25 extends Hooks {
         step03();
         step04();
         step05();
-        step06();
+//        step06();
     }
 
     @AfterMethod
@@ -56,8 +56,9 @@ public class Test_07_07_25 extends Hooks {
         test_07_07_00.code = PROPERTIES.getProperty("Авторизация.Код");
         test_07_07_00.forma = PROPERTIES.getProperty("Форма");
 
-        test_07_07_00.smevFlag = "{\"smevSkip\":true,\"__coment1__\":\"//smevSkip=true//smevAction[positive,negative,techError]\",\"smevAction\":{\"vs1\":\"positive\",\"vs2\":\"positive\",\"vs3\":\"positive\",\"vs4\":\"positive\",\"vs5\":\"positive\",\"vs6\":\"positive\",\"vs7\":\"positive\",\"vs8\":\"positive\",\"vs9\":\"positive\",\"vs9pay\":\"positive\",\"vs9cmnt\":\"positive\",\"vs10\":\"positive\"},\"__comment2__\":\"//smevSkip=false//smevMode[dev,prod]\",\"smevMode\":\"dev\"}";
-        test_07_07_00.isNegative = false;
+//       Проставить значения для smevFlag путем вызова API (vs2 = positive2, vs9 = negative)
+        test_07_07_00.smevFlag = "{\"smevSkip\":true,\"__coment1__\":\"//smevSkip=true//smevAction[positive,negative,techError]\",\"smevAction\":{\"vs1\":\"positive\",\"vs2\":\"positive2\",\"vs3\":\"positive\",\"vs4\":\"positive\",\"vs5\":\"positive\",\"vs6\":\"positive\",\"vs7\":\"positive\",\"vs8\":\"positive\",\"vs9\":\"negative\",\"vs9pay\":\"positive\",\"vs9cmnt\":\"positive\",\"vs10\":\"positive\"},\"__comment2__\":\"//smevSkip=false//smevMode[dev,prod]\",\"smevMode\":\"dev\"}";
+        test_07_07_00.isNegative = true;
 
         test_07_07_00.steps();
 
@@ -149,6 +150,11 @@ public class Test_07_07_25 extends Hooks {
                 .inField("Наименование организации (на английском языке)").inputValue(PROPERTIES.getProperty("Наименование"))
                 .inField("Адрес на английском языке").inputValue(PROPERTIES.getProperty("Адрес по контракту"));
 
+
+//        new GUIFunctions()
+//                .inContainer("Информация о заявителе")
+//                .inField("E-mail").inputValue(PROPERTIES.getProperty("Email"));
+
         new GUIFunctions()
                 .inContainer("Информация об импортере")
                 .inField("Наименование (на английском языке)").inputValue(PROPERTIES.getProperty("Наименование"))
@@ -237,8 +243,9 @@ public class Test_07_07_25 extends Hooks {
                 .waitForLoading()
                 .clickButton("Отправить на проверку")
                 .waitForLoading()
-                .clickButton("К перечню заявлений")
-                .waitForLoading();
+//                .clickButton("К перечню заявлений")
+//                .waitForLoading()
+                ;
 
     }
 
@@ -246,34 +253,82 @@ public class Test_07_07_25 extends Hooks {
     public void step05() {
         CommonFunctions.printStep();
 
-        CommonFunctions.wait(15);
+        $x("(//div[@class='KrDropdownMenu_container__3c8fs']//button)[3]").click();
+        $x("//li[@class='KrDropdownMenu_option__ylk9A KrDropdownMenu_primary__3oZmg']//span[1]").click();
 
-        refresh();
-//      refreshTab("//span[text()='№" + requestNumber + "']", 20);
+        new GUIFunctions()
+                .inField("Дата оформления").inputValue(PROPERTIES.getProperty("Дата оформления"))
+                .inField("Номер").inputValue(PROPERTIES.getProperty("Номер"));
+        $x("//*[text()='Каталог продукции']/ancestor::div[@class='Grid_container__2Nvhh']//following::input[@type='file']").sendKeys("C:\\auto-tests\\tmp.pdf");
+
+        $x("//textarea[contains(@class,'Input_input__29Pew Input_textarea__2U8uL')]").setValue("Доп. Инфо");
+
+
+//
 
         new GUIFunctions()
                 .waitForLoading()
-                .clickButton("№" + requestNumber)
-                .waitForLoading()
+//                .clickButton("Сохранить")
+//                .waitForLoading()
+//                .clickButton("Сохранить")
+//                .waitForURL("")
+        ;
+        while ($x("(//div[@class='Button_primary__27YYO']//span)[2]").isDisplayed()) {
+            System.out.println("Каталог продукции / Сохранить");
+            $x("(//div[@class='Button_primary__27YYO']//span)[2]").click();
+            CommonFunctions.wait(10);
+        }
+
+        // Проверки...
+        // Проверки...
+
+        new GUIFunctions()
                 .clickButton("Продолжить")
-                .waitForLoading()
-                .clickButton("Перейти к заявлению на экспертизу")
+        ;
+        // Проверки...
+        // Проверки...
+        new GUIFunctions()
+
+
+
+//                .inField("Номер").inputValue("111")
+//                .inField("Дата").inputValue(PROPERTIES.getProperty("Дата оформления"))
                 .waitForLoading();
 
-        new GUIFunctions()
-                .inField("Организация").selectValue(PROPERTIES.getProperty("Организация"))
-                .inField("ФИО уполномоченного лица").selectValue("Отров Отр Отрович")
-                .waitForLoading()
-                .clickButton("Продолжить")
-                .waitForLoading();
+//        $x("//*[text()='Дополнение проекта заявления']/ancestor::div[@class='Grid_container__2Nvhh']//following::input[@type='file']").sendKeys("C:\\auto-tests\\tmp.pdf");
+        $x("//[text()='Дополнение проекта заявления']/following::[text()='Загрузите документ'][1]").sendKeys("C:\\auto-tests\\tmp.pdf");
+        new GUIFunctions().waitForURL("")
+//                .clickButton("Продолжить")
 
-        new GUIFunctions()
-                .clickButton("Подписать и отправить")
-                .inField("Выберите сертификат").selectValue("Ермухамбетова Балсикер Бисеньевна от 18.01.2022").assertValue()
-                .clickButton("Подписать")
-                .waitForLoading()
-                .clickButton("К перечню заявлений")
-                .waitForLoading();
+        ;
+//        CommonFunctions.wait(15);
+//
+//        refresh();
+////      refreshTab("//span[text()='№" + requestNumber + "']", 20);
+//
+//        new GUIFunctions()
+//                .waitForLoading()
+//                .clickButton("№" + requestNumber)
+//                .waitForLoading()
+//                .clickButton("Продолжить")
+//                .waitForLoading()
+//                .clickButton("Перейти к заявлению на экспертизу")
+//                .waitForLoading();
+//
+//        new GUIFunctions()
+//                .inField("Организация").selectValue(PROPERTIES.getProperty("Организация"))
+//                .inField("ФИО уполномоченного лица").selectValue("Отров Отр Отрович")
+//                .waitForLoading()
+//                .clickButton("Продолжить")
+//                .waitForLoading();
+//
+//        new GUIFunctions()
+//                .clickButton("Подписать и отправить")
+//                .inField("Выберите сертификат").selectValue("Ермухамбетова Балсикер Бисеньевна от 18.01.2022").assertValue()
+//                .clickButton("Подписать")
+//                .waitForLoading()
+//                .clickButton("К перечню заявлений")
+//                .waitForLoading();
     }
 
     @Step("Ввод данных в карточку «Информация о заявителе»  и в карточку «Информация об импортере» [4]")
